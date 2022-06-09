@@ -19,14 +19,42 @@ public class SeedData
         {
             #region ConfigurationDbContext ile ilgili kayıtlar eklenir.
 
-            /*var configrationDbContext = scope.ServiceProvider.GetService<ConfigurationDbContext>();
+            var configrationDbContext = scope.ServiceProvider.GetService<ConfigurationDbContext>();
             configrationDbContext.Database.Migrate();
 
-            foreach (var client in Config.Clients)
+            if (!configrationDbContext.Clients.Any())
             {
-                configrationDbContext.Clients.Add(client.ToEntity());
-            }*/
-            
+                foreach (var client in Config.Clients)
+                {
+                    configrationDbContext.Clients.Add(client.ToEntity());
+                }
+            }
+
+            if (!configrationDbContext.ApiResources.Any())
+            {
+                foreach (var apiResource in Config.ApiResources)
+                {
+                    configrationDbContext.ApiResources.Add(apiResource.ToEntity());
+                }
+            }
+
+            if (!configrationDbContext.ApiScopes.Any())
+            {
+                foreach (var apiScopes in Config.ApiScopes)
+                {
+                    configrationDbContext.ApiScopes.Add(apiScopes.ToEntity());
+                }
+            }
+
+            if (!configrationDbContext.IdentityResources.Any())
+            {
+                foreach (var identityResource in Config.IdentityResources)
+                {
+                    configrationDbContext.IdentityResources.Add(identityResource.ToEntity());
+                }
+            }
+
+            configrationDbContext.SaveChanges();
 
             #endregion
 

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Duende.IdentityServer.Services;
 using BOnlineStore.IdentityServer.Business;
+using System.Reflection;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -21,7 +22,7 @@ internal static class HostingExtensions
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        var assemblyName = typeof(Program).Assembly.GetName().Name;
+        var assemblyName = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
 
         builder.Services
             .AddIdentityServer(options =>
@@ -34,7 +35,7 @@ internal static class HostingExtensions
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                 options.EmitStaticAudienceClaim = true;
             })
-            /*.AddConfigurationStore(options =>
+            .AddConfigurationStore(options =>
             {
                 options.ConfigureDbContext = c =>
                 {
@@ -57,11 +58,11 @@ internal static class HostingExtensions
                     );
                 };
 
-            })*/
-            .AddInMemoryIdentityResources(Config.IdentityResources)            
+            })
+            /*.AddInMemoryIdentityResources(Config.IdentityResources)            
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
-            .AddInMemoryApiResources(Config.ApiResources)
+            .AddInMemoryApiResources(Config.ApiResources)*/
             .AddDeveloperSigningCredential()            
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<ProfileService>();
