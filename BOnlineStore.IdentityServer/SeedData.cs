@@ -71,7 +71,7 @@ public class SeedData
 
                 var adminUser = new ApplicationUser
                 {
-                    UserName = "administrator",
+                    UserName = "scakir1978@hotmail.com",
                     Email = "scakir1978@hotmail.com",
                     TenantId = defaultTenantId
                 };
@@ -81,15 +81,7 @@ public class SeedData
                 if (!result.Succeeded)
                 {
                     throw new Exception(result.Errors.First().Description);
-                }
-
-                /*result = userMgr.AddClaimsAsync(adminUser, new Claim[]{
-                            new Claim(BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsTenantId, defaultTenantId.ToString()),
-                        }).Result;
-                if (!result.Succeeded)
-                {
-                    throw new Exception(result.Errors.First().Description);
-                }*/
+                }                
 
                 Log.Debug("administrator created");
 
