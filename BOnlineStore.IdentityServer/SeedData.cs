@@ -63,7 +63,7 @@ public class SeedData
             var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
             context.Database.Migrate();
 
-            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();               
 
             if (!userMgr.Users.Any())
             {
