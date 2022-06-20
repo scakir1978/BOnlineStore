@@ -34,7 +34,7 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
 
         public IQueryable<Tenant> Tenants()
         {
-            return _context.Tenant.AsQueryable();            
+            return _context.Tenant.AsQueryable();
         }
 
         public Task<Tenant> UpdateAsync(Tenant tenant)
