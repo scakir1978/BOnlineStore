@@ -1,15 +1,16 @@
-﻿using BOnlineStore.IdentityServer.Models;
+﻿using BOnlineStore.IdentityServer.Dtos;
+using BOnlineStore.IdentityServer.Models;
 
 namespace BOnlineStore.IdentityServer.Business.TenantService
 {
     public interface ITenantService
     {
-        IQueryable<Tenant> Tenants();
-        Task<Tenant> FindByIdAsync(Guid id);
-        Task<Tenant> FindByNameAsync(string name);
-        Task<Tenant> CreateAsync(Tenant tenant);   
-        Task<Tenant> UpdateAsync(Tenant tenant);
-        Task<Tenant> DeleteAsync(Guid id);
+        IQueryable<TenantDto> Tenants();
+        Task<TenantDto> FindByIdAsync(Guid id);
+        Task<TenantDto> FindByNameAsync(string name);
+        Task<TenantDto> CreateAsync(TenantCreateDto tenant);   
+        Task<TenantDto> UpdateAsync(TenantUpdateDto tenant);
+        Task<bool> DeleteAsync(Guid id);
 
     }
 }

@@ -1,4 +1,6 @@
-﻿using BOnlineStore.IdentityServer.Data;
+﻿using AutoMapper;
+using BOnlineStore.IdentityServer.Data;
+using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
 
 namespace BOnlineStore.IdentityServer.Business.TenantService
@@ -6,38 +8,40 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
     public class TenantService : ITenantService
     {
         protected readonly ApplicationDbContext _context;
+        protected readonly IMapper _mapper;
 
-        public TenantService(ApplicationDbContext context)
+        public TenantService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
-        public Task<Tenant> CreateAsync(Tenant tenant)
+        public Task<TenantDto> CreateAsync(TenantCreateDto tenantDto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Tenant> DeleteAsync(Guid id)
+        public Task<bool> DeleteAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Tenant> FindByIdAsync(Guid id)
+        public Task<TenantDto> FindByIdAsync(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Tenant> FindByNameAsync(string name)
+        public Task<TenantDto> FindByNameAsync(string name)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Tenant> Tenants()
+        public IQueryable<TenantDto> Tenants()
         {
-            return _context.Tenant.AsQueryable();
+            return _mapper.Map<IQueryable<TenantDto>>(_context.Tenant.AsQueryable());
         }
 
-        public Task<Tenant> UpdateAsync(Tenant tenant)
+        public Task<TenantDto> UpdateAsync(TenantUpdateDto tenant)
         {
             throw new NotImplementedException();
         }

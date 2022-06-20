@@ -63,9 +63,9 @@ public class SeedData
             var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
             context.Database.Migrate();
 
-            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();               
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();               
 
-            if (!userMgr.Users.Any())
+            if (!userManager.Users.Any())
             {
                 var defaultTenantId = Guid.NewGuid();
 
@@ -76,7 +76,7 @@ public class SeedData
                     TenantId = defaultTenantId
                 };
 
-                var result = userMgr.CreateAsync(adminUser, "Scag185489*").Result;
+                var result = userManager.CreateAsync(adminUser, "Scag185489*").Result;
 
                 if (!result.Succeeded)
                 {

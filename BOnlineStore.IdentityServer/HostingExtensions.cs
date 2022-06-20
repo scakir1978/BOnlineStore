@@ -7,6 +7,7 @@ using Serilog;
 using Duende.IdentityServer.Services;
 using BOnlineStore.IdentityServer.Business;
 using System.Reflection;
+using AutoMapper;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -77,7 +78,10 @@ internal static class HostingExtensions
                 // set the redirect URI to https://localhost:5001/signin-google
                 options.ClientId = "copy client ID from Google here";
                 options.ClientSecret = "copy client secret from Google here";
-            });        
+            });
+        
+        IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
+        builder.Services.AddSingleton(mapper);                
 
         return builder.Build();
     }

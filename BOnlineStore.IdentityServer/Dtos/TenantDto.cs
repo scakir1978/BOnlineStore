@@ -1,8 +1,8 @@
 ﻿using BOnlineStore.Shared.Models;
 
-namespace BOnlineStore.IdentityServer.Models
+namespace BOnlineStore.IdentityServer.Dtos
 {
-    public class Tenant
+    public class TenantDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -10,7 +10,5 @@ namespace BOnlineStore.IdentityServer.Models
         public TaxInformation TaxInformation { get; set; }
         public DateTime CreateDateTime { get; set; }
         public DateTime UpdateDateTime { get; set; }
-        public virtual List<ApplicationUser> Users { get; set; }
-
     }
 }
