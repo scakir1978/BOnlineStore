@@ -8,6 +8,7 @@ using Duende.IdentityServer.Services;
 using BOnlineStore.IdentityServer.Business;
 using System.Reflection;
 using AutoMapper;
+using BOnlineStore.IdentityServer.Business.TenantService;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -15,6 +16,8 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.Services.AddScoped<ITenantService, TenantService>();
+
         builder.Services.AddRazorPages();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>

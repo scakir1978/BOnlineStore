@@ -16,24 +16,36 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
             _mapper = mapper;
         }
 
-        public Task<TenantDto> CreateAsync(TenantCreateDto tenantDto)
+        public async Task<TenantDto> CreateAsync(TenantCreateDto tenantDto)
         {
-            throw new NotImplementedException();
+            var existingTenant = FindByName(tenantDto.Name);
+            if (existingTenant != null)
+                throw new Exception("Girilen şirket sistemde mevcut");
+
+            var tenant = await _context.Tenant.AddAsync(_mapper.Map<Tenant>(tenantDto));
+            await _context.SaveChangesAsync();
+            return _mapper.Map<TenantDto>(tenant);
+
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var existingTenant = FindById(id);
+            if (existingTenant == null)
+                throw new Exception("Silinecek şirket sistemde bulunamadı.");
+
+            var tenant = _context.Tenant.Remove(_mapper.Map<Tenant>(existingTenant));
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<TenantDto> FindByIdAsync(Guid id)
+        public TenantDto FindById(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<TenantDto>(_context.Tenant.Where(x => x.Id == id).FirstOrDefault());
         }
 
-        public Task<TenantDto> FindByNameAsync(string name)
+        public TenantDto FindByName(string name)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<TenantDto>(_context.Tenant.Where(x => x.Name == name).FirstOrDefault());
         }
 
         public IQueryable<TenantDto> Tenants()
@@ -41,9 +53,15 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
             return _mapper.Map<IQueryable<TenantDto>>(_context.Tenant.AsQueryable());
         }
 
-        public Task<TenantDto> UpdateAsync(TenantUpdateDto tenant)
+        public async Task<TenantDto> UpdateAsync(TenantUpdateDto tenantDto)
         {
-            throw new NotImplementedException();
+            var existingTenant = FindById(tenantDto.Id);
+            if (existingTenant == null)
+                throw new Exception("Güncellenecek şirket sistemde bulunamadı");
+
+            var tenant = _context.Tenant.Update(_mapper.Map<Tenant>(tenantDto));
+            await _context.SaveChangesAsync();
+            return _mapper.Map<TenantDto>(tenant);
         }
     }
 }
