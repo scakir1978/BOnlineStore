@@ -8,6 +8,7 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
         IQueryable<TenantDto> Tenants();
         TenantDto FindById(Guid id);
         TenantDto FindByName(string name);
+        bool IsAnyTenantExist();
         Task<TenantDto> CreateAsync(TenantCreateDto tenant);   
         Task<TenantDto> UpdateAsync(TenantUpdateDto tenant);
         Task<bool> DeleteAsync(Guid id);

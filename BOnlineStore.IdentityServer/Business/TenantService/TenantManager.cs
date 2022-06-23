@@ -5,12 +5,12 @@ using BOnlineStore.IdentityServer.Models;
 
 namespace BOnlineStore.IdentityServer.Business.TenantService
 {
-    public class TenantService : ITenantService
+    public class TenantManager : ITenantService
     {
         protected readonly ApplicationDbContext _context;
         protected readonly IMapper _mapper;
 
-        public TenantService(ApplicationDbContext context, IMapper mapper)
+        public TenantManager(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -22,10 +22,11 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
             if (existingTenant != null)
                 throw new Exception("Girilen şirket sistemde mevcut");
 
-            var tenant = await _context.Tenant.AddAsync(_mapper.Map<Tenant>(tenantDto));
-            await _context.SaveChangesAsync();
-            return _mapper.Map<TenantDto>(tenant);
+            var result = await _context.Tenant.AddAsync(_mapper.Map<Tenant>(tenantDto));
 
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<TenantDto>(result.Entity);
         }
 
         public async Task<bool> DeleteAsync(Guid id)
@@ -50,7 +51,12 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
 
         public IQueryable<TenantDto> Tenants()
         {
-            return _mapper.Map<IQueryable<TenantDto>>(_context.Tenant.AsQueryable());
+            return _mapper.ProjectTo<TenantDto>(_context.Tenant.AsQueryable());
+        }
+
+        public bool IsAnyTenantExist()
+        {
+            return _context.Tenant.Any();
         }
 
         public async Task<TenantDto> UpdateAsync(TenantUpdateDto tenantDto)
@@ -59,9 +65,9 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
             if (existingTenant == null)
                 throw new Exception("Güncellenecek şirket sistemde bulunamadı");
 
-            var tenant = _context.Tenant.Update(_mapper.Map<Tenant>(tenantDto));
+            var result = _context.Tenant.Update(_mapper.Map<Tenant>(tenantDto));
             await _context.SaveChangesAsync();
-            return _mapper.Map<TenantDto>(tenant);
+            return _mapper.Map<TenantDto>(result.Entity);
         }
     }
 }

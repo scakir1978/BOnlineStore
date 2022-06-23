@@ -16,7 +16,7 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddScoped<ITenantService, TenantService>();
+        builder.Services.AddScoped<ITenantService, TenantManager>();
 
         builder.Services.AddRazorPages();
 

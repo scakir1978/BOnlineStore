@@ -12,14 +12,14 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         
     }
 
-    public DbSet<Tenant> Tenant;
+    public DbSet<Tenant> Tenant { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Tenant>(entity =>
         {
             entity.HasKey(c => c.Id);
-            entity.HasMany(c => c.Users).WithOne(e => e.Tenant);
+            entity.HasMany(c => c.Users).WithOne(e => e.Tenant).OnDelete(DeleteBehavior.Restrict);            
         });
 
 
