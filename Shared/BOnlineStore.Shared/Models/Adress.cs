@@ -12,7 +12,7 @@ namespace BOnlineStore.Shared.Models
     public class Adress
     {
         [StringLength(256)]
-        public string Adress1 { get; set; }
+        public string? Adress1 { get; set; }
 
         [StringLength(256)]
         public string? Adress2 { get; set; }
