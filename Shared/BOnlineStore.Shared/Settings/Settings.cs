@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BOnlineStore.MongoDb.GenericRepository
+namespace BOnlineStore.Shared
 {
     public class Settings : ISettings
     {
