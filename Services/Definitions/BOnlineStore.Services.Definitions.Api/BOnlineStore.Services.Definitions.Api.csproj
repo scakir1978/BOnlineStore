@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\BOnlineStore.MongoDb.GenericRepository\BOnlineStore.MongoDb.GenericRepository.csproj" />
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.Shared\BOnlineStore.Shared.csproj" />
   </ItemGroup>
 

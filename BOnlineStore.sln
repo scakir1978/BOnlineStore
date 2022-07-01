@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{49
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definitions", "Definitions", "{91FD46FF-BF8E-4781-A5DE-74FB510FE5EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.Services.Definitions.Api", "Services\Definitions\BOnlineStore.Services.Definitions\BOnlineStore.Services.Definitions.Api.csproj", "{B6420ACC-B981-4F96-8CAB-C240D6274B76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.Services.Definitions.Api", "Services\Definitions\BOnlineStore.Services.Definitions.Api\BOnlineStore.Services.Definitions.Api.csproj", "{B6420ACC-B981-4F96-8CAB-C240D6274B76}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C56E1D43-2CBB-414F-8C83-2C55744DBB51}"
 EndProject
