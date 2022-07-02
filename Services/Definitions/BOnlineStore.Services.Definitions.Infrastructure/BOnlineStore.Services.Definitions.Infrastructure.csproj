@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.MongoDb.GenericRepository\BOnlineStore.MongoDb.GenericRepository.csproj" />
+    <ProjectReference Include="..\BOnlineStore.Services.Definitions.Domain\BOnlineStore.Services.Definitions.Domain.csproj" />
   </ItemGroup>
 
 </Project>

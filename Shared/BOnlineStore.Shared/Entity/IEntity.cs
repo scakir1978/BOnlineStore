@@ -11,7 +11,8 @@ namespace BOnlineStore.Shared
     public interface IEntity
     {
         [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        Guid Id { get; set; }
+        [BsonRepresentation(BsonType.String)]
+        Guid Id { get; }
+        
     }
 }
