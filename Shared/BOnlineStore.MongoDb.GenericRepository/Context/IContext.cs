@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BOnlineStore.Shared
+namespace BOnlineStore.MongoDb.GenericRepository
 {
     public interface IContext
     {
