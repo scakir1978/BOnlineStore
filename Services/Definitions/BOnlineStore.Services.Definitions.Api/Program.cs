@@ -1,4 +1,6 @@
 
+using AutoMapper;
+using BOnlineStore.Services.Definitions.Api;
 using BOnlineStore.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -54,6 +56,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.RequireHttpsMetadata = false;
     });
 
+IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 

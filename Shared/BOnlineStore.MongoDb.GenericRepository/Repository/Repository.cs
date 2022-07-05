@@ -51,7 +51,7 @@ namespace BOnlineStore.MongoDb.GenericRepository
         }
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, Expression<Func<TEntity, bool>> predicate)
-        {
+        {   
             return await _entity.FindOneAndReplaceAsync(predicate, entity);
         }
 

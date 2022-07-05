@@ -61,19 +61,26 @@ namespace BOnlineStore.Generic.Service
             return _mapper.Map<TEntityDto>(await _repository.GetByIdAsync(id));            
         }
 
-        public Task<TEntityDto> UpdateAsync(Guid id, TUpdateInput input)
+        public async Task<TEntityDto> UpdateAsync(Guid id, TUpdateInput input)
         {
-            throw new NotImplementedException();
-        }
+            TEntity updateEntity = await _repository.GetByIdAsync(id);
+            if (updateEntity == null)
+            {
+                throw new Exception("Kayıt bulunamadı");
+            }
+            
+            return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(id, _mapper.Map(input, updateEntity)));
+            
+        }        
 
-        public Task<TEntityDto> UpdateAsync(TEntityDto input, Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntityDto> UpdateAsync(TEntityDto input, Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<TEntityDto> UpdateAsync(TEntityDto input, Expression<Func<TEntityDto, bool>> predicate)
-        {
-            throw new NotImplementedException();
+            TEntity updateEntity = await _repository.GetAsync(predicate);
+            if (updateEntity == null)
+            {
+                throw new Exception("Kayıt bulunamadı");
+            }
+            return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(_mapper.Map(input, updateEntity), predicate));
         }
     }
 }
