@@ -1,10 +1,6 @@
-﻿using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BOnlineStore.Shared.Entities;
+using MongoDB.Driver;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BOnlineStore.MongoDb.GenericRepository
 {
@@ -20,6 +16,6 @@ namespace BOnlineStore.MongoDb.GenericRepository
         Task<TEntity> DeleteAsync(TEntity entity);
         Task<TEntity> DeleteAsync(Guid id);
         Task<TEntity> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
-        Task<IClientSessionHandle> StartSession();
+        Task<IClientSessionHandle> StartSession();        
     }
 }

@@ -1,12 +1,6 @@
 ﻿using BOnlineStore.MongoDb.GenericRepository;
 using BOnlineStore.Services.Definitions.Api.Entities;
 using BOnlineStore.Services.Definitions.Api.Repositories;
-using BOnlineStore.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BOnlineStore.Services.Definitions.Infrastructure.Repositories
 {

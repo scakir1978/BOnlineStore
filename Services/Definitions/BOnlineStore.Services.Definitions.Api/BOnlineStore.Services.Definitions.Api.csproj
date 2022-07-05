@@ -16,4 +16,9 @@
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.Shared\BOnlineStore.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+    <Folder Include="Services\ModelGroup\" />
+  </ItemGroup>
+
 </Project>

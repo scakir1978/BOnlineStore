@@ -1,10 +1,4 @@
-﻿using BOnlineStore.MongoDb.GenericRepository;
-using BOnlineStore.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BOnlineStore.Shared.Entities;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
