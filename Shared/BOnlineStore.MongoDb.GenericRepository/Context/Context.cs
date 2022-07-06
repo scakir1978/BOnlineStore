@@ -7,7 +7,7 @@ namespace BOnlineStore.MongoDb.GenericRepository
         public IMongoDatabase Database { get; set; }
         public MongoClient Client { get; set; }
 
-        public Context(ISettings settings)
+        public Context(IDatabaseSettings settings)
         {
             Client = new MongoClient(settings.ConnectionString);
             Database = Client.GetDatabase(settings.DatabaseName);

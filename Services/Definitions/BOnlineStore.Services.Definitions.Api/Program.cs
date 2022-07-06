@@ -1,9 +1,13 @@
 
 using AutoMapper;
+using BOnlineStore.MongoDb.GenericRepository;
 using BOnlineStore.Services.Definitions.Api;
+using BOnlineStore.Services.Definitions.Api.Injections;
+using BOnlineStore.Services.Definitions.Api.Repositories;
 using BOnlineStore.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
@@ -59,6 +63,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 
+builder.Services.AddMongoDbConfigurationAndInjections(builder.Configuration);
+builder.Services.AddRepositoryInjections();
+builder.Services.AddServiceInjections();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -84,8 +92,6 @@ app.UseEndpoints(endpoints =>
 {    
     endpoints.MapControllers();
 });
-
-
 
 app.Run();
 

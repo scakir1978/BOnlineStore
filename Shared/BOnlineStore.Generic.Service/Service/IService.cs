@@ -16,7 +16,7 @@ namespace BOnlineStore.Generic.Service
         Task<TEntityDto> AddAsync(TCreateInput input);
         Task<bool> AddRangeAsync(IEnumerable<TCreateInput> inputs);
         Task<TEntityDto> UpdateAsync(Guid id, TUpdateInput input);
-        Task<TEntityDto> UpdateAsync(TEntityDto input, Expression<Func<TEntity, bool>> predicate);
+        Task<TEntityDto> UpdateAsync(TUpdateInput input, Expression<Func<TEntity, bool>> predicate);
         Task<TEntityDto> DeleteAsync(TEntityDto input);
         Task<TEntityDto> DeleteAsync(Guid id);
         Task<TEntityDto> DeleteAsync(Expression<Func<TEntity, bool>> predicate);

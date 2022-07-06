@@ -1,33 +1,56 @@
 ﻿using AutoMapper;
 using BOnlineStore.MongoDb.GenericRepository;
 using BOnlineStore.Shared.Entities;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static BOnlineStore.Shared.Enums;
 
 namespace BOnlineStore.Generic.Service
 {
     public abstract class Service<TEntity, TEntityDto, TCreateInput, TUpdateInput> : IService<TEntity, TEntityDto, TCreateInput, TUpdateInput> where TEntity : IEntity
     {
         private readonly IMapper _mapper;
-        private readonly IRepository<TEntity> _repository;
+        private readonly IRepository<TEntity> _repository;        
 
         public Service(IRepository<TEntity> repository, IMapper mapper)
         {
             _repository = repository;
-            _mapper = mapper;
+            _mapper = mapper;            
         }
 
         public async Task<TEntityDto> AddAsync(TCreateInput input)
         {
+            #region Validation Control
+            var validationResult = await ServiceValidator(ValidationTypeEnum.Create)
+                                        .ValidateAsync(new ValidationContext<TCreateInput>(input));
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+            #endregion
+
             return _mapper.Map<TEntityDto>(await _repository.AddAsync(_mapper.Map<TEntity>(input)));            
         }
 
         public async Task<bool> AddRangeAsync(IEnumerable<TCreateInput> inputs)
         {
+            #region Validation Control
+            foreach (var input in inputs)
+            {
+                var validationResult = await ServiceValidator(ValidationTypeEnum.Create).ValidateAsync(new ValidationContext<TCreateInput>(input));
+                if (!validationResult.IsValid)
+                {
+                    throw new ValidationException(validationResult.Errors);
+                }
+            }
+            #endregion
+
             return await _repository.AddRangeAsync(_mapper.Map<List<TEntity>>(inputs));            
         }
 
@@ -63,24 +86,52 @@ namespace BOnlineStore.Generic.Service
 
         public async Task<TEntityDto> UpdateAsync(Guid id, TUpdateInput input)
         {
+            #region Validation Control
+            var validationResult = await ServiceValidator(ValidationTypeEnum.Update)
+                                        .ValidateAsync(new ValidationContext<TUpdateInput>(input));
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+            #endregion
+
+            #region Record Control            
             TEntity updateEntity = await _repository.GetByIdAsync(id);
             if (updateEntity == null)
             {
                 throw new Exception("Kayıt bulunamadı");
             }
-            
+            #endregion
+
             return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(id, _mapper.Map(input, updateEntity)));
             
         }        
 
-        public async Task<TEntityDto> UpdateAsync(TEntityDto input, Expression<Func<TEntity, bool>> predicate)
+        public async Task<TEntityDto> UpdateAsync(TUpdateInput input, Expression<Func<TEntity, bool>> predicate)
         {
+            #region Validation Control            
+            var validationResult = await ServiceValidator(ValidationTypeEnum.Update)
+                                        .ValidateAsync(new ValidationContext<TUpdateInput>(input));
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+            #endregion
+
+            #region Record Control            
             TEntity updateEntity = await _repository.GetAsync(predicate);
             if (updateEntity == null)
             {
                 throw new Exception("Kayıt bulunamadı");
             }
+            #endregion
+
             return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(_mapper.Map(input, updateEntity), predicate));
         }
+
+        public abstract IValidator ServiceValidator(ValidationTypeEnum validationType);
+        
     }
 }

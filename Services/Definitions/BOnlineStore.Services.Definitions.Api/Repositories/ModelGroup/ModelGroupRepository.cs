@@ -2,7 +2,7 @@
 using BOnlineStore.Services.Definitions.Api.Entities;
 using BOnlineStore.Services.Definitions.Api.Repositories;
 
-namespace BOnlineStore.Services.Definitions.Infrastructure.Repositories
+namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class ModelGroupRepository : Repository<ModelGroup>, IModelGroupRepository
     {
