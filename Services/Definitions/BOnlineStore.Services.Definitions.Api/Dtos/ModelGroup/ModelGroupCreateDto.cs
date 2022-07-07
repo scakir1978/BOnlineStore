@@ -7,8 +7,9 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         public string Code { get; set; }
         public string Name { get; set; }        
 
-        public ModelGroupCreateDto(Guid id, string code, string name)
+        public ModelGroupCreateDto(Guid tenantId, Guid id, string code, string name)
         {
+            TenantId = tenantId;
             Id = id;
             Code = code;
             Name = name;
