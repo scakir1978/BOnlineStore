@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BOnlineStore.Generic.Service;
-using BOnlineStore.MongoDb.GenericRepository;
 using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Entities;
 using BOnlineStore.Services.Definitions.Api.Repositories;

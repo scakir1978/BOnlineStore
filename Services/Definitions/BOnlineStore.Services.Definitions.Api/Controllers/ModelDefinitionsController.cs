@@ -1,6 +1,5 @@
 ﻿using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BOnlineStore.Services.Definitions.Api.Controllers
