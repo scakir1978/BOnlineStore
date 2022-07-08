@@ -1,13 +1,10 @@
 
 using AutoMapper;
-using BOnlineStore.MongoDb.GenericRepository;
 using BOnlineStore.Services.Definitions.Api;
 using BOnlineStore.Services.Definitions.Api.Injections;
-using BOnlineStore.Services.Definitions.Api.Repositories;
 using BOnlineStore.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
