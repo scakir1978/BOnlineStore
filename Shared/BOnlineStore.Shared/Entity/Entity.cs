@@ -18,5 +18,10 @@ namespace BOnlineStore.Shared.Entities
             Id = id;
             TenantId = tenantId;
         }
+
+        public void SetTenant(Guid tenantId)
+        {
+            TenantId = tenantId;
+        }
     }
 }

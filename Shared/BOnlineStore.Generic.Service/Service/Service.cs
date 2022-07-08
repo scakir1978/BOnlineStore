@@ -23,7 +23,7 @@ namespace BOnlineStore.Generic.Service
             _mapper = mapper;            
         }
 
-        public async Task<TEntityDto> AddAsync(TCreateInput input)
+        public virtual async Task<TEntityDto> AddAsync(TCreateInput input)
         {
             #region Validation Control
             var validationResult = await ServiceValidator(ValidationTypeEnum.Create)
@@ -35,10 +35,10 @@ namespace BOnlineStore.Generic.Service
             }
             #endregion
 
-            return _mapper.Map<TEntityDto>(await _repository.AddAsync(_mapper.Map<TEntity>(input)));            
+            return _mapper.Map<TEntityDto>(_repository.AddAsync(_mapper.Map<TEntity>(input)));            
         }
 
-        public async Task<bool> AddRangeAsync(IEnumerable<TCreateInput> inputs)
+        public virtual async Task<bool> AddRangeAsync(IEnumerable<TCreateInput> inputs)
         {
             #region Validation Control
             foreach (var input in inputs)
@@ -54,37 +54,27 @@ namespace BOnlineStore.Generic.Service
             return await _repository.AddRangeAsync(_mapper.Map<List<TEntity>>(inputs));            
         }
 
-        public async Task<TEntityDto> DeleteAsync(TEntityDto input)
+        public virtual async Task<TEntityDto> DeleteAsync(TEntityDto input)
         {
             return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(_mapper.Map<TEntity>(input)));            
         }
 
-        public async Task<TEntityDto> DeleteAsync(Guid id)
+        public virtual async Task<TEntityDto> DeleteAsync(Guid id)
         {
             return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(id));
         }
 
-        public async Task<TEntityDto> DeleteAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(predicate));
-        }
-
-        public IQueryable<TEntityDto> Get(Expression<Func<TEntity, bool>>? predicate = null)
+        public virtual IQueryable<TEntityDto> Get(Expression<Func<TEntity, bool>>? predicate = null)
         {
             return _mapper.ProjectTo<TEntityDto>(_repository.Get(predicate));            
         }
 
-        public async Task<TEntityDto> GetAsync(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _mapper.Map<TEntityDto>(await _repository.GetAsync(predicate));            
-        }
-
-        public async Task<TEntityDto> GetByIdAsync(Guid id)
+        public virtual async Task<TEntityDto> GetByIdAsync(Guid id)
         {
             return _mapper.Map<TEntityDto>(await _repository.GetByIdAsync(id));            
         }
 
-        public async Task<TEntityDto> UpdateAsync(Guid id, TUpdateInput input)
+        public virtual async Task<TEntityDto> UpdateAsync(Guid id, TUpdateInput input)
         {
             #region Validation Control
             var validationResult = await ServiceValidator(ValidationTypeEnum.Update)
@@ -108,7 +98,7 @@ namespace BOnlineStore.Generic.Service
             
         }        
 
-        public async Task<TEntityDto> UpdateAsync(TUpdateInput input, Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<TEntityDto> UpdateAsync(TUpdateInput input, Expression<Func<TEntity, bool>> predicate)
         {
             #region Validation Control            
             var validationResult = await ServiceValidator(ValidationTypeEnum.Update)
@@ -121,7 +111,7 @@ namespace BOnlineStore.Generic.Service
             #endregion
 
             #region Record Control            
-            TEntity updateEntity = await _repository.GetAsync(predicate);
+            TEntity updateEntity = _repository.Get(predicate).First();
             if (updateEntity == null)
             {
                 throw new Exception("Kayıt bulunamadı");

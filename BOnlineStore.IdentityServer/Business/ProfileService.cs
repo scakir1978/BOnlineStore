@@ -25,7 +25,7 @@ namespace BOnlineStore.IdentityServer.Business
 
 		    var claims = new List<Claim>
 		    {
-			    new Claim(BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsTenantId, user.TenantId.ToString()),			    
+			    new Claim(IdentityServerConstants.ApiScopesDefinitionsTenantId, user.TenantId.ToString()),			    
 		    };
 
 		    context.IssuedClaims.AddRange(claims);

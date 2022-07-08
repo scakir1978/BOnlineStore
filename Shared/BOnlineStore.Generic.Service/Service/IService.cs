@@ -10,8 +10,7 @@ namespace BOnlineStore.Generic.Service
 {
     public interface IService<TEntity, TEntityDto, in TCreateInput, in TUpdateInput> where TEntity : IEntity   
     {
-        IQueryable<TEntityDto> Get(Expression<Func<TEntity, bool>>? predicate = null);
-        Task<TEntityDto> GetAsync(Expression<Func<TEntity, bool>> predicate);
+        IQueryable<TEntityDto> Get(Expression<Func<TEntity, bool>>? predicate = null);        
         Task<TEntityDto> GetByIdAsync(Guid id);
         Task<TEntityDto> AddAsync(TCreateInput input);
         Task<bool> AddRangeAsync(IEnumerable<TCreateInput> inputs);
@@ -19,7 +18,7 @@ namespace BOnlineStore.Generic.Service
         Task<TEntityDto> UpdateAsync(TUpdateInput input, Expression<Func<TEntity, bool>> predicate);
         Task<TEntityDto> DeleteAsync(TEntityDto input);
         Task<TEntityDto> DeleteAsync(Guid id);
-        Task<TEntityDto> DeleteAsync(Expression<Func<TEntity, bool>> predicate);
+        
         
     }
 }

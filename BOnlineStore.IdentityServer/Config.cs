@@ -8,8 +8,8 @@ public static class Config
 {
     public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
     {
-        new ApiResource(BOnlineStoreIdentityServerConstants.ApiResourcesDefinitions){Scopes={ BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsFullPermission}},        
-        new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
+        new ApiResource(Shared.IdentityServerConstants.ApiResourcesDefinitions){ Scopes={ Shared.IdentityServerConstants.ApiScopesDefinitionsFullPermission}},        
+        new ApiResource(Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName)
     };
 
     public static IEnumerable<IdentityResource> IdentityResources =>
@@ -23,8 +23,8 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope(BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsFullPermission),
-            new ApiScope(IdentityServerConstants.LocalApi.ScopeName),
+            new ApiScope(Shared.IdentityServerConstants.ApiScopesDefinitionsFullPermission),
+            new ApiScope(Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName),
         };
 
     public static IEnumerable<Client> Clients =>
@@ -43,11 +43,11 @@ public static class Config
                 AllowedScopes =
                 {
                     //BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsTenantId, 
-                    BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsFullPermission, 
-                    IdentityServerConstants.LocalApi.ScopeName,
-                    IdentityServerConstants.StandardScopes.OpenId, 
-                    IdentityServerConstants.StandardScopes.Profile,
-                    IdentityServerConstants.StandardScopes.OfflineAccess
+                    Shared.IdentityServerConstants.ApiScopesDefinitionsFullPermission,
+                    Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName,
+                    Duende.IdentityServer.IdentityServerConstants.StandardScopes.OpenId,
+                    Duende.IdentityServer.IdentityServerConstants.StandardScopes.Profile,
+                    Duende.IdentityServer.IdentityServerConstants.StandardScopes.OfflineAccess
                 },
                 AllowOfflineAccess = true,
                 AccessTokenLifetime = ((60 * 60) * 6), // 6 saat

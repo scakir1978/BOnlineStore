@@ -56,7 +56,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = builder.Configuration[AppSettingsKeysConstants.IdentityServerUrl];
-        options.Audience = BOnlineStoreIdentityServerConstants.ApiResourcesDefinitions;
+        options.Audience = IdentityServerConstants.ApiResourcesDefinitions;
         options.RequireHttpsMetadata = false;
     });
 

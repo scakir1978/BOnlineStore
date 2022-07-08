@@ -12,6 +12,8 @@ namespace BOnlineStore.Shared.Entities
         [BsonId]
         [BsonRepresentation(BsonType.String)]
         Guid Id { get; }
+
+        void SetTenant(Guid tenantId);
         
     }
 }

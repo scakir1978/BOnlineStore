@@ -6,7 +6,8 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class ModelGroupRepository : Repository<ModelGroup>, IModelGroupRepository
     {
-        public ModelGroupRepository(IContext context) : base(context)
+        public ModelGroupRepository(IContext context, IHttpContextAccessor httpContextAccessor)
+            : base(context, httpContextAccessor)
         {}
     }
 }

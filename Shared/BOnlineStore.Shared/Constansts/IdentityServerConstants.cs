@@ -1,6 +1,6 @@
 ﻿namespace BOnlineStore.Shared
 {
-    public class BOnlineStoreIdentityServerConstants
+    public class IdentityServerConstants
     {
         #region Api Resources Constants
 
