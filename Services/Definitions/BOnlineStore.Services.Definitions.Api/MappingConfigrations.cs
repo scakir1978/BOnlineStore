@@ -10,9 +10,9 @@ namespace BOnlineStore.Services.Definitions.Api
         {
             var mappingConfig = new MapperConfiguration(config =>
             {
-                config.CreateMap<ModelGroup, ModelGroupDto>().ReverseMap();
-                config.CreateMap<ModelGroup, ModelGroupCreateDto>().ReverseMap();
-                config.CreateMap<ModelGroup, ModelGroupUpdateDto>().ReverseMap();
+                config.CreateMap<ModelGroup, ModelGroupDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+                config.CreateMap<ModelGroup, ModelGroupCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation(); ;
+                config.CreateMap<ModelGroup, ModelGroupUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation(); ;
             });
 
             return mappingConfig;

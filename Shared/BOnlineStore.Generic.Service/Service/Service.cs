@@ -35,7 +35,13 @@ namespace BOnlineStore.Generic.Service
             }
             #endregion
 
-            return _mapper.Map<TEntityDto>(_repository.AddAsync(_mapper.Map<TEntity>(input)));            
+            var entity = _mapper.Map<TEntity>(input);
+
+            var entityAdded = await _repository.AddAsync(entity);
+
+            var entityDto = _mapper.Map<TEntityDto>(entityAdded);
+
+            return entityDto;
         }
 
         public virtual async Task<bool> AddRangeAsync(IEnumerable<TCreateInput> inputs)
@@ -64,9 +70,10 @@ namespace BOnlineStore.Generic.Service
             return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(id));
         }
 
-        public virtual IQueryable<TEntityDto> Get(Expression<Func<TEntity, bool>>? predicate = null)
+        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>>? predicate = null)
         {
-            return _mapper.ProjectTo<TEntityDto>(_repository.Get(predicate));            
+            //return _mapper.ProjectTo<TEntity>(_repository.Get(predicate));            
+            return _repository.Get(predicate);
         }
 
         public virtual async Task<TEntityDto> GetByIdAsync(Guid id)

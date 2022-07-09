@@ -6,17 +6,17 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]    
-    public class ModelDefinitionsController : ControllerBase
+    public class ModelGroupsController : ControllerBase
     {
         private protected IModelGroupService _modelGroupService;
 
-        public ModelDefinitionsController(IModelGroupService modelGroupService)
+        public ModelGroupsController(IModelGroupService modelGroupService)
         {
             _modelGroupService = modelGroupService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             //return Ok(User.Claims.FirstOrDefault(x => x.Type == "tenantId")?.Value ?? "Tenant id bulunamadı.");
             return Ok(_modelGroupService.Get());

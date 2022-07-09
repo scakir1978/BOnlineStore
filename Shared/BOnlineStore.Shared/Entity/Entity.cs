@@ -5,13 +5,19 @@ namespace BOnlineStore.Shared.Entities
 {
     public abstract class Entity : IEntity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        public Guid TenantId { get; private set; }
 
         [BsonId]
         [BsonRepresentation(BsonType.String)]
         public Guid Id { get; private set ; }
+
+
+        [BsonRepresentation(BsonType.String)]
+        public Guid TenantId { get; private set; }
+
+        public Entity()
+        {
+            Id = Guid.NewGuid();
+        }
 
         public Entity(Guid id, Guid tenantId)
         {

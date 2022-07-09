@@ -7,11 +7,10 @@ namespace BOnlineStore.Shared.Entities
     {
         [BsonId]
         [BsonRepresentation(BsonType.String)]
-        Guid TenantId { get; }
-
-        [BsonId]
-        [BsonRepresentation(BsonType.String)]
         Guid Id { get; }
+
+        [BsonRepresentation(BsonType.String)]
+        Guid TenantId { get; }
 
         void SetTenant(Guid tenantId);
         

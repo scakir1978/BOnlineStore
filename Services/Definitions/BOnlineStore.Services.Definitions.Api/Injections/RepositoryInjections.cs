@@ -8,6 +8,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
     {
         public static IServiceCollection AddRepositoryInjections(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddScoped<IModelGroupRepository, ModelGroupRepository>();           
 
             return services;
