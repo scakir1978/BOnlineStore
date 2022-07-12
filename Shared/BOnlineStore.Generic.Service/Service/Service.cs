@@ -33,6 +33,11 @@ namespace BOnlineStore.Generic.Service
         }
         public virtual async Task<TEntityDto> GetByIdAsync(Guid id)
         {
+            var entity = await _repository.GetByIdAsync(id);
+
+            if (entity == null)
+                throw new Exception("Kayıt Bulunamadı");
+
             return _mapper.Map<TEntityDto>(await _repository.GetByIdAsync(id));
         }
         public virtual async Task<TEntityDto> AddAsync(TCreateInput input)
