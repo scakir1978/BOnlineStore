@@ -19,7 +19,7 @@ namespace BOnlineStore.MongoDb.GenericRepository
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>>? predicate = null)
+        public virtual IQueryable<TEntity> Load(Expression<Func<TEntity, bool>>? predicate = null)
         {
             var query = _entity.AsQueryable().Where(x => x.TenantId == GetTenantId());
 
@@ -28,9 +28,14 @@ namespace BOnlineStore.MongoDb.GenericRepository
                 : query.Where(predicate);
         }
 
-        public virtual Task<TEntity> GetByIdAsync(Guid id)
+        public virtual async Task<List<TEntity>> GetAsync()
         {
-            return _entity.Find(x => x.TenantId == GetTenantId() && x.Id == id).FirstOrDefaultAsync();
+            return await _entity.Find(x=>x.TenantId == GetTenantId()).ToListAsync();
+        }
+
+        public virtual async Task<TEntity> GetByIdAsync(Guid id)
+        {
+            return await _entity.Find(x => x.TenantId == GetTenantId() && x.Id == id).FirstOrDefaultAsync();
         }
 
         public virtual async Task<TEntity> AddAsync(TEntity entity)
@@ -54,15 +59,17 @@ namespace BOnlineStore.MongoDb.GenericRepository
         }
 
         public virtual async Task<TEntity> UpdateAsync(Guid id, TEntity entity)
-        {
+        {            
+            var options = new FindOneAndReplaceOptions<TEntity> { ReturnDocument = ReturnDocument.After };
             entity.SetTenant(GetTenantId());
-            return await _entity.FindOneAndReplaceAsync(x => x.TenantId == GetTenantId() && x.Id == id, entity);
+            return await _entity.FindOneAndReplaceAsync<TEntity>(x => x.TenantId == GetTenantId() && x.Id == id, entity, options );
         }
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, Expression<Func<TEntity, bool>> predicate)
         {
+            var options = new FindOneAndReplaceOptions<TEntity> { ReturnDocument = ReturnDocument.After };
             entity.SetTenant(GetTenantId());
-            return await _entity.FindOneAndReplaceAsync(predicate, entity);
+            return await _entity.FindOneAndReplaceAsync(predicate, entity, options);
         }
 
         public virtual async Task<TEntity> DeleteAsync(TEntity entity)

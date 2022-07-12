@@ -6,7 +6,8 @@ namespace BOnlineStore.MongoDb.GenericRepository
 {
     public interface IRepository<TEntity> where TEntity : IEntity
     {
-        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>>? predicate = null);        
+        IQueryable<TEntity> Load(Expression<Func<TEntity, bool>>? predicate = null);
+        Task<List<TEntity>> GetAsync();        
         Task<TEntity> GetByIdAsync(Guid id);
         Task<TEntity> AddAsync(TEntity entity);
         Task<bool> AddRangeAsync(IEnumerable<TEntity> entities);

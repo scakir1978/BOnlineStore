@@ -1,11 +1,12 @@
 ﻿using BOnlineStore.Shared.Entity;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     public class ModelGroupDto : EntityDto
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string Code { get; private set; }
+        public string Name { get; private set; }
 
         public ModelGroupDto(Guid id, string code, string name)
         {            
