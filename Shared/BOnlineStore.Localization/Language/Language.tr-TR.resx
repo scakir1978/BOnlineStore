@@ -117,10 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ModelGroupCodeNotEmpty" xml:space="preserve">
+    <value>Model grup kodu boş olamaz.</value>
+  </data>
+  <data name="ModelGroupNameNotEmpty" xml:space="preserve">
+    <value>Model grup adı boş olamaz.</value>
+  </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>Kayıt bulunamadı.</value>
-  </data>
-  <data name="TranslateExample" xml:space="preserve">
-    <value>Çeviri başarılı!</value>
   </data>
 </root>
