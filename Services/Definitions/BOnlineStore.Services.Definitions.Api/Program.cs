@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -93,6 +94,23 @@ builder.Services.AddMongoDbConfigurationAndInjections(builder.Configuration);
 builder.Services.AddRepositoryInjections();
 builder.Services.AddServiceInjections();
 
+builder.Services.AddLocalization();
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new("tr-TR");
+
+    CultureInfo[] cultures = new CultureInfo[]
+    {
+        new("tr-TR"),
+        new("en-US"),
+        new("fr-FR")
+    };
+
+    options.SupportedCultures = cultures;
+    options.SupportedUICultures = cultures;
+});
+
 var app = builder.Build();
 
 Log.Information("app build complete");
@@ -104,10 +122,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseExceptionHandler(options =>
+app.UseRequestLocalization();
+
+/*app.UseExceptionHandler(options =>
 {
     
-});
+});*/
 
 app.UseHttpsRedirection();
 

@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.Generic.Service\BOnlineStore.Generic.Service.csproj" />
+    <ProjectReference Include="..\..\..\Shared\BOnlineStore.Localization\BOnlineStore.Localization.csproj" />
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.MongoDb.GenericRepository\BOnlineStore.MongoDb.GenericRepository.csproj" />
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.Shared\BOnlineStore.Shared.csproj" />
   </ItemGroup>

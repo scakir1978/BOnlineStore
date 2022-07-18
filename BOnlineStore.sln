@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.MongoDb.Generi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.Generic.Service", "Shared\BOnlineStore.Generic.Service\BOnlineStore.Generic.Service.csproj", "{50D1EA10-403E-4DE0-A2A5-D27F649F5A15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOnlineStore.Localization", "Shared\BOnlineStore.Localization\BOnlineStore.Localization.csproj", "{0C0DBDDC-9AFD-470F-A18B-F69978712CB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{50D1EA10-403E-4DE0-A2A5-D27F649F5A15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50D1EA10-403E-4DE0-A2A5-D27F649F5A15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50D1EA10-403E-4DE0-A2A5-D27F649F5A15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C0DBDDC-9AFD-470F-A18B-F69978712CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C0DBDDC-9AFD-470F-A18B-F69978712CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C0DBDDC-9AFD-470F-A18B-F69978712CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C0DBDDC-9AFD-470F-A18B-F69978712CB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{82E87B30-2766-4806-886F-66626088D292} = {C56E1D43-2CBB-414F-8C83-2C55744DBB51}
 		{DD7E6D7C-C8EE-4521-8639-02691771AEC7} = {C56E1D43-2CBB-414F-8C83-2C55744DBB51}
 		{50D1EA10-403E-4DE0-A2A5-D27F649F5A15} = {C56E1D43-2CBB-414F-8C83-2C55744DBB51}
+		{0C0DBDDC-9AFD-470F-A18B-F69978712CB4} = {C56E1D43-2CBB-414F-8C83-2C55744DBB51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A12FA703-13AF-486D-90AA-45AC95F5C81E}

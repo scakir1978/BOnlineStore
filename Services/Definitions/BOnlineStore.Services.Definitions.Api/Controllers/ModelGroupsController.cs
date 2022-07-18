@@ -1,7 +1,9 @@
-﻿using BOnlineStore.Services.Definitions.Api.Dtos;
+﻿using BOnlineStore.Localization;
+using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Services;
 using BOnlineStore.Shared.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Controllers
 {
@@ -11,11 +13,13 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     {
         private protected IModelGroupService _modelGroupService;
         private protected ILogger<ModelGroupsController> _logger;
+        private readonly IStringLocalizer<Language> _localizer;
 
-        public ModelGroupsController(IModelGroupService modelGroupService, ILogger<ModelGroupsController> logger)
+        public ModelGroupsController(IModelGroupService modelGroupService, ILogger<ModelGroupsController> logger, IStringLocalizer<Language> sharedLocalizer)
         {
             _modelGroupService = modelGroupService;
             _logger = logger;
+            _localizer = sharedLocalizer;
         }
 
         [HttpGet("Load")]
@@ -27,6 +31,8 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
+            var loc = _localizer["TranslateExample"];
+            _logger.LogInformation(loc);
             return CreateSuccessActionResultInstance(await _modelGroupService.GetAsync());            
         }
 
