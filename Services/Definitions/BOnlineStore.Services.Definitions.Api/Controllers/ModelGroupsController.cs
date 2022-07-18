@@ -10,10 +10,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     public class ModelGroupsController : ControllerShared
     {
         private protected IModelGroupService _modelGroupService;
+        private protected ILogger<ModelGroupsController> _logger;
 
-        public ModelGroupsController(IModelGroupService modelGroupService)
+        public ModelGroupsController(IModelGroupService modelGroupService, ILogger<ModelGroupsController> logger)
         {
             _modelGroupService = modelGroupService;
+            _logger = logger;
         }
 
         [HttpGet("Load")]

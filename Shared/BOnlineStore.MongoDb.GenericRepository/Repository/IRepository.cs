@@ -1,5 +1,6 @@
 ﻿using BOnlineStore.Shared.Entities;
 using MongoDB.Driver;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace BOnlineStore.MongoDb.GenericRepository

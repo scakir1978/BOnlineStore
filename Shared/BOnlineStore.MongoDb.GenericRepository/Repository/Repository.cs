@@ -89,7 +89,7 @@ namespace BOnlineStore.MongoDb.GenericRepository
 
         private Guid GetTenantId()
         {
-            var tenantId = _httpContextAccessor.HttpContext.User.Claims.FirstOrDefault(x => x.Type == GlobalConstants.tenantId)?.Value ?? "";
+            var tenantId = _httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == GlobalConstants.tenantId)?.Value ?? "";
             return new Guid(tenantId);
         }
     }

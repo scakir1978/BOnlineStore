@@ -6,20 +6,46 @@ using BOnlineStore.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var logger = new LoggerConfiguration()   
+  .ReadFrom.Configuration(builder.Configuration)
+  /*.Enrich.FromLogContext()
+  .Enrich.WithMachineName()
+  .Enrich.WithEnvironmentName()
+  .Enrich.WithThreadName()
+  .Enrich.WithThreadId()*/
+  .CreateLogger();
+
+Log.Logger = logger; 
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
+
+builder.Host.UseSerilog((context, configuration) => {
+
+    configuration.ReadFrom.Configuration(context.Configuration);
+                 /*.Enrich.FromLogContext()
+                 .Enrich.WithMachineName()
+                 .Enrich.WithEnvironmentName()
+                 .Enrich.WithThreadName()
+                 .Enrich.WithThreadId();*/
+});
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new AuthorizeFilter());
+
 }).AddJsonOptions(options => {
 
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 
 });
-
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -69,12 +95,19 @@ builder.Services.AddServiceInjections();
 
 var app = builder.Build();
 
+Log.Information("app build complete");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler(options =>
+{
+    
+});
 
 app.UseHttpsRedirection();
 
@@ -93,5 +126,9 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
+app.UseSerilogRequestLogging();
+
 app.Run();
+
+Log.CloseAndFlush();
 
