@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FileNotFound" xml:space="preserve">
+    <value>The {0} file could not be found.</value>
+    <comment>İsimli dosya bulunamadı</comment>
+  </data>
+  <data name="HandledException" xml:space="preserve">
+    <value>An error occurred during operation. See logs/log details for more information.</value>
+    <comment>İşlem sırasında hata oluştu. Daha fazla bilgi için loglara/log detaylarına bakınız.</comment>
+  </data>
   <data name="ModelGroupCodeNotEmpty" xml:space="preserve">
     <value>Model group code not empty.</value>
     <comment>Model grup kodu boş olamaz.</comment>
@@ -128,5 +136,13 @@
   <data name="RecordNotFound" xml:space="preserve">
     <value>Record not found.</value>
     <comment>Kayıt bulunamadı.</comment>
+  </data>
+  <data name="UnhandledException" xml:space="preserve">
+    <value>Unhandled exeption occurred.</value>
+    <comment>İşlenmemiş bir hata oluştu.</comment>
+  </data>
+  <data name="ValidationErrors" xml:space="preserve">
+    <value>Validation errors occurred.</value>
+    <comment>Validasyon hataları oluştu.</comment>
   </data>
 </root>

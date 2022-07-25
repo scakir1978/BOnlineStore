@@ -1,10 +1,14 @@
 
 using AutoMapper;
+using BOnlineStore.Localization;
+using BOnlineStore.Localization.Constants;
 using BOnlineStore.Services.Definitions.Api;
 using BOnlineStore.Services.Definitions.Api.Injections;
 using BOnlineStore.Shared;
+using BOnlineStore.Shared.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Localization;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Globalization;
@@ -14,11 +18,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration()   
   .ReadFrom.Configuration(builder.Configuration)
-  /*.Enrich.FromLogContext()
-  .Enrich.WithMachineName()
-  .Enrich.WithEnvironmentName()
-  .Enrich.WithThreadName()
-  .Enrich.WithThreadId()*/
   .CreateLogger();
 
 Log.Logger = logger; 
@@ -26,15 +25,9 @@ Log.Logger = logger;
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
-
 builder.Host.UseSerilog((context, configuration) => {
 
-    configuration.ReadFrom.Configuration(context.Configuration);
-                 /*.Enrich.FromLogContext()
-                 .Enrich.WithMachineName()
-                 .Enrich.WithEnvironmentName()
-                 .Enrich.WithThreadName()
-                 .Enrich.WithThreadId();*/
+    configuration.ReadFrom.Configuration(context.Configuration);                 
 });
 
 builder.Services.AddControllers(options =>
@@ -47,6 +40,24 @@ builder.Services.AddControllers(options =>
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
 
 });
+
+builder.Services.AddLocalization();
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new("tr-TR");
+
+    CultureInfo[] cultures = new CultureInfo[]
+    {
+        new("tr-TR"),
+        new("en-US"),
+        new("fr-FR")
+    };
+
+    options.SupportedCultures = cultures;
+    options.SupportedUICultures = cultures;
+});
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -94,26 +105,7 @@ builder.Services.AddMongoDbConfigurationAndInjections(builder.Configuration);
 builder.Services.AddRepositoryInjections();
 builder.Services.AddServiceInjections();
 
-builder.Services.AddLocalization();
-
-builder.Services.Configure<RequestLocalizationOptions>(options =>
-{
-    options.DefaultRequestCulture = new("tr-TR");
-
-    CultureInfo[] cultures = new CultureInfo[]
-    {
-        new("tr-TR"),
-        new("en-US"),
-        new("fr-FR")
-    };
-
-    options.SupportedCultures = cultures;
-    options.SupportedUICultures = cultures;
-});
-
 var app = builder.Build();
-
-Log.Information("app build complete");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -124,10 +116,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseRequestLocalization();
 
-/*app.UseExceptionHandler(options =>
-{
-    
-});*/
+app.ConfigureExeptionHandler();
 
 app.UseHttpsRedirection();
 
@@ -146,7 +135,14 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-app.UseSerilogRequestLogging();
+app.UseSerilogRequestLogging(options =>
+{
+    using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+    {
+        var _stringLocalizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<Language>>();
+        options.MessageTemplate = _stringLocalizer[SharedKeys.HandledException];
+    }
+});
 
 app.Run();
 

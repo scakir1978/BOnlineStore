@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace BOnlineStore.Shared.Dtos
@@ -32,6 +33,11 @@ namespace BOnlineStore.Shared.Dtos
         public static Response<T> Fail(Error error, HttpStatusCode statusCode)
         {
             return new Response<T> { Errors = new List<Error>() { error }, StatusCode = statusCode, IsSucceed = false };
+        }
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this);            
         }
 
 
