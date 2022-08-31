@@ -12,6 +12,7 @@ namespace BOnlineStore.Localization.Constants
         public const string ValidationErrors = "ValidationErrors";
         public const string UnhandledException = "UnhandledException";
         public const string HandledException = "HandledException";
-        public const string SwaggerVersion = "v1";
+        public const string DefinitionServiceSwaggerTitle = "DefinitionServiceSwaggerTitle";
+        public const string SwaggerSecurityDescription = "SwaggerSecurityDescription";
     }
 }

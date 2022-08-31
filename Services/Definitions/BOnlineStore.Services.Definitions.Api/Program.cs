@@ -5,6 +5,7 @@ using BOnlineStore.Localization.Constants;
 using BOnlineStore.Services.Definitions.Api;
 using BOnlineStore.Services.Definitions.Api.Injections;
 using BOnlineStore.Shared;
+using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -45,13 +46,12 @@ builder.Services.AddLocalization();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    options.DefaultRequestCulture = new("tr-TR");
+    options.DefaultRequestCulture = new(GlobalConstants.turkish);
 
     CultureInfo[] cultures = new CultureInfo[]
     {
-        new("tr-TR"),
-        new("en-US"),
-        new("fr-FR")
+        new(GlobalConstants.turkish),
+        new(GlobalConstants.english)        
     };
 
     options.SupportedCultures = cultures;
@@ -64,15 +64,15 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc("v1", new OpenApiInfo { Title = "BOnlineStore Definitions APIs", Version = "v1" });
-    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    option.SwaggerDoc(GlobalConstants.swaggerVersion, new OpenApiInfo { Title = "BOnlineStore Definitions APIs", Version = GlobalConstants.swaggerVersion });
+    option.AddSecurityDefinition(GlobalConstants.swaggerScheme, new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
         Description = "Please enter a valid token",
-        Name = "Authorization",
+        Name = GlobalConstants.swaggerAuthorization,
         Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "Bearer"
+        BearerFormat = GlobalConstants.swaggerBearerFormat,
+        Scheme = GlobalConstants.swaggerScheme
     });
     option.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
@@ -82,7 +82,7 @@ builder.Services.AddSwaggerGen(option =>
                 Reference = new OpenApiReference
                 {
                     Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
+                    Id=GlobalConstants.swaggerScheme
                 }
             },
             new string[]{}
