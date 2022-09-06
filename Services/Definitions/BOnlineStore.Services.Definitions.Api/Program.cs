@@ -8,6 +8,7 @@ using BOnlineStore.Shared;
 using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Localization;
 using Microsoft.OpenApi.Models;
@@ -55,7 +56,8 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     };
 
     options.SupportedCultures = cultures;
-    options.SupportedUICultures = cultures;
+    options.SupportedUICultures = cultures;    
+
 });
 
 

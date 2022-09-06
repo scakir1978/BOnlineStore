@@ -10,6 +10,7 @@ using Duende.IdentityServer.EntityFramework.Mappers;
 using BOnlineStore.Shared;
 using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Dtos;
+using BOnlineStore.Shared.Constansts;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -88,6 +89,7 @@ public class SeedData
             {
                 UserName = "scakir1978@hotmail.com",
                 Email = "scakir1978@hotmail.com",
+                Locale = GlobalConstants.english,
                 TenantId = tenantDto.Id
             };
 

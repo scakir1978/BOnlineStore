@@ -12,6 +12,7 @@
 
         public const string ApiScopesDefinitionsFullPermission = "definitions_full_permission";
         public const string ApiScopesDefinitionsTenantId = "tenantId";
+        public const string ApiScopesDefinitionsLocale = "locale";
 
         #endregion
     }

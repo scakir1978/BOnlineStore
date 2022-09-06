@@ -3,6 +3,7 @@
 
 
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace BOnlineStore.IdentityServer.Models;
 
@@ -10,6 +11,8 @@ namespace BOnlineStore.IdentityServer.Models;
 public class ApplicationUser : IdentityUser
 {
     public Guid TenantId { get; set; }
+    [StringLength(10)]
+    public string Locale { get; set; }
     public virtual Tenant Tenant { get; set; }
     
 }
