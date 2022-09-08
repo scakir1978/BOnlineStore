@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using BOnlineStore.Localization;
+using BOnlineStore.Localization.Constants;
 using BOnlineStore.MongoDb.GenericRepository;
 using BOnlineStore.Shared.Entities;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +18,14 @@ namespace BOnlineStore.Generic.Service
     public abstract class Service<TEntity, TEntityDto, TCreateInput, TUpdateInput> : IService<TEntity, TEntityDto, TCreateInput, TUpdateInput> where TEntity : IEntity
     {
         private readonly IMapper _mapper;
-        private readonly IRepository<TEntity> _repository;        
+        private readonly IRepository<TEntity> _repository;
+        private readonly IStringLocalizer<Language> _stringLocalizer;
 
-        public Service(IRepository<TEntity> repository, IMapper mapper)
+        public Service(IRepository<TEntity> repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer)
         {
             _repository = repository;
-            _mapper = mapper;            
+            _mapper = mapper;
+            _stringLocalizer = stringLocalizer;
         }
 
         public IQueryable<TEntity> Load(Expression<Func<TEntity, bool>>? predicate = null)
@@ -48,7 +53,7 @@ namespace BOnlineStore.Generic.Service
 
             if (!validationResult.IsValid)
             {
-                throw new ValidationException(validationResult.Errors);
+                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
             }
             #endregion
 
@@ -68,7 +73,7 @@ namespace BOnlineStore.Generic.Service
                 var validationResult = await ServiceValidator(ValidationTypeEnum.Create).ValidateAsync(new ValidationContext<TCreateInput>(input));
                 if (!validationResult.IsValid)
                 {
-                    throw new ValidationException(validationResult.Errors);
+                    throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
                 }
             }
             #endregion
@@ -91,7 +96,7 @@ namespace BOnlineStore.Generic.Service
 
             if (!validationResult.IsValid)
             {
-                throw new ValidationException(validationResult.Errors);
+                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
             }
             #endregion
 
@@ -114,7 +119,7 @@ namespace BOnlineStore.Generic.Service
 
             if (!validationResult.IsValid)
             {
-                throw new ValidationException(validationResult.Errors);
+                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
             }
             #endregion
 

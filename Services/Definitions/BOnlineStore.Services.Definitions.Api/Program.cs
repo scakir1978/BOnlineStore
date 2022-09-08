@@ -19,7 +19,7 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration()   
-  .ReadFrom.Configuration(builder.Configuration)
+  .ReadFrom.Configuration(builder.Configuration)  
   .CreateLogger();
 
 Log.Logger = logger; 
@@ -139,11 +139,8 @@ app.UseEndpoints(endpoints =>
 
 app.UseSerilogRequestLogging(options =>
 {
-    using (var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-    {
-        var _stringLocalizer = scope.ServiceProvider.GetRequiredService<IStringLocalizer<Language>>();
-        options.MessageTemplate = _stringLocalizer[SharedKeys.HandledException];
-    }
+    options.IncludeQueryInRequestPath = true; 
+
 });
 
 app.Run();

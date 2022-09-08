@@ -17,7 +17,7 @@ namespace BOnlineStore.Services.Definitions.Api.Services
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<Language> _stringLocalizer;
 
-        public ModelGroupService(IModelGroupRepository repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer) : base(repository, mapper)
+        public ModelGroupService(IModelGroupRepository repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer) : base(repository, mapper, stringLocalizer)
         {
             _repository = repository;
             _mapper = mapper;
