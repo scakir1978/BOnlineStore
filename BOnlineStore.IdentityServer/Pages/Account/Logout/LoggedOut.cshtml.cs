@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BOnlineStore.IdentityServer.Pages.Logout;
 
-[SecurityHeaders]
 [AllowAnonymous]
 public class LoggedOut : PageModel
 {

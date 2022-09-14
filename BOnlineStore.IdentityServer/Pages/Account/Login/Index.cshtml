@@ -1,150 +1,99 @@
-@page
+ï»¿@page
 @model BOnlineStore.IdentityServer.Pages.Login.Index
 
-<html class="loading dark-layout" lang="en" data-layout="dark-layout" data-textdirection="ltr">
-
-<head>
-    <title>Oturum Aç</title>
-    <link rel="apple-touch-icon" href="~/app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="~/app-assets/images/ico/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
-
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors.min.css">
-    <!-- END: Vendor CSS-->
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/bordered-layout.css">
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/themes/semi-dark-layout.css">
-
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/core/menu/menu-types/horizontal-menu.css">
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/forms/form-validation.css">
-    <link rel="stylesheet" type="text/css" href="~/app-assets/css/pages/authentication.css">
-    <!-- END: Page CSS-->
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
-    <!-- END: Custom CSS-->
-
-</head>
-
-<body class="horizontal-layout horizontal-menu blank-page navbar-floating footer-static  " data-open="hover" data-menu="horizontal-menu" data-col="blank-page">
-    <div class="login-page">
-        <div class="lead">
-            <h1>Oturum Aç</h1>
-            <p>Nasýl oturum açacaðýnýzý seçin.</p>
+<div class="app-content content ">    
+    <div class="content-wrapper">
+        <div class="content-header row">
         </div>
-
-        <partial name="_ValidationSummary" />
-
-        <div class="row">
-
-            @if (Model.View.EnableLocalLogin)
-            {
-                <div class="col-sm-6">
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Local Account</h2>
-                        </div>
-
+        <div class="content-body">
+            <div class="auth-wrapper auth-basic px-2">
+                <div class="auth-inner my-2">
+                    <!-- Login basic -->
+                    <div class="card mb-0">
                         <div class="card-body">
-                            <form asp-page="/Account/Login/Index">
-                                <input type="hidden" asp-for="Input.ReturnUrl" />
 
-                                <div class="form-group">
-                                    <label asp-for="Input.Username">E-Mail</label>
-                                    <input class="form-control" placeholder="E-Mail" asp-for="Input.Username" autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Input.Password"></label>
-                                    <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
-                                </div>
+                            <h4 class="card-title mb-1">HoÅŸgeldiniz! ðŸ‘‹</h4>
+                            <p class="card-text mb-2">LÃ¼tfen hesabÄ±nÄ±za giriÅŸ yapÄ±n ve maceraya baÅŸlayÄ±n</p>
 
-                                @if (Model.View.AllowRememberLogin)
-                                {
-                                    <div class="form-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" asp-for="Input.RememberLogin">
-                                            <label class="form-check-label" asp-for="Input.RememberLogin">
-                                                Remember My Login
-                                            </label>
+                            <partial name="_ValidationSummary" />
+
+                            @if (Model.View.EnableLocalLogin)
+                            {
+                                <form class="auth-login-form mt-2" asp-page="/Account/Login/Index">
+                                    <input type="hidden" asp-for="Input.ReturnUrl" />
+                                    <div class="mb-1">
+                                        <label asp-for="Input.Username" class="form-label">Email</label>
+                                        <input asp-for="Input.Username" type="text" class="form-control" id="login-email" placeholder="ahmet@example.com" aria-describedby="login-email" tabindex="1" autofocus />
+                                    </div>
+
+                                    <div class="mb-1">
+                                        <div class="d-flex justify-content-between">
+                                            <label class="form-label" asp-for="Input.Password">Åžifre</label>
+                                            <a href="#">
+                                                <small>Åžifremi Unuttum</small>
+                                            </a>
+                                        </div>
+                                        <div class="input-group input-group-merge form-password-toggle">
+                                            <input asp-for="Input.Password" type="password" autocomplete="off" class="form-control form-control-merge" id="login-password" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="login-password" />
+                                            <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
                                         </div>
                                     </div>
-                                }
 
-                                <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
-                                <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
-                            </form>
+                                    @if (Model.View.AllowRememberLogin)
+                                    {
+
+                                        <div class="mb-1">
+                                            <div class="form-check">
+                                                <input asp-for="Input.RememberLogin" class="form-check-input" type="checkbox" id="remember-me" tabindex="3" />
+                                                <label asp-for="Input.RememberLogin" class="form-check-label" for="remember-me"> Remember Me </label>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                    <button name="Input.Button" value="login" class="btn btn-primary w-100" tabindex="4">Oturum AÃ§</button>
+
+                                </form>
+                            }
+
+                            <p class="text-center mt-2">
+                                <span>Platformumuzda yeni misiniz?</span>
+                                <a href="#">
+                                    <span>Hesap oluÅŸtur</span>
+                                </a>
+                            </p>
+
+                            @if (Model.View.VisibleExternalProviders.Any())
+                            {
+
+                                <div class="divider my-2">
+                                    <div class="divider-text">or</div>
+                                </div>
+
+                                <div class="auth-footer-btn d-flex justify-content-center">
+                                    <a href="#" class="btn btn-facebook">
+                                        <i data-feather="facebook"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-twitter white">
+                                        <i data-feather="twitter"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-google">
+                                        <i data-feather="mail"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-github">
+                                        <i data-feather="github"></i>
+                                    </a>
+                                </div>
+
+                            }
                         </div>
                     </div>
+                    <!-- /Login basic -->
                 </div>
-            }
-
-            @if (Model.View.VisibleExternalProviders.Any())
-            {
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>External Account</h2>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-inline">
-                                @foreach (var provider in Model.View.VisibleExternalProviders)
-                                {
-                                    <li class="list-inline-item">
-                                        <a class="btn btn-secondary"
-                                   asp-page="/ExternalLogin/Challenge"
-                                   asp-route-scheme="@provider.AuthenticationScheme"
-                                   asp-route-returnUrl="@Model.Input.ReturnUrl">
-                                            @provider.DisplayName
-                                        </a>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            }
-
-            @if (!Model.View.EnableLocalLogin && !Model.View.VisibleExternalProviders.Any())
-            {
-                <div class="alert alert-warning">
-                    <strong>Invalid login request</strong>
-                    There are no login schemes configured for this request.
-                </div>
-            }
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- BEGIN: Vendor JS-->
-    <script src="~/app-assets/vendors/js/vendors.min.js"></script>
-    <!-- BEGIN Vendor JS-->
-    <!-- BEGIN: Page Vendor JS-->
-    <script src="~/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
-    <!-- END: Page Vendor JS-->
-    <!-- BEGIN: Theme JS-->
-    <script src="~/app-assets/js/core/app-menu.js"></script>
-    <script src="~/app-assets/js/core/app.js"></script>
-    <!-- END: Theme JS-->
-    <!-- BEGIN: Page JS-->
-    <script src="~/app-assets/js/scripts/pages/auth-login.js"></script>
-    <!-- END: Page JS-->
 
-    <script>
-        $(window).on('load', function() {
-            if (feather) {
-                feather.replace({
-                    width: 14,
-                    height: 14
-                });
-            }
-        })
-    </script>
 
-</body>
-</html>

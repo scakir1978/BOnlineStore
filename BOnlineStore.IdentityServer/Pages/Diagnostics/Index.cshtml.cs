@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BOnlineStore.IdentityServer.Pages.Diagnostics;
 
-[SecurityHeaders]
 [Authorize]
 public class Index : PageModel
 {

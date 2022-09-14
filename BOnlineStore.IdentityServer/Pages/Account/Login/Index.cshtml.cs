@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BOnlineStore.IdentityServer.Pages.Login;
 
-[SecurityHeaders]
 [AllowAnonymous]
 public class Index : PageModel
 {
