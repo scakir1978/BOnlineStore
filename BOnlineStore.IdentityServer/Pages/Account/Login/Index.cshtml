@@ -1,6 +1,10 @@
 @page
 @model BOnlineStore.IdentityServer.Pages.Login.Index
 
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+
 <div class="login-page">
     <div class="lead">
         <h1>Login</h1>
@@ -14,6 +18,7 @@
         @if (Model.View.EnableLocalLogin)
         {
             <div class="col-sm-6">
+                
                 <div class="card">
                     <div class="card-header">
                         <h2>Local Account</h2>
