@@ -31,7 +31,7 @@ export class SampleComponent implements OnInit {
    */
   ngOnInit() {
     this.contentHeader = {
-      headerTitle: 'Home',
+      headerTitle: 'Sample',
       actionButton: true,
       breadcrumb: {
         type: '',
