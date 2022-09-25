@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   hmr: false,
-  apiUrl: 'http://localhost:4000'
+  apiUrl: 'http://localhost:4000',
+  identityUrl: 'https://localhost:5001',
+  uiUrl: 'http://localhost:4200',
 };
 
 /*

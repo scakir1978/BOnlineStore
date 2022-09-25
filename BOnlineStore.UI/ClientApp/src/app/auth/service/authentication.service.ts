@@ -6,9 +6,31 @@ import { map } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { User, Role } from 'app/auth/models';
 import { ToastrService } from 'ngx-toastr';
+import * as oidc from 'oidc-client';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+
+  config: oidc.UserManagerSettings = {
+    client_id: 'AngularClient',
+    authority: `${environment.identityUrl}`,
+    //authority: 'https://localhost:5001',
+    redirect_uri: `${environment.uiUrl}/pages/callback`,
+    //redirect_uri: "http://localhost:4200/pages/callback",
+    silent_redirect_uri: `${environment.uiUrl}/pages/silent`,
+    //silent_redirect_uri: "http://localhost:4200/pages/silent",
+    post_logout_redirect_uri: `${environment.uiUrl}/pages/callout`,
+    //post_logout_redirect_uri: "http://localhost:4200/pages/callout",
+    response_type: 'code',
+    scope:
+      'openid profile definitions_full_permission IdentityServerApi offline_access',
+    automaticSilentRenew: true,
+
+  };
+
+  private identityUser: oidc.User | null | undefined = null;
+  private userManager: oidc.UserManager;
+
   //public
   public currentUser: Observable<User>;
 
@@ -21,6 +43,7 @@ export class AuthenticationService {
    * @param {ToastrService} _toastrService
    */
   constructor(private _http: HttpClient, private _toastrService: ToastrService) {
+    this.userManager = new oidc.UserManager(this.config);
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -44,6 +67,57 @@ export class AuthenticationService {
     return this.currentUser && this.currentUserSubject.value.role === Role.Client;
   }
 
+  private createUIUser(identityUser: oidc.User) {
+
+    var user: User = new User();
+
+    user.id = identityUser.profile.sid;
+    user.avatar = "avatar-s-11.jpg";
+    user.email = identityUser.profile.email;
+    user.firstName = identityUser.profile.name;
+    user.lastName = identityUser.profile.family_name;
+    user.role = Role.Admin;
+    user.token = identityUser.access_token;
+    user.language = identityUser.profile.locale ?? "tr-TR";
+
+    localStorage.setItem('currentUser', JSON.stringify(user));  
+
+    this.currentUserSubject.next(user);
+
+  }
+
+  completeAuthentication(): Promise<oidc.User> {
+    return new oidc.UserManager({ response_mode: 'query' })
+      .signinRedirectCallback()
+      .then((identityUser) => {
+        this.createUIUser(identityUser);
+        return identityUser;
+      });
+  }
+
+  loginIndetity(): void {
+    this.userManager.signinRedirect();
+  }
+
+  logoutIndetity(): void {
+    this.userManager.signoutRedirect();
+  }
+
+  silentRefresh(): Promise<oidc.User | undefined> {
+    return this.userManager
+      .signinSilentCallback()
+      .then((indentityUser: oidc.User | undefined) => {
+        this.createUIUser(indentityUser);
+        return indentityUser;
+      });
+  }
+
+  signoutRedirectCallback() {
+    return new oidc.UserManager({
+      response_mode: 'query',
+    }).signoutRedirectCallback();
+  }
+
   /**
    * User login
    *
@@ -65,8 +139,8 @@ export class AuthenticationService {
             setTimeout(() => {
               this._toastrService.success(
                 'You have successfully logged in as an ' +
-                  user.role +
-                  ' user to Vuexy. Now you can start to explore. Enjoy! 🎉',
+                user.role +
+                ' user to Vuexy. Now you can start to explore. Enjoy! 🎉',
                 '👋 Welcome, ' + user.firstName + '!',
                 { toastClass: 'toast ngx-toastr', closeButton: true }
               );

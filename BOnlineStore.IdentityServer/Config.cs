@@ -36,10 +36,10 @@ public static class Config
                 ClientName = "Angular Client",
                 RequireClientSecret = false,
                 AllowedGrantTypes = GrantTypes.Code,
-                RedirectUris = { "http://localhost:4200/callback" },
+                RedirectUris = { "http://localhost:4200/pages/callback" },
                 AllowedCorsOrigins={ "http://localhost:4200" },
-                PostLogoutRedirectUris = { "http://localhost:4200/callout" },
-                FrontChannelLogoutUri = "http://localhost:4200/callout",
+                PostLogoutRedirectUris = { "http://localhost:4200/pages/callout" },
+                FrontChannelLogoutUri = "http://localhost:4200/pages/callout",
                 AllowedScopes =
                 {
                     //BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsTenantId, 

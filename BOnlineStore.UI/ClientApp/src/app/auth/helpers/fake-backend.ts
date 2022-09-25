@@ -23,7 +23,7 @@ import { User, Role } from 'app/auth/models';
 // Users with role
 const users: User[] = [
   {
-    id: 1,
+    id: "1",
     email: 'admin@demo.com',
     password: 'admin',
     firstName: 'John',
@@ -32,7 +32,7 @@ const users: User[] = [
     role: Role.Admin
   },
   {
-    id: 2,
+    id: "2",
     email: 'client@demo.com',
     password: 'client',
     firstName: 'Nataly',
@@ -41,7 +41,7 @@ const users: User[] = [
     role: Role.Client
   },
   {
-    id: 3,
+    id: "3",
     email: 'user@demo.com',
     password: 'user',
     firstName: 'Rose',
@@ -133,13 +133,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function currentUser() {
       if (!isLoggedIn()) return;
-      const id = parseInt(headers.get('Authorization').split('.')[1]);
+      const id = headers.get('Authorization').split('.')[1];
       return users.find(x => x.id === id);
     }
 
     function idFromUrl() {
       const urlParts = url.split('/');
-      return parseInt(urlParts[urlParts.length - 1]);
+      return urlParts[urlParts.length - 1];
     }
   }
 }

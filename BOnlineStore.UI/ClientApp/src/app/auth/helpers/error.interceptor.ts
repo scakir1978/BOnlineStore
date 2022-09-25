@@ -23,7 +23,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
           // ? Can also logout and reload if needed
           // this._authenticationService.logout();
-          // location.reload(true);
+          // location.reload();
         }
         // throwError
         const error = err.error.message || err.statusText;
