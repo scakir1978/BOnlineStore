@@ -100,7 +100,13 @@ export class AuthenticationService {
   }
 
   logoutIndetity(): void {
+
+    localStorage.removeItem('currentUser');
+    // notify
+    this.currentUserSubject.next(null);
+
     this.userManager.signoutRedirect();
+    
   }
 
   silentRefresh(): Promise<oidc.User | undefined> {

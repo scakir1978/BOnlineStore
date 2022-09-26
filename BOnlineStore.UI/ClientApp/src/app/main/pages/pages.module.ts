@@ -11,6 +11,7 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { CallbackModule } from './callback/callback.module';
+import { AccountSettingsModule } from './account-settings/account-settings.module';
 
 @NgModule({
   declarations: [],
@@ -23,7 +24,8 @@ import { CallbackModule } from './callback/callback.module';
     FormsModule,
     AuthenticationModule,
     MiscellaneousModule,
-    CallbackModule
+    CallbackModule,
+    AccountSettingsModule
   ],
 
   providers: []

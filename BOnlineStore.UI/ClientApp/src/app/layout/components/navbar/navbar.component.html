@@ -76,6 +76,17 @@
               width="40"/><span class="avatar-status-online"></span
           ></span>
         </ng-container>
+        <div ngbDropdownMenu aria-labelledby="navbarUserDropdown" class="dropdown-menu dropdown-menu-right">
+
+          <a ngbDropdownItem [routerLink]="['/pages/account-settings']"
+            ><span [data-feather]="'settings'" [class]="'mr-50'"></span> Settings</a
+          >
+
+          <div class="dropdown-divider"></div>
+
+          <a ngbDropdownItem (click)="logout()"><span [data-feather]="'power'" [class]="'mr-50'"></span> Logout</a>
+          
+        </div>
       </a>
     </li>
     <!--/ User Dropdown -->
