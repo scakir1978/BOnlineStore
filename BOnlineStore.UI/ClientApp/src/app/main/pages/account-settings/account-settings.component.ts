@@ -5,6 +5,9 @@ import { takeUntil } from 'rxjs/operators';
 import { FlatpickrOptions } from 'ng2-flatpickr';
 
 import { AccountSettingsService } from 'app/main/pages/account-settings/account-settings.service';
+import { TranslateService } from '@ngx-translate/core';
+import { CoreConfigService } from '@core/services/config.service';
+import { CoreConfig } from '@core/types';
 @Component({
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
@@ -23,6 +26,8 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public passwordTextTypeRetype = false;
   public avatarImage: string;
 
+  private _headerTitle: string = "";
+
   // private
   private _unsubscribeAll: Subject<any>;
 
@@ -31,7 +36,9 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
    *
    * @param {AccountSettingsService} _accountSettingsService
    */
-  constructor(private _accountSettingsService: AccountSettingsService) {
+  constructor(private _accountSettingsService: AccountSettingsService, private _translate: TranslateService,
+    private _coreConfigService: CoreConfigService) {
+
     this._unsubscribeAll = new Subject();
   }
 
@@ -89,26 +96,35 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
         this.data = response;
         this.avatarImage = this.data.accountSetting.general.avatar;
       });
+    
+    this.createBreadCrumb();
 
-    // content header
+    this._coreConfigService.getConfig().pipe(takeUntil(this._unsubscribeAll)).subscribe((response : CoreConfig)=>{ 
+      this.createBreadCrumb();
+    })  
+    
+  }
+
+  // content header
+  private createBreadCrumb(){
     this.contentHeader = {
-      headerTitle: 'Account Settings',
+      headerTitle: this._translate.instant("KEYS.ACCOUNTSETTINGS"),
       actionButton: true,
       breadcrumb: {
         type: '',
         links: [
           {
-            name: 'Home',
+            name: this._translate.instant("MENU.HOME"),
             isLink: true,
             link: '/',
           },
           {
-            name: 'Pages',
+            name: this._translate.instant("KEYS.PAGES"),
             isLink: true,
             link: '/',
           },
           {
-            name: 'Account Settings',
+            name: this._translate.instant("KEYS.ACCOUNTSETTINGS"),
             isLink: false,
           },
         ],

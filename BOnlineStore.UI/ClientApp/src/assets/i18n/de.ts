@@ -8,7 +8,9 @@ export const locale = {
     KEYS: {
       GENERAL:"Allgemein",
       CHANGEPASSWORD:"Passwort ändern",
-      UPLOAD:"Hochladen"
+      UPLOAD:"Hochladen",
+      ACCOUNTSETTINGS:"Account Einstellungen",
+      PAGES:"Seiten"
     }
   }
 }
