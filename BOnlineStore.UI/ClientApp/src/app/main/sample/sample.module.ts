@@ -15,19 +15,24 @@ const routes = [
     path: 'sample',
     component: SampleComponent,
     canActivate: [AuthGuard],
-    data: { animation: 'sample' }
+    data: { animation: 'sample' },
   },
   {
     path: 'home',
     component: HomeComponent,
     canActivate: [AuthGuard],
-    data: { animation: 'home' }
-  }
+    data: { animation: 'home' },
+  },
 ];
 
 @NgModule({
   declarations: [SampleComponent, HomeComponent],
-  imports: [RouterModule.forChild(routes), ContentHeaderModule, TranslateModule, CoreCommonModule],
-  exports: [SampleComponent, HomeComponent]
+  imports: [
+    RouterModule.forChild(routes),
+    ContentHeaderModule,
+    TranslateModule,
+    CoreCommonModule,
+  ],
+  exports: [SampleComponent, HomeComponent],
 })
 export class SampleModule {}

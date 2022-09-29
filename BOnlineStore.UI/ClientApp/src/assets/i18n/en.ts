@@ -4,6 +4,11 @@ export const locale = {
     MENU: {
       HOME: 'Home',
       SAMPLE: 'Sample'
+    },
+    KEYS: {
+      GENERAL:"General",
+      CHANGEPASSWORD:"Change Password",
+      UPLOAD:"Upload"
     }
   }
 }

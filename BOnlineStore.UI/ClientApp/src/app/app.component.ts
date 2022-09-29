@@ -14,10 +14,10 @@ import { CoreLoadingScreenService } from '@core/services/loading-screen.service'
 import { CoreTranslationService } from '@core/services/translation.service';
 
 import { menu } from 'app/menu/menu';
-import { locale as menuEnglish } from 'app/menu/i18n/en';
-import { locale as menuFrench } from 'app/menu/i18n/fr';
-import { locale as menuGerman } from 'app/menu/i18n/de';
-import { locale as menuPortuguese } from 'app/menu/i18n/pt';
+import { locale as languageEnglish } from '../assets/i18n/en';
+import { locale as languageFrench } from '../assets/i18n/fr';
+import { locale as languageGerman } from '../assets/i18n/de';
+import { locale as languagePortuguese } from '../assets/i18n/pt';
 
 @Component({
   selector: 'app-root',
@@ -75,7 +75,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this._translateService.setDefaultLang('en');
 
     // Set the translations for the menu
-    this._coreTranslationService.translate(menuEnglish, menuFrench, menuGerman, menuPortuguese);
+    this._coreTranslationService.translate(languageEnglish, languageFrench, languageGerman, languagePortuguese);
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();

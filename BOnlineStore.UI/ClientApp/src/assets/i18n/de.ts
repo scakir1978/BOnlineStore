@@ -4,6 +4,11 @@ export const locale = {
     MENU: {
       HOME: 'Zuhause',
       SAMPLE: 'Stichprobe'
+    },
+    KEYS: {
+      GENERAL:"Allgemein",
+      CHANGEPASSWORD:"Passwort ändern",
+      UPLOAD:"Hochladen"
     }
   }
 }

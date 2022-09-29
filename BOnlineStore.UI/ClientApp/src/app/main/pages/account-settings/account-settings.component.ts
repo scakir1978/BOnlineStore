@@ -9,14 +9,14 @@ import { AccountSettingsService } from 'app/main/pages/account-settings/account-
   selector: 'app-account-settings',
   templateUrl: './account-settings.component.html',
   styleUrls: ['./account-settings.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AccountSettingsComponent implements OnInit, OnDestroy {
   // public
   public contentHeader: object;
   public data: any;
   public birthDateOptions: FlatpickrOptions = {
-    altInput: true
+    altInput: true,
   };
   public passwordTextTypeOld = false;
   public passwordTextTypeNew = false;
@@ -83,10 +83,12 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
    * On init
    */
   ngOnInit() {
-    this._accountSettingsService.onSettingsChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(response => {
-      this.data = response;
-      this.avatarImage = this.data.accountSetting.general.avatar;
-    });
+    this._accountSettingsService.onSettingsChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((response) => {
+        this.data = response;
+        this.avatarImage = this.data.accountSetting.general.avatar;
+      });
 
     // content header
     this.contentHeader = {
@@ -98,19 +100,19 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
           {
             name: 'Home',
             isLink: true,
-            link: '/'
+            link: '/',
           },
           {
             name: 'Pages',
             isLink: true,
-            link: '/'
+            link: '/',
           },
           {
             name: 'Account Settings',
-            isLink: false
-          }
-        ]
-      }
+            isLink: false,
+          },
+        ],
+      },
     };
   }
 
