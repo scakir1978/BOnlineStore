@@ -1,7 +1,10 @@
-﻿using BOnlineStore.Localization;
+﻿using AutoMapper;
+using BOnlineStore.Localization;
 using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Services;
 using BOnlineStore.Shared.Controllers;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
@@ -11,17 +14,28 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class ModelGroupsController : ControllerShared
     {
-        private protected IModelGroupService _modelGroupService;                
+        private protected IModelGroupService _modelGroupService;
+        private protected IMapper _mapper;
 
-        public ModelGroupsController(IModelGroupService modelGroupService)
+        public ModelGroupsController(IModelGroupService modelGroupService, IMapper mapper)
         {
-            _modelGroupService = modelGroupService;            
+            _modelGroupService = modelGroupService;
+            _mapper = mapper;
         }
 
-        [HttpGet("Load")]
-        public IActionResult Load()
+        [HttpPost("Load")]
+        public IActionResult Load([FromBody] DataSourceLoadOptionsBase loadOptions)
         {
-            return CreateSuccessActionResultInstance(_modelGroupService.Load());            
+            var source = DataSourceLoader.Load(_modelGroupService.Load(), loadOptions);
+            LoadResult loadResult = new LoadResult
+            {
+                data = loadOptions.Group == null ? _mapper.Map<List<ModelGroupDto>>(source.data) : source.data,
+                totalCount = 1,                
+                groupCount = 0,
+                summary = source.summary
+            };
+
+            return Ok(loadResult);
         }
 
         [HttpGet]

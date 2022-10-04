@@ -4,4 +4,5 @@ export const environment = {
   apiUrl: 'http://localhost:4000',
   identityUrl: 'https://localhost:5001',
   uiUrl: 'http://localhost:4200',
+  definitionsUrl: 'https://localhost:5011/api/'
 };

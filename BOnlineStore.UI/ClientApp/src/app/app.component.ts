@@ -14,6 +14,7 @@ import { CoreLoadingScreenService } from '@core/services/loading-screen.service'
 import { CoreTranslationService } from '@core/services/translation.service';
 
 import { menu } from 'app/menu/menu';
+import { locale as languageTurkish } from '../assets/i18n/tr';
 import { locale as languageEnglish } from '../assets/i18n/en';
 import { locale as languageFrench } from '../assets/i18n/fr';
 import { locale as languageGerman } from '../assets/i18n/de';
@@ -27,8 +28,8 @@ import { locale as languagePortuguese } from '../assets/i18n/pt';
 export class AppComponent implements OnInit, OnDestroy {
   coreConfig: any;
   menu: any;
-  defaultLanguage: 'en'; // This language will be used as a fallback when a translation isn't found in the current language
-  appLanguage: 'en'; // Set application default language i.e fr
+  defaultLanguage: 'tr'; // This language will be used as a fallback when a translation isn't found in the current language
+  appLanguage: 'tr'; // Set application default language i.e fr
 
   // Private
   private _unsubscribeAll: Subject<any>;
@@ -69,13 +70,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this._coreMenuService.setCurrentMenu('main');
 
     // Add languages to the translation service
-    this._translateService.addLangs(['en', 'fr', 'de', 'pt']);
+    this._translateService.addLangs(['tr','en', 'fr', 'de', 'pt']);
 
     // This language will be used as a fallback when a translation isn't found in the current language
-    this._translateService.setDefaultLang('en');
+    this._translateService.setDefaultLang('tr');
 
     // Set the translations for the menu
-    this._coreTranslationService.translate(languageEnglish, languageFrench, languageGerman, languagePortuguese);
+    this._coreTranslationService.translate(languageTurkish, languageEnglish, languageFrench, languageGerman, languagePortuguese);
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();
@@ -100,7 +101,7 @@ export class AppComponent implements OnInit, OnDestroy {
       // Change application language? Read the ngxTranslate Fix
 
       // ? Use app-config.ts file to set default language
-      const appLanguage = this.coreConfig.app.appLanguage || 'en';
+      const appLanguage = this.coreConfig.app.appLanguage || 'tr';
       this._translateService.use(appLanguage);
 
       // ? OR
@@ -126,7 +127,7 @@ export class AppComponent implements OnInit, OnDestroy {
       // Set the default language to 'en' and then back to 'fr'.
 
       setTimeout(() => {
-        this._translateService.setDefaultLang('en');
+        this._translateService.setDefaultLang('tr');
         this._translateService.setDefaultLang(appLanguage);
       });
 

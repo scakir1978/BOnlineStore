@@ -1,0 +1,27 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
+
+import { CoreCommonModule } from '@core/common.module';
+import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
+import { ModelGroupModule } from './model-group/model-group.module';
+
+
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule,
+    CommonModule,
+    CoreCommonModule,
+    ContentHeaderModule,
+    NgbModule,
+    NgSelectModule,
+    FormsModule,
+    ModelGroupModule        
+  ],
+  providers: []
+})
+export class DefinitionsModule { }

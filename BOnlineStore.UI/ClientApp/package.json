@@ -51,6 +51,7 @@
     "bs-stepper": "1.7.0",
     "chart.js": "2.9.4",
     "core-js": "3.14.0",
+    "devextreme": "^22.1.5",
     "devextreme-angular": "^22.1.5",
     "feather-icons": "4.28.0",
     "flatpickr": "4.6.9",

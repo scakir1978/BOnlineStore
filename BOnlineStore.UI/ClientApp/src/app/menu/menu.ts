@@ -16,5 +16,23 @@ export const menu: CoreMenu[] = [
     type: 'item',
     icon: 'file',
     url: 'sample'
+  },
+  {
+    id: 'definitions',
+    title: 'Definitions',
+    translate: 'KEYS.DEFINITIONS',
+    type: 'collapsible',
+    icon: 'book',
+    children:[
+      {
+        id: 'modelgroups',
+        title: 'Model Groups',
+        translate: 'KEYS.MODELGROUPS',
+        type: 'item',
+        icon: 'file',
+        url: 'definitions/model-groups'
+      }
+    ]    
   }
+
 ]

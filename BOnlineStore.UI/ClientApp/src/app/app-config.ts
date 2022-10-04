@@ -19,7 +19,7 @@ export const coreConfig: CoreConfig = {
     appName     : 'Vuexy',                                        // App Name
     appTitle    : 'Vuexy - Angular 14+ Bootstrap Admin Template', // App Title
     appLogoImage: 'assets/images/logo/logo.svg',                  // App Logo
-    appLanguage : 'en',                                           // App Default Language (en, fr, de, pt etc..)
+    appLanguage : 'tr',                                           // App Default Language (tr, en, fr, de, pt etc..)
   },
   layout: {
     skin  : 'default',                        // default, dark, bordered, semi-dark

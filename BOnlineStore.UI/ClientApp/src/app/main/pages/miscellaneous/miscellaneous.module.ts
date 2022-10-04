@@ -1,3 +1,4 @@
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,6 +13,11 @@ const routes: Routes = [
     path: 'miscellaneous/error',
     component: ErrorComponent,
     data: { animation: 'misc' }
+  },
+  {
+    path: 'miscellaneous/not-authorized',
+    component: NotAuthorizedComponent,
+    data: { animation: 'notauthorized' }
   }
 ];
 

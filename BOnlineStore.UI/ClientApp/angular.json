@@ -37,7 +37,13 @@
               "fast-deep-equal",
               "plyr",
               "sweetalert2",
-              "bs-stepper"
+              "bs-stepper",
+              "jszip",
+              "devexpress-diagram",
+              "devexpress-gantt",
+              "devextreme-quill",
+              "luxon",
+              "oidc-client"
             ],
             "outputPath": "dist/vuexy",
             "index": "src/index.html",
@@ -54,7 +60,9 @@
               "./node_modules/@fullcalendar/common/main.css",
               "./node_modules/@fullcalendar/daygrid/main.css",
               "./node_modules/@fullcalendar/timegrid/main.css",
-              "./node_modules/@fullcalendar/list/main.css"
+              "./node_modules/@fullcalendar/list/main.css",
+              "node_modules/devextreme/dist/css/dx.light.css",
+              "node_modules/devextreme/dist/css/dx.dark.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules", "src/assets/"]

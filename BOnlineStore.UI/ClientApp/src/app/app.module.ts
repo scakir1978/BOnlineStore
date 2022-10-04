@@ -26,6 +26,10 @@ const appRoutes: Routes = [
     loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
   },
   {
+    path: 'definitions',
+    loadChildren: () => import('./main/definitions/definitions.module').then(m => m.DefinitionsModule)
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'
@@ -49,7 +53,7 @@ const appRoutes: Routes = [
     TranslateModule.forRoot(),
 
     //NgBootstrap
-    NgbModule,
+    NgbModule,    
     ToastrModule.forRoot(),
 
     // Core modules
@@ -60,7 +64,7 @@ const appRoutes: Routes = [
 
     // App modules
     LayoutModule,
-    SampleModule
+    SampleModule    
   ],
 
   bootstrap: [AppComponent],

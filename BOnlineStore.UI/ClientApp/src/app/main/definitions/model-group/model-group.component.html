@@ -1,0 +1,26 @@
+<div class="content-wrapper container-xxl p-0">
+  <div class="content-body">
+    <app-content-header [contentHeader]="contentHeader"></app-content-header>
+
+    <dx-data-grid
+      id="gridContainer"
+      [dataSource]="modelGroupDataSource"
+      [showBorders]="true"
+      [remoteOperations]="true"
+      [repaintChangesOnly]="true"
+      (onSaving)="onSaving($event)"
+    >
+      <dxo-editing
+        mode="batch"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+        [allowUpdating]="true"
+      ></dxo-editing>
+
+      <dxi-column dataField="id" [allowEditing]="false"></dxi-column>
+      <dxi-column dataField="code"></dxi-column>
+      <dxi-column dataField="name"></dxi-column>
+      
+    </dx-data-grid>
+  </div>
+</div>

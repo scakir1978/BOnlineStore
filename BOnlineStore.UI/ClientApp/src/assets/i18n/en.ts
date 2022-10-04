@@ -10,7 +10,9 @@ export const locale = {
       CHANGEPASSWORD:"Change Password",
       UPLOAD:"Upload",
       ACCOUNTSETTINGS:"Account Settings",
-      PAGES:"Pages"
+      PAGES:"Pages",
+      MODELGROUPS:"Model Groups",
+      DEFINITIONS:"Definitions"
     }
   }
 }
