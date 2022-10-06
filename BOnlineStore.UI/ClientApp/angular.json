@@ -61,13 +61,16 @@
               "./node_modules/@fullcalendar/daygrid/main.css",
               "./node_modules/@fullcalendar/timegrid/main.css",
               "./node_modules/@fullcalendar/list/main.css",
-              "node_modules/devextreme/dist/css/dx.light.css",
-              "node_modules/devextreme/dist/css/dx.dark.css"
+              "src/assets/css/dx.light.css",
+              "src/assets/css/dx.dark.vuexy.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules", "src/assets/"]
             },
-            "scripts": ["./node_modules/katex/dist/katex.min.js", "./node_modules/quill/dist/quill.min.js"],
+            "scripts": [
+              "./node_modules/katex/dist/katex.min.js",
+              "./node_modules/quill/dist/quill.min.js"
+            ],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,

@@ -127,7 +127,7 @@ export class AppComponent implements OnInit, OnDestroy {
       // Set the default language to 'en' and then back to 'fr'.
 
       setTimeout(() => {
-        this._translateService.setDefaultLang('tr');
+        this._translateService.setDefaultLang('en');
         this._translateService.setDefaultLang(appLanguage);
       });
 
