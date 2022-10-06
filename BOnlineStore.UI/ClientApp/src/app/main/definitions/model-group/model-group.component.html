@@ -15,12 +15,16 @@
         [allowAdding]="true"
         [allowDeleting]="true"
         [allowUpdating]="true"
+        [useIcons]="true"
       ></dxo-editing>
 
-      <dxi-column dataField="id" [allowEditing]="false"></dxi-column>
+      <dxi-column
+        dataField="id"
+        [allowEditing]="false"
+        [visible]="false"
+      ></dxi-column>
       <dxi-column dataField="code"></dxi-column>
       <dxi-column dataField="name"></dxi-column>
-      
     </dx-data-grid>
   </div>
 </div>
