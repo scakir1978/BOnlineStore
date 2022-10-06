@@ -166,28 +166,37 @@ export class NavbarComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((config) => {
         this.currentSkin = config.layout.skin;
+        this.changeDevExtremeSkin(config.layout.skin);
       });
 
     // Toggle Dark skin with prevSkin skin
     this.prevSkin = localStorage.getItem('prevSkin');
 
     if (this.currentSkin === 'dark') {
-      window.localStorage.setItem('dx-theme', 'light');
-      themes.current('light');
-      refreshTheme();
+      //window.localStorage.setItem('dx-theme', 'light');
+      //themes.current('light');
       this._coreConfigService.setConfig(
         { layout: { skin: this.prevSkin ? this.prevSkin : 'default' } },
         { emitEvent: true }
       );
     } else {
-      window.localStorage.setItem('dx-theme', 'dark');
-      themes.current('dark');
-      refreshTheme();
+      //window.localStorage.setItem('dx-theme', 'dark');
+      //themes.current('dark');
       localStorage.setItem('prevSkin', this.currentSkin);
       this._coreConfigService.setConfig(
         { layout: { skin: 'dark' } },
         { emitEvent: true }
       );
+    }
+  }
+
+  changeDevExtremeSkin(vuexySkin) {
+    if (vuexySkin === 'dark') {
+      window.localStorage.setItem('dx-theme', 'dark');
+      themes.current('dark');
+    } else {
+      window.localStorage.setItem('dx-theme', 'light');
+      themes.current('light');
     }
   }
 

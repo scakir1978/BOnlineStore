@@ -60,9 +60,7 @@
               "./node_modules/@fullcalendar/common/main.css",
               "./node_modules/@fullcalendar/daygrid/main.css",
               "./node_modules/@fullcalendar/timegrid/main.css",
-              "./node_modules/@fullcalendar/list/main.css",
-              "src/assets/css/dx.light.css",
-              "src/assets/css/dx.dark.vuexy.css"
+              "./node_modules/@fullcalendar/list/main.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["node_modules", "src/assets/"]
