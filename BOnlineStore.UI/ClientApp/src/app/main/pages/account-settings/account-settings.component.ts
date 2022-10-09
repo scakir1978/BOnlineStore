@@ -26,7 +26,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
   public passwordTextTypeRetype = false;
   public avatarImage: string;
 
-  private _headerTitle: string = "";
+  private _headerTitle: string = '';
 
   // private
   private _unsubscribeAll: Subject<any>;
@@ -36,9 +36,11 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
    *
    * @param {AccountSettingsService} _accountSettingsService
    */
-  constructor(private _accountSettingsService: AccountSettingsService, private _translate: TranslateService,
-    private _coreConfigService: CoreConfigService) {
-
+  constructor(
+    private _accountSettingsService: AccountSettingsService,
+    private _translate: TranslateService,
+    private _coreConfigService: CoreConfigService
+  ) {
     this._unsubscribeAll = new Subject();
   }
 
@@ -96,35 +98,37 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
         this.data = response;
         this.avatarImage = this.data.accountSetting.general.avatar;
       });
-    
+
     this.createBreadCrumb();
 
-    this._coreConfigService.getConfig().pipe(takeUntil(this._unsubscribeAll)).subscribe((response : CoreConfig)=>{ 
-      this.createBreadCrumb();
-    })  
-    
+    this._coreConfigService
+      .getConfig()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((response: CoreConfig) => {
+        this.createBreadCrumb();
+      });
   }
 
   // content header
-  private createBreadCrumb(){
+  private createBreadCrumb() {
     this.contentHeader = {
-      headerTitle: this._translate.instant("KEYS.ACCOUNTSETTINGS"),
+      headerTitle: this._translate.instant('KEYS.ACCOUNTSETTINGS'),
       actionButton: true,
       breadcrumb: {
         type: '',
         links: [
           {
-            name: this._translate.instant("MENU.HOME"),
+            name: this._translate.instant('MENU.HOME'),
             isLink: true,
             link: '/',
           },
           {
-            name: this._translate.instant("KEYS.PAGES"),
+            name: this._translate.instant('KEYS.PAGES'),
             isLink: true,
             link: '/',
           },
           {
-            name: this._translate.instant("KEYS.ACCOUNTSETTINGS"),
+            name: this._translate.instant('KEYS.ACCOUNTSETTINGS'),
             isLink: false,
           },
         ],
@@ -137,7 +141,7 @@ export class AccountSettingsComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 }

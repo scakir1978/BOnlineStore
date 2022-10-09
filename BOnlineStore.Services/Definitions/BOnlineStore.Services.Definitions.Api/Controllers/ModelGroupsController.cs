@@ -40,33 +40,33 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _modelGroupService.GetAsync());            
+            return CreateSuccessActionResultInstance(await _modelGroupService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
-            return CreateSuccessActionResultInstance(await _modelGroupService.GetByIdAsync(id));            
+            return CreateSuccessActionResultInstance(await _modelGroupService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(ModelGroupCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _modelGroupService.AddAsync(input));            
+            return CreateSuccessActionResultInstance(await _modelGroupService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(Guid id, ModelGroupUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _modelGroupService.UpdateAsync(id, input));            
+            return CreateSuccessActionResultInstance(await _modelGroupService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            return CreateSuccessActionResultInstance(await _modelGroupService.DeleteAsync(id));            
+            return CreateSuccessActionResultInstance(await _modelGroupService.DeleteAsync(id));
         }
 
     }

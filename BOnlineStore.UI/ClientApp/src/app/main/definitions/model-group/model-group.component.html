@@ -16,15 +16,40 @@
         [allowDeleting]="true"
         [allowUpdating]="true"
         [useIcons]="true"
-      ></dxo-editing>
+        [refreshMode]="'full'"
+        [confirmDelete]="true"
+      >
+        <dxo-texts
+          addRow="{{ 'KEYS.ADDROW' | translate }}"
+          cancelAllChanges="{{ 'KEYS.CANCELALLCHANGES' | translate }}"
+          cancelRowChanges="{{ 'KEYS.CANCELROWCHANGES' | translate }}"
+          confirmDeleteMessage="{{ 'KEYS.CONFIRMDELETEMESSAGE' | translate }}"
+          confirmDeleteTitle="{{ 'KEYS.CONFIRMDELETETITLE' | translate }}"
+          deleteRow="{{ 'KEYS.DELETEROW' | translate }}"
+          editRow="{{ 'KEYS.EDITROW' | translate }}"
+          saveAllChanges="{{ 'KEYS.SAVEALLCHANGES' | translate }}"
+          saveRowChanges="{{ 'KEYS.SAVEROWCHANGES' | translate }}"
+          undeleteRow="{{ 'KEYS.UNDELETEROW' | translate }}"
+          validationCancelChanges="{{
+            'KEYS.VALIDATIONCANCELCHANGES' | translate
+          }}"
+        >
+        </dxo-texts>
+      </dxo-editing>
 
       <dxi-column
         dataField="id"
         [allowEditing]="false"
         [visible]="false"
       ></dxi-column>
-      <dxi-column dataField="code"></dxi-column>
-      <dxi-column dataField="name"></dxi-column>
+      <dxi-column
+        dataField="code"
+        caption="{{ 'KEYS.CODE' | translate }}"
+      ></dxi-column>
+      <dxi-column
+        dataField="name"
+        caption="{{ 'KEYS.NAME' | translate }}"
+      ></dxi-column>
     </dx-data-grid>
   </div>
 </div>

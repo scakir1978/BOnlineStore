@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewEncapsulation,
+  ElementRef,
+} from '@angular/core';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,7 +15,7 @@ import { CoreConfigService } from '@core/services/config.service';
   selector: 'vertical-layout',
   templateUrl: './vertical-layout.component.html',
   styleUrls: ['./vertical-layout.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class VerticalLayoutComponent implements OnInit, OnDestroy {
   coreConfig: any;
@@ -22,7 +28,10 @@ export class VerticalLayoutComponent implements OnInit, OnDestroy {
    *
    * @param {CoreConfigService} _coreConfigService
    */
-  constructor(private _coreConfigService: CoreConfigService, private _elementRef: ElementRef) {
+  constructor(
+    private _coreConfigService: CoreConfigService,
+    private _elementRef: ElementRef
+  ) {
     // Set the private defaults
     this._unsubscribeAll = new Subject();
   }
@@ -35,9 +44,11 @@ export class VerticalLayoutComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // Subscribe to config changes
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
   }
 
   /**
@@ -45,7 +56,7 @@ export class VerticalLayoutComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 }

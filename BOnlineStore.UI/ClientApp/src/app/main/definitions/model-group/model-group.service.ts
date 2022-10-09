@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 import DataSource from 'devextreme/data/data_source';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -27,14 +27,58 @@ export class ModelGroupService implements Resolve<any> {
       paginate: true,
       pageSize: 10,
       load: (loadOptions) =>
-        this._http
-          .post(environment.definitionsUrl + 'modelgroups/load', {
-            loadOptions,
-          })
-          .toPromise()
-          .then((response: any) => {
-            return response.data;
-          }),
+        this.sendRequest(environment.definitionsUrl + 'ModelGroups  ', 'LOAD'),
+      insert: (values: any) =>
+        this.sendRequest(
+          environment.definitionsUrl + 'ModelGroups',
+          'INSERT',
+          '',
+          values
+        ),
+      update: (key: string, values: any) =>
+        this.sendRequest(
+          environment.definitionsUrl + 'ModelGroups',
+          'UPDATE',
+          key,
+          values
+        ),
+      remove: (key: string) =>
+        this.sendRequest(
+          environment.definitionsUrl + 'ModelGroups',
+          'DELETE',
+          key
+        ),
     });
+  }
+
+  sendRequest(
+    url: string,
+    method = 'LOAD',
+    key: string = '',
+    data: any = {}
+  ): any {
+    const httpParams = new HttpParams({ fromObject: data });
+    const httpOptions = { withCredentials: true, body: httpParams };
+    let result;
+
+    switch (method) {
+      case 'LOAD':
+        result = this._http.get(url);
+        break;
+      case 'INSERT':
+        result = this._http.post(url, data);
+        break;
+      case 'UPDATE':
+        result = this._http.put(url + '/' + key, data);
+        break;
+
+      case 'DELETE':
+        result = this._http.delete(url + '/' + key);
+        break;
+    }
+
+    return lastValueFrom(result).then((data: any) =>
+      method === 'LOAD' ? data.data : data
+    );
   }
 }

@@ -8,7 +8,7 @@ import { CoreConfigService } from '@core/services/config.service';
 @Component({
   selector: 'app-error',
   templateUrl: './error.component.html',
-  styleUrls: ['./error.component.scss']
+  styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent implements OnInit {
   public coreConfig: any;
@@ -28,17 +28,17 @@ export class ErrorComponent implements OnInit {
     this._coreConfigService.config = {
       layout: {
         navbar: {
-          hidden: true
+          hidden: true,
         },
         footer: {
-          hidden: true
+          hidden: true,
         },
         menu: {
-          hidden: true
+          hidden: true,
         },
         customizer: false,
-        enableLocalStorage: false
-      }
+        enableLocalStorage: false,
+      },
     };
   }
 
@@ -50,9 +50,11 @@ export class ErrorComponent implements OnInit {
    */
   ngOnInit(): void {
     // Subscribe to config changes
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
   }
 
   /**
@@ -60,7 +62,7 @@ export class ErrorComponent implements OnInit {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 }

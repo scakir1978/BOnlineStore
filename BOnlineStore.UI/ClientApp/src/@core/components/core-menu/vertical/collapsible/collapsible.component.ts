@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
@@ -11,7 +18,7 @@ import { User } from 'app/auth/models';
 
 @Component({
   selector: '[core-menu-vertical-collapsible]',
-  templateUrl: './collapsible.component.html'
+  templateUrl: './collapsible.component.html',
 })
 export class CoreMenuVerticalCollapsibleComponent implements OnInit, OnDestroy {
   currentUser: User;
@@ -51,7 +58,7 @@ export class CoreMenuVerticalCollapsibleComponent implements OnInit, OnDestroy {
     // Listen for router events and expand
     this._router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         takeUntil(this._unsubscribeAll)
       )
       .subscribe((event: NavigationEnd) => {
@@ -64,29 +71,33 @@ export class CoreMenuVerticalCollapsibleComponent implements OnInit, OnDestroy {
       });
 
     // Subscribe to the current menu changes
-    this._coreMenuService.onMenuChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
-      this.currentUser = this._coreMenuService.currentUser;
-    });
+    this._coreMenuService.onMenuChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this.currentUser = this._coreMenuService.currentUser;
+      });
 
     // Listen for collapsing of any menu item
-    this._coreMenuService.onItemCollapsed.pipe(takeUntil(this._unsubscribeAll)).subscribe(clickedItem => {
-      if (clickedItem && clickedItem.children) {
-        // Check if the clicked item is one of the children of this item
-        if (this.confirmItemInChildren(this.item, clickedItem)) {
-          return;
-        }
+    this._coreMenuService.onItemCollapsed
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((clickedItem) => {
+        if (clickedItem && clickedItem.children) {
+          // Check if the clicked item is one of the children of this item
+          if (this.confirmItemInChildren(this.item, clickedItem)) {
+            return;
+          }
 
-        // Check if the url can be found in one of the children of this item
-        if (this.confirmUrlInChildren(this.item, this._router.url)) {
-          return;
-        }
+          // Check if the url can be found in one of the children of this item
+          if (this.confirmUrlInChildren(this.item, this._router.url)) {
+            return;
+          }
 
-        // If the clicked item is not this item, collapse...
-        if (this.item !== clickedItem) {
-          this.collapse();
+          // If the clicked item is not this item, collapse...
+          if (this.item !== clickedItem) {
+            this.collapse();
+          }
         }
-      }
-    });
+      });
 
     // Check if the url can be found in one of the children of this item
     // Required for onInit case (i.e switching theme customizer menu layout)
@@ -102,7 +113,7 @@ export class CoreMenuVerticalCollapsibleComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 
@@ -121,7 +132,7 @@ export class CoreMenuVerticalCollapsibleComponent implements OnInit, OnDestroy {
 
     // Menu collapse toggled...
     this._coreMenuService.onItemCollapsed.next(this.item);
-    this._coreMenuService.onItemCollapseToggled.next();
+    this._coreMenuService.onItemCollapseToggled.next(true);
   }
 
   /**
@@ -137,7 +148,7 @@ export class CoreMenuVerticalCollapsibleComponent implements OnInit, OnDestroy {
     // Mark for check
     this._changeDetectorRef.markForCheck();
 
-    this._coreMenuService.onItemCollapseToggled.next();
+    this._coreMenuService.onItemCollapseToggled.next(true);
   }
 
   /**
@@ -153,7 +164,7 @@ export class CoreMenuVerticalCollapsibleComponent implements OnInit, OnDestroy {
     // Mark for check
     this._changeDetectorRef.markForCheck();
 
-    this._coreMenuService.onItemCollapseToggled.next();
+    this._coreMenuService.onItemCollapseToggled.next(true);
   }
 
   /**

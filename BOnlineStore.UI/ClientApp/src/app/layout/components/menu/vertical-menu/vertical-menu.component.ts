@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild, HostListener, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  HostListener,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 import { Subject } from 'rxjs';
@@ -13,7 +20,7 @@ import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.s
   selector: 'vertical-menu',
   templateUrl: './vertical-menu.component.html',
   styleUrls: ['./vertical-menu.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class VerticalMenuComponent implements OnInit, OnDestroy {
   coreConfig: any;
@@ -42,7 +49,8 @@ export class VerticalMenuComponent implements OnInit, OnDestroy {
     this._unsubscribeAll = new Subject();
   }
 
-  @ViewChild(PerfectScrollbarDirective, { static: false }) directiveRef?: PerfectScrollbarDirective;
+  @ViewChild(PerfectScrollbarDirective, { static: false })
+  directiveRef?: PerfectScrollbarDirective;
 
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
@@ -52,16 +60,19 @@ export class VerticalMenuComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // Subscribe config change
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
 
-    this.isCollapsed = this._coreSidebarService.getSidebarRegistry('menu').collapsed;
+    this.isCollapsed =
+      this._coreSidebarService.getSidebarRegistry('menu').collapsed;
 
     // Close the menu on router NavigationEnd (Required for small screen to close the menu on select)
     this._router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(() => {
@@ -73,7 +84,7 @@ export class VerticalMenuComponent implements OnInit, OnDestroy {
     // scroll to active on navigation end
     this._router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         take(1)
       )
       .subscribe(() => {
@@ -85,7 +96,7 @@ export class VerticalMenuComponent implements OnInit, OnDestroy {
     // Get current menu
     this._coreMenuService.onMenuChanged
       .pipe(
-        filter(value => value !== null),
+        filter((value) => value !== null),
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(() => {
@@ -98,7 +109,7 @@ export class VerticalMenuComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 
@@ -131,14 +142,20 @@ export class VerticalMenuComponent implements OnInit, OnDestroy {
     this._coreConfigService
       .getConfig()
       .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe(config => {
+      .subscribe((config) => {
         this.isCollapsed = config.layout.menu.collapsed;
       });
 
     if (this.isCollapsed) {
-      this._coreConfigService.setConfig({ layout: { menu: { collapsed: false } } }, { emitEvent: true });
+      this._coreConfigService.setConfig(
+        { layout: { menu: { collapsed: false } } },
+        { emitEvent: true }
+      );
     } else {
-      this._coreConfigService.setConfig({ layout: { menu: { collapsed: true } } }, { emitEvent: true });
+      this._coreConfigService.setConfig(
+        { layout: { menu: { collapsed: true } } },
+        { emitEvent: true }
+      );
     }
   }
 }

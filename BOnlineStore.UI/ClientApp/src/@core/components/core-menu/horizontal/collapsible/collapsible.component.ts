@@ -1,4 +1,12 @@
-import { Component, HostListener, HostBinding, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  HostBinding,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
@@ -11,9 +19,11 @@ import { User } from 'app/auth/models';
 
 @Component({
   selector: '[core-menu-horizontal-collapsible]',
-  templateUrl: './collapsible.component.html'
+  templateUrl: './collapsible.component.html',
 })
-export class CoreMenuHorizontalCollapsibleComponent implements OnInit, OnDestroy {
+export class CoreMenuHorizontalCollapsibleComponent
+  implements OnInit, OnDestroy
+{
   coreConfig: any;
   currentUser: User;
   isShow = false;
@@ -55,19 +65,23 @@ export class CoreMenuHorizontalCollapsibleComponent implements OnInit, OnDestroy
    */
   ngOnInit(): void {
     // Subscribe to config changes
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
 
     // Subscribe to the current menu changes
-    this._coreMenuService.onMenuChanged.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
-      this.currentUser = this._coreMenuService.currentUser;
-    });
+    this._coreMenuService.onMenuChanged
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        this.currentUser = this._coreMenuService.currentUser;
+      });
 
     // Listen for router events and expand
     this._router.events
       .pipe(
-        filter(event => event instanceof NavigationEnd),
+        filter((event) => event instanceof NavigationEnd),
         takeUntil(this._unsubscribeAll)
       )
       .subscribe((event: NavigationEnd) => {
@@ -93,7 +107,7 @@ export class CoreMenuHorizontalCollapsibleComponent implements OnInit, OnDestroy
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 
@@ -138,7 +152,9 @@ export class CoreMenuHorizontalCollapsibleComponent implements OnInit, OnDestroy
           let maxHeight = innerHeight - dropdownTop - 25;
           nativeElementChildren.setAttribute(
             'style',
-            'overflow-y: auto; overflow-x: hidden; max-height : ' + maxHeight + 'px'
+            'overflow-y: auto; overflow-x: hidden; max-height : ' +
+              maxHeight +
+              'px'
           );
         }
 

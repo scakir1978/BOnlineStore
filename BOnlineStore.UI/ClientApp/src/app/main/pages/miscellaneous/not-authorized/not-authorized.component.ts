@@ -9,7 +9,7 @@ import { CoreConfigService } from '@core/services/config.service';
 @Component({
   selector: 'app-not-authorized',
   templateUrl: './not-authorized.component.html',
-  styleUrls: ['./not-authorized.component.scss']
+  styleUrls: ['./not-authorized.component.scss'],
 })
 export class NotAuthorizedComponent implements OnInit {
   public coreConfig: any;
@@ -22,25 +22,27 @@ export class NotAuthorizedComponent implements OnInit {
    *
    * @param {CoreConfigService} _coreConfigService
    */
-  constructor(private _coreConfigService: CoreConfigService,
-    private _authenticationService: AuthenticationService) {
+  constructor(
+    private _coreConfigService: CoreConfigService,
+    private _authenticationService: AuthenticationService
+  ) {
     this._unsubscribeAll = new Subject();
 
     // Configure the layout
     this._coreConfigService.config = {
       layout: {
         navbar: {
-          hidden: true
+          hidden: true,
         },
         footer: {
-          hidden: true
+          hidden: true,
         },
         menu: {
-          hidden: true
+          hidden: true,
         },
         customizer: false,
-        enableLocalStorage: false
-      }
+        enableLocalStorage: false,
+      },
     };
   }
 
@@ -52,12 +54,14 @@ export class NotAuthorizedComponent implements OnInit {
    */
   ngOnInit(): void {
     // Subscribe to config changes
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
   }
 
-  gotoLoginPage(){
+  gotoLoginPage() {
     this._authenticationService.loginIndetity();
   }
 
@@ -66,7 +70,7 @@ export class NotAuthorizedComponent implements OnInit {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 }

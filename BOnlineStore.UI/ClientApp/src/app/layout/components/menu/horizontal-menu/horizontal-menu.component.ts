@@ -11,7 +11,7 @@ import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.s
   selector: 'horizontal-menu',
   templateUrl: './horizontal-menu.component.html',
   styleUrls: ['./horizontal-menu.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class HorizontalMenuComponent implements OnInit, OnDestroy {
   coreConfig: any;
@@ -44,14 +44,16 @@ export class HorizontalMenuComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // Subscribe config change
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
 
     // Get current menu
     this._coreMenuService.onMenuChanged
       .pipe(
-        filter(value => value !== null),
+        filter((value) => value !== null),
         takeUntil(this._unsubscribeAll)
       )
       .subscribe(() => {
@@ -64,7 +66,7 @@ export class HorizontalMenuComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 }

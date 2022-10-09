@@ -3,17 +3,29 @@ export const locale = {
   data: {
     MENU: {
       HOME: 'Ana Sayfa',
-      SAMPLE: 'Örnek Sayfa'
+      SAMPLE: 'Örnek Sayfa',
     },
     KEYS: {
-      GENERAL:"Genel",
-      CHANGEPASSWORD:"Şifre Değiştir",
-      UPLOAD:"Yükle",
-      ACCOUNTSETTINGS:"Hesap Ayarları",
-      PAGES:"Sayfalar",
-      MODELGROUPS:"Model Grupları",
-      DEFINITIONS:"Tanımlamalar"
-
-    }
-  }
-}
+      GENERAL: 'Genel',
+      CHANGEPASSWORD: 'Şifre Değiştir',
+      UPLOAD: 'Yükle',
+      ACCOUNTSETTINGS: 'Hesap Ayarları',
+      PAGES: 'Sayfalar',
+      MODELGROUPS: 'Model Grupları',
+      DEFINITIONS: 'Tanımlamalar',
+      CODE: 'Kod',
+      NAME: 'Adı',
+      ADDROW: 'Kayıt Ekle',
+      CANCELALLCHANGES: 'Yapılan değişiklikleri geri al',
+      CANCELROWCHANGES: 'İptal',
+      CONFIRMDELETEMESSAGE: 'Bu kaydı silmek istediğinizden emin misiniz?',
+      CONFIRMDELETETITLE: 'Silme Uyarısı',
+      DELETEROW: 'Sil',
+      EDITROW: 'Düzelt',
+      SAVEALLCHANGES: 'Değişiklikleri kaydet',
+      SAVEROWCHANGES: 'Kaydet',
+      UNDELETEROW: 'Geri al',
+      VALIDATIONCANCELCHANGES: 'Değişiklikleri iptal et',
+    },
+  },
+};

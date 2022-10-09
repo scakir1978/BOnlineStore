@@ -14,7 +14,7 @@ namespace BOnlineStore.Services.Definitions.Api.Validations
             _stringLocalizer = stringLocalizer;
 
             RuleFor(x => x.Name).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.ModelGroupNameNotEmpty]);
-            RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.ModelGroupCodeNotEmpty]);            
+            RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.ModelGroupCodeNotEmpty]);
         }
 
     }

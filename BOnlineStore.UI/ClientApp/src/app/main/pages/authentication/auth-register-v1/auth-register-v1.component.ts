@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -10,7 +14,7 @@ import { CoreConfigService } from '@core/services/config.service';
   selector: 'app-auth-register-v1',
   templateUrl: './auth-register-v1.component.html',
   styleUrls: ['./auth-register-v1.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AuthRegisterV1Component implements OnInit {
   // Public
@@ -28,24 +32,27 @@ export class AuthRegisterV1Component implements OnInit {
    * @param {CoreConfigService} _coreConfigService
    * @param {FormBuilder} _formBuilder
    */
-  constructor(private _coreConfigService: CoreConfigService, private _formBuilder: UntypedFormBuilder) {
+  constructor(
+    private _coreConfigService: CoreConfigService,
+    private _formBuilder: UntypedFormBuilder
+  ) {
     this._unsubscribeAll = new Subject();
 
     // Configure the layout
     this._coreConfigService.config = {
       layout: {
         navbar: {
-          hidden: true
+          hidden: true,
         },
         menu: {
-          hidden: true
+          hidden: true,
         },
         footer: {
-          hidden: true
+          hidden: true,
         },
         customizer: false,
-        enableLocalStorage: false
-      }
+        enableLocalStorage: false,
+      },
     };
   }
 
@@ -83,13 +90,15 @@ export class AuthRegisterV1Component implements OnInit {
     this.registerForm = this._formBuilder.group({
       username: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
 
     // Subscribe to config changes
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
   }
 
   /**
@@ -97,7 +106,7 @@ export class AuthRegisterV1Component implements OnInit {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 }

@@ -3,16 +3,29 @@ export const locale = {
   data: {
     MENU: {
       HOME: 'Home',
-      SAMPLE: 'Sample'
+      SAMPLE: 'Sample',
     },
     KEYS: {
-      GENERAL:"General",
-      CHANGEPASSWORD:"Change Password",
-      UPLOAD:"Upload",
-      ACCOUNTSETTINGS:"Account Settings",
-      PAGES:"Pages",
-      MODELGROUPS:"Model Groups",
-      DEFINITIONS:"Definitions"
-    }
-  }
-}
+      GENERAL: 'General',
+      CHANGEPASSWORD: 'Change Password',
+      UPLOAD: 'Upload',
+      ACCOUNTSETTINGS: 'Account Settings',
+      PAGES: 'Pages',
+      MODELGROUPS: 'Model Groups',
+      DEFINITIONS: 'Definitions',
+      CODE: 'Code',
+      NAME: 'Name',
+      ADDROW: 'Add a row',
+      CANCELALLCHANGES: 'Discard changes',
+      CANCELROWCHANGES: 'Cancel',
+      CONFIRMDELETEMESSAGE: 'Are you sure you want to delete this record?',
+      CONFIRMDELETETITLE: 'Delete Warning',
+      DELETEROW: 'Delete',
+      EDITROW: 'Edit',
+      SAVEALLCHANGES: 'Save Changes',
+      SAVEROWCHANGES: 'Save',
+      UNDELETEROW: 'Undelete',
+      VALIDATIONCANCELCHANGES: 'Cancel Changes',
+    },
+  },
+};

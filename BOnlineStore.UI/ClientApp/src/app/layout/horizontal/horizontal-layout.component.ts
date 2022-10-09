@@ -9,7 +9,7 @@ import { CoreConfigService } from '@core/services/config.service';
   selector: 'horizontal-layout',
   templateUrl: './horizontal-layout.component.html',
   styleUrls: ['./horizontal-layout.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class HorizontalLayoutComponent implements OnInit, OnDestroy {
   coreConfig: any;
@@ -35,9 +35,11 @@ export class HorizontalLayoutComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // Subscribe to config changes
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
   }
 
   /**
@@ -45,7 +47,7 @@ export class HorizontalLayoutComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 }

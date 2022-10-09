@@ -11,9 +11,14 @@ import {
   OnInit,
   Output,
   Renderer2,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/animations';
+import {
+  animate,
+  AnimationBuilder,
+  AnimationPlayer,
+  style,
+} from '@angular/animations';
 import { DOCUMENT } from '@angular/common';
 import { MediaObserver } from '@angular/flex-layout';
 
@@ -28,7 +33,7 @@ import { CoreSidebarService } from '@core/components/core-sidebar/core-sidebar.s
 @Component({
   selector: 'core-sidebar',
   templateUrl: './core-sidebar.component.html',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class CoreSidebarComponent implements OnInit, OnDestroy {
   // Sidebar name (Component input)
@@ -69,7 +74,9 @@ export class CoreSidebarComponent implements OnInit, OnDestroy {
   @Input()
   hideOnEsc: boolean;
 
-  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+  @HostListener('document:keydown.escape', ['$event']) onKeydownHandler(
+    event: KeyboardEvent
+  ) {
     if (this.hideOnEsc) {
       this.close();
     }
@@ -120,7 +127,8 @@ export class CoreSidebarComponent implements OnInit, OnDestroy {
 
     // Layout root element
     this.rootElement =
-      this.document.querySelectorAll('.vertical-layout')[0] || this.document.querySelectorAll('.horizontal-layout')[0];
+      this.document.querySelectorAll('.vertical-layout')[0] ||
+      this.document.querySelectorAll('.horizontal-layout')[0];
 
     this.collapsedChangedEvent = new EventEmitter();
     this.openedChangedEvent = new EventEmitter();
@@ -184,14 +192,16 @@ export class CoreSidebarComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // Subscribe to app-config changes
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this._coreConfig = config;
-      if (config.layout.type == 'vertical') {
-        this.menuClass = 'vertical-menu-modern';
-      } else {
-        this.menuClass = 'horizontal-menu';
-      }
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this._coreConfig = config;
+        if (config.layout.type == 'vertical') {
+          this.menuClass = 'vertical-menu-modern';
+        } else {
+          this.menuClass = 'horizontal-menu';
+        }
+      });
 
     // Register the sidebar
     this._coreSidebarService.setSidebarRegistry(this.name, this);
@@ -216,7 +226,7 @@ export class CoreSidebarComponent implements OnInit, OnDestroy {
     this._coreSidebarService.removeSidebarRegistry(this.name);
 
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 
@@ -241,81 +251,89 @@ export class CoreSidebarComponent implements OnInit, OnDestroy {
     this._wasCollapsed = this.collapsed;
 
     // On every media(screen) change
-    this._coreMediaService.onMediaUpdate.pipe(takeUntil(this._unsubscribeAll)).subscribe(() => {
-      // Get the collapsible status
-      const isCollapsible = this._mediaObserver.isActive(this.collapsibleSidebar);
-      //! On screen resize set the config collapsed state if we have else this.collapsed
-      this._wasCollapsed = this._coreConfig.layout.menu.collapsed || this.collapsed;
+    this._coreMediaService.onMediaUpdate
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(() => {
+        // Get the collapsible status
+        const isCollapsible = this._mediaObserver.isActive(
+          this.collapsibleSidebar
+        );
+        //! On screen resize set the config collapsed state if we have else this.collapsed
+        this._wasCollapsed =
+          this._coreConfig.layout.menu.collapsed || this.collapsed;
 
-      // If sidebar is not collapsible, switch to overlay menu (On page load without resize the window)
-      // ? Improve this menu condition
-      if (!isCollapsible && this.name === 'menu') {
-        this.rootElement.classList.remove(this.menuClass);
-        this.rootElement.classList.add('vertical-overlay-menu');
-      }
-
-      // If the both status are the same, then return
-      if (this._wasCollapsible === isCollapsible) {
-        return;
-      }
-
-      // If isCollapsible is true, use collapsible sidebar
-      if (isCollapsible) {
-        // Set the collapsibleSidebar status
-        this.iscollapsibleSidebar = true;
-
-        // Set the the opened status to true
-        this.isOpened = true;
-
-        this.expanded = true; // Adde expanded class init
-
-        // Emit the 'openedChangedEvent' event
-        this.openedChangedEvent.emit(this.isOpened);
-
-        // If the sidebar was collapsed, forcefully collapse it again
-        if (this._wasCollapsed) {
-          // Collapse
-          this.collapsed = true;
-
-          this.expanded = false; // Remove expanded class
-          // Change detector
-          this._changeDetectorRef.markForCheck();
+        // If sidebar is not collapsible, switch to overlay menu (On page load without resize the window)
+        // ? Improve this menu condition
+        if (!isCollapsible && this.name === 'menu') {
+          this.rootElement.classList.remove(this.menuClass);
+          this.rootElement.classList.add('vertical-overlay-menu');
         }
 
-        // If sidebar is collapsible, switch to collapsible menu (modern-menu)
-        if (this.name === 'menu') {
-          this.rootElement.classList.add(this.menuClass);
-          this.rootElement.classList.remove('vertical-overlay-menu', 'menu-hide');
+        // If the both status are the same, then return
+        if (this._wasCollapsible === isCollapsible) {
+          return;
         }
 
-        // Hide the overlay if any exists
-        this._hideOverlay();
-      }
-      // Else use overlay sidebar
-      else {
-        // Set the collapsibleSidebar status
-        this.iscollapsibleSidebar = false;
+        // If isCollapsible is true, use collapsible sidebar
+        if (isCollapsible) {
+          // Set the collapsibleSidebar status
+          this.iscollapsibleSidebar = true;
 
-        // Expanded the sidebar in case if it was collapsed
-        this.expand();
+          // Set the the opened status to true
+          this.isOpened = true;
 
-        // Force the the opened status to close
-        this.isOpened = false;
+          this.expanded = true; // Adde expanded class init
 
-        // Emit the 'openedChangedEvent' event
-        this.openedChangedEvent.emit(this.isOpened);
+          // Emit the 'openedChangedEvent' event
+          this.openedChangedEvent.emit(this.isOpened);
 
-        // If sidebar is not collapsible, switch to overlay menu (On window resize)
-        this.rootElement.classList.remove(this.menuClass);
-        this.rootElement.classList.add('vertical-overlay-menu');
+          // If the sidebar was collapsed, forcefully collapse it again
+          if (this._wasCollapsed) {
+            // Collapse
+            this.collapsed = true;
 
-        // Hide the sidebar
-        this._hideSidebar();
-      }
+            this.expanded = false; // Remove expanded class
+            // Change detector
+            this._changeDetectorRef.markForCheck();
+          }
 
-      // Set the new active status
-      this._wasCollapsible = isCollapsible;
-    });
+          // If sidebar is collapsible, switch to collapsible menu (modern-menu)
+          if (this.name === 'menu') {
+            this.rootElement.classList.add(this.menuClass);
+            this.rootElement.classList.remove(
+              'vertical-overlay-menu',
+              'menu-hide'
+            );
+          }
+
+          // Hide the overlay if any exists
+          this._hideOverlay();
+        }
+        // Else use overlay sidebar
+        else {
+          // Set the collapsibleSidebar status
+          this.iscollapsibleSidebar = false;
+
+          // Expanded the sidebar in case if it was collapsed
+          this.expand();
+
+          // Force the the opened status to close
+          this.isOpened = false;
+
+          // Emit the 'openedChangedEvent' event
+          this.openedChangedEvent.emit(this.isOpened);
+
+          // If sidebar is not collapsible, switch to overlay menu (On window resize)
+          this.rootElement.classList.remove(this.menuClass);
+          this.rootElement.classList.add('vertical-overlay-menu');
+
+          // Hide the sidebar
+          this._hideSidebar();
+        }
+
+        // Set the new active status
+        this._wasCollapsible = isCollapsible;
+      });
   }
 
   /**
@@ -357,7 +375,10 @@ export class CoreSidebarComponent implements OnInit, OnDestroy {
     }
 
     // Append the overlay element to the parent element of the sidebar
-    this._renderer.appendChild(this._elementRef.nativeElement.parentElement, this._overlay);
+    this._renderer.appendChild(
+      this._elementRef.nativeElement.parentElement,
+      this._overlay
+    );
 
     // Overlay enter animation and attach it to the animationPlayer
     this._animationPlayer = this._animationBuilder

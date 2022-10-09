@@ -7,7 +7,7 @@ import { CoreConfigService } from '@core/services/config.service';
 
 @Component({
   selector: 'footer',
-  templateUrl: './footer.component.html'
+  templateUrl: './footer.component.html',
 })
 export class FooterComponent implements OnInit, OnDestroy {
   public coreConfig: any;
@@ -34,9 +34,11 @@ export class FooterComponent implements OnInit, OnDestroy {
    */
   ngOnInit(): void {
     // Subscribe to config changes
-    this._coreConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe(config => {
-      this.coreConfig = config;
-    });
+    this._coreConfigService.config
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((config) => {
+        this.coreConfig = config;
+      });
   }
 
   /**
@@ -44,7 +46,7 @@ export class FooterComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     // Unsubscribe from all subscriptions
-    this._unsubscribeAll.next();
+    this._unsubscribeAll.next(true);
     this._unsubscribeAll.complete();
   }
 }

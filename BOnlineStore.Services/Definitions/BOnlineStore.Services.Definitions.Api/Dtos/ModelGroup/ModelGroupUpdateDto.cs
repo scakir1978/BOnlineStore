@@ -2,11 +2,11 @@
 {
     public class ModelGroupUpdateDto
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string? Code { get; set; }
+        public string? Name { get; set; }
 
-        public ModelGroupUpdateDto(string code, string name)
-        {            
+        public ModelGroupUpdateDto(string? code, string? name)
+        {
             Code = code;
             Name = name;
         }
