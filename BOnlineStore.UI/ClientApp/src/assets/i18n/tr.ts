@@ -26,6 +26,7 @@ export const locale = {
       SAVEROWCHANGES: 'Kaydet',
       UNDELETEROW: 'Geri al',
       VALIDATIONCANCELCHANGES: 'Değişiklikleri iptal et',
+      SEARCH: 'Ara',
     },
   },
 };

@@ -24,7 +24,7 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         }
 
         [HttpPost("Load")]
-        public IActionResult Load([FromBody] DataSourceLoadOptionsBase loadOptions)
+        public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             return Ok(DataSourceLoader.Load(_mapper.Map<List<ModelGroupDto>>(_modelGroupService.Load()), loadOptions));
 

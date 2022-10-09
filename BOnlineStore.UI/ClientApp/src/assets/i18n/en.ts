@@ -26,6 +26,7 @@ export const locale = {
       SAVEROWCHANGES: 'Save',
       UNDELETEROW: 'Undelete',
       VALIDATIONCANCELCHANGES: 'Cancel Changes',
+      SEARCH: 'Search',
     },
   },
 };

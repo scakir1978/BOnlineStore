@@ -13,35 +13,19 @@ import { environment } from 'environments/environment';
 import { AuthenticationService } from 'app/auth/service';
 
 @Injectable()
-export class JwtInterceptor implements HttpInterceptor, OnInit, OnDestroy {
+export class JwtInterceptor implements HttpInterceptor {
   // private
-  private _unsubscribeAll: Subject<any>;
   private language: string;
+  private serverLanguages = [
+    { code: 'tr', serverCode: 'tr-TR' },
+    { code: 'en', serverCode: 'en-US' },
+  ];
 
   /**
    *
    * @param {AuthenticationService} _authenticationService
    */
-  constructor(
-    private _authenticationService: AuthenticationService,
-    private _coreConfigService: CoreConfigService
-  ) {
-    this._unsubscribeAll = new Subject();
-  }
-
-  ngOnInit(): void {
-    this._coreConfigService
-      .getConfig()
-      .pipe(takeUntil(this._unsubscribeAll))
-      .subscribe((config: CoreConfig) => {
-        this.language =
-          config.app.appLanguage +
-          '-' +
-          config.app.appLanguage.toLocaleUpperCase();
-      });
-  }
-
-  ngOnDestroy(): void {}
+  constructor(private _authenticationService: AuthenticationService) {}
 
   /**
    * Add auth header with jwt if user is logged in and request is to api url
@@ -54,6 +38,10 @@ export class JwtInterceptor implements HttpInterceptor, OnInit, OnDestroy {
   ): Observable<HttpEvent<any>> {
     const currentUser = this._authenticationService.currentUserValue;
     const isLoggedIn = currentUser && currentUser.token;
+    const localConfig: CoreConfig = JSON.parse(localStorage.getItem('config'));
+    const serverLanguageCode = this.serverLanguages.find(
+      (x) => x.code === localConfig.app.appLanguage
+    ).serverCode;
     //const isApiUrl = request.url.startsWith(environment.apiUrl);
     if (isLoggedIn) {
       request = request.clone({
@@ -62,7 +50,7 @@ export class JwtInterceptor implements HttpInterceptor, OnInit, OnDestroy {
           'Cache-Control': 'no-cache',
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
-          'Accept-Language': this.language ?? currentUser.language,
+          'Accept-Language': serverLanguageCode ?? currentUser.language,
           Accept: 'application/json',
         },
       });

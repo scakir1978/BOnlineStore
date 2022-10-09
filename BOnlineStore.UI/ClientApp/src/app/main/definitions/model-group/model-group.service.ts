@@ -27,7 +27,12 @@ export class ModelGroupService implements Resolve<any> {
       paginate: true,
       pageSize: 10,
       load: (loadOptions) =>
-        this.sendRequest(environment.definitionsUrl + 'ModelGroups  ', 'LOAD'),
+        this.sendRequest(
+          environment.definitionsUrl + 'ModelGroups/Load  ',
+          'LOADPOST',
+          null,
+          loadOptions
+        ),
       insert: (values: any) =>
         this.sendRequest(
           environment.definitionsUrl + 'ModelGroups',
@@ -65,6 +70,9 @@ export class ModelGroupService implements Resolve<any> {
       case 'LOAD':
         result = this._http.get(url);
         break;
+      case 'LOADPOST':
+        result = this._http.post(url, data);
+        break;
       case 'INSERT':
         result = this._http.post(url, data);
         break;
@@ -78,7 +86,7 @@ export class ModelGroupService implements Resolve<any> {
     }
 
     return lastValueFrom(result).then((data: any) =>
-      method === 'LOAD' ? data.data : data
+      method === 'LOAD' || 'LOADPOST' ? data.data : data
     );
   }
 }
