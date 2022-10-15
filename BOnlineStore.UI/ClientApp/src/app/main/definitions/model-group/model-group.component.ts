@@ -7,10 +7,17 @@ import DataSource from 'devextreme/data/data_source';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { Workbook } from 'exceljs';
+import { saveAs } from 'file-saver';
+import { exportDataGrid as exportDataGridExcel } from 'devextreme/excel_exporter';
+
+import { exportDataGrid as exportDataGridPdf } from 'devextreme/pdf_exporter';
+import { jsPDF } from 'jspdf';
+
 @Component({
   selector: 'model-group',
   templateUrl: './model-group.component.html',
-  styleUrls: ['./model-group.component.scss']
+  styleUrls: ['./model-group.component.scss'],
 })
 export class ModelGroupComponent implements OnInit {
   // public
@@ -20,12 +27,14 @@ export class ModelGroupComponent implements OnInit {
 
   private _unsubscribeAll: Subject<any>;
 
-  constructor(private _translate: TranslateService,
-    private _coreConfigService: CoreConfigService, private _modelGroupService : ModelGroupService) {
-      this.modelGroupDataSource = _modelGroupService.getDataSource();
-      this._unsubscribeAll = new Subject();
-    }
-    
+  constructor(
+    private _translate: TranslateService,
+    private _coreConfigService: CoreConfigService,
+    private _modelGroupService: ModelGroupService
+  ) {
+    this.modelGroupDataSource = _modelGroupService.getDataSource();
+    this._unsubscribeAll = new Subject();
+  }
 
   // Lifecycle Hooks
   // -----------------------------------------------------------------------------------------------------
@@ -33,36 +42,66 @@ export class ModelGroupComponent implements OnInit {
   /**
    * On init
    */
-  ngOnInit() {    
-
+  ngOnInit() {
     this.createBreadCrumb();
 
-    this._coreConfigService.getConfig().pipe(takeUntil(this._unsubscribeAll)).subscribe((response : CoreConfig)=>{ 
-      this.createBreadCrumb();
-    })  
+    this._coreConfigService
+      .getConfig()
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe((response: CoreConfig) => {
+        this.createBreadCrumb();
+      });
   }
 
-  private createBreadCrumb(){
+  onExporting(e) {
+    e.fileName = 'ModelGruplari';
+    if (e.format === 'xslx') {
+      const workbook = new Workbook();
+      const worksheet = workbook.addWorksheet('ModelGruplari');
+
+      exportDataGridExcel({
+        component: e.component,
+        worksheet,
+        autoFilterEnabled: true,
+      }).then(() => {
+        workbook.xlsx.writeBuffer().then((buffer) => {
+          saveAs(
+            new Blob([buffer], { type: 'application/octet-stream' }),
+            'ModelGruplari.xlsx'
+          );
+        });
+      });
+      e.cancel = true;
+    }
+    if (e.format === 'pdf') {
+      const doc = new jsPDF();
+      exportDataGridPdf({
+        jsPDFDocument: doc,
+        component: e.component,
+        indent: 5,
+      }).then(() => {
+        doc.save('ModelGruplari.pdf');
+      });
+    }
+  }
+
+  private createBreadCrumb() {
     this.contentHeader = {
-      headerTitle: this._translate.instant("KEYS.MODELGROUPS"),
+      headerTitle: this._translate.instant('KEYS.MODELGROUPS'),
       actionButton: true,
       breadcrumb: {
         type: '',
         links: [
           {
-            name: this._translate.instant("KEYS.DEFINITIONS"),
-            isLink: false            
+            name: this._translate.instant('KEYS.DEFINITIONS'),
+            isLink: false,
           },
           {
-            name: this._translate.instant("KEYS.MODELGROUPS"),
+            name: this._translate.instant('KEYS.MODELGROUPS'),
             isLink: false,
           },
         ],
       },
     };
-  }
-
-  onSaving(e){
-    
   }
 }

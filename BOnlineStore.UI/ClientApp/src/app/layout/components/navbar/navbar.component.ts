@@ -24,7 +24,7 @@ import { coreConfig } from 'app/app-config';
 import { Router } from '@angular/router';
 
 import themes from 'devextreme/ui/themes';
-import { refreshTheme } from 'devextreme/viz/themes';
+import { locale } from 'devextreme/localization';
 
 @Component({
   selector: 'app-navbar',
@@ -154,6 +154,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
       { app: { appLanguage: language } },
       { emitEvent: true }
     );
+
+    sessionStorage.setItem('locale', language);
+    locale(language);
+    parent.document.location.reload();
   }
 
   /**

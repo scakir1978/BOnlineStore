@@ -11,39 +11,11 @@
       [showColumnLines]="true"
       [showRowLines]="true"
       [showBorders]="true"
-      (onSaving)="onSaving($event)"
+      (onExporting)="onExporting($event)"
     >
-      <dxo-filter-row
-        [visible]="true"
-        applyFilterText="{{ 'KEYS.APPLYFILTER' | translate }}"
-        betweenEndText="{{ 'KEYS.BETWEENEND' | translate }}"
-        betweenStartText="{{ 'KEYS.BETWEENSTART' | translate }}"
-        resetOperationText="{{ 'KEYS.RESETOPERATION' | translate }}"
-        showAllText="{{ 'KEYS.SHOWALL' | translate }}"
-      >
-        <dxo-operation-descriptions
-          between="{{ 'KEYS.BETWEEN' | translate }}"
-          contains="{{ 'KEYS.CONTAINS' | translate }}"
-          endsWith="{{ 'KEYS.ENDSWITH' | translate }}"
-          equal="{{ 'KEYS.EQUAL' | translate }}"
-          greaterThan="{{ 'KEYS.GREATERTHAN' | translate }}"
-          greaterThanOrEqual="{{ 'KEYS.GREATERTHANOREQUAL' | translate }}"
-          lessThan="{{ 'KEYS.LESSTHAN' | translate }}"
-          lessThanOrEqual="{{ 'KEYS.LESSTHANOREQUAL' | translate }}"
-          notContains="{{ 'KEYS.NOTCONTAINS' | translate }}"
-          notEqual="{{ 'KEYS.NOTEQUAL' | translate }}"
-          startsWith="{{ 'KEYS.STARTSWITH' | translate }}"
-        >
-        </dxo-operation-descriptions>
-      </dxo-filter-row>
-      <dxo-header-filter [visible]="true">
-        <dxo-texts
-          cancel="{{ 'KEYS.CANCEL' | translate }}"
-          emptyValue="{{ 'KEYS.EMPTYVALUE' | translate }}"
-          ok="{{ 'KEYS.OK' | translate }}"
-        >
-        </dxo-texts>
-      </dxo-header-filter>
+      <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+      <dxo-filter-row [visible]="true"> </dxo-filter-row>
+      <dxo-header-filter [visible]="true"> </dxo-header-filter>
       <dxo-editing
         mode="batch"
         [allowAdding]="true"
@@ -53,22 +25,6 @@
         [refreshMode]="'full'"
         [confirmDelete]="true"
       >
-        <dxo-texts
-          addRow="{{ 'KEYS.ADDROW' | translate }}"
-          cancelAllChanges="{{ 'KEYS.CANCELALLCHANGES' | translate }}"
-          cancelRowChanges="{{ 'KEYS.CANCELROWCHANGES' | translate }}"
-          confirmDeleteMessage="{{ 'KEYS.CONFIRMDELETEMESSAGE' | translate }}"
-          confirmDeleteTitle="{{ 'KEYS.CONFIRMDELETETITLE' | translate }}"
-          deleteRow="{{ 'KEYS.DELETEROW' | translate }}"
-          editRow="{{ 'KEYS.EDITROW' | translate }}"
-          saveAllChanges="{{ 'KEYS.SAVEALLCHANGES' | translate }}"
-          saveRowChanges="{{ 'KEYS.SAVEROWCHANGES' | translate }}"
-          undeleteRow="{{ 'KEYS.UNDELETEROW' | translate }}"
-          validationCancelChanges="{{
-            'KEYS.VALIDATIONCANCELCHANGES' | translate
-          }}"
-        >
-        </dxo-texts>
       </dxo-editing>
 
       <dxo-paging [pageSize]="10"> </dxo-paging>
@@ -78,49 +34,13 @@
         [showPageSizeSelector]="true"
         [showInfo]="true"
         [showNavigationButtons]="true"
-        infoText="{{ 'KEYS.INFOTEXT' | translate }}"
       >
       </dxo-pager>
 
-      <dxo-filter-panel [visible]="true">
-        <dxo-texts
-          clearFilter="{{ 'KEYS.CLEARFILTER' | translate }}"
-          createFilter="{{ 'KEYS.CREATEFILTER' | translate }}"
-          filterEnabledHint="{{ 'KEYS.FILTERENABLEDHINT' | translate }}"
-        >
-        </dxo-texts>
-      </dxo-filter-panel>
+      <dxo-filter-panel [visible]="true"> </dxo-filter-panel>
       <dxo-filter-builder [allowHierarchicalFields]="true">
-        <dxo-filter-operation-descriptions
-          between="{{ 'KEYS.BETWEEN' | translate }}"
-          contains="{{ 'KEYS.CONTAINS' | translate }}"
-          endsWith="{{ 'KEYS.ENDSWITH' | translate }}"
-          equal="{{ 'KEYS.EQUAL' | translate }}"
-          greaterThan="{{ 'KEYS.GREATERTHAN' | translate }}"
-          greaterThanOrEqual="{{ 'KEYS.GREATERTHANOREQUAL' | translate }}"
-          isBlank="{{ 'KEYS.ISBLANK' | translate }}"
-          isNotBlank="{{ 'KEYS.ISNOTBLANK' | translate }}"
-          lessThan="{{ 'KEYS.LESSTHAN' | translate }}"
-          lessThanOrEqual="{{ 'KEYS.LESSTHANOREQUAL' | translate }}"
-          notContains="{{ 'KEYS.NOTCONTAINS' | translate }}"
-          notEqual="{{ 'KEYS.NOTEQUAL' | translate }}"
-          startsWith="{{ 'KEYS.STARTSWITH' | translate }}"
-        >
-        </dxo-filter-operation-descriptions>
-        <dxo-group-operation-descriptions
-          and="{{ 'KEYS.AND' | translate }}"
-          notAnd="{{ 'KEYS.NOTAND' | translate }}"
-          notOr="{{ 'KEYS.NOTOR' | translate }}"
-          or="{{ 'KEYS.OR' | translate }}"
-        >
-        </dxo-group-operation-descriptions>
       </dxo-filter-builder>
-
-      <dxo-filter-builder-popup
-        title="{{ 'KEYS.FILTERPOPUPTITLE' | translate }}"
-      >
-      </dxo-filter-builder-popup>
-
+      <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
       <dxi-column
         dataField="id"
         [allowEditing]="false"

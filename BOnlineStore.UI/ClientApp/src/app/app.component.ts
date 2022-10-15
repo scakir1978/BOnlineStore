@@ -28,6 +28,9 @@ import { locale as languageGerman } from '../assets/i18n/de';
 import { locale as languagePortuguese } from '../assets/i18n/pt';
 
 import themes from 'devextreme/ui/themes';
+import { locale, loadMessages } from 'devextreme/localization';
+import trDevextremeMessages from '../assets/i18n/devextreme/tr.json';
+import enDevextremeMessages from '../assets/i18n/devextreme/en.json';
 
 themes.current(window.localStorage.getItem('dx-theme') || 'dark');
 
@@ -95,6 +98,10 @@ export class AppComponent implements OnInit, OnDestroy {
       languagePortuguese
     );
 
+    //devextreme localization
+    loadMessages(trDevextremeMessages);
+    loadMessages(enDevextremeMessages);
+
     // Set the private defaults
     this._unsubscribeAll = new Subject();
   }
@@ -122,6 +129,13 @@ export class AppComponent implements OnInit, OnDestroy {
         // ? Use app-config.ts file to set default language
         const appLanguage = this.coreConfig.app.appLanguage || 'tr';
         this._translateService.use(appLanguage);
+
+        //devextreme localization
+        locale(this.coreConfig.app.appLanguage || 'tr');
+        sessionStorage.setItem(
+          'locale',
+          this.coreConfig.app.appLanguage || 'tr'
+        );
 
         // ? OR
         // ? User the current browser lang if available, if undefined use 'en'
