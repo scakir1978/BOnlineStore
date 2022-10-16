@@ -25,18 +25,19 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
 
         [HttpPost("Load")]
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
-        {
-            return Ok(DataSourceLoader.Load(_mapper.Map<List<ModelGroupDto>>(_modelGroupService.Load()), loadOptions));
+        {           
+            var source = DataSourceLoader.Load(_modelGroupService.Load(), loadOptions);
+            //return Ok(DataSourceLoader.Load(_mapper.Map<List<ModelGroupDto>>(_modelGroupService.Load()), loadOptions));
 
-            /*LoadResult loadResult = new LoadResult
+            LoadResult loadResult = new LoadResult
             {
                 data = loadOptions.Group == null ? _mapper.Map<List<ModelGroupDto>>(source.data) : source.data,
-                totalCount = 1,                
-                groupCount = 0,
+                totalCount = source.totalCount,                
+                groupCount = source.groupCount,
                 summary = source.summary
             };
 
-            return Ok(loadResult);*/
+            return Ok(loadResult);
         }
 
         [HttpGet]

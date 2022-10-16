@@ -14,6 +14,7 @@ using Microsoft.Extensions.Localization;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Globalization;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +40,7 @@ builder.Services.AddControllers(options =>
 }).AddJsonOptions(options => {
 
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;    
 
 });
 

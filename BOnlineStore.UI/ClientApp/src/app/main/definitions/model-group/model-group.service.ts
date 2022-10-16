@@ -23,7 +23,7 @@ export class ModelGroupService implements Resolve<any> {
   getDataSource(): DataSource {
     return new DataSource({
       key: 'id',
-      loadMode: 'raw',
+      //loadMode: 'raw',
       paginate: true,
       pageSize: 10,
       load: (loadOptions) =>
@@ -85,8 +85,6 @@ export class ModelGroupService implements Resolve<any> {
         break;
     }
 
-    return lastValueFrom(result).then((data: any) =>
-      method === 'LOAD' || 'LOADPOST' ? data.data : data
-    );
+    return lastValueFrom(result).then((data: any) => data);
   }
 }
