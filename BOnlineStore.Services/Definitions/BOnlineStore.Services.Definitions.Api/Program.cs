@@ -1,21 +1,15 @@
 
 using AutoMapper;
-using BOnlineStore.Localization;
-using BOnlineStore.Localization.Constants;
 using BOnlineStore.Services.Definitions.Api;
 using BOnlineStore.Services.Definitions.Api.Injections;
 using BOnlineStore.Shared;
 using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using Microsoft.Extensions.Localization;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Globalization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
