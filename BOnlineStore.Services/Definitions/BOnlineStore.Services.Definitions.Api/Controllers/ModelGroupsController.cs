@@ -27,27 +27,7 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         [HttpPost("Load")]
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
-
-            //var data = _modelGroupService.Load();
-            var data = _modelGroupService.Load();
-            //var mappedData = _mapper.ProjectTo<ModelGroupDto>(data);            
-
-            var source = DataSourceLoader.Load(data, loadOptions);
-
-            return Ok(source);
-            //var source = DataSourceLoader.Load(_modelGroupService.Load().ToList(), loadOptions);
-            //return Ok(DataSourceLoader.Load(_mapper.Map<List<ModelGroupDto>>(_modelGroupService.Load()), loadOptions));
-
-            /*
-            LoadResult loadResult = new LoadResult
-            {
-                data = loadOptions.Group == null ? _mapper.Map<List<ModelGroupDto>>(source.data) : source.data,
-                totalCount = source.totalCount,                
-                groupCount = source.groupCount,
-                summary = source.summary
-            };
-
-            return Ok(loadResult);*/
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ModelGroupDto>(_modelGroupService.Load()), loadOptions));            
         }
 
         [HttpGet]

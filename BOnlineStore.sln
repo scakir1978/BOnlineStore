@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.Localization",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BOnlineStore.UI", "BOnlineStore.UI", "{DE0B668D-CECF-4850-A104-5D39405B367F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOnlineStore.UI", "BOnlineStore.UI\BOnlineStore.UI.csproj", "{9A19D945-58CF-4D40-9636-6A764A2EB826}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.UI", "BOnlineStore.UI\BOnlineStore.UI.csproj", "{9A19D945-58CF-4D40-9636-6A764A2EB826}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevExtreme.AspNet.Data", "..\DevExtreme.AspNet.Data-master\net\DevExtreme.AspNet.Data\DevExtreme.AspNet.Data.csproj", "{67BBA442-66A4-416E-9B0A-10F2CF37364D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{9A19D945-58CF-4D40-9636-6A764A2EB826}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A19D945-58CF-4D40-9636-6A764A2EB826}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A19D945-58CF-4D40-9636-6A764A2EB826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67BBA442-66A4-416E-9B0A-10F2CF37364D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67BBA442-66A4-416E-9B0A-10F2CF37364D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67BBA442-66A4-416E-9B0A-10F2CF37364D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67BBA442-66A4-416E-9B0A-10F2CF37364D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{50D1EA10-403E-4DE0-A2A5-D27F649F5A15} = {C56E1D43-2CBB-414F-8C83-2C55744DBB51}
 		{0C0DBDDC-9AFD-470F-A18B-F69978712CB4} = {C56E1D43-2CBB-414F-8C83-2C55744DBB51}
 		{9A19D945-58CF-4D40-9636-6A764A2EB826} = {DE0B668D-CECF-4850-A104-5D39405B367F}
+		{67BBA442-66A4-416E-9B0A-10F2CF37364D} = {C56E1D43-2CBB-414F-8C83-2C55744DBB51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A12FA703-13AF-486D-90AA-45AC95F5C81E}

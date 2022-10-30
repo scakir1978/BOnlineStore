@@ -8,6 +8,7 @@ import {
 import DataSource from 'devextreme/data/data_source';
 import { environment } from 'environments/environment';
 import { lastValueFrom, Observable } from 'rxjs';
+import { createStore } from 'devextreme-query-mongodb';
 
 @Injectable({
   providedIn: 'root',
@@ -83,6 +84,6 @@ export class ModelGroupService implements Resolve<any> {
         break;
     }
 
-    return lastValueFrom(result).then((data: any) => data);
+    return lastValueFrom(result).then((result: any) => result.data);
   }
 }

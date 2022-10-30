@@ -37,13 +37,18 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new AuthorizeFilter());
 
-}).AddJsonOptions(options => {
+}).AddNewtonsoftJson(options=>
+{
+    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+});
+
+    /*.AddJsonOptions(options => {
 
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     //options.JsonSerializerOptions.PropertyNamingPolicy = null;
 
-});
+});*/
 
 builder.Services.AddLocalization();
 
