@@ -9,19 +9,17 @@ import { CoreCommonModule } from '@core/common.module';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { ModelGroupModule } from './model-group/model-group.module';
 
-
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule,
     CommonModule,
     CoreCommonModule,
     ContentHeaderModule,
     NgbModule,
     NgSelectModule,
     FormsModule,
-    ModelGroupModule        
+    ModelGroupModule,
   ],
-  providers: []
+  providers: [],
 })
-export class DefinitionsModule { }
+export class DefinitionsModule {}

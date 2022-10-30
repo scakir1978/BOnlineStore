@@ -6,10 +6,11 @@ import { map } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { User, Role } from 'app/auth/models';
 import { ToastrService } from 'ngx-toastr';
-import * as oidc from 'oidc-client';
+import * as oidc from 'oidc-client-ts';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+  returnUrl: string = '/';
 
   config: oidc.UserManagerSettings = {
     client_id: 'AngularClient',
@@ -25,7 +26,7 @@ export class AuthenticationService {
     scope:
       'openid profile definitions_full_permission IdentityServerApi offline_access',
     automaticSilentRenew: true,
-
+    response_mode: 'query',
   };
 
   private identityUser: oidc.User | null | undefined = null;
@@ -42,9 +43,14 @@ export class AuthenticationService {
    * @param {HttpClient} _http
    * @param {ToastrService} _toastrService
    */
-  constructor(private _http: HttpClient, private _toastrService: ToastrService) {
+  constructor(
+    private _http: HttpClient,
+    private _toastrService: ToastrService
+  ) {
     this.userManager = new oidc.UserManager(this.config);
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(
+      JSON.parse(localStorage.getItem('currentUser'))
+    );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -57,71 +63,63 @@ export class AuthenticationService {
    *  Confirms if user is admin
    */
   get isAdmin() {
-    return this.currentUser && this.currentUserSubject.value.role === Role.Admin;
+    return (
+      this.currentUser && this.currentUserSubject.value.role === Role.Admin
+    );
   }
 
   /**
    *  Confirms if user is client
    */
   get isClient() {
-    return this.currentUser && this.currentUserSubject.value.role === Role.Client;
+    return (
+      this.currentUser && this.currentUserSubject.value.role === Role.Client
+    );
   }
 
   private createUIUser(identityUser: oidc.User) {
-
     var user: User = new User();
 
     user.id = identityUser.profile.sid;
-    user.avatar = "avatar-s-11.jpg";
+    user.avatar = 'avatar-s-11.jpg';
     user.email = identityUser.profile.email;
     user.firstName = identityUser.profile.name;
     user.lastName = identityUser.profile.family_name;
     user.role = Role.Admin;
     user.token = identityUser.access_token;
-    user.language = identityUser.profile.locale ?? "tr-TR";
+    user.language = identityUser.profile.locale ?? 'tr-TR';
 
-    localStorage.setItem('currentUser', JSON.stringify(user));  
+    localStorage.setItem('currentUser', JSON.stringify(user));
 
     this.currentUserSubject.next(user);
-
   }
 
   completeAuthentication(): Promise<oidc.User> {
-    return new oidc.UserManager({ response_mode: 'query' })
-      .signinRedirectCallback()
-      .then((identityUser) => {
-        this.createUIUser(identityUser);
-        return identityUser;
-      });
+    return this.userManager.signinRedirectCallback().then((identityUser) => {
+      this.createUIUser(identityUser);
+      return identityUser;
+    });
   }
 
-  loginIndetity(): void {
+  loginIndetity(returnUrl: string = '/'): void {
+    this.returnUrl = returnUrl;
     this.userManager.signinRedirect();
   }
 
   logoutIndetity(): void {
-
     localStorage.removeItem('currentUser');
     // notify
     this.currentUserSubject.next(null);
 
     this.userManager.signoutRedirect();
-    
   }
 
-  silentRefresh(): Promise<oidc.User | undefined> {
-    return this.userManager
-      .signinSilentCallback()
-      .then((indentityUser: oidc.User | undefined) => {
-        this.createUIUser(indentityUser);
-        return indentityUser;
-      });
+  silentRefresh(): Promise<void> {
+    return this.userManager.signinSilentCallback();
   }
 
   signoutRedirectCallback() {
-    return new oidc.UserManager({
-      response_mode: 'query',
-    }).signoutRedirectCallback();
+    return this.userManager.signoutRedirectCallback();
   }
 
   /**
@@ -133,9 +131,12 @@ export class AuthenticationService {
    */
   login(email: string, password: string) {
     return this._http
-      .post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
+      .post<any>(`${environment.apiUrl}/users/authenticate`, {
+        email,
+        password,
+      })
       .pipe(
-        map(user => {
+        map((user) => {
           // login successful if there's a jwt token in the response
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -145,8 +146,8 @@ export class AuthenticationService {
             setTimeout(() => {
               this._toastrService.success(
                 'You have successfully logged in as an ' +
-                user.role +
-                ' user to Vuexy. Now you can start to explore. Enjoy! 🎉',
+                  user.role +
+                  ' user to Vuexy. Now you can start to explore. Enjoy! 🎉',
                 '👋 Welcome, ' + user.firstName + '!',
                 { toastClass: 'toast ngx-toastr', closeButton: true }
               );

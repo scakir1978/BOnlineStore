@@ -5,6 +5,7 @@ using BOnlineStore.MongoDb.GenericRepository;
 using BOnlineStore.Shared.Entities;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace BOnlineStore.Generic.Service
         {
             return _mapper.Map<List<TEntityDto>>(await _repository.GetAsync());
         }
-        public virtual async Task<TEntityDto> GetByIdAsync(Guid id)
+        public virtual async Task<TEntityDto> GetByIdAsync(string id)
         {
             var entity = await _repository.GetByIdAsync(id);
 
@@ -84,11 +85,11 @@ namespace BOnlineStore.Generic.Service
         {
             return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(_mapper.Map<TEntity>(input)));            
         }
-        public virtual async Task<TEntityDto> DeleteAsync(Guid id)
+        public virtual async Task<TEntityDto> DeleteAsync(string id)
         {
             return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(id));
         }        
-        public virtual async Task<TEntityDto> UpdateAsync(Guid id, TUpdateInput input)
+        public virtual async Task<TEntityDto> UpdateAsync(string id, TUpdateInput input)
         {
             #region Validation Control
             var validationResult = await ServiceValidator(ValidationTypeEnum.Update)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using System.Linq.Expressions;
 using BOnlineStore.Shared.Constansts;
+using MongoDB.Bson;
 
 namespace BOnlineStore.MongoDb.GenericRepository
 {
@@ -27,13 +28,13 @@ namespace BOnlineStore.MongoDb.GenericRepository
                 ? query
                 : query.Where(predicate);
         }
-
+            
         public virtual async Task<List<TEntity>> GetAsync()
         {
             return await _entity.Find(x=>x.TenantId == GetTenantId()).ToListAsync();
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(Guid id)
+        public virtual async Task<TEntity> GetByIdAsync(string id)
         {
             return await _entity.Find(x => x.TenantId == GetTenantId() && x.Id == id).FirstOrDefaultAsync();
         }
@@ -58,7 +59,7 @@ namespace BOnlineStore.MongoDb.GenericRepository
             return (await _entity.BulkWriteAsync((IEnumerable<WriteModel<TEntity>>)entities, options)).IsAcknowledged;
         }
 
-        public virtual async Task<TEntity> UpdateAsync(Guid id, TEntity entity)
+        public virtual async Task<TEntity> UpdateAsync(string id, TEntity entity)
         {            
             var options = new FindOneAndReplaceOptions<TEntity> { ReturnDocument = ReturnDocument.After };
             entity.SetTenant(GetTenantId());
@@ -77,7 +78,7 @@ namespace BOnlineStore.MongoDb.GenericRepository
             return await _entity.FindOneAndDeleteAsync(x => x.TenantId == GetTenantId() && x.Id == entity.Id);
         }
 
-        public virtual async Task<TEntity> DeleteAsync(Guid id)
+        public virtual async Task<TEntity> DeleteAsync(string id)
         {
             return await _entity.FindOneAndDeleteAsync(x => x.TenantId == GetTenantId() && x.Id == id);
         }

@@ -15811,9 +15811,9 @@
   line-height: inherit;
 }
 .dx-datagrid .dx-row-alt > td {
-  background-color: #3f3f4b;
-  border-top: 1px solid #3f3f4b;
-  border-bottom: 1px solid #3f3f4b;
+  background-color: #313c59;
+  border-top: 1px solid #313c59;
+  border-bottom: 1px solid #313c59;
 }
 .dx-datagrid .dx-row-alt.dx-row:not(.dx-row-removed) {
   border-bottom-color: transparent;
@@ -18130,9 +18130,9 @@ input.dx-hidden {
   line-height: inherit;
 }
 .dx-treelist .dx-row-alt > td {
-  background-color: #3f3f4b;
-  border-top: 1px solid #3f3f4b;
-  border-bottom: 1px solid #3f3f4b;
+  background-color: #313c59;
+  border-top: 1px solid #313c59;
+  border-bottom: 1px solid #313c59;
 }
 .dx-treelist .dx-row-alt.dx-row:not(.dx-row-removed) {
   border-bottom-color: transparent;

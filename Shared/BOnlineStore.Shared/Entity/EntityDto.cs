@@ -5,6 +5,6 @@ namespace BOnlineStore.Shared.Entity
 {
     public  class EntityDto
     {       
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
 }

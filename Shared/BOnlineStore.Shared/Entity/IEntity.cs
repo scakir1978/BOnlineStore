@@ -6,8 +6,8 @@ namespace BOnlineStore.Shared.Entities
     public interface IEntity
     {
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        Guid Id { get; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        string Id { get; }
 
         [BsonRepresentation(BsonType.String)]
         Guid TenantId { get; }

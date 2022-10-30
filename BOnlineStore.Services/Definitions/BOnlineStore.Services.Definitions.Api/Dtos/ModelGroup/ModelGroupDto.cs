@@ -1,4 +1,5 @@
 ﻿using BOnlineStore.Shared.Entity;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
@@ -8,7 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         public string Code { get; set; }
         public string Name { get; set; }
 
-        public ModelGroupDto(Guid id, string code, string name)
+        public ModelGroupDto(string id, string code, string name)
         {            
             Id = id;
             Code = code;

@@ -1,5 +1,5 @@
 import { ModelGroupService } from './model-group.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CoreConfigService } from '@core/services/config.service';
 import { CoreConfig } from '@core/types';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +19,7 @@ import { jsPDF } from 'jspdf';
   templateUrl: './model-group.component.html',
   styleUrls: ['./model-group.component.scss'],
 })
-export class ModelGroupComponent implements OnInit {
+export class ModelGroupComponent implements OnInit, OnDestroy {
   // public
   public contentHeader: object;
 
@@ -103,5 +103,14 @@ export class ModelGroupComponent implements OnInit {
         ],
       },
     };
+  }
+
+  /**
+   * On destroy
+   */
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next(true);
+    this._unsubscribeAll.complete();
   }
 }

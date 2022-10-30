@@ -62,8 +62,6 @@ export class ModelGroupService implements Resolve<any> {
     key: string = '',
     data: any = {}
   ): any {
-    const httpParams = new HttpParams({ fromObject: data });
-    const httpOptions = { withCredentials: true, body: httpParams };
     let result;
 
     switch (method) {

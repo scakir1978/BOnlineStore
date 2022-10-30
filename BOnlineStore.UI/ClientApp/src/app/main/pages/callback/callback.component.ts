@@ -5,15 +5,17 @@ import { AuthenticationService } from 'app/auth/service';
 @Component({
   selector: 'app-callback',
   templateUrl: './callback.component.html',
-  styleUrls: ['./callback.component.scss']
+  styleUrls: ['./callback.component.scss'],
 })
 export class CallbackComponent implements OnInit {
-
-  constructor(private router: Router, private authService: AuthenticationService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService
+  ) {}
 
   ngOnInit(): void {
     if (this.router.url.includes('callback')) {
-      this.authService.completeAuthentication().then(() => {
+      this.authService.completeAuthentication().then((user) => {
         this.router.navigateByUrl('/');
       });
     }
@@ -28,5 +30,4 @@ export class CallbackComponent implements OnInit {
         .then(() => this.router.navigateByUrl('/'));
     }
   }
-
 }

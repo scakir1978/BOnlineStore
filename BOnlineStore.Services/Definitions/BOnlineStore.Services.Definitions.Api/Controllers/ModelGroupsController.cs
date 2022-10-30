@@ -7,6 +7,7 @@ using DevExtreme.AspNet.Data;
 using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Controllers
 {
@@ -26,11 +27,18 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         [HttpPost("Load")]
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
-            var data = _modelGroupService.Load().ToList();
+
+            //var data = _modelGroupService.Load();
+            var data = _modelGroupService.Load();
+            //var mappedData = _mapper.ProjectTo<ModelGroupDto>(data);            
+
             var source = DataSourceLoader.Load(data, loadOptions);
+
+            return Ok(source);
             //var source = DataSourceLoader.Load(_modelGroupService.Load().ToList(), loadOptions);
             //return Ok(DataSourceLoader.Load(_mapper.Map<List<ModelGroupDto>>(_modelGroupService.Load()), loadOptions));
 
+            /*
             LoadResult loadResult = new LoadResult
             {
                 data = loadOptions.Group == null ? _mapper.Map<List<ModelGroupDto>>(source.data) : source.data,
@@ -39,7 +47,7 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
                 summary = source.summary
             };
 
-            return Ok(loadResult);
+            return Ok(loadResult);*/
         }
 
         [HttpGet]
@@ -49,7 +57,7 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(Guid id)
+        public async Task<IActionResult> GetByIdAsync(string id)
         {
             return CreateSuccessActionResultInstance(await _modelGroupService.GetByIdAsync(id));
         }
@@ -61,13 +69,13 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(Guid id, ModelGroupUpdateDto input)
+        public async Task<IActionResult> UpdateAsync(string id, ModelGroupUpdateDto input)
         {
             return CreateSuccessActionResultInstance(await _modelGroupService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(Guid id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
             return CreateSuccessActionResultInstance(await _modelGroupService.DeleteAsync(id));
         }

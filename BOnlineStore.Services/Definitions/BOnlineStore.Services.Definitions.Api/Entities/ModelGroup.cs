@@ -1,4 +1,5 @@
 ﻿using BOnlineStore.Shared.Entities;
+using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
@@ -13,7 +14,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             Name = "";
         }
 
-        public ModelGroup(Guid tenantId, Guid id, string code, string name) : base(tenantId, id)
+        public ModelGroup(Guid tenantId, string id, string code, string name) : base(tenantId, id)
         {
             Code = code;
             Name = name;
