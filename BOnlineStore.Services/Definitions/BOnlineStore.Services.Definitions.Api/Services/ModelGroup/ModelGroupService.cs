@@ -11,7 +11,7 @@ using static BOnlineStore.Shared.Enums;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
-    public class ModelGroupService : Service<ModelGroup,ModelGroupDto,ModelGroupCreateDto,ModelGroupUpdateDto> , IModelGroupService
+    public class ModelGroupService : Service<ModelGroup, ModelGroupDto, ModelGroupCreateDto, ModelGroupUpdateDto>, IModelGroupService
     {
         private readonly IModelGroupRepository _repository;
         private readonly IMapper _mapper;
@@ -23,13 +23,6 @@ namespace BOnlineStore.Services.Definitions.Api.Services
             _mapper = mapper;
             _stringLocalizer = stringLocalizer;
         }
-
-        public override IValidator ServiceValidator(ValidationTypeEnum validationType)
-        {
-            if (validationType == ValidationTypeEnum.Update) 
-                return new ModelGroupUpdateValidation(_stringLocalizer);
-
-            return new ModelGroupCreateValidation(_stringLocalizer);
-        }
+        
     }
 }

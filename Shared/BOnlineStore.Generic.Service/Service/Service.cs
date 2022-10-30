@@ -6,6 +6,7 @@ using BOnlineStore.Shared.Entities;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using MongoDB.Bson;
+using SharpCompress.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,31 +34,21 @@ namespace BOnlineStore.Generic.Service
         {
             return _repository.Load(predicate);
         }
+
         public virtual async Task<List<TEntityDto>> GetAsync()
         {
             return _mapper.Map<List<TEntityDto>>(await _repository.GetAsync());
         }
+
         public virtual async Task<TEntityDto> GetByIdAsync(string id)
         {
-            var entity = await _repository.GetByIdAsync(id);
-
-            if (entity == null)
-                throw new Exception("Kayıt Bulunamadı");
+            await IsRecordExists(id);
 
             return _mapper.Map<TEntityDto>(await _repository.GetByIdAsync(id));
-        }
+        }       
+
         public virtual async Task<TEntityDto> AddAsync(TCreateInput input)
         {
-            #region Validation Control
-            var validationResult = await ServiceValidator(ValidationTypeEnum.Create)
-                                        .ValidateAsync(new ValidationContext<TCreateInput>(input));
-
-            if (!validationResult.IsValid)
-            {
-                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
-            }
-            #endregion
-
             var entity = _mapper.Map<TEntity>(input);
 
             var entityAdded = await _repository.AddAsync(entity);
@@ -66,76 +57,65 @@ namespace BOnlineStore.Generic.Service
 
             return entityDto;
         }
+
         public virtual async Task<bool> AddRangeAsync(IEnumerable<TCreateInput> inputs)
         {
-            #region Validation Control
-            foreach (var input in inputs)
-            {
-                var validationResult = await ServiceValidator(ValidationTypeEnum.Create).ValidateAsync(new ValidationContext<TCreateInput>(input));
-                if (!validationResult.IsValid)
-                {
-                    throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
-                }
-            }
-            #endregion
-
-            return await _repository.AddRangeAsync(_mapper.Map<List<TEntity>>(inputs));            
+            return await _repository.AddRangeAsync(_mapper.Map<List<TEntity>>(inputs));
         }
+
         public virtual async Task<TEntityDto> DeleteAsync(TEntityDto input)
         {
-            return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(_mapper.Map<TEntity>(input)));            
+            var entity = _mapper.Map<TEntity>(input);
+
+            await IsRecordExists(entity.Id);
+
+            return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(entity));
         }
+
         public virtual async Task<TEntityDto> DeleteAsync(string id)
         {
+            await IsRecordExists(id);
+
             return _mapper.Map<TEntityDto>(await _repository.DeleteAsync(id));
-        }        
+        }
+
         public virtual async Task<TEntityDto> UpdateAsync(string id, TUpdateInput input)
         {
-            #region Validation Control
-            var validationResult = await ServiceValidator(ValidationTypeEnum.Update)
-                                        .ValidateAsync(new ValidationContext<TUpdateInput>(input));
-
-            if (!validationResult.IsValid)
-            {
-                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
-            }
-            #endregion
-
             #region Record Control            
             TEntity updateEntity = await _repository.GetByIdAsync(id);
             if (updateEntity == null)
             {
-                throw new Exception("Kayıt bulunamadı");
+                throw new Exception(_stringLocalizer[SharedKeys.RecordNotFound, typeof(TEntity).Name, id]);
             }
+
             #endregion
 
             return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(id, _mapper.Map(input, updateEntity)));
-            
-        }        
+
+        }
+
         public virtual async Task<TEntityDto> UpdateAsync(TUpdateInput input, Expression<Func<TEntity, bool>> predicate)
         {
-            #region Validation Control            
-            var validationResult = await ServiceValidator(ValidationTypeEnum.Update)
-                                        .ValidateAsync(new ValidationContext<TUpdateInput>(input));
-
-            if (!validationResult.IsValid)
-            {
-                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
-            }
-            #endregion
 
             #region Record Control            
             TEntity updateEntity = _repository.Load(predicate).First();
             if (updateEntity == null)
             {
-                throw new Exception("Kayıt bulunamadı");
+                throw new Exception(_stringLocalizer[SharedKeys.RecordNotFoundPredicate, typeof(TEntity).Name]);
             }
             #endregion
 
             return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(_mapper.Map(input, updateEntity), predicate));
         }
-        public abstract IValidator ServiceValidator(ValidationTypeEnum validationType);
 
-        
+        private async Task IsRecordExists(string id)
+        {
+            var entity = await _repository.GetByIdAsync(id);
+
+            if (entity == null)
+                throw new Exception(_stringLocalizer[SharedKeys.RecordNotFound, typeof(TEntity).Name, id]);
+        }
+
+
     }
 }

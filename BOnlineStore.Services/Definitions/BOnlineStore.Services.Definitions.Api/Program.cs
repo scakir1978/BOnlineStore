@@ -111,6 +111,7 @@ IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddMongoDbConfigurationAndInjections(builder.Configuration);
+builder.Services.AddValidatorInjections();
 builder.Services.AddRepositoryInjections();
 builder.Services.AddServiceInjections();
 

@@ -84,6 +84,6 @@ export class ModelGroupService implements Resolve<any> {
         break;
     }
 
-    return lastValueFrom(result).then((result: any) => result.data);
+    return lastValueFrom(result).then((response: any) => response.result);
   }
 }

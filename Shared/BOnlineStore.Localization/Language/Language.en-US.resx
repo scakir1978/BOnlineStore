@@ -134,15 +134,19 @@
     <comment>Model grup kodu boş olamaz.</comment>
   </data>
   <data name="ModelGroupNameNotEmpty" xml:space="preserve">
-    <value>Model group name not empty</value>
+    <value>Model group name not empty.</value>
     <comment>Model grup adı boş olamaz.</comment>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
-    <value>Record not found.</value>
-    <comment>Kayıt bulunamadı.</comment>
+    <value>No record with id number {1} found in table {0}.</value>
+    <comment>{0} tablosunda {1} id numaralı kayıt bulunamadı.</comment>
+  </data>
+  <data name="RecordNotFoundPredicate" xml:space="preserve">
+    <value>In the {0} table, the record you are looking for could not be found.</value>
+    <comment>{0} tablosunda aradığınız kayıt bulunamadı.</comment>
   </data>
   <data name="SwaggerSecurityDescription" xml:space="preserve">
-    <value>Please enter a valid token</value>
+    <value>Please enter a valid token.</value>
     <comment>Lütfen geçerli bir token girin.</comment>
   </data>
   <data name="UnhandledException" xml:space="preserve">

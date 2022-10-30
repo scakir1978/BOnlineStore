@@ -14,5 +14,7 @@ namespace BOnlineStore.Localization.Constants
         public const string HandledException = "HandledException";
         public const string DefinitionServiceSwaggerTitle = "DefinitionServiceSwaggerTitle";
         public const string SwaggerSecurityDescription = "SwaggerSecurityDescription";
+        public const string RecordNotFound = "RecordNotFound";
+        public const string RecordNotFoundPredicate = "RecordNotFoundPredicate";
     }
 }

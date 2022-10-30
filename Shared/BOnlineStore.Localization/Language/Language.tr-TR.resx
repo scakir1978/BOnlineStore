@@ -133,7 +133,10 @@
     <value>Model grup adı boş olamaz.</value>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
-    <value>Kayıt bulunamadı.</value>
+    <value>{0} tablosunda {1} id numaralı kayıt bulunamadı.</value>
+  </data>
+  <data name="RecordNotFoundPredicate" xml:space="preserve">
+    <value>{0} tablosunda aradığınız kayıt bulunamadı.</value>
   </data>
   <data name="SwaggerSecurityDescription" xml:space="preserve">
     <value>Lütfen geçerli bir token girin.</value>
