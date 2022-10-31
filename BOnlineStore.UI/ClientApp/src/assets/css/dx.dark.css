@@ -6951,7 +6951,7 @@
   background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0A%3C!--%20Generator%3A%20Adobe%20Illustrator%2024.0.1%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200)%20%20--%3E%0A%3Csvg%20version%3D%221.1%22%20id%3D%22dx_l_3%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0A%09%20width%3D%2224px%22%20height%3D%2224px%22%20viewBox%3D%220%200%2024%2024%22%20style%3D%22enable-background%3Anew%200%200%2024%2024%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpath%20style%3D%22fill%3A%23dedede%3B%22%20d%3D%22M12%2C2C6.5%2C2%2C2%2C6.5%2C2%2C12c0%2C5.5%2C4.5%2C10%2C10%2C10s10-4.5%2C10-10C22%2C6.5%2C17.5%2C2%2C12%2C2z%20M18%2C13H6v-2h12V13z%22%2F%3E%0A%3C%2Fsvg%3E%0A");
 }
 .dx-list-item.dx-list-item-ghost-reordering.dx-state-focused.dx-state-hover {
-  color: #7c7c7c;
+  color: #acafb6;
   background: #283046;
   border-top: 1px solid rgba(28,168,221,.5);
   border-bottom: 1px solid rgba(28,168,221,.5);
@@ -7231,7 +7231,7 @@
   background-image: url("data:image/svg+xml;charset=UTF-8,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22utf-8%22%3F%3E%0A%3C!--%20Generator%3A%20Adobe%20Illustrator%2024.0.1%2C%20SVG%20Export%20Plug-In%20.%20SVG%20Version%3A%206.00%20Build%200)%20%20--%3E%0A%3Csvg%20version%3D%221.1%22%20id%3D%22dx_l_3%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%0A%09%20width%3D%2224px%22%20height%3D%2224px%22%20viewBox%3D%220%200%2024%2024%22%20style%3D%22enable-background%3Anew%200%200%2024%2024%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpath%20style%3D%22fill%3A%23dedede%3B%22%20d%3D%22M12%2C2C6.5%2C2%2C2%2C6.5%2C2%2C12c0%2C5.5%2C4.5%2C10%2C10%2C10s10-4.5%2C10-10C22%2C6.5%2C17.5%2C2%2C12%2C2z%20M18%2C13H6v-2h12V13z%22%2F%3E%0A%3C%2Fsvg%3E%0A");
 }
 .dx-device-mobile .dx-list-item.dx-list-item-ghost-reordering.dx-state-focused.dx-state-hover {
-  color: #7c7c7c;
+  color: #acafb6;
   background: #283046;
   border-top: 1px solid rgba(28,168,221,.5);
   border-bottom: 1px solid rgba(28,168,221,.5);
@@ -12772,7 +12772,7 @@
 }
 .dx-datagrid .dx-header-filter {
   position: relative;
-  color: #7c7c7c;
+  color: #acafb6;
   font: 14px/1 DXIcons;
 }
 .dx-datagrid .dx-header-filter::before {
@@ -13267,7 +13267,7 @@
   opacity: .5;
   margin-bottom: 10px;
   background-color: #283046;
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   border: 1px solid #4d4d4d;
   padding: 7px;
@@ -13277,7 +13277,7 @@
 .dx-datagrid-drag-header {
   -webkit-box-shadow: 0 0 1px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.2);
   box-shadow: 0 0 1px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.2);
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   padding: 7px;
   border: 1px solid rgba(28,168,221,.5);
@@ -13335,7 +13335,7 @@
   background-color: transparent;
 }
 .dx-datagrid-headers {
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   -ms-touch-action: pinch-zoom;
   touch-action: pinch-zoom;
@@ -13531,7 +13531,7 @@
   background-color: #4d4d4d;
   border-top: 1px solid #4d4d4d;
   border-bottom: 1px solid #4d4d4d;
-  color: #7c7c7c;
+  color: #acafb6;
 }
 .dx-datagrid-rowsview .dx-adaptive-detail-row .dx-adaptive-item-text {
   padding-top: 8px;
@@ -13798,7 +13798,7 @@
   touch-action: pinch-zoom;
 }
 .dx-datagrid-group-panel .dx-group-panel-message {
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   padding: 7px;
   border-top: 1px solid transparent;
@@ -13806,14 +13806,14 @@
 }
 .dx-datagrid-group-panel .dx-group-panel-item {
   margin-right: 10px;
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   border: 1px solid #4d4d4d;
   padding: 7px;
 }
 .dx-datagrid-group-panel .dx-block-separator {
   margin-right: 10px;
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   padding: 8px;
   background-color: #3b3b3b;
@@ -13828,8 +13828,8 @@
   font-weight: 700;
 }
 .dx-datagrid-rowsview .dx-row.dx-group-row:not(.dx-row-focused) {
-  color: #7c7c7c;
-  background-color: #323232;
+  color: #acafb6;
+  background-color: #161d31;
 }
 .dx-datagrid-rowsview .dx-row.dx-group-row td {
   border-top-color: #4d4d4d;
@@ -13842,7 +13842,7 @@
   background-size: 18px 18px;
   padding: 0;
   text-align: center;
-  color: #7c7c7c;
+  color: #acafb6;
 }
 .dx-datagrid-group-opened::before {
   content: "\f001";
@@ -13854,7 +13854,7 @@
   background-size: 18px 18px;
   padding: 0;
   text-align: center;
-  color: #7c7c7c;
+  color: #acafb6;
 }
 .dx-datagrid-group-closed::before {
   content: "\f04e";
@@ -14827,7 +14827,7 @@ input.dx-hidden {
 }
 .dx-treelist-container .dx-header-filter {
   position: relative;
-  color: #7c7c7c;
+  color: #acafb6;
   font: 14px/1 DXIcons;
 }
 .dx-treelist-container .dx-header-filter::before {
@@ -15339,7 +15339,7 @@ input.dx-hidden {
   opacity: .5;
   margin-bottom: 10px;
   background-color: #283046;
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   border: 1px solid #4d4d4d;
   padding: 7px;
@@ -15349,7 +15349,7 @@ input.dx-hidden {
 .dx-treelist-drag-header {
   -webkit-box-shadow: 0 0 1px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.2);
   box-shadow: 0 0 1px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.2);
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   padding: 7px;
   border: 1px solid rgba(28,168,221,.5);
@@ -15407,7 +15407,7 @@ input.dx-hidden {
   background-color: transparent;
 }
 .dx-treelist-headers {
-  color: #7c7c7c;
+  color: #acafb6;
   font-weight: 400;
   -ms-touch-action: pinch-zoom;
   touch-action: pinch-zoom;
@@ -15641,7 +15641,7 @@ input.dx-hidden {
   background-color: #4d4d4d;
   border-top: 1px solid #4d4d4d;
   border-bottom: 1px solid #4d4d4d;
-  color: #7c7c7c;
+  color: #acafb6;
 }
 .dx-treelist-rowsview .dx-adaptive-detail-row .dx-adaptive-item-text {
   padding-top: 8px;
@@ -15917,7 +15917,7 @@ input.dx-hidden {
   visibility: hidden;
 }
 .dx-treelist-rowsview tr:not(.dx-row-focused) .dx-treelist-empty-space {
-  color: #7c7c7c;
+  color: #acafb6;
 }
 .dx-treelist-rowsview .dx-treelist-expanded span {
   font: 18px/18px DXIcons;
@@ -15950,7 +15950,7 @@ input.dx-hidden {
   margin-top: -8px;
 }
 .dx-treelist-rowsview tr:not(.dx-row-focused).dx-selection .dx-treelist-empty-space {
-  color: #7c7c7c;
+  color: #acafb6;
 }
 .dx-treelist-rowsview .dx-treelist-cell-expandable {
   white-space: nowrap;
@@ -16256,7 +16256,7 @@ input.dx-hidden {
   content: "\f052";
 }
 .dx-pivotgrid-fields-container .dx-header-filter {
-  color: #7c7c7c;
+  color: #acafb6;
   font: 14px/1 DXIcons;
   width: 14px;
 }
@@ -22703,7 +22703,7 @@ input.dx-hidden {
   height: 45px;
 }
 .dx-gantt .dx-gantt-header {
-  color: #7c7c7c;
+  color: #acafb6;
 }
 .dx-gantt .dx-gantt-header .dx-gantt-hb,
 .dx-gantt .dx-gantt-header .dx-gantt-tsa,

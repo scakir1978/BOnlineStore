@@ -44,6 +44,21 @@
       <dxo-group-panel [visible]="true"></dxo-group-panel>
       <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
 
+      <dxo-toolbar>
+        <dxi-item location="after">
+          <div *dxTemplate>
+            <dx-button icon="refresh" (onClick)="refreshDataGrid($event)">
+            </dx-button>
+          </div>
+        </dxi-item>
+        <dxi-item name="groupPanel"></dxi-item>
+        <dxi-item name="addRowButton"></dxi-item>
+        <dxi-item name="saveButton"></dxi-item>
+        <dxi-item name="revertButton"></dxi-item>
+        <dxi-item name="exportButton"></dxi-item>
+        <dxi-item name="columnChooserButton"></dxi-item>
+      </dxo-toolbar>
+
       <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
       </dxi-column>
       <dxi-column dataField="code" caption="{{ 'KEYS.CODE' | translate }}">

@@ -1,5 +1,5 @@
 import { ModelGroupService } from './model-group.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CoreConfigService } from '@core/services/config.service';
 import { CoreConfig } from '@core/types';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { exportDataGrid as exportDataGridExcel } from 'devextreme/excel_exporter
 
 import { exportDataGrid as exportDataGridPdf } from 'devextreme/pdf_exporter';
 import { jsPDF } from 'jspdf';
+import { DxDataGridComponent } from 'devextreme-angular';
 
 @Component({
   selector: 'model-group',
@@ -20,6 +21,9 @@ import { jsPDF } from 'jspdf';
   styleUrls: ['./model-group.component.scss'],
 })
 export class ModelGroupComponent implements OnInit, OnDestroy {
+  @ViewChild(DxDataGridComponent, { static: false })
+  dataGrid: DxDataGridComponent;
+
   // public
   public contentHeader: object;
 
@@ -103,6 +107,10 @@ export class ModelGroupComponent implements OnInit, OnDestroy {
         ],
       },
     };
+  }
+
+  refreshDataGrid() {
+    this.dataGrid.instance.refresh();
   }
 
   /**

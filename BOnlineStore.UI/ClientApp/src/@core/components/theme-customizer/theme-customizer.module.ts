@@ -6,17 +6,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   PerfectScrollbarConfigInterface,
   PerfectScrollbarModule,
-  PERFECT_SCROLLBAR_CONFIG
+  PERFECT_SCROLLBAR_CONFIG,
 } from 'ngx-perfect-scrollbar';
 
 import { CoreDirectivesModule } from '@core/directives/directives';
 import { CoreSidebarModule } from '@core/components/core-sidebar/core-sidebar.module';
 
 import { CoreThemeCustomizerComponent } from '@core/components/theme-customizer/theme-customizer.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
-  wheelPropagation: false
+  wheelPropagation: false,
 };
 
 @NgModule({
@@ -28,14 +29,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FlexLayoutModule,
     PerfectScrollbarModule,
     CoreDirectivesModule,
-    CoreSidebarModule
+    CoreSidebarModule,
+    TranslateModule,
   ],
   providers: [
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+    },
+    TranslateService,
   ],
-  exports: [CoreThemeCustomizerComponent]
+  exports: [CoreThemeCustomizerComponent, TranslateModule],
 })
 export class CoreThemeCustomizerModule {}
+
+/*exports: [TranslateModule],
+  providers: [ModelGroupService, TranslateService]*/

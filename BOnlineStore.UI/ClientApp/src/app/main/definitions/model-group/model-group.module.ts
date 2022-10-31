@@ -18,8 +18,9 @@ const routes: Routes = [
     component: ModelGroupComponent,
     canActivate: [AuthGuard],
     resolve: {
-      modelGroup: ModelGroupService  },
-    data: { animation: 'model-groups' }
+      modelGroup: ModelGroupService,
+    },
+    data: { animation: 'model-groups' },
   },
 ];
 
@@ -27,13 +28,13 @@ const routes: Routes = [
   declarations: [ModelGroupComponent],
   imports: [
     RouterModule.forChild(routes),
-    NgbModule,    
+    NgbModule,
     ContentHeaderModule,
     CoreCommonModule,
     ContentHeaderModule,
     Ng2FlatpickrModule,
     TranslateModule,
-    DevExtremeModule    
+    DevExtremeModule,
   ],
   exports: [TranslateModule],
   providers: [ModelGroupService, TranslateService],
