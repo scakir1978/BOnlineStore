@@ -177,15 +177,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.prevSkin = localStorage.getItem('prevSkin');
 
     if (this.currentSkin === 'dark') {
-      //window.localStorage.setItem('dx-theme', 'light');
-      //themes.current('light');
       this._coreConfigService.setConfig(
         { layout: { skin: this.prevSkin ? this.prevSkin : 'default' } },
         { emitEvent: true }
       );
     } else {
-      //window.localStorage.setItem('dx-theme', 'dark');
-      //themes.current('dark');
       localStorage.setItem('prevSkin', this.currentSkin);
       this._coreConfigService.setConfig(
         { layout: { skin: 'dark' } },
@@ -196,11 +192,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   changeDevExtremeSkin(vuexySkin) {
     if (vuexySkin === 'dark') {
-      window.localStorage.setItem('dx-theme', 'dark');
-      themes.current('dark');
+      window.localStorage.setItem('dx-theme', 'normalDark');
+      themes.current('normalDark');
     } else {
-      window.localStorage.setItem('dx-theme', 'light');
-      themes.current('light');
+      window.localStorage.setItem('dx-theme', 'normalLight');
+      themes.current('normalLight');
     }
   }
 

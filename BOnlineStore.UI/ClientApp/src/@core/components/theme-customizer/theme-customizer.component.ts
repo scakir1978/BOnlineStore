@@ -121,13 +121,13 @@ export class CoreThemeCustomizerComponent implements OnInit, OnDestroy {
     var currentDevExTheme = window.localStorage.getItem('dx-theme');
     if (vuexySkin === 'dark') {
       if (currentDevExTheme !== 'dark') {
-        window.localStorage.setItem('dx-theme', 'dark');
-        themes.current('dark');
+        window.localStorage.setItem('dx-theme', 'normalDark');
+        themes.current('normalDark');
       }
     } else {
       if (currentDevExTheme !== 'light') {
-        window.localStorage.setItem('dx-theme', 'light');
-        themes.current('light');
+        window.localStorage.setItem('dx-theme', 'normalLight');
+        themes.current('normalLight');
       }
     }
   }

@@ -32,7 +32,7 @@ import { locale, loadMessages } from 'devextreme/localization';
 import trDevextremeMessages from '../assets/i18n/devextreme/tr.json';
 import enDevextremeMessages from '../assets/i18n/devextreme/en.json';
 
-themes.current(window.localStorage.getItem('dx-theme') || 'dark');
+themes.current(window.localStorage.getItem('dx-theme') || 'normalDark');
 
 @Component({
   selector: 'app-root',
