@@ -19,6 +19,7 @@ import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
 import { ErrorInterceptor, fakeBackendProvider, JwtInterceptor } from './auth/helpers';
+import { BaseDefinitionsOnGridComponent } from './main/base/base-definitions-on-grid/base-definitions-on-grid.component';
 
 const appRoutes: Routes = [
   {
@@ -41,7 +42,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, BaseDefinitionsOnGridComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

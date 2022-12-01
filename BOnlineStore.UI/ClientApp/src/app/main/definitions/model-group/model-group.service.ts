@@ -7,8 +7,8 @@ import {
 } from '@angular/router';
 import DataSource from 'devextreme/data/data_source';
 import { environment } from 'environments/environment';
-import { lastValueFrom, Observable } from 'rxjs';
-import { createStore } from 'devextreme-query-mongodb';
+import { lastValueFrom, Observable, switchAll } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -85,5 +85,15 @@ export class ModelGroupService implements Resolve<any> {
     }
 
     return lastValueFrom(result).then((response: any) => response.result);
+    /*.catch((err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Hata oluştu..',
+          text: err,
+          customClass: {
+            confirmButton: 'btn btn-primary',
+          },
+        });
+      });*/
   }
 }

@@ -11,6 +11,7 @@ import { ContentHeaderModule } from 'app/layout/components/content-header/conten
 import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 import { ModelGroupComponent } from './model-group.component';
 import { ModelGroupService } from './model-group.service';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 const routes: Routes = [
   {
@@ -35,6 +36,7 @@ const routes: Routes = [
     Ng2FlatpickrModule,
     TranslateModule,
     DevExtremeModule,
+    SweetAlert2Module.forRoot(),
   ],
   exports: [TranslateModule],
   providers: [ModelGroupService, TranslateService],

@@ -130,11 +130,11 @@
     <comment>İşlem sırasında hata oluştu. Daha fazla bilgi için loglara/log detaylarına bakınız.</comment>
   </data>
   <data name="ModelGroupCodeNotEmpty" xml:space="preserve">
-    <value>Model group code not empty.</value>
+    <value>Model group code cannot be empty.</value>
     <comment>Model grup kodu boş olamaz.</comment>
   </data>
   <data name="ModelGroupNameNotEmpty" xml:space="preserve">
-    <value>Model group name not empty.</value>
+    <value>Model group name cannot be empty.</value>
     <comment>Model grup adı boş olamaz.</comment>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
