@@ -10,5 +10,7 @@ namespace BOnlineStore.Localization.Constants
     {
         public const string ModelGroupCodeNotEmpty = "ModelGroupCodeNotEmpty";
         public const string ModelGroupNameNotEmpty = "ModelGroupNameNotEmpty";
+        public const string ColorCodeNotEmpty = "ColorCodeNotEmpty";
+        public const string ColorNameNotEmpty = "ColorNameNotEmpty";
     }
 }

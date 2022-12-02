@@ -11,6 +11,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
         public static IServiceCollection AddValidatorInjections(this IServiceCollection services)
         {
             services.AddScoped<IValidator<ModelGroup>, ModelGroupValidator>();
+            services.AddScoped<IValidator<Color>, ColorValidator>();
 
             return services;
         }
