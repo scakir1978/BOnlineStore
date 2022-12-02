@@ -8,6 +8,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { CoreCommonModule } from '@core/common.module';
 import { ContentHeaderModule } from 'app/layout/components/content-header/content-header.module';
 import { ModelGroupModule } from './model-group/model-group.module';
+import { ColorGroupModule } from './color-group/color-group.module';
 
 @NgModule({
   declarations: [],
@@ -19,6 +20,7 @@ import { ModelGroupModule } from './model-group/model-group.module';
     NgSelectModule,
     FormsModule,
     ModelGroupModule,
+    ColorGroupModule,
   ],
   providers: [],
 })

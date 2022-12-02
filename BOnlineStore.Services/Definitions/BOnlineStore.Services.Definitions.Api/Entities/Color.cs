@@ -12,8 +12,8 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string ColorGroupId { get; private set; }
 
+        [BsonIgnore]
         public ColorGroup ColorGroup { get; private set; }
-
 
         public Color() : base()
         {

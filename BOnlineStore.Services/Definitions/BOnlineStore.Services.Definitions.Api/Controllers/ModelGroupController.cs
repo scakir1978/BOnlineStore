@@ -1,24 +1,20 @@
 ﻿using AutoMapper;
-using BOnlineStore.Localization;
 using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Services;
 using BOnlineStore.Shared.Controllers;
 using DevExtreme.AspNet.Data;
-using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
-using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ModelGroupsController : ControllerShared
+    public class ModelGroupController : ControllerShared
     {
         private protected IModelGroupService _modelGroupService;
         private protected IMapper _mapper;
 
-        public ModelGroupsController(IModelGroupService modelGroupService, IMapper mapper)
+        public ModelGroupController(IModelGroupService modelGroupService, IMapper mapper)
         {
             _modelGroupService = modelGroupService;
             _mapper = mapper;
@@ -28,7 +24,7 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ModelGroupDto>(_modelGroupService.Load()), loadOptions));            
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ModelGroupDto>(_modelGroupService.Load()), loadOptions));
         }
 
         [HttpGet]
