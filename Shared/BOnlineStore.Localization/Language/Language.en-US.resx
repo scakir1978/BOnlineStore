@@ -117,13 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CodeNameNotEmpty" xml:space="preserve">
-    <value>Color name cannot be empty.</value>
-    <comment>Renk adı boş olamaz.</comment>
-  </data>
-  <data name="CodeNotEmpty" xml:space="preserve">
+  <data name="ColorCodeNotEmpty" xml:space="preserve">
     <value>Color code cannot be empty.</value>
     <comment>Renk kodu boş olamaz.</comment>
+  </data>
+  <data name="ColorGroupCodeNotEmpty" xml:space="preserve">
+    <value>Color group code cannot be empty.</value>
+    <comment>Renk grup kodu boş olamaz.</comment>
+  </data>
+  <data name="ColorGroupNameNotEmpty" xml:space="preserve">
+    <value>Color group name cannot be empty.</value>
+    <comment>Renk grup adı boş olamaz.</comment>
+  </data>
+  <data name="ColorNameNotEmpty" xml:space="preserve">
+    <value>Color name cannot be empty.</value>
+    <comment>Renk adı boş olamaz.</comment>
   </data>
   <data name="DefinitionServiceSwaggerTitle" xml:space="preserve">
     <value>BOnlineStore Definitions APIs</value>

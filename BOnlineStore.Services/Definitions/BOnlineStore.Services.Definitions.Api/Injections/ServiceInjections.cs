@@ -8,6 +8,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
         {
             services.AddScoped<IModelGroupService, ModelGroupService>();
             services.AddScoped<IColorService, ColorService>();
+            services.AddScoped<IColorGroupService, ColorGroupService>();
 
             return services;
         }

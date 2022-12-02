@@ -120,6 +120,12 @@
   <data name="ColorCodeNotEmpty" xml:space="preserve">
     <value>Renk kodu boş olamaz.</value>
   </data>
+  <data name="ColorGroupCodeNotEmpty" xml:space="preserve">
+    <value>Renk grup kodu boş olamaz.</value>
+  </data>
+  <data name="ColorGroupNameNotEmpty" xml:space="preserve">
+    <value>Renk grup adı boş olamaz.</value>
+  </data>
   <data name="ColorNameNotEmpty" xml:space="preserve">
     <value>Renk adı boş olamaz.</value>
   </data>
