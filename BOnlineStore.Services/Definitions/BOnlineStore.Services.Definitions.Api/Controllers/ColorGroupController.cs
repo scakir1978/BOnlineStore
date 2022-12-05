@@ -9,12 +9,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ColorGroupsController : ControllerShared
+    public class ColorGroupController : ControllerShared
     {
         private protected IColorGroupService _ColorGroupService;
         private protected IMapper _mapper;
 
-        public ColorGroupsController(IColorGroupService ColorGroupService, IMapper mapper)
+        public ColorGroupController(IColorGroupService ColorGroupService, IMapper mapper)
         {
             _ColorGroupService = ColorGroupService;
             _mapper = mapper;

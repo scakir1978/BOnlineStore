@@ -1,4 +1,4 @@
-import { CoreMenu } from '@core/types'
+import { CoreMenu } from '@core/types';
 
 export const menu: CoreMenu[] = [
   {
@@ -7,7 +7,7 @@ export const menu: CoreMenu[] = [
     translate: 'MENU.HOME',
     type: 'item',
     icon: 'home',
-    url: 'home'
+    url: 'home',
   },
   {
     id: 'sample',
@@ -15,7 +15,7 @@ export const menu: CoreMenu[] = [
     translate: 'MENU.SAMPLE',
     type: 'item',
     icon: 'file',
-    url: 'sample'
+    url: 'sample',
   },
   {
     id: 'definitions',
@@ -23,16 +23,31 @@ export const menu: CoreMenu[] = [
     translate: 'KEYS.DEFINITIONS',
     type: 'collapsible',
     icon: 'book',
-    children:[
+    children: [
       {
         id: 'modelgroups',
         title: 'Model Groups',
         translate: 'KEYS.MODELGROUPS',
         type: 'item',
         icon: 'file',
-        url: 'definitions/model-groups'
-      }
-    ]    
-  }
-
-]
+        url: 'definitions/model-groups',
+      },
+      {
+        id: 'colorgroups',
+        title: 'Color Groups',
+        translate: 'KEYS.COLORGROUPS',
+        type: 'item',
+        icon: 'file',
+        url: 'definitions/color-groups',
+      },
+      {
+        id: 'color',
+        title: 'Color',
+        translate: 'KEYS.COLOR',
+        type: 'item',
+        icon: 'file',
+        url: 'definitions/color',
+      },
+    ],
+  },
+];

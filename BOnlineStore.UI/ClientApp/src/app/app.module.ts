@@ -1,3 +1,4 @@
+import { BaseDefinitionsOnGridComponent } from 'app/main/base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
@@ -18,27 +19,34 @@ import { coreConfig } from 'app/app-config';
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { SampleModule } from 'app/main/sample/sample.module';
-import { ErrorInterceptor, fakeBackendProvider, JwtInterceptor } from './auth/helpers';
-import { BaseDefinitionsOnGridComponent } from './main/base/base-definitions-on-grid/base-definitions-on-grid.component';
+import {
+  ErrorInterceptor,
+  fakeBackendProvider,
+  JwtInterceptor,
+} from './auth/helpers';
 
 const appRoutes: Routes = [
   {
     path: 'pages',
-    loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule)
+    loadChildren: () =>
+      import('./main/pages/pages.module').then((m) => m.PagesModule),
   },
   {
     path: 'definitions',
-    loadChildren: () => import('./main/definitions/definitions.module').then(m => m.DefinitionsModule)
+    loadChildren: () =>
+      import('./main/definitions/definitions.module').then(
+        (m) => m.DefinitionsModule
+      ),
   },
   {
     path: '',
     redirectTo: '/home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: '/pages/miscellaneous/error' //Error 404 - Page not found
-  }
+    redirectTo: '/pages/miscellaneous/error', //Error 404 - Page not found
+  },
 ];
 
 @NgModule({
@@ -49,12 +57,12 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes, {
       scrollPositionRestoration: 'enabled', // Add options right here
-      relativeLinkResolution: 'legacy'
+      relativeLinkResolution: 'legacy',
     }),
     TranslateModule.forRoot(),
 
     //NgBootstrap
-    NgbModule,    
+    NgbModule,
     ToastrModule.forRoot(),
 
     // Core modules
@@ -65,14 +73,14 @@ const appRoutes: Routes = [
 
     // App modules
     LayoutModule,
-    SampleModule    
+    SampleModule,
   ],
 
   bootstrap: [AppComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider
-  ]
+    fakeBackendProvider,
+  ],
 })
 export class AppModule {}

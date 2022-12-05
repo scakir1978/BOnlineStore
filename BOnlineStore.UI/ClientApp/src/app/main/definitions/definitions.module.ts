@@ -1,3 +1,4 @@
+import { ColorModule } from './color/color.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { ColorGroupModule } from './color-group/color-group.module';
     FormsModule,
     ModelGroupModule,
     ColorGroupModule,
+    ColorModule,
   ],
   providers: [],
 })
