@@ -7,12 +7,14 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
     {
         public string Code { get; set; }
         public string Name { get; set; }
+        public string ColorGroupId { get; set; }
 
-        public ColorCreateDto(string code, string name)
+        public ColorCreateDto(string code, string name, string colorGroupId)
         {
             Id = ObjectId.GenerateNewId().ToString();
             Code = code;
             Name = name;
+            ColorGroupId = colorGroupId;
         }
     }
 }

@@ -10,3 +10,10 @@ export enum DatasourceFunctionsEnum {
   GETREMOVE = 'GetRemove',
   NOREMOVE = 'NoRemove',
 }
+
+export enum TableDefinitionsDataSourceTypeEnum {
+  DataSource = 'DataSource',
+  DataSourceRawMode = 'DataSourceRawMode',
+  CustomDataSource = 'CustomDataSource',
+  ArrayDataSource = 'ArrayDataSource',
+}

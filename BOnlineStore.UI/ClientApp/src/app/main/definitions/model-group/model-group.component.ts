@@ -21,7 +21,7 @@ export class ModelGroupComponent extends BaseDefinitionsOnGridComponent {
     super(
       _translate,
       _coreConfigService,
-      'ModelGruplari', //Pdf, excel dosya adı
+      'KEYS.MODELGROUPS', //Pdf, excel dosya adı
       'KEYS.MODELGROUPS', //breadCrump için kullanılacak componenet keyi
       'KEYS.DEFINITIONS' //breadCrump için kullanılacak componenetin bağlı olduğu parent menü
     );

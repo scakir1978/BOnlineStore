@@ -21,7 +21,7 @@ export class ColorGroupComponent extends BaseDefinitionsOnGridComponent {
     super(
       _translate,
       _coreConfigService,
-      'ColorGroups', //Pdf, excel dosya adı
+      'KEYS.COLORGROUPS', //Pdf, excel dosya adı
       'KEYS.COLORGROUPS', //breadCrump için kullanılacak componenet keyi
       'KEYS.DEFINITIONS' //breadCrump için kullanılacak componenetin bağlı olduğu parent menü
     );

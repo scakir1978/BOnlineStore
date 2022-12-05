@@ -12,25 +12,24 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string ColorGroupId { get; private set; }
 
-        [BsonIgnore]
-        public ColorGroup ColorGroup { get; private set; }
-
         public Color() : base()
         {
             Code = "";
             Name = "";
         }
 
-        public Color(Guid tenantId, string id, string code, string name) : base(tenantId, id)
+        public Color(Guid tenantId, string id, string code, string name, string colorGroupId) : base(tenantId, id)
         {
             Code = code;
             Name = name;
+            ColorGroupId = colorGroupId;
         }
 
-        public void UpdateModelGroup(string code, string name)
+        public void UpdateModelGroup(string code, string name, string colorGroupId)
         {
             Code = code;
             Name = name;
+            ColorGroupId = colorGroupId;
         }
     }
 }

@@ -34,11 +34,11 @@ export class BaseDefinitionsOnGridComponent implements OnInit, OnDestroy {
   constructor(
     public _translate: TranslateService,
     public _coreConfigService: CoreConfigService,
-    @Inject(String) _fileName: string,
+    @Inject(String) _fileNameKey: string,
     @Inject(String) _componentKey: string,
     @Inject(String) _parentKey: string
   ) {
-    this.fileName = _fileName;
+    this.fileName = this._translate.instant(_fileNameKey);
     this.componentKey = _componentKey;
     this.parentKey = _parentKey;
     this._unsubscribeAll = new Subject();

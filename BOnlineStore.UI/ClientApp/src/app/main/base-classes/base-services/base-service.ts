@@ -4,6 +4,7 @@ import { Inject } from '@angular/core';
 import DataSource from 'devextreme/data/data_source';
 import { environment } from 'environments/environment';
 import { lastValueFrom, Observable } from 'rxjs';
+import CustomStore from 'devextreme/data/custom_store';
 
 export abstract class BaseService {
   constructor(
@@ -13,6 +14,7 @@ export abstract class BaseService {
 
   getBaseDataSource(
     controllerName: string = this._controllerName,
+    keys: any = 'id',
     addLoadFunction: DatasourceFunctionsEnum = DatasourceFunctionsEnum.NOLOAD,
     addLoadPostFunction: DatasourceFunctionsEnum = DatasourceFunctionsEnum.GETLOADPOST,
     addInsertFunction: DatasourceFunctionsEnum = DatasourceFunctionsEnum.GETINSERT,
@@ -20,7 +22,7 @@ export abstract class BaseService {
     addRemoveFunction: DatasourceFunctionsEnum = DatasourceFunctionsEnum.GETREMOVE
   ): DataSource {
     var dataSource = new DataSource({
-      key: 'id',
+      key: keys,
       paginate: true,
       pageSize: 10,
       ...(addLoadFunction == DatasourceFunctionsEnum.GETLOAD && {
@@ -70,67 +72,37 @@ export abstract class BaseService {
     });
 
     return dataSource;
-
-    /*return new DataSource({
-      key: 'id',
-      paginate: true,
-      pageSize: 10,
-      load: (loadOptions) =>
-        this.sendRequest(
-          environment.definitionsUrl + this._controllerName + '/Load  ',
-          'LOADPOST',
-          null,
-          loadOptions
-        ),
-      insert: (values: any) =>
-        this.sendRequest(
-          environment.definitionsUrl + this._controllerName,
-          'INSERT',
-          '',
-          values
-        ),
-      update: (key: string, values: any) =>
-        this.sendRequest(
-          environment.definitionsUrl + this._controllerName,
-          'UPDATE',
-          key,
-          values
-        ),
-      remove: (key: string) =>
-        this.sendRequest(
-          environment.definitionsUrl + this._controllerName,
-          'DELETE',
-          key
-        ),
-    });*/
   }
 
-  /*getColorGroupDataSource(): DataSource {
-    return new DataSource({
-      key: 'id',
-      paginate: true,
-      pageSize: 10,
+  //Comboboxlar için
+  getBaseRawCustomStore(
+    controllerName: string = this._controllerName,
+    keys: any = 'id'
+  ): CustomStore {
+    return new CustomStore({
+      key: keys,
+      loadMode: 'raw',
       load: (loadOptions) =>
         this.sendRequest(
-          environment.definitionsUrl + 'Color/Load  ',
-          'LOADPOST',
+          environment.definitionsUrl + controllerName + '/Load',
+          'LOAD',
           null,
           loadOptions
         ),
     });
-  }*/
+  }
 
   sendRequest(
     url: string,
-    method = 'LOAD',
+    method = 'LOADPOST',
     key: string = '',
     data: any = {}
   ): any {
     let result;
 
     switch (method) {
-      case 'LOAD':
-        result = this._http.get(url);
+      case 'LOAD': //Comboboxlar için
+        result = this._http.post(url, data);
         break;
       case 'LOADPOST':
         result = this._http.post(url, data);
