@@ -15,9 +15,8 @@
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
-    <PackageReference Include="Serilog.Sinks.MongoDB" Version="5.3.1" />
     <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +24,15 @@
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.Localization\BOnlineStore.Localization.csproj" />
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.MongoDb.GenericRepository\BOnlineStore.MongoDb.GenericRepository.csproj" />
     <ProjectReference Include="..\..\..\Shared\BOnlineStore.Shared\BOnlineStore.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Validations\" />
+    <Folder Include="Services\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

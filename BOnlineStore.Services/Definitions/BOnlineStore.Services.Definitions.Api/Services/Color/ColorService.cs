@@ -24,5 +24,10 @@ namespace BOnlineStore.Services.Definitions.Api.Services
             _stringLocalizer = stringLocalizer;
         }
 
+        public void Sort()
+        {
+
+        }
+
     }
 }

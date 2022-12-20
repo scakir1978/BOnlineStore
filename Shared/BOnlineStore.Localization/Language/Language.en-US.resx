@@ -129,6 +129,10 @@
     <value>Color group name cannot be empty.</value>
     <comment>Renk grup adı boş olamaz.</comment>
   </data>
+  <data name="ColorGroupNotEmpty" xml:space="preserve">
+    <value>Color group cannot be empty.</value>
+    <comment>Renk grubu boş olamaz.</comment>
+  </data>
   <data name="ColorNameNotEmpty" xml:space="preserve">
     <value>Color name cannot be empty.</value>
     <comment>Renk adı boş olamaz.</comment>

@@ -4,17 +4,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:45333",
-      "sslPort": 44356
+      "applicationUrl": "http://localhost:32957",
+      "sslPort": 44305
     }
   },
   "profiles": {
-    "BOnlineStore.Services.Definitions.Api": {
+    "BOnlineStore.Services.Production.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:5011;http://localhost:6011",
+      "applicationUrl": "https://localhost:5012;http://localhost:6012",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
