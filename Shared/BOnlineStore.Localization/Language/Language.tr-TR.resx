@@ -141,11 +141,20 @@
   <data name="HandledException" xml:space="preserve">
     <value>İşlem sırasında hata oluştu. Daha fazla bilgi için loglara/log detaylarına bakınız.</value>
   </data>
+  <data name="ModelCodeNotEmpty" xml:space="preserve">
+    <value>Model kodu boş olamaz.</value>
+  </data>
   <data name="ModelGroupCodeNotEmpty" xml:space="preserve">
     <value>Model grup kodu boş olamaz.</value>
   </data>
   <data name="ModelGroupNameNotEmpty" xml:space="preserve">
     <value>Model grup adı boş olamaz.</value>
+  </data>
+  <data name="ModelGroupNotEmpty" xml:space="preserve">
+    <value>Model grubu boş olamaz.</value>
+  </data>
+  <data name="ModelNameNotEmpty" xml:space="preserve">
+    <value>Model adı boş olamaz.</value>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>{0} tablosunda {1} id numaralı kayıt bulunamadı.</value>

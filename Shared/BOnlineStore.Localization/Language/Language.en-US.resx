@@ -149,6 +149,10 @@
     <value>An error occurred during operation. See logs/log details for more information.</value>
     <comment>İşlem sırasında hata oluştu. Daha fazla bilgi için loglara/log detaylarına bakınız.</comment>
   </data>
+  <data name="ModelCodeNotEmpty" xml:space="preserve">
+    <value>Model code cannot be empty.</value>
+    <comment>Model kodu boş olamaz.</comment>
+  </data>
   <data name="ModelGroupCodeNotEmpty" xml:space="preserve">
     <value>Model group code cannot be empty.</value>
     <comment>Model grup kodu boş olamaz.</comment>
@@ -156,6 +160,14 @@
   <data name="ModelGroupNameNotEmpty" xml:space="preserve">
     <value>Model group name cannot be empty.</value>
     <comment>Model grup adı boş olamaz.</comment>
+  </data>
+  <data name="ModelGroupNotEmpty" xml:space="preserve">
+    <value>Model group cannot be empty.</value>
+    <comment>Model grubu boş olamaz.</comment>
+  </data>
+  <data name="ModelNameNotEmpty" xml:space="preserve">
+    <value>Model name cannot be empty.</value>
+    <comment>Model adı boş olamaz.</comment>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>No record with id number {1} found in table {0}.</value>

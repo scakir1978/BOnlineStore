@@ -21,6 +21,10 @@ namespace BOnlineStore.Services.Definitions.Api
                 config.CreateMap<ColorGroup, ColorGroupDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
                 config.CreateMap<ColorGroup, ColorGroupCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
                 config.CreateMap<ColorGroup, ColorGroupUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
+                config.CreateMap<Model, ModelDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+                config.CreateMap<Model, ModelCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+                config.CreateMap<Model, ModelUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
             });
 
             return mappingConfig;

@@ -12,6 +12,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IModelGroupRepository, ModelGroupRepository>();
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<IColorGroupRepository, ColorGroupRepository>();
+            services.AddScoped<IModelRepository, ModelRepository>();
 
             return services;
         }
