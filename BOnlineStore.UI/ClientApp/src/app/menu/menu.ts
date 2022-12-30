@@ -50,4 +50,21 @@ export const menu: CoreMenu[] = [
       },
     ],
   },
+  {
+    id: 'production',
+    title: 'Production',
+    translate: 'KEYS.PRODUCTION',
+    type: 'collapsible',
+    icon: 'book',
+    children: [
+      {
+        id: 'formulatype',
+        title: 'Formula Type',
+        translate: 'KEYS.FORMULATYPES',
+        type: 'item',
+        icon: 'file',
+        url: 'production/formula-type',
+      },
+    ],
+  },
 ];

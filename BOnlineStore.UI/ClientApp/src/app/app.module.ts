@@ -39,6 +39,13 @@ const appRoutes: Routes = [
       ),
   },
   {
+    path: 'production',
+    loadChildren: () =>
+      import('./main/production/production.module').then(
+        (m) => m.ProductionModule
+      ),
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',

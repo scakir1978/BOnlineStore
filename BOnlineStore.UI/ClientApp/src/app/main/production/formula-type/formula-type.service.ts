@@ -1,5 +1,5 @@
-import { DefinitionControllerNamesEnum } from './../../base-classes/base-enums/definition-controller-names.enum';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { ProductionControllerNamesEnum } from '../../base-classes/base-enums/production-controller-names.enum';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -7,19 +7,19 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import DataSource from 'devextreme/data/data_source';
-import { BaseService } from 'app/main/base-classes/base-services/base-service';
-import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { BaseService } from 'app/main/base-classes/base-services/base-service';
+import { lastValueFrom, Observable, switchAll } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ModelGroupService extends BaseService implements Resolve<any> {
+export class FormulaTypeService extends BaseService implements Resolve<any> {
   constructor(public _http: HttpClient) {
     super(
       _http,
-      environment.definitionsUrl,
-      DefinitionControllerNamesEnum.MODELGROUP
+      environment.productionUrl,
+      ProductionControllerNamesEnum.FORMULATYPE
     );
   }
 

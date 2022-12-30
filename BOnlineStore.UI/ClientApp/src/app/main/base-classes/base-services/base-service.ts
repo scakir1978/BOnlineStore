@@ -9,10 +9,12 @@ import CustomStore from 'devextreme/data/custom_store';
 export abstract class BaseService {
   constructor(
     public _http: HttpClient,
+    @Inject(String) private _serviceUrl: string,
     @Inject(String) private _controllerName: string
   ) {}
 
   getBaseDataSource(
+    serviceUrl: string = this._serviceUrl,
     controllerName: string = this._controllerName,
     keys: any = 'id',
     addLoadFunction: DatasourceFunctionsEnum = DatasourceFunctionsEnum.NOLOAD,
@@ -28,7 +30,7 @@ export abstract class BaseService {
       ...(addLoadFunction == DatasourceFunctionsEnum.GETLOAD && {
         load: (loadOptions) =>
           this.sendRequest(
-            environment.definitionsUrl + controllerName + '/Load  ',
+            serviceUrl + controllerName + '/Load  ',
             'LOAD',
             null,
             loadOptions
@@ -37,7 +39,7 @@ export abstract class BaseService {
       ...(addLoadPostFunction == DatasourceFunctionsEnum.GETLOADPOST && {
         load: (loadOptions) =>
           this.sendRequest(
-            environment.definitionsUrl + controllerName + '/Load  ',
+            serviceUrl + controllerName + '/Load  ',
             'LOADPOST',
             null,
             loadOptions
@@ -45,29 +47,15 @@ export abstract class BaseService {
       }),
       ...(addInsertFunction == DatasourceFunctionsEnum.GETINSERT && {
         insert: (values: any) =>
-          this.sendRequest(
-            environment.definitionsUrl + controllerName,
-            'INSERT',
-            '',
-            values
-          ),
+          this.sendRequest(serviceUrl + controllerName, 'INSERT', '', values),
       }),
       ...(addUpdateFunction == DatasourceFunctionsEnum.GETUPDATE && {
         update: (key: string, values: any) =>
-          this.sendRequest(
-            environment.definitionsUrl + controllerName,
-            'UPDATE',
-            key,
-            values
-          ),
+          this.sendRequest(serviceUrl + controllerName, 'UPDATE', key, values),
       }),
       ...(addRemoveFunction == DatasourceFunctionsEnum.GETREMOVE && {
         remove: (key: string) =>
-          this.sendRequest(
-            environment.definitionsUrl + controllerName,
-            'DELETE',
-            key
-          ),
+          this.sendRequest(serviceUrl + controllerName, 'DELETE', key),
       }),
     });
 
@@ -76,6 +64,7 @@ export abstract class BaseService {
 
   //Comboboxlar için
   getBaseRawCustomStore(
+    serviceUrl: string = this._serviceUrl,
     controllerName: string = this._controllerName,
     keys: any = 'id'
   ): CustomStore {
@@ -84,7 +73,7 @@ export abstract class BaseService {
       loadMode: 'raw',
       load: (loadOptions) =>
         this.sendRequest(
-          environment.definitionsUrl + controllerName + '/Load',
+          serviceUrl + controllerName + '/Load',
           'LOAD',
           null,
           loadOptions

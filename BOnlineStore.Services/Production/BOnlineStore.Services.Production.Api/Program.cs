@@ -58,7 +58,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(option =>
 {
-    option.SwaggerDoc(GlobalConstants.swaggerVersion, new OpenApiInfo { Title = "BOnlineStore Definitions APIs", Version = GlobalConstants.swaggerVersion });
+    option.SwaggerDoc(GlobalConstants.swaggerVersion, new OpenApiInfo { Title = "BOnlineStore Production APIs", Version = GlobalConstants.swaggerVersion });
     option.AddSecurityDefinition(GlobalConstants.swaggerScheme, new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,

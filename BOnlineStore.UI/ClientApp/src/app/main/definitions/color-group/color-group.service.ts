@@ -16,7 +16,11 @@ import { lastValueFrom, Observable, switchAll } from 'rxjs';
 })
 export class ColorGroupService extends BaseService implements Resolve<any> {
   constructor(public _http: HttpClient) {
-    super(_http, DefinitionControllerNamesEnum.COLORGROUP);
+    super(
+      _http,
+      environment.definitionsUrl,
+      DefinitionControllerNamesEnum.COLORGROUP
+    );
   }
 
   resolve(

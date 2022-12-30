@@ -21,6 +21,8 @@ export const locale = {
       THEMECUSTOMIZER: 'Theme Customizer',
       THEMECUSTOMIZERTITLE: 'Customize & Preview in Real Time',
       SKIN: 'Skin',
+      PRODUCTION: 'Production',
+      FORMULATYPES: 'Formula Types',
     },
   },
 };

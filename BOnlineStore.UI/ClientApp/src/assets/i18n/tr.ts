@@ -21,6 +21,8 @@ export const locale = {
       THEMECUSTOMIZER: 'Temayı Özelleştir',
       THEMECUSTOMIZERTITLE: 'Gerçek Zamanlı Özelleştirin ve Önizleyin',
       SKIN: 'Görünüm',
+      PRODUCTION: 'İmalat',
+      FORMULATYPES: 'Formül Tipleri',
     },
   },
 };

@@ -145,6 +145,14 @@
     <value>The {0} file could not be found.</value>
     <comment>İsimli dosya bulunamadı</comment>
   </data>
+  <data name="FormulaTypeCodeNotEmpty" xml:space="preserve">
+    <value>Formula type code cannot be empty.</value>
+    <comment>Formül tip kodu boş olamaz.</comment>
+  </data>
+  <data name="FormulaTypeNameNotEmpty" xml:space="preserve">
+    <value>Formula type name cannot be empty.</value>
+    <comment>Formül tip adı boş olamaz.</comment>
+  </data>
   <data name="HandledException" xml:space="preserve">
     <value>An error occurred during operation. See logs/log details for more information.</value>
     <comment>İşlem sırasında hata oluştu. Daha fazla bilgi için loglara/log detaylarına bakınız.</comment>

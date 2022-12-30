@@ -138,6 +138,12 @@
   <data name="FileNotFound" xml:space="preserve">
     <value>{0} isimli dosya bulunamadı.</value>
   </data>
+  <data name="FormulaTypeCodeNotEmpty" xml:space="preserve">
+    <value>Formül tip kodu boş olamaz.</value>
+  </data>
+  <data name="FormulaTypeNameNotEmpty" xml:space="preserve">
+    <value>Formül tip adı boş olamaz.</value>
+  </data>
   <data name="HandledException" xml:space="preserve">
     <value>İşlem sırasında hata oluştu. Daha fazla bilgi için loglara/log detaylarına bakınız.</value>
   </data>

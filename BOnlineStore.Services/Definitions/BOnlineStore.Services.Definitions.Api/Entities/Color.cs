@@ -25,7 +25,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             ColorGroupId = colorGroupId;
         }
 
-        public void UpdateModelGroup(string code, string name, string colorGroupId)
+        public void UpdateColor(string code, string name, string colorGroupId)
         {
             Code = code;
             Name = name;

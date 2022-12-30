@@ -1,3 +1,4 @@
+import { environment } from 'environments/environment';
 import { DefinitionControllerNamesEnum } from './../../base-classes/base-enums/definition-controller-names.enum';
 import CustomStore from 'devextreme/data/custom_store';
 import { HttpClient } from '@angular/common/http';
@@ -16,7 +17,11 @@ import { Observable } from 'rxjs';
 })
 export class ColorService extends BaseService implements Resolve<any> {
   constructor(public _http: HttpClient) {
-    super(_http, DefinitionControllerNamesEnum.COLOR);
+    super(
+      _http,
+      environment.definitionsUrl,
+      DefinitionControllerNamesEnum.COLOR
+    );
   }
 
   resolve(
