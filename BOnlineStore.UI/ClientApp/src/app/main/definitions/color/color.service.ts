@@ -35,6 +35,7 @@ export class ColorService extends BaseService implements Resolve<any> {
 
   getColorGroupDataSource(): CustomStore {
     return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
       DefinitionControllerNamesEnum.COLORGROUP
     );
   }
