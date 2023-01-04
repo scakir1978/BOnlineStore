@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  mongodb:
+    image: mongo
+  identitydb:
+    image: mcr.microsoft.com/mssql/server 
+  rabbitmq:
+    image: rabbitmq:3.11-management
+  bonlinestore.services.definitions.api:
+    image: ${DOCKER_REGISTRY-}bonlinestoreservicesdefinitionsapi
+    build:
+      context: .
+      dockerfile: BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile
+
+  bonlinestore.services.order.api:
+    image: ${DOCKER_REGISTRY-}bonlinestoreservicesorderapi
+    build:
+      context: .
+      dockerfile: BOnlineStore.Services/Order/BOnlineStore.Services.Order.Api/Dockerfile
+
+  bonlinestore.identityserver:
+    image: ${DOCKER_REGISTRY-}bonlinestoreidentityserver
+    build:
+      context: .
+      dockerfile: BOnlineStore.IdentityServer/Dockerfile
+
+  bonlinestore.ui:
+    image: ${DOCKER_REGISTRY-}bonlinestoreui
+    build:
+      context: .
+      dockerfile: BOnlineStore.UI/Dockerfile
+
+volumes:
+  mongo_data:
+  identity_data:
+  rabbitmq_data:
+

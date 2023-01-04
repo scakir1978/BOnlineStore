@@ -3,6 +3,9 @@
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
 	  <ImplicitUsings>enable</ImplicitUsings>
+	  <UserSecretsId>9f09aafb-84d9-49c2-b2d3-100c77f28a7e</UserSecretsId>
+	  <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	  <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +15,8 @@
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.10" />
 
 	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+
+	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 	<PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
 
 	<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
