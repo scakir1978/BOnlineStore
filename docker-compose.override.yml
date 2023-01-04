@@ -36,6 +36,7 @@ services:
       - "IdentityServerUrl=https://identity.api:5001"
     depends_on:
       - "mongodb"
+      - "identityserver.api"
     ports:
       - "6011:80"
       - "5011:443"
@@ -52,6 +53,7 @@ services:
       - "IdentityServerUrl=https://identity.api:5001"
     depends_on:
       - "mongodb"
+      - "identityserver.api"
     ports:
       - "6012:80"
       - "5012:443"
