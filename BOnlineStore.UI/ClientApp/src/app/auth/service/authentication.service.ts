@@ -24,7 +24,7 @@ export class AuthenticationService {
     //post_logout_redirect_uri: "http://localhost:4200/pages/callout",
     response_type: 'code',
     scope:
-      'openid profile definitions_full_permission IdentityServerApi offline_access',
+      'openid profile definitions_full_permission production_full_permission gateway_full_permission IdentityServerApi offline_access',
     automaticSilentRenew: true,
     response_mode: 'query',
   };

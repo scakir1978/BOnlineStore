@@ -13,34 +13,37 @@ using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var logger = new LoggerConfiguration()   
-  .ReadFrom.Configuration(builder.Configuration)  
+var logger = new LoggerConfiguration()
+  .WriteTo.Seq(builder.Configuration.GetValue<string>("SeqServerUrl"))
+  .ReadFrom.Configuration(builder.Configuration)
   .CreateLogger();
 
-Log.Logger = logger; 
+Log.Logger = logger;
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
-builder.Host.UseSerilog((context, configuration) => {
-
-    configuration.ReadFrom.Configuration(context.Configuration);                 
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration
+    .WriteTo.Seq(builder.Configuration.GetValue<string>("SeqServerUrl"))
+    .ReadFrom.Configuration(context.Configuration);
 });
 
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new AuthorizeFilter());
 
-}).AddNewtonsoftJson(options=>
+}).AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Include;
 });
 
-    /*.AddJsonOptions(options => {
+/*.AddJsonOptions(options => {
 
-    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-    //options.JsonSerializerOptions.PropertyNamingPolicy = null;
+options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+//options.JsonSerializerOptions.PropertyNamingPolicy = null;
 
 });*/
 
@@ -53,11 +56,11 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     CultureInfo[] cultures = new CultureInfo[]
     {
         new(GlobalConstants.turkish),
-        new(GlobalConstants.english)        
+        new(GlobalConstants.english)
     };
 
     options.SupportedCultures = cultures;
-    options.SupportedUICultures = cultures;    
+    options.SupportedUICultures = cultures;
 
 });
 
@@ -135,13 +138,13 @@ app.MapControllers();
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.UseEndpoints(endpoints =>
-{    
+{
     endpoints.MapControllers();
 });
 
 app.UseSerilogRequestLogging(options =>
 {
-    options.IncludeQueryInRequestPath = true; 
+    options.IncludeQueryInRequestPath = true;
 
 });
 

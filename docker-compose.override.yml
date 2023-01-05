@@ -27,6 +27,17 @@ services:
       - "5672:5672"
       - "15672:15672"    
 
+  seq:
+    container_name: seq
+    restart: always
+    ports:
+      - "80:80"
+      - "5341:5341"
+    volumes:
+      - seq_data:/data
+    environment:
+      - ACCEPT_EULA=Y        
+
   bonlinestore.services.definitions.api:
     container_name: definitions.api
     environment:
@@ -34,12 +45,33 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
       - "IdentityServerUrl=https://identity.api:5001"
+      - "SeqServerUrl=http://seq:5341"
     depends_on:
       - "mongodb"
       - "identityserver.api"
+      - "seq"
     ports:
       - "6011:80"
       - "5011:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro        
+
+  bonlinestore.services.production.api:
+    container_name: production.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
+      - "IdentityServerUrl=https://identity.api:5001"
+      - "SeqServerUrl=http://seq:5341"
+    depends_on:
+      - "mongodb"
+      - "identityserver.api"
+      - "seq"
+    ports:
+      - "6012:80"
+      - "5012:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -51,12 +83,14 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
       - "IdentityServerUrl=https://identity.api:5001"
+      - "SeqServerUrl=http://seq:5341"
     depends_on:
       - "mongodb"
       - "identityserver.api"
+      - "seq"
     ports:
-      - "6012:80"
-      - "5012:443"
+      - "6013:80"
+      - "5013:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -66,11 +100,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "ConnectionStrings: DefaultConnection = Server=identitydb,1433;Database=IdentityDB; User=sa; Password=Scag185489"
     depends_on:
       - "identitydb"
     ports:
-      - "80"
-      - "443"
+      - "5001:443"      
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

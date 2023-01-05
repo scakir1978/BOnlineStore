@@ -13,6 +13,7 @@ using System.Globalization;
 var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration()
+  .WriteTo.Seq(builder.Configuration.GetValue<string>("SeqServerUrl"))
   .ReadFrom.Configuration(builder.Configuration)
   .CreateLogger();
 
@@ -23,7 +24,9 @@ builder.Logging.AddSerilog(logger);
 
 builder.Host.UseSerilog((context, configuration) =>
 {
-    configuration.ReadFrom.Configuration(context.Configuration);
+    configuration
+    .WriteTo.Seq(builder.Configuration.GetValue<string>("SeqServerUrl"))
+    .ReadFrom.Configuration(context.Configuration);
 });
 
 builder.Services.AddControllers(options =>
@@ -88,7 +91,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = builder.Configuration[AppSettingsKeysConstants.IdentityServerUrl];
-        options.Audience = IdentityServerConstants.ApiResourcesDefinitions;
+        options.Audience = IdentityServerConstants.ApiResourcesProduction;
         options.RequireHttpsMetadata = false;
     });
 

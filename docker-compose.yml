@@ -7,17 +7,25 @@ services:
     image: mcr.microsoft.com/mssql/server 
   rabbitmq:
     image: rabbitmq:3.11-management
+  seq:
+    image: datalust/seq
   bonlinestore.services.definitions.api:
     image: ${DOCKER_REGISTRY-}bonlinestoreservicesdefinitionsapi
     build:
       context: .
-      dockerfile: BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile
+      dockerfile: BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile  
 
   bonlinestore.services.order.api:
     image: ${DOCKER_REGISTRY-}bonlinestoreservicesorderapi
     build:
       context: .
       dockerfile: BOnlineStore.Services/Order/BOnlineStore.Services.Order.Api/Dockerfile
+
+  bonlinestore.services.production.api:
+    image: ${DOCKER_REGISTRY-}bonlinestoreservicesproductionapi
+    build:
+      context: .
+      dockerfile: BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile
 
   bonlinestore.identityserver:
     image: ${DOCKER_REGISTRY-}bonlinestoreidentityserver
@@ -35,4 +43,5 @@ volumes:
   mongo_data:
   identity_data:
   rabbitmq_data:
+  seq_data:
 

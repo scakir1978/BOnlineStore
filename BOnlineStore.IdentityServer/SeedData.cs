@@ -113,7 +113,7 @@ public class SeedData
         {
             var tenantCreateDto = new TenantCreateDto
             {
-                //Id = defaultTenantId,
+                Id = Guid.Parse("894326A8-AA25-4A33-25C0-08DA904CDDC4"),
                 Name = "Console.Log Deneme Şirketi",
                 CreateDateTime = DateTime.Now,
                 Adress = new Shared.Models.Adress
