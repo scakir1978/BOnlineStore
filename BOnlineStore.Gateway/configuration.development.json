@@ -17,10 +17,10 @@
       ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "GatewayAuthenticationScheme",
-        "AllowedScopes": []
+        "AllowedScopes": [ "definitions_full_permission" ]
       }
-    }
-    /*{
+    },
+    {
       "UpstreamPathTemplate": "/services/production/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "https",
@@ -31,7 +31,11 @@
           "Host": "localhost",
           "Port": 5012
         }
-      ]
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "production_full_permission" ]
+      }
     },
     {
       "UpstreamPathTemplate": "/services/order/{everything}",
@@ -44,7 +48,11 @@
           "Host": "localhost",
           "Port": 5013
         }
-      ]
-    }*/
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "GatewayAuthenticationScheme",
+        "AllowedScopes": [ "order_full_permission" ]
+      }
+    }
   ]
 }
