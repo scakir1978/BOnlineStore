@@ -1,4 +1,5 @@
-﻿using BOnlineStore.Shared;
+﻿using BOnlineStore.IdentityServer.Settings;
+using BOnlineStore.Shared;
 using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 
@@ -6,6 +7,12 @@ namespace BOnlineStore.IdentityServer;
 
 public static class Config
 {
+    private static IIdentityConfigSettings _identityConfigSettings;
+    public static void ConfigureIdentityConfigSettings(IIdentityConfigSettings identityConfigSettings)
+    {
+        _identityConfigSettings = identityConfigSettings;
+    }
+
     public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
     {
         new ApiResource(Shared.IdentityServerConstants.ApiResourcesDefinitions){ Scopes={ Shared.IdentityServerConstants.ApiScopesDefinitionsFullPermission}},
@@ -42,10 +49,10 @@ public static class Config
                 ClientName = "Angular Client",
                 RequireClientSecret = false,
                 AllowedGrantTypes = GrantTypes.Code,
-                RedirectUris = { "http://localhost:4200/pages/callback" },
-                AllowedCorsOrigins={ "http://localhost:4200", "https://localhost:5000" },
-                PostLogoutRedirectUris = { "http://localhost:4200/pages/callout" },
-                FrontChannelLogoutUri = "http://localhost:4200/pages/callout",
+                RedirectUris = { _identityConfigSettings.RedirectUri },
+                AllowedCorsOrigins={ _identityConfigSettings.AllowedCorsOrigin1, _identityConfigSettings.AllowedCorsOrigin2 },
+                PostLogoutRedirectUris = { _identityConfigSettings.PostLogoutRedirectUri },
+                FrontChannelLogoutUri = _identityConfigSettings.FrontChannelLogoutUri,
                 AllowedScopes =
                 {
                     //BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsTenantId, 

@@ -9,6 +9,8 @@ using BOnlineStore.IdentityServer.Business;
 using System.Reflection;
 using AutoMapper;
 using BOnlineStore.IdentityServer.Business.TenantService;
+using BOnlineStore.IdentityServer.Settings;
+using Microsoft.Extensions.Options;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -16,6 +18,13 @@ internal static class HostingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
+        builder.Services.Configure<IdentityConfigSettings>(builder.Configuration.GetSection(nameof(IdentityConfigSettings)));
+
+        builder.Services.AddSingleton<IIdentityConfigSettings>(sp =>
+        {
+            return sp.GetRequiredService<IOptions<IdentityConfigSettings>>().Value;
+        });
+
         builder.Services.AddScoped<ITenantService, TenantManager>();
 
         builder.Services.AddRazorPages();
@@ -45,11 +54,11 @@ internal static class HostingExtensions
                 {
                     c.UseSqlServer
                     (
-                        builder.Configuration.GetConnectionString("DefaultConnection"), 
+                        builder.Configuration.GetConnectionString("DefaultConnection"),
                         sqloptions => sqloptions.MigrationsAssembly(assemblyName)
                     );
-                };                
-                
+                };
+
             })
             .AddOperationalStore(options =>
             {
@@ -63,26 +72,22 @@ internal static class HostingExtensions
                 };
 
             })
-            /*.AddInMemoryIdentityResources(Config.IdentityResources)            
-            .AddInMemoryApiScopes(Config.ApiScopes)
-            .AddInMemoryClients(Config.Clients)
-            .AddInMemoryApiResources(Config.ApiResources)*/
-            .AddDeveloperSigningCredential()            
+            .AddDeveloperSigningCredential()
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<ProfileService>();
 
         builder.Services.AddAuthentication();
-        
+
         IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
-        builder.Services.AddSingleton(mapper);                
+        builder.Services.AddSingleton(mapper);
 
         return builder.Build();
     }
-    
+
     public static WebApplication ConfigurePipeline(this WebApplication app)
-    { 
+    {
         app.UseSerilogRequestLogging();
-    
+
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
@@ -92,7 +97,7 @@ internal static class HostingExtensions
         app.UseRouting();
         app.UseIdentityServer();
         app.UseAuthorization();
-        
+
         app.MapRazorPages()
             .RequireAuthorization();
 

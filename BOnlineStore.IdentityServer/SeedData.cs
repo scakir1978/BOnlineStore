@@ -11,6 +11,7 @@ using BOnlineStore.Shared;
 using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.Shared.Constansts;
+using BOnlineStore.IdentityServer.Settings;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -24,6 +25,8 @@ public class SeedData
 
             var configrationDbContext = scope.ServiceProvider.GetService<ConfigurationDbContext>();
             configrationDbContext.Database.Migrate();
+
+            Config.ConfigureIdentityConfigSettings(app.Services.GetRequiredService<IIdentityConfigSettings>());
 
             if (!configrationDbContext.Clients.Any())
             {

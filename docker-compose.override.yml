@@ -102,6 +102,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "ConnectionStrings: DefaultConnection = Server=identitydb,1433;Database=IdentityDB; User=sa; Password=Scag185489"
+      - "IdentityConfigSettings: RedirectUri = http://bonlinestore.ui/pages/callback"
+      - "IdentityConfigSettings: AllowedCorsOrigin1 = http://bonlinestore.ui"
+      - "IdentityConfigSettings: AllowedCorsOrigin2 = http://bonlinestore.gateway"
+      - "IdentityConfigSettings: PostLogoutRedirectUri =  http://bonlinestore.ui/pages/callout"
+      - "IdentityConfigSettings: FrontChannelLogoutUri =  http://bonlinestore.ui/pages/callout"
     depends_on:
       - "identitydb"
     ports:
@@ -127,7 +132,7 @@ services:
 
   bonlinestore.ui:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
       - "80"
