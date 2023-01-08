@@ -43,7 +43,7 @@ public static class Config
                 RequireClientSecret = false,
                 AllowedGrantTypes = GrantTypes.Code,
                 RedirectUris = { "http://localhost:4200/pages/callback" },
-                AllowedCorsOrigins={ "http://localhost:4200" },
+                AllowedCorsOrigins={ "http://localhost:4200", "https://localhost:5000" },
                 PostLogoutRedirectUris = { "http://localhost:4200/pages/callout" },
                 FrontChannelLogoutUri = "http://localhost:4200/pages/callout",
                 AllowedScopes =

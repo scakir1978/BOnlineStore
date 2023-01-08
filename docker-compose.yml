@@ -33,6 +33,12 @@ services:
       context: .
       dockerfile: BOnlineStore.IdentityServer/Dockerfile
 
+  bonlinestore.gateway:
+    image: ${DOCKER_REGISTRY-}bonlinestoregateway
+    build:
+      context: .
+      dockerfile: BOnlineStore.Gateway/BOnlineStore.Gateway/Dockerfile  
+
   bonlinestore.ui:
     image: ${DOCKER_REGISTRY-}bonlinestoreui
     build:

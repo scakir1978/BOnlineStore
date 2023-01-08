@@ -131,7 +131,7 @@ export class AuthenticationService {
    */
   login(email: string, password: string) {
     return this._http
-      .post<any>(`${environment.apiUrl}/users/authenticate`, {
+      .post<any>(`${environment.identityUrl}/users/authenticate`, {
         email,
         password,
       })

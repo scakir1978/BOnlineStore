@@ -44,7 +44,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
-      - "IdentityServerUrl=https://identity.api:5001"
+      - "IdentityServerUrl=https://bonlinestore.identityserver"
       - "SeqServerUrl=http://seq:5341"
     depends_on:
       - "mongodb"
@@ -63,7 +63,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
-      - "IdentityServerUrl=https://identity.api:5001"
+      - "IdentityServerUrl=https://bonlinestore.identityserver"
       - "SeqServerUrl=http://seq:5341"
     depends_on:
       - "mongodb"
@@ -82,7 +82,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
-      - "IdentityServerUrl=https://identity.api:5001"
+      - "IdentityServerUrl=https://bonlinestore.identityserver"
       - "SeqServerUrl=http://seq:5341"
     depends_on:
       - "mongodb"
@@ -97,6 +97,7 @@ services:
 
   bonlinestore.identityserver:
     container_name: identityserver.api
+    restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
@@ -108,6 +109,21 @@ services:
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  bonlinestore.gateway:
+    container_name: gateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - "IdentityServerUrl=https://bonlinestore.identityserver"
+    depends_on:
+      - "identityserver.api"
+    ports:
+      - "6000:80"
+      - "5000:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro        
 
   bonlinestore.ui:
     environment:

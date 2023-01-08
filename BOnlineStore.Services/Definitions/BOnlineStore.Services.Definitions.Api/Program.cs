@@ -121,21 +121,21 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseRequestLocalization();
-
 app.ConfigureExeptionHandler();
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-
 app.UseRouting();
-
-app.UseAuthorization();
 
 app.MapControllers();
 
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.UseRequestLocalization();
 
 app.UseEndpoints(endpoints =>
 {

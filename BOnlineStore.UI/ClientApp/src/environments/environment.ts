@@ -5,10 +5,12 @@
 export const environment = {
   production: false,
   hmr: false,
-  apiUrl: 'http://localhost:4000',
-  identityUrl: 'https://localhost:5001',
-  definitionsUrl: 'https://localhost:5011/api/',
-  productionUrl: 'https://localhost:5012/api/',
+  //identityUrl: 'https://localhost:5001',
+  identityUrl: 'https://localhost:5000/identity/',
+  definitionsUrl: 'https://localhost:5000/services/definitions/',
+  //definitionsUrl: 'https://localhost:5011/api/',
+  productionUrl: 'https://localhost:5000/services/production/',
+  //productionUrl: 'https://localhost:5012/api/',
   uiUrl: 'http://localhost:4200',
 };
 

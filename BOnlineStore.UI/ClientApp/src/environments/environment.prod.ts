@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   hmr: false,
-  apiUrl: 'http://localhost:4000',
-  identityUrl: 'https://localhost:5001',
-  uiUrl: 'http://localhost:4200',
-  definitionsUrl: 'https://localhost:5011/api/'
+  identityUrl: 'https://identity',
+  definitionsUrl: 'https://bonlinestore.gateway/services/definitions/',
+  productionUrl: 'https://bonlinestore.gateway/services/production/',
+  uiUrl: 'http://bonlinestore.ui',
 };

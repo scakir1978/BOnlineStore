@@ -42,7 +42,6 @@ export class JwtInterceptor implements HttpInterceptor {
     const serverLanguageCode = this.serverLanguages.find(
       (x) => x.code === localConfig.app.appLanguage
     ).serverCode;
-    //const isApiUrl = request.url.startsWith(environment.apiUrl);
     if (isLoggedIn) {
       request = request.clone({
         setHeaders: {
