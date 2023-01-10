@@ -118,7 +118,7 @@ services:
   bonlinestore.gateway:
     container_name: gateway
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "IdentityServerUrl=https://bonlinestore.identityserver"
     depends_on:
@@ -133,7 +133,7 @@ services:
   bonlinestore.ui:
     container_name: bonlinestore.ui 
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
       - "4200:80"
