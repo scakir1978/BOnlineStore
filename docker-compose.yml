@@ -37,7 +37,7 @@ services:
     image: ${DOCKER_REGISTRY-}bonlinestoregateway
     build:
       context: .
-      dockerfile: BOnlineStore.Gateway/BOnlineStore.Gateway/Dockerfile  
+      dockerfile: BOnlineStore.Gateway/Dockerfile  
 
   bonlinestore.ui:
     image: ${DOCKER_REGISTRY-}bonlinestoreui

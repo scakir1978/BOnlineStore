@@ -1,0 +1,23 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "bonlinestore.ui",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}",
+      "serviceActions": {
+        "bonlinestore.gateway": "StartDebugging",
+        "bonlinestore.identityserver": "StartDebugging",
+        "bonlinestore.services.definitions.api": "StartDebugging",
+        "bonlinestore.services.order.api": "StartDebugging",
+        "bonlinestore.services.production.api": "StartDebugging",
+        "bonlinestore.ui": "StartDebugging",
+        "identitydb": "StartWithoutDebugging",
+        "mongodb": "StartWithoutDebugging",
+        "rabbitmq": "StartWithoutDebugging",
+        "seq": "StartWithoutDebugging"
+      }
+    }
+  }
+}
