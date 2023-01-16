@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   hmr: false,
-  identityUrl: 'https://identity',
-  definitionsUrl: 'https://gateway/services/definitions/',
-  productionUrl: 'https://gateway/services/production/',
-  uiUrl: 'http://bonlinestore.ui',
+  identityUrl: 'https://gateway.bonlinestore.com/identity',
+  definitionsUrl: 'https://gateway.bonlinestore.com/services/definitions/',
+  productionUrl: 'https://gateway.bonlinestore.com/services/production/',
+  uiUrl: 'http://ui.bonlinestore',
 };

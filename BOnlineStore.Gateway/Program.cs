@@ -5,6 +5,10 @@ using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+Console.WriteLine(builder.Environment.EnvironmentName.ToLower());
+Console.WriteLine(builder.Configuration[AppSettingsKeysConstants.IdentityServerUrl]);
+
 builder.Configuration
     .AddJsonFile($"configuration.{builder.Environment.EnvironmentName.ToLower()}.json")
     .AddEnvironmentVariables();

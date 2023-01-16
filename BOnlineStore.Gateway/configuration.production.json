@@ -1,6 +1,6 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "https://gateway"
+    "BaseUrl": "https://gateway.bonlinestore.com"
   },
   "Routes": [
     {
@@ -11,7 +11,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "identityserver.api",
+          "Host": "identity.bonlinestore.com",
           "Port": 443
         }
       ]
@@ -24,7 +24,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "definitions.api",
+          "Host": "definitions.bonlinestore.com",
           "Port": 443
         }
       ],
@@ -41,7 +41,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "production.api",
+          "Host": "production.bonlinestore.com",
           "Port": 443
         }
       ],
@@ -58,7 +58,7 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "order.api",
+          "Host": "order.bonlinestore.com",
           "Port": 443
         }
       ],

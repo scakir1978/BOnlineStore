@@ -42,8 +42,8 @@ services:
   bonlinestore.ui:
     image: ${DOCKER_REGISTRY-}bonlinestoreui
     build:
-      context: .
-      dockerfile: BOnlineStore.UI/ClientApp/Dockerfile
+      context: ./BOnlineStore.UI/ClientApp
+      dockerfile: Dockerfile
 
 volumes:
   mongo_data:

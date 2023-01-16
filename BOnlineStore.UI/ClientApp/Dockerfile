@@ -1,13 +1,15 @@
 FROM node:16-alpine AS build
 WORKDIR /dist/src/app
+
 # Copy files to virtual directory
-COPY package.json .
-COPY package-lock.json .
+COPY package.json /dist/src/app/package.json
+COPY package-lock.json /dist/src/app/package-lock.json
+
 # Run command in Virtual directory
 RUN npm cache clean --force
 # Copy files from local machine to virtual directory in docker image
 COPY . .
-RUN npm install 
+RUN npm install --force 
 RUN npm run build --prod
 
 

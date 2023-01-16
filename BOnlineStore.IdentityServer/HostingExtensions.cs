@@ -29,6 +29,8 @@ internal static class HostingExtensions
 
         builder.Services.AddRazorPages();
 
+
+
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -40,6 +42,7 @@ internal static class HostingExtensions
         builder.Services
             .AddIdentityServer(options =>
             {
+                options.IssuerUri = builder.Configuration.GetValue<string>("IdentityServerUrl");
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;

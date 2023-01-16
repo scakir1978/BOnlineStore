@@ -10,8 +10,10 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Globalization;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 var logger = new LoggerConfiguration()
   .WriteTo.Seq(builder.Configuration.GetValue<string>("SeqServerUrl"))
@@ -113,6 +115,7 @@ builder.Services.AddRepositoryInjections();
 builder.Services.AddServiceInjections();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

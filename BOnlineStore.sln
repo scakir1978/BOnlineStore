@@ -39,7 +39,12 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BOnlineStore.Gateway", "BOnlineStore.Gateway", "{C82BF66C-D7A3-460F-9C21-847B0A3345A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOnlineStore.Gateway", "BOnlineStore.Gateway\BOnlineStore.Gateway.csproj", "{CCAB24B9-6E98-4E08-BDAE-1A55D2EAEB3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.Gateway", "BOnlineStore.Gateway\BOnlineStore.Gateway.csproj", "{CCAB24B9-6E98-4E08-BDAE-1A55D2EAEB3A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificates", "{1CB0742F-CFD8-4FF1-B4D4-1D10D1F31766}"
+	ProjectSection(SolutionItems) = preProject
+		Shared\Certificates\bonlinestore.crt = Shared\Certificates\bonlinestore.crt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -109,6 +114,7 @@ Global
 		{F9863884-AC06-4219-8A64-B2C9A4957BA8} = {49D3AC90-63E2-45A5-ADB3-74652029FED4}
 		{774F2542-DB21-4920-9594-FE8F4DD4370E} = {F9863884-AC06-4219-8A64-B2C9A4957BA8}
 		{CCAB24B9-6E98-4E08-BDAE-1A55D2EAEB3A} = {C82BF66C-D7A3-460F-9C21-847B0A3345A0}
+		{1CB0742F-CFD8-4FF1-B4D4-1D10D1F31766} = {C56E1D43-2CBB-414F-8C83-2C55744DBB51}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A12FA703-13AF-486D-90AA-45AC95F5C81E}
