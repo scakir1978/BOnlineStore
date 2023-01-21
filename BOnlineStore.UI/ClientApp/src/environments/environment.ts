@@ -8,9 +8,9 @@ export const environment = {
   //identityUrl: 'https://localhost:5001',
   identityUrl: 'https://localhost:5000/identity/',
   definitionsUrl: 'https://localhost:5000/services/definitions/',
-  //definitionsUrl: 'https://localhost:5011/api/',
+  //definitionsUrl: 'http://localhost:5011/api/',
   productionUrl: 'https://localhost:5000/services/production/',
-  //productionUrl: 'https://localhost:5012/api/',
+  //productionUrl: 'http://localhost:5012/api/',
   uiUrl: 'http://localhost:4200',
 };
 

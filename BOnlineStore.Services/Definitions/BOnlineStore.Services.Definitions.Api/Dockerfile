@@ -7,6 +7,8 @@ ADD Shared/Certificates/bonlinestore.crt /usr/local/share/ca-certificates/bonlin
 RUN chmod 644 /usr/local/share/ca-certificates/bonlinestore.crt && update-ca-certificates
 
 WORKDIR /app
+ADD Shared/Certificates/bonlinestore.pfx bonlinestore.pfx
+
 EXPOSE 80
 EXPOSE 443
 

@@ -9,7 +9,7 @@
       },
       "dotnetRunMessages": true,
       //"applicationUrl": "https://bonlinestore.com:5011;http://bonlinestore.com:6011"
-      //"applicationUrl": "https://localhost:5011;http://localhost:6011"
+      "applicationUrl": "https://localhost:5011;http://localhost:6011"
     },
     "IIS Express": {
       "commandName": "IISExpress",

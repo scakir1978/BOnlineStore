@@ -9,12 +9,12 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  identitydb:
-    container_name: identitydb
+  identitydbdocker:
+    container_name: identitydbdocker
     user: root
     restart: always
     ports:
-      - "1433:1433"
+      - "1444:1433"
     volumes:
       - identity_data:/var/opt/mssql/data
     environment:
@@ -45,19 +45,20 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "IdentityServerUrl=https://identity.bonlinestore.com"
-      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=IdentityDB; User=sa; Password=Scag18548912345*"
+      - "ConnectionStrings:DefaultConnection=Server=identitydbdocker,1433;Database=IdentityDB; User=sa; Password=Scag18548912345*"
       - "IdentityConfigSettings:RedirectUri=http://ui.bonlinestore/pages/callback"
       - "IdentityConfigSettings:AllowedCorsOrigin1=http://ui.bonlinestore"
-      - "IdentityConfigSettings:AllowedCorsOrigin2=http://gateway.bonlinestore"
+      - "IdentityConfigSettings:AllowedCorsOrigin2=https://gateway.bonlinestore"
       - "IdentityConfigSettings:PostLogoutRedirectUri=http://ui.bonlinestore/pages/callout"
       - "IdentityConfigSettings:FrontChannelLogoutUri=http://ui.bonlinestore/pages/callout"
+      - "IdentityRunningMode=docker"
     depends_on:
-      - "identitydb"
+      - "identitydbdocker"
     ports:
       - "5001:443"      
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    #volumes:
+    #  - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   bonlinestore.services.definitions.api:
     container_name: definitions.bonlinestore.com
@@ -67,6 +68,7 @@ services:
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
       - "IdentityServerUrl=https://identity.bonlinestore.com"
       - "SeqServerUrl=http://seq:5341"
+      - "DefinitionsRunningMode=docker"
     depends_on:
       - "mongodb"
       - "bonlinestore.identityserver"
@@ -74,9 +76,9 @@ services:
     ports:
       - "6011:80"
       - "5011:443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro        
+    #volumes:
+    #  - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro        
 
   bonlinestore.services.production.api:
     container_name: production.bonlinestore.com
@@ -119,9 +121,12 @@ services:
   bonlinestore.gateway:
     container_name: gateway.bonlinestore.com
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      #- ASPNETCORE_Kestrel__Certificates__Default__Password="Scag185489"
+      #- ASPNETCORE_Kestrel__Certificates__Default__Path="bonlinestore.pfx"
       - "IdentityServerUrl=https://identity.bonlinestore.com"
+      - "GatewayRunningMode=docker"
     depends_on:
       - "bonlinestore.identityserver"
     ports:

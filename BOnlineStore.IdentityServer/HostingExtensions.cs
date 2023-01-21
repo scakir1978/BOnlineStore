@@ -1,16 +1,16 @@
-using Duende.IdentityServer;
 using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Duende.IdentityServer.Services;
 using BOnlineStore.IdentityServer.Business;
 using System.Reflection;
 using AutoMapper;
 using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Settings;
 using Microsoft.Extensions.Options;
+using System.Security.Cryptography.X509Certificates;
+using BOnlineStore.Shared;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -39,7 +39,8 @@ internal static class HostingExtensions
 
         var assemblyName = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
 
-        builder.Services
+
+        var builderIdentity = builder.Services
             .AddIdentityServer(options =>
             {
                 options.IssuerUri = builder.Configuration.GetValue<string>("IdentityServerUrl");
@@ -78,6 +79,26 @@ internal static class HostingExtensions
             .AddDeveloperSigningCredential()
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<ProfileService>();
+
+        if (builder.Configuration[AppSettingsKeysConstants.IdentityRunningMode] == "docker")
+        {
+            var certName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/bonlinestore.pfx";
+            Log.Information(File.Exists(certName) == true ? $"Certificate status: {certName} found." : $"Certificate status: {certName} NOT FOUND!!!");
+
+            builderIdentity.AddSigningCredential(new X509Certificate2(certName, "Scag185489"));
+
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(80);
+                options.ListenAnyIP(443, listenOptions =>
+                {
+                    listenOptions.UseConnectionLogging();
+                    listenOptions.UseHttps(certName, "Scag185489");
+                });
+            });
+        }
+        else
+            builderIdentity.AddDeveloperSigningCredential();
 
         builder.Services.AddAuthentication();
 

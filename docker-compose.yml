@@ -3,7 +3,7 @@ version: '3.4'
 services:
   mongodb:
     image: mongo
-  identitydb:
+  identitydbdocker:
     image: mcr.microsoft.com/mssql/server 
   rabbitmq:
     image: rabbitmq:3.11-management

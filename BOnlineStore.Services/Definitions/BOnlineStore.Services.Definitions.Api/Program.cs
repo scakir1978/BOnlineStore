@@ -32,6 +32,22 @@ builder.Host.UseSerilog((context, configuration) =>
     .ReadFrom.Configuration(context.Configuration);
 });
 
+if (builder.Configuration[AppSettingsKeysConstants.DefinitionsRunningMode] == "docker")
+{
+    var certName = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/bonlinestore.pfx";
+    Console.WriteLine(File.Exists(certName) == true ? $"Certificate status: {certName} found." : $"Certificate status: {certName} NOT FOUND!!!");
+
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(80);
+        options.ListenAnyIP(443, listenOptions =>
+        {
+            listenOptions.UseConnectionLogging();
+            listenOptions.UseHttps(certName, "Scag185489");
+        });
+    });
+}
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(new AuthorizeFilter());
