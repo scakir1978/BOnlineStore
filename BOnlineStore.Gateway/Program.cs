@@ -49,8 +49,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddOcelot();
 
-
-
 var app = builder.Build();
 
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());

@@ -44,6 +44,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificates", "{1CB0742F-CFD8-4FF1-B4D4-1D10D1F31766}"
 	ProjectSection(SolutionItems) = preProject
 		Shared\Certificates\bonlinestore.crt = Shared\Certificates\bonlinestore.crt
+		Shared\Certificates\bonlinestore.key = Shared\Certificates\bonlinestore.key
 		Shared\Certificates\bonlinestore.pfx = Shared\Certificates\bonlinestore.pfx
 	EndProjectSection
 EndProject
