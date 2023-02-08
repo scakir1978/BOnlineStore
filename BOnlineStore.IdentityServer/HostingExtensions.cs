@@ -76,7 +76,6 @@ internal static class HostingExtensions
                 };
 
             })
-            .AddDeveloperSigningCredential()
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<ProfileService>();
 
@@ -105,6 +104,14 @@ internal static class HostingExtensions
         IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
         builder.Services.AddSingleton(mapper);
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("MyCorsPolicy", policy =>
+            {
+                policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            });
+        });
+
         return builder.Build();
     }
 
@@ -119,8 +126,11 @@ internal static class HostingExtensions
 
         app.UseStaticFiles();
         app.UseRouting();
+        app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         app.UseIdentityServer();
         app.UseAuthorization();
+
+
 
         app.MapRazorPages()
             .RequireAuthorization();

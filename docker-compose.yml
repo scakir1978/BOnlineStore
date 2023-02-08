@@ -9,38 +9,38 @@ services:
     image: rabbitmq:3.11-management
   seq:
     image: datalust/seq
-  bonlinestore.services.definitions.api:
-    image: ${DOCKER_REGISTRY-}bonlinestoreservicesdefinitionsapi
+  definitions.bonlinestore.com:
+    image: scakir1978/definitions.bonlinestore.com
     build:
       context: .
       dockerfile: BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile  
 
-  bonlinestore.services.order.api:
-    image: ${DOCKER_REGISTRY-}bonlinestoreservicesorderapi
+  order.bonlinestore.com:
+    image: scakir1978/order.bonlinestore.com
     build:
       context: .
       dockerfile: BOnlineStore.Services/Order/BOnlineStore.Services.Order.Api/Dockerfile
 
-  bonlinestore.services.production.api:
-    image: ${DOCKER_REGISTRY-}bonlinestoreservicesproductionapi
+  production.bonlinestore.com:
+    image: scakir1978/production.bonlinestore.com
     build:
       context: .
       dockerfile: BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile
 
-  bonlinestore.identityserver:
-    image: ${DOCKER_REGISTRY-}bonlinestoreidentityserver
+  identity.bonlinestore.com:
+    image: scakir1978/identity.bonlinestore.com
     build:
       context: .
       dockerfile: BOnlineStore.IdentityServer/Dockerfile
 
-  bonlinestore.gateway:
-    image: ${DOCKER_REGISTRY-}bonlinestoregateway
+  gateway.bonlinestore.com:
+    image: scakir1978/gateway.bonlinestore.com
     build:
       context: .
       dockerfile: BOnlineStore.Gateway/Dockerfile  
 
-  bonlinestore.ui:
-    image: ${DOCKER_REGISTRY-}bonlinestoreui
+  ui.bonlinestore.com:
+    image: scakir1978/ui.bonlinestore.com
     build:
       context: ./BOnlineStore.UI/ClientApp
       dockerfile: Dockerfile

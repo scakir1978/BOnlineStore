@@ -4,19 +4,6 @@
   },
   "Routes": [
     {
-      "UpstreamPathTemplate": "/identity/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "UpstreamScheme": "https",
-      "DownstreamPathTemplate": "/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "identity.bonlinestore.com",
-          "Port": 443
-        }
-      ]
-    },
-    {
       "UpstreamPathTemplate": "/services/definitions/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
       "UpstreamScheme": "https",

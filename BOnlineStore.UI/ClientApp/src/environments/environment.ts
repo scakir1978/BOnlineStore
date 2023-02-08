@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   hmr: false,
-  //identityUrl: 'https://localhost:5001',
-  identityUrl: 'https://localhost:5000/identity/',
+  identityUrl: 'https://localhost:5001',
+  //identityUrl: 'https://localhost:5000/identity',
   definitionsUrl: 'https://localhost:5000/services/definitions/',
   //definitionsUrl: 'http://localhost:5011/api/',
   productionUrl: 'https://localhost:5000/services/production/',

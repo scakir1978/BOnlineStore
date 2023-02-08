@@ -38,7 +38,7 @@ services:
     environment:
       - ACCEPT_EULA=Y        
 
-  bonlinestore.identityserver:
+  identity.bonlinestore.com:
     container_name: identity.bonlinestore.com
     restart: on-failure
     environment:
@@ -46,21 +46,16 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "IdentityServerUrl=https://identity.bonlinestore.com"
       - "ConnectionStrings:DefaultConnection=Server=identitydbdocker,1433;Database=IdentityDB; User=sa; Password=Scag18548912345*"
-      - "IdentityConfigSettings:RedirectUri=http://ui.bonlinestore/pages/callback"
-      - "IdentityConfigSettings:AllowedCorsOrigin1=http://ui.bonlinestore"
-      - "IdentityConfigSettings:AllowedCorsOrigin2=https://gateway.bonlinestore"
-      - "IdentityConfigSettings:PostLogoutRedirectUri=http://ui.bonlinestore/pages/callout"
-      - "IdentityConfigSettings:FrontChannelLogoutUri=http://ui.bonlinestore/pages/callout"
+      - "IdentityConfigSettings:RedirectUri=https://ui.bonlinestore.com/pages/callback"
+      - "IdentityConfigSettings:AllowedCorsOrigin1=https://ui.bonlinestore.com"
+      - "IdentityConfigSettings:AllowedCorsOrigin2=https://gateway.bonlinestore.com"
+      - "IdentityConfigSettings:PostLogoutRedirectUri=https://ui.bonlinestore.com/pages/callout"
+      - "IdentityConfigSettings:FrontChannelLogoutUri=https://ui.bonlinestore.com/pages/callout"
       - "IdentityRunningMode=docker"
     depends_on:
-      - "identitydbdocker"
-    ports:
-      - "5001:443"      
-    #volumes:
-    #  - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-    #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - "identitydbdocker"    
 
-  bonlinestore.services.definitions.api:
+  definitions.bonlinestore.com:
     container_name: definitions.bonlinestore.com
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -71,35 +66,24 @@ services:
       - "DefinitionsRunningMode=docker"
     depends_on:
       - "mongodb"
-      - "bonlinestore.identityserver"
-      - "seq"
-    ports:
-      - "6011:80"
-      - "5011:443"
-    #volumes:
-    #  - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-    #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro        
+      - "identity.bonlinestore.com"
+      - "seq"    
 
-  bonlinestore.services.production.api:
+  production.bonlinestore.com:
     container_name: production.bonlinestore.com
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development      
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
       - "IdentityServerUrl=https://identity.bonlinestore.com"
       - "SeqServerUrl=http://seq:5341"
+      - "ProductionRunningMode=docker"
     depends_on:
       - "mongodb"
-      - "bonlinestore.identityserver"
-      - "seq"
-    ports:
-      - "6012:80"
-      - "5012:443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - "identity.bonlinestore.com"
+      - "seq"    
 
-  bonlinestore.services.order.api:
+  order.bonlinestore.com:
     container_name: order.bonlinestore.com
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -107,44 +91,27 @@ services:
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
       - "IdentityServerUrl=https://identity.bonlinestore.com"
       - "SeqServerUrl=http://seq:5341"
+      - "OrderRunningMode=docker"
     depends_on:
       - "mongodb"
-      - "bonlinestore.identityserver"
-      - "seq"
-    ports:
-      - "6013:80"
-      - "5013:443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro 
+      - "identity.bonlinestore.com"
+      - "seq"    
 
-  bonlinestore.gateway:
+  gateway.bonlinestore.com:
     container_name: gateway.bonlinestore.com
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      #- ASPNETCORE_Kestrel__Certificates__Default__Password="Scag185489"
-      #- ASPNETCORE_Kestrel__Certificates__Default__Path="bonlinestore.pfx"
+      - ASPNETCORE_URLS=https://+:443;http://+:80      
       - "IdentityServerUrl=https://identity.bonlinestore.com"
       - "GatewayRunningMode=docker"
     depends_on:
-      - "bonlinestore.identityserver"
-    ports:
-      - "6000:80"
-      - "5000:443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro              
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - "identity.bonlinestore.com"    
 
-  bonlinestore.ui:
+  ui.bonlinestore.com:
     container_name: ui.bonlinestore.com
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:443;http://+:80
-    ports:
-      - "4200:80"
-      - "5200:443"      
-    volumes:
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    ports:      
+      - "443:443"       
       

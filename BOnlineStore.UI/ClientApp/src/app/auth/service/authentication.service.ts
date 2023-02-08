@@ -23,6 +23,15 @@ export class AuthenticationService {
     post_logout_redirect_uri: `${environment.uiUrl}/pages/callout`,
     //post_logout_redirect_uri: "http://localhost:4200/pages/callout",
     response_type: 'code',
+    /*metadata: {
+      authorization_endpoint: `${environment.identityUrl}/connect/authorize`,
+      token_endpoint: `${environment.identityUrl}/connect/token`,
+      userinfo_endpoint: `${environment.identityUrl}/connect/userinfo`,
+      end_session_endpoint: `${environment.identityUrl}/connect/endsession`,
+      check_session_iframe: `${environment.identityUrl}/connect/checksession`,
+      revocation_endpoint: `${environment.identityUrl}/connect/revocation`,
+      introspection_endpoint: `${environment.identityUrl}/connect/introspect`,
+    },*/
     scope:
       'openid profile definitions_full_permission production_full_permission gateway_full_permission IdentityServerApi offline_access',
     automaticSilentRenew: true,
@@ -48,6 +57,7 @@ export class AuthenticationService {
     private _toastrService: ToastrService
   ) {
     this.userManager = new oidc.UserManager(this.config);
+
     this.currentUserSubject = new BehaviorSubject<User>(
       JSON.parse(localStorage.getItem('currentUser'))
     );
