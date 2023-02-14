@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identitydb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identitydb
+  template:
+    metadata:
+      labels:
+        app: identitydb
+    spec:
+      terminationGracePeriodSeconds: 30
+      hostname: identitydb
+      securityContext:
+        fsGroup: 10001
+      containers:
+        - name: identitydb
+          image: mcr.microsoft.com/mssql/server
+          resources:
+            requests:
+              memory: "2G"
+              cpu: "2000m"
+            limits:
+              memory: "2G"
+              cpu: "2000m"
+          ports:
+            - containerPort: 1433
+          env:
+            - name: MSSQL_PID
+              valueFrom:
+                configMapKeyRef:
+                  key: MSSQL_PID
+            - name: ACCEPT_EULA
+              valueFrom:
+                configMapKeyRef:
+                  key: ACCEPT_EULA
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: identitydb-secret
+                  key: MSSQL_SA_PASSWORD
+          volumeMounts:
+            - name: mssqldb
+              mountPath: /var/opt/mssql
+      volumes:
+        - name: mssqldb
+          persistentVolumeClaim:
+            claimName: mssql-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identitydb
+spec:
+  selector:
+    app: identitydb
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+  type: LoadBalancer

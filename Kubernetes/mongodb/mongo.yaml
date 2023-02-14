@@ -6,6 +6,13 @@ spec:
   selector:
     matchLabels:
       app: mongodb
+  replicas: 1
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
   template:
     metadata:
       labels:
@@ -31,3 +38,21 @@ spec:
                 secretKeyRef:
                   name: mongo-secret
                   key: mongo-root-password
+          volumeMounts:
+            - name: "mongodb-persistent-storage"
+              mountPath: "/data/db"
+      volumes:
+        - name: "mongodb-persistent-storage"
+          persistentVolumeClaim:
+            claimName: "mongodb-pvc"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017

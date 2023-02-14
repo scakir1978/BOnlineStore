@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: identitydb-configmap
+data:
+  ACCEPT_EULA: "Y"
+  MSSQL_PID: "Developer"
