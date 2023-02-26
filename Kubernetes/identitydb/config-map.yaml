@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: identitydb-configmap
 data:
-  ACCEPT_EULA: "Y"
-  MSSQL_PID: "Developer"
+  accept-eula: "Y"
+  mssql-pid: "Developer"

@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity.bonlinestore.com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity.bonlinestore.com
+  template:
+    metadata:
+      labels:
+        app: identity.bonlinestore.com
+    spec:
+      containers:
+        - name: identity.bonlinestore.com
+          image: scakir1978/identity.bonlinestore.com:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 433
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: aspnetcore-environment
+            - name: ASPNETCORE_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: aspnetcore-urls
+            - name: IdentityServerUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: identity-server-url
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: identity.bonlinestore.com
+                  key: identitydb-connection-string
+            - name: IdentityConfigSettings__RedirectUri
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: redirect-uri
+            - name: IdentityConfigSettings__AllowedCorsOrigin1
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: allowed-cors-origin1
+            - name: IdentityConfigSettings__AllowedCorsOrigin2
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: allowed-cors-origin2
+            - name: IdentityConfigSettings__PostLogoutRedirectUri
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: post-logout-redirect-uri
+            - name: IdentityConfigSettings__FrontChannelLogoutUri
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: front-channel-logout-uri
+            - name: IdentityRunningMode
+              valueFrom:
+                configMapKeyRef:
+                  name: identity.bonlinestore.com
+                  key: identity-running-mode
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity.bonlinestore.com
+spec:
+  selector:
+    app: identity.bonlinestore.com
+  ports:
+    - protocol: TCP
+      port: 5011
+      targetPort: 433
+  type: LoadBalancer

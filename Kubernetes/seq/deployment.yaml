@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seq
+  template:
+    metadata:
+      labels:
+        app: seq
+    spec:
+      terminationGracePeriodSeconds: 30
+      hostname: seq
+      containers:
+        - name: seq
+          image: datalust/seq
+          resources:
+            requests:
+              memory: "2G"
+              cpu: "2000m"
+            limits:
+              memory: "2G"
+              cpu: "2000m"
+          ports:
+            - containerPort: 80
+            - containerPort: 5341
+          env:
+            - name: ACCEPT_EULA
+              valueFrom:
+                configMapKeyRef:
+                  name: seq-configmap
+                  key: accept-eula
+          volumeMounts:
+            - name: "seq-persistent-storage"
+              mountPath: /data
+      volumes:
+        - name: "seq-persistent-storage"
+          persistentVolumeClaim:
+            claimName: seq-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seq
+spec:
+  selector:
+    app: seq
+  ports:
+    - protocol: TCP
+      port: 5341
+      targetPort: 80
+  type: LoadBalancer
