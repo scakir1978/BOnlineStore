@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway.bonlinestore.com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway.bonlinestore.com
+  template:
+    metadata:
+      labels:
+        app: gateway.bonlinestore.com
+    spec:
+      containers:
+        - name: gateway-bonlinestore-com
+          image: scakir1978/gateway.bonlinestore.com:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 443
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: gateway.bonlinestore.com
+                  key: aspnetcore-environment
+            - name: ASPNETCORE_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: gateway.bonlinestore.com
+                  key: aspnetcore-urls
+            - name: IdentityServerUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: gateway.bonlinestore.com
+                  key: identity-server-url
+            - name: gatewayRunningMode
+              valueFrom:
+                configMapKeyRef:
+                  name: gateway.bonlinestore.com
+                  key: gateway-running-mode
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-bonlinestore-com
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "gateway.bonlinestore.com"
+spec:
+  selector:
+    app: gateway.bonlinestore.com
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+  type: LoadBalancer

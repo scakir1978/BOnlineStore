@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui.bonlinestore.com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui.bonlinestore.com
+  template:
+    metadata:
+      labels:
+        app: ui.bonlinestore.com
+    spec:
+      containers:
+        - name: ui-bonlinestore-com
+          image: scakir1978/ui.bonlinestore.com:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 443
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: ui.bonlinestore.com
+                  key: aspnetcore-environment
+            - name: ASPNETCORE_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: ui.bonlinestore.com
+                  key: aspnetcore-urls
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-bonlinestore-com
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "ui.bonlinestore.com"
+spec:
+  selector:
+    app: ui.bonlinestore.com
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+  type: NodePort

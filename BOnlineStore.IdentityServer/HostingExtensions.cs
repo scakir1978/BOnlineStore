@@ -11,6 +11,7 @@ using BOnlineStore.IdentityServer.Settings;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography.X509Certificates;
 using BOnlineStore.Shared;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -112,6 +113,16 @@ internal static class HostingExtensions
             });
         });
 
+        builder.Services.Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders =
+                ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+            options.KnownNetworks.Clear();
+            options.KnownProxies.Clear();
+        });
+
+
         return builder.Build();
     }
 
@@ -123,6 +134,8 @@ internal static class HostingExtensions
         {
             app.UseDeveloperExceptionPage();
         }
+
+        app.UseForwardedHeaders();
 
         app.UseStaticFiles();
         app.UseRouting();

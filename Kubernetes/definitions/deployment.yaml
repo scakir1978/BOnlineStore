@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: definitions.bonlinestore.com
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: definitions.bonlinestore.com
+  template:
+    metadata:
+      labels:
+        app: definitions.bonlinestore.com
+    spec:
+      containers:
+        - name: definitions-bonlinestore-com
+          image: scakir1978/definitions.bonlinestore.com:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 443
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: definitions.bonlinestore.com
+                  key: aspnetcore-environment
+            - name: ASPNETCORE_URLS
+              valueFrom:
+                configMapKeyRef:
+                  name: definitions.bonlinestore.com
+                  key: aspnetcore-urls
+            - name: IdentityServerUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: definitions.bonlinestore.com
+                  key: identity-server-url
+            - name: DatabaseSettings__ConnectionString
+              valueFrom:
+                configMapKeyRef:
+                  name: definitions.bonlinestore.com
+                  key: definitionsdb-connection-string
+            - name: SeqServerUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: definitions.bonlinestore.com
+                  key: seq-server-url
+            - name: DefinitionsRunningMode
+              valueFrom:
+                configMapKeyRef:
+                  name: definitions.bonlinestore.com
+                  key: definitions-running-mode
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: definitions-bonlinestore-com
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "definitions.bonlinestore.com"
+spec:
+  selector:
+    app: definitions.bonlinestore.com
+  ports:
+    - protocol: TCP
+      port: 443
+      targetPort: 443
+  type: NodePort

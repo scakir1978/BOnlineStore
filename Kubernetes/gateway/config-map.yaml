@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gateway.bonlinestore.com
+data:
+  aspnetcore-environment: Development
+  aspnetcore-urls: https://+:443;http://+:80
+  identity-server-url: http://identity-bonlinestore-com
+  gateway-running-mode: docker

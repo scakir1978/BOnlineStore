@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ui.bonlinestore.com
+data:
+  aspnetcore-environment: Production
+  aspnetcore-urls: https://+:443;http://+:80
