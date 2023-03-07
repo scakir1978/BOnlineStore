@@ -20,6 +20,7 @@ spec:
         - ui.bonlinestore.com
         - identity.bonlinestore.com
         - definitions.bonlinestore.com
+        - production.bonlinestore.com
       secretName: bonlinestore-com-certificate
   rules:
     - host: ui.bonlinestore.com
@@ -40,6 +41,16 @@ spec:
             backend:
               service:
                 name: definitions-bonlinestore-com
+                port:
+                  number: 443
+    - host: production.bonlinestore.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /(.*)
+            backend:
+              service:
+                name: production-bonlinestore-com
                 port:
                   number: 443
     - host: identity.bonlinestore.com

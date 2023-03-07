@@ -85,7 +85,12 @@ spec:
   selector:
     app: identity.bonlinestore.com
   ports:
-    - protocol: TCP
+    - name: https
+      protocol: TCP
       port: 443
       targetPort: 443
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
   type: NodePort

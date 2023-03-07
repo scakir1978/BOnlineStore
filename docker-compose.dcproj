@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
-	<PropertyGroup Label="Globals">
-		<ProjectVersion>2.1</ProjectVersion>
-		<DockerTargetOS>Linux</DockerTargetOS>
-		<ProjectGuid>48b88299-85b2-4ddb-b78a-32a7a60536c2</ProjectGuid>
-		<DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-		<DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-		<DockerServiceName>bonlinestore.services.definitions.api</DockerServiceName>
-	</PropertyGroup>
-	<ItemGroup>
-		<None Include="docker-compose.override.yml">
-			<DependentUpon>docker-compose.yml</DependentUpon>
-		</None>
-		<None Include="docker-compose.yml" />
-		<None Include=".dockerignore" />
-		<None Include="identity-push-docker-hub.bat" />
-		<None Include="ui-push-docker-hub.bat" />
-	</ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <ProjectGuid>48b88299-85b2-4ddb-b78a-32a7a60536c2</ProjectGuid>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
+    <DockerServiceName>bonlinestore.services.definitions.api</DockerServiceName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose.yml" />
+    <None Include=".dockerignore" />
+    <None Include="docker-hub\production.bat" />
+    <None Include="docker-hub\definitions.bat" />
+    <None Include="docker-hub\identity.bat" />
+    <None Include="docker-hub\ui.bat" />
+  </ItemGroup>
 </Project>

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: definitions.bonlinestore.com
+  name: production.bonlinestore.com
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: definitions.bonlinestore.com
+      app: production.bonlinestore.com
   template:
     metadata:
       labels:
-        app: definitions.bonlinestore.com
+        app: production.bonlinestore.com
     spec:
       containers:
-        - name: definitions-bonlinestore-com
-          image: scakir1978/definitions.bonlinestore.com:latest
+        - name: production-bonlinestore-com
+          image: scakir1978/production.bonlinestore.com:latest
           imagePullPolicy: Always
           resources:
             limits:
@@ -27,43 +27,43 @@ spec:
             - name: ASPNETCORE_ENVIRONMENT
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
+                  name: production.bonlinestore.com
                   key: aspnetcore-environment
             - name: ASPNETCORE_URLS
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
+                  name: production.bonlinestore.com
                   key: aspnetcore-urls
             - name: IdentityServerUrl
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
+                  name: production.bonlinestore.com
                   key: identity-server-url
             - name: DatabaseSettings__ConnectionString
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
-                  key: definitionsdb-connection-string
+                  name: production.bonlinestore.com
+                  key: productiondb-connection-string
             - name: SeqServerUrl
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
+                  name: production.bonlinestore.com
                   key: seq-server-url
-            - name: DefinitionsRunningMode
+            - name: productionRunningMode
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
-                  key: definitions-running-mode
+                  name: production.bonlinestore.com
+                  key: production-running-mode
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: definitions-bonlinestore-com
+  name: production-bonlinestore-com
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "definitions.bonlinestore.com"
+    service.beta.kubernetes.io/do-loadbalancer-name: "production.bonlinestore.com"
 spec:
   selector:
-    app: definitions.bonlinestore.com
+    app: production.bonlinestore.com
   ports:
     - name: https
       protocol: TCP
