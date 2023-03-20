@@ -1,131 +1,137 @@
 ﻿@page
 @model BOnlineStore.IdentityServer.Pages.Login.Index
 
-<div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper">
-        <div class="content-header row">
-        </div>
-        <div class="content-body">
-            <div class="auth-wrapper auth-basic px-2">
-                <div class="auth-inner my-2">
-                    <!-- Login basic -->
-                    <div class="card mb-0">
-                        <div class="card-body">
-                            <a href="index.html" class="brand-logo">
-                                <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28">
-                                    <defs>
-                                        <lineargradient id="linearGradient-1" x1="100%" y1="10.5120544%" x2="50%" y2="89.4879456%">
-                                            <stop stop-color="#000000" offset="0%"></stop>
-                                            <stop stop-color="#FFFFFF" offset="100%"></stop>
-                                        </lineargradient>
-                                        <lineargradient id="linearGradient-2" x1="64.0437835%" y1="46.3276743%" x2="37.373316%" y2="100%">
-                                            <stop stop-color="#EEEEEE" stop-opacity="0" offset="0%"></stop>
-                                            <stop stop-color="#FFFFFF" offset="100%"></stop>
-                                        </lineargradient>
-                                    </defs>
-                                    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                        <g id="Artboard" transform="translate(-400.000000, -178.000000)">
-                                            <g id="Group" transform="translate(400.000000, 178.000000)">
-                                                <path class="text-primary" id="Path" d="M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z" style="fill: currentColor"></path>
-                                                <path id="Path1" d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z" fill="url(#linearGradient-1)" opacity="0.2"></path>
-                                                <polygon id="Path-2" fill="#000000" opacity="0.049999997" points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325"></polygon>
-                                                <polygon id="Path-21" fill="#000000" opacity="0.099999994" points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338"></polygon>
-                                                <polygon id="Path-3" fill="url(#linearGradient-2)" opacity="0.099999994" points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288"></polygon>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </svg>
-                                <h2 class="brand-text text-primary ms-1">Vuexy</h2>
+<div class="auth-page-wrapper pt-5">
+    <!-- auth page content -->
+    <div class="auth-page-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center mt-sm-5 mb-4 text-white-50">
+                        <div>
+                            <a href="#" class="d-inline-block auth-logo">
+                                <img src="~/assets/images/logo-light.png" alt="" height="20">
                             </a>
+                        </div>
+                        <p class="mt-3 fs-15 fw-semibold">B-Online-Store</p>
+                    </div>
+                </div>
+            </div>
+            <!-- end row -->
 
-                            <h4 class="card-title mb-1">Hoşgeldiniz! 👋</h4>
-                            <p class="card-text mb-2">Lütfen hesabınıza giriş yapın ve maceraya başlayın</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5">
+                    <div class="card mt-4 card-bg-fill">
 
-                            <partial name="_ValidationSummary" />
+                        <div class="card-body p-4">
+                            <div class="text-center mt-2">
+                                <h5 class="text-primary">Hoş Geldiniz...</h5>
+                                <p class="text-muted">B-Online-Store adresine devam etmek için oturum açın.</p>
+                            </div>
+                            <div class="p-2 mt-4">
 
                             @if (Model.View.EnableLocalLogin)
                             {
-
-                                <form class="auth-login-form mt-2" asp-page="/Account/Login/Index">
-                                    <input type="hidden" asp-for="Input.ReturnUrl" />
-                                    <div class="mb-1">
-                                        <label asp-for="Input.Username" class="form-label">Email</label>
-                                        <input asp-for="Input.Username" type="text" class="form-control" id="login-email" placeholder="ahmet@example.com" aria-describedby="login-email" tabindex="1" autofocus />
-                                    </div>
-
-                                    <div class="mb-1">
-                                        <div class="d-flex justify-content-between">
-                                            <label class="form-label" asp-for="Input.Password">Şifre</label>
-                                            <a href="#">
-                                                <small>Şifremi Unuttum</small>
-                                            </a>
-                                        </div>
-                                        <div class="input-group input-group-merge form-password-toggle">
-                                            <input asp-for="Input.Password" type="password" autocomplete="off" class="form-control form-control-merge" id="login-password" tabindex="2" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="login-password" />
-                                            <span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
-                                        </div>
-                                    </div>
-
-                                    @if (Model.View.AllowRememberLogin)
-                                    {
-
-                                        <div class="mb-1">
-                                            <div class="form-check">
-                                                <input asp-for="Input.RememberLogin" class="form-check-input" type="checkbox" id="remember-me" tabindex="3" />
-                                                <label asp-for="Input.RememberLogin" class="form-check-label" for="remember-me"> Beni hatırla </label>
+                                    <form asp-page="/Account/Login/Index" class="needs-validation" novalidate>
+                                        <input type="hidden" asp-for="Input.ReturnUrl" />
+                                        <div class="mb-3 position-relative">
+                                            <label asp-for="Input.Username" class="form-label">E-Mail</label>
+                                            <input asp-for="Input.Username" type="text" class="form-control" id="username" placeholder="Mail adresinizi girin" aria-describedby="username" tabindex="1" required>
+                                            <div class="invalid-tooltip">
+                                                Lütfen e-mail adresinizi giriniz.
                                             </div>
                                         </div>
 
-                                    }
+                                        <div class="mb-3">
+                                            <div class="float-end">
+                                                <a href="#" class="text-muted">Şifrenizimi unuttunuz?</a>
+                                            </div>
+                                            <label asp-for="Input.Password" class="form-label">Şifre</label>
+                                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                                <input asp-for="Input.Password" type="password" class="form-control pe-5 password-input" id="password-input" tabindex="2" placeholder="Şifrenizi girin" required>
+                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
+                                                <div class="invalid-tooltip">
+                                                    Lütfen şifrenizi giriniz.                    
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <button name="Input.Button" value="login" class="btn btn-primary w-100" tabindex="4">Oturum Aç</button>
+                                        @if (Model.View.AllowRememberLogin)
+                                        {
+                                            <div class="form-check">
+                                                <input asp-for="Input.RememberLogin" class="form-check-input" type="checkbox" id="auth-remember-check" tabindex="3">
+                                                <label asp-for="Input.RememberLogin" class="form-check-label" for="auth-remember-check">Beni hatırla</label>
+                                            </div>
+                                        }
 
-                                </form>
+                                        <div class="mt-4">
+                                            <button name="Input.Button" value="login" class="btn btn-primary w-100" type="submit" tabindex="4">Oturum Aç</button>
+                                        </div>
 
+                                        @if (Model.View.VisibleExternalProviders.Any())
+                                        {
+                                            <div class="mt-4 text-center">
+                                                <div class="signin-other-title">
+                                                    <h5 class="fs-13 mb-4 title">Sign In with</h5>
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-facebook-fill fs-16"></i></button>
+                                                    <button type="button" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-google-fill fs-16"></i></button>
+                                                    <button type="button" class="btn btn-dark btn-icon waves-effect waves-light"><i class="ri-github-fill fs-16"></i></button>
+                                                    <button type="button" class="btn btn-info btn-icon waves-effect waves-light"><i class="ri-twitter-fill fs-16"></i></button>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </form>
                             }
 
-                            <p class="text-center mt-2">
-                                <span>Platformumuzda yeni misiniz?</span>
-                                <a href="http://localhost:4200/pages/register">
-                                    <span>Hesap oluştur</span>
-                                </a>
-                            </p>
-
-                            @if (Model.View.VisibleExternalProviders.Any())
-                            {
-
-                                <div class="divider my-2">
-                                    <div class="divider-text">or</div>
-                                </div>
-
-                                <div class="auth-footer-btn d-flex justify-content-center">
-                                    <a href="#" class="btn btn-facebook">
-                                        <i data-feather="facebook"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-twitter white">
-                                        <i data-feather="twitter"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-google">
-                                        <i data-feather="mail"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-github">
-                                        <i data-feather="github"></i>
-                                    </a>
-                                </div>
-
-                            }
-
+                            </div>
                         </div>
+                        <!-- end card body -->
                     </div>
-                    <!-- /Login basic -->
+                    <!-- end card -->
+
+                    <div class="mt-4 text-center">
+                        <p class="mb-0">Hesabınız mı yok ? <a href="#" class="fw-bold text-primary text-decoration-underline"> Hesap oluştur </a> </p>
+                    </div>
+
+                    <partial name="_ValidationSummary" />
+
                 </div>
             </div>
-
+            <!-- end row -->
         </div>
+        <!-- end container -->
     </div>
+    <!-- end auth page content -->
+    <!-- footer -->
+    @*<footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <p class="mb-0 text-muted">&copy; <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>*@
+    <!-- end Footer -->
 </div>
+<!-- end auth-page-wrapper -->
+
+@section scripts{
+    <!-- prismjs plugin -->
+    <script src="~/assets/libs/prismjs/prism.js"></script>
+
+    <script src="~/assets/js/pages/form-validation.init.js"></script>
+    
+    <!-- password-addon init -->
+    <script src="~/assets/js/pages/password-addon.init.js"></script>
+
+    
+}
 
 
 
