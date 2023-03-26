@@ -19,7 +19,7 @@ FROM nginx:latest
 # Copying compiled code and nginx config to different folder
 # NOTE: This path may change according to your project's output folder 
 #COPY --from=build /dist/src/app/dist/vuexy /usr/share/nginx/html
-COPY /dist/vuexy /usr/share/nginx/html
+COPY /dist/velzon /usr/share/nginx/html
 COPY ssl/bonlinestore.crt  /etc/nginx/certs/bonlinestore.crt
 COPY ssl/bonlinetore-decrypted.key  /etc/nginx/certs/bonlinestore.key
 COPY nginx.conf  /etc/nginx/conf.d/default.conf

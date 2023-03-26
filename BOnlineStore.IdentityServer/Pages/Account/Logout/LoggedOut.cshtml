@@ -1,7 +1,48 @@
 @page
 @model BOnlineStore.IdentityServer.Pages.Logout.LoggedOut
 
-<div class="logged-out-page">
+<!-- auth page content -->
+<div class="auth-page-content">
+    <div class="container">        
+
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="card mt-4 card-bg-fill">
+                    <div class="card-body p-4 text-center">
+                        <lord-icon src="https://cdn.lordicon.com/hzomhqxz.json" trigger="loop" colors="primary:#8c68cd,secondary:#4788ffs" style="width:180px;height:180px"></lord-icon>
+
+                        <div class="mt-4 pt-2">
+                            <h5>Oturumu kapattýnýz</h5>
+                            <p class="text-muted"><span class="fw-semibold">B-Online-Store</span> uygulamasýný kullandýðýnýz için teþekkür ederiz.</p>
+
+                            @if (Model.View.PostLogoutRedirectUri != null)
+                            {    
+                                <div class="mt-4">
+                                    <a href="@Model.View.PostLogoutRedirectUri" class="btn btn-primary w-100">Tekrar Oturum Aç</a>
+                                </div>
+                            }
+
+                            @*@if (Model.View.SignOutIframeUrl != null)
+                            {
+                                <iframe width="0" height="0" class="signout" src="@Model.View.SignOutIframeUrl"></iframe>
+                            }*@
+
+                        </div>
+                    </div>
+                    <!-- end card body -->
+                </div>
+                <!-- end card -->
+
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- end auth page content -->
+
+@*<div class="logged-out-page">
     <h1>
         Logout
         <small>You are now logged out</small>
@@ -19,7 +60,7 @@
     {
         <iframe width="0" height="0" class="signout" src="@Model.View.SignOutIframeUrl"></iframe>
     }
-</div>
+</div>*@
 
 @section scripts
 {

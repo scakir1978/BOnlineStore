@@ -1,0 +1,20 @@
+{
+  "GENERAL": "Genel",
+  "DASHBOARD": "Panel",
+  "CHANGEPASSWORD": "Şifre Değiştir",
+  "UPLOAD": "Yükle",
+  "ACCOUNTSETTINGS": "Hesap Ayarları",
+  "PAGES": "Sayfalar",
+  "MODELGROUPS": "Model Grupları",
+  "COLORGROUPS": "Renk Grupları",
+  "COLORGROUP": "Renk Grubu",
+  "COLOR": "Renk",
+  "DEFINITIONS": "Tanımlamalar",
+  "CODE": "Kod",
+  "NAME": "Adı",
+  "THEMECUSTOMIZER": "Temayı Özelleştir",
+  "THEMECUSTOMIZERTITLE": "Gerçek Zamanlı Özelleştirin ve Önizleyin",
+  "SKIN": "Görünüm",
+  "PRODUCTION": "Üretim",
+  "FORMULATYPES": "Formül Tipleri"
+}

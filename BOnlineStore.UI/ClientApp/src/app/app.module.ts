@@ -1,93 +1,72 @@
-import { BaseDefinitionsOnGridComponent } from 'app/main/base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { CallbackModule } from "./callback/callback.module";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
 
-import 'hammerjs';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { ToastrModule } from 'ngx-toastr'; // For auth after login toast
+// search module
+import { Ng2SearchPipeModule } from "ng2-search-filter";
 
-import { CoreModule } from '@core/core.module';
-import { CoreCommonModule } from '@core/common.module';
-import { CoreSidebarModule, CoreThemeCustomizerModule } from '@core/components';
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
 
-import { coreConfig } from 'app/app-config';
+import { LayoutsModule } from "./layouts/layouts.module";
+import { PagesModule } from "./pages/pages.module";
 
-import { AppComponent } from 'app/app.component';
-import { LayoutModule } from 'app/layout/layout.module';
-import { SampleModule } from 'app/main/sample/sample.module';
+// Auth
 import {
-  ErrorInterceptor,
-  fakeBackendProvider,
-  JwtInterceptor,
-} from './auth/helpers';
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+} from "@angular/common/http";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { environment } from "../environments/environment";
+import { initFirebaseBackend } from "./authUtils";
+import { FakeBackendInterceptor } from "./core/helpers/fake-backend";
+import { ErrorInterceptor } from "./core/helpers/error.interceptor";
+import { JwtInterceptor } from "./core/helpers/jwt.interceptor";
 
-const appRoutes: Routes = [
-  {
-    path: 'pages',
-    loadChildren: () =>
-      import('./main/pages/pages.module').then((m) => m.PagesModule),
-  },
-  {
-    path: 'definitions',
-    loadChildren: () =>
-      import('./main/definitions/definitions.module').then(
-        (m) => m.DefinitionsModule
-      ),
-  },
-  {
-    path: 'production',
-    loadChildren: () =>
-      import('./main/production/production.module').then(
-        (m) => m.ProductionModule
-      ),
-  },
-  {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: 'full',
-  },
-  {
-    path: '**',
-    redirectTo: '/pages/miscellaneous/error', //Error 404 - Page not found
-  },
-];
+// Language
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+
+export function createTranslateLoader(http: HttpClient): any {
+  return new TranslateHttpLoader(http, "assets/i18n/", ".json");
+}
+
+/*if (environment.defaultauth === "firebase") {
+  initFirebaseBackend(environment.firebaseConfig);
+} else {
+  FakeBackendInterceptor;
+}*/
 
 @NgModule({
-  declarations: [AppComponent, BaseDefinitionsOnGridComponent],
+  declarations: [AppComponent],
   imports: [
-    BrowserModule,
+    TranslateModule.forRoot({
+      defaultLanguage: "tr",
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes, {
-      scrollPositionRestoration: 'enabled', // Add options right here
-      relativeLinkResolution: 'legacy',
-    }),
-    TranslateModule.forRoot(),
-
-    //NgBootstrap
-    NgbModule,
-    ToastrModule.forRoot(),
-
-    // Core modules
-    CoreModule.forRoot(coreConfig),
-    CoreCommonModule,
-    CoreSidebarModule,
-    CoreThemeCustomizerModule,
-
-    // App modules
-    LayoutModule,
-    SampleModule,
+    BrowserModule,
+    AppRoutingModule,
+    LayoutsModule,
+    PagesModule,
+    Ng2SearchPipeModule,
+    CallbackModule,
   ],
-
-  bootstrap: [AppComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider,
+    /*{
+      provide: HTTP_INTERCEPTORS,
+      useClass: FakeBackendInterceptor,
+      multi: true,
+    },*/
   ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
