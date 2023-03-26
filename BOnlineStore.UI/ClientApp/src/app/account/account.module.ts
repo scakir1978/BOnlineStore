@@ -10,30 +10,25 @@ import lottie from 'lottie-web';
 
 import { ToastsContainer } from './login/toasts-container.component';
 
-
 import { AccountRoutingModule } from './account-routing.module';
-import { SigninModule } from "./auth/signin/signin.module";
-import { SignupModule } from "./auth/signup/signup.module";
+import { SigninModule } from './auth/signin/signin.module';
+import { SignupModule } from './auth/signup/signup.module';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
-  declarations: [
-    RegisterComponent,
-    LoginComponent,
-    ToastsContainer
-  ],
+  declarations: [RegisterComponent, LoginComponent, ToastsContainer],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     NgbToastModule,
     AccountRoutingModule,
-    SigninModule
+    SigninModule,
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AccountModule { 
+export class AccountModule {
   constructor() {
     defineElement(lottie.loadAnimation);
   }

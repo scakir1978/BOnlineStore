@@ -16,13 +16,21 @@
             <h1 class="title text-muted">401</h1>
           </div>
           <div>
-            <h4>You are not authorized! 🔐</h4>
+            <h4>
+              {{ "NOTAUTHORIZEDMESSAGE1" | translate }}
+              🔐
+            </h4>
             <p class="text-muted w-75 mx-auto">
-              Please contact your site administrator.
+              {{ "NOTAUTHORIZEDMESSAGE2" | translate }}
             </p>
-            <a routerLink="" class="btn btn-success"
-              ><i class="mdi mdi-home me-1"></i>Back to home</a
+            <button
+              type="button"
+              class="btn btn-primary waves-effect waves-light"
+              (click)="gotoLoginPage()"
             >
+              <i class="mdi mdi-home me-1"></i
+              >{{ "NOTAUTHORIZEDMESSAGE3" | translate }}
+            </button>
           </div>
         </div>
         <!-- end col-->

@@ -16,5 +16,17 @@
   "THEMECUSTOMIZERTITLE": "Customize & Preview in Real Time",
   "SKIN": "Skin",
   "PRODUCTION": "Production",
-  "FORMULATYPES": "Formula Types"
+  "FORMULATYPES": "Formula Types",
+  "NOTAUTHORIZEDMESSAGE1": "You are not authorized!",
+  "NOTAUTHORIZEDMESSAGE2": "Please contact your site administrator.",
+  "NOTAUTHORIZEDMESSAGE3": "Go to login page.",
+  "LOADING": "Loading...",
+  "LAYOUT": "Layout",
+  "CHOOSELAYOUT": "Choose your layout",
+  "VERTICAL": "Vertical",
+  "HORIZONTAL": "Horizontal",
+  "TWOCOLUMN": "Two Column",
+  "SEMIBOX": "Semi Box",
+  "COLORSCHEME": " Color Scheme",
+  "CHOOSECOLORSCHEME": "Choose Light or Dark Scheme."
 }

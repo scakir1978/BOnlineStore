@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   Router,
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-} from "@angular/router";
+} from '@angular/router';
 
 // Auth Services
-import { AuthenticationService } from "../services/auth.service";
+import { AuthenticationService } from '../services/auth.service';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
@@ -21,11 +21,11 @@ export class AuthGuard implements CanActivate {
 
     if (currentUser) {
       if (
-        route.data["roles"] &&
-        route.data["roles"].indexOf(currentUser.role) === -1
+        route.data['roles'] &&
+        route.data['roles'].indexOf(currentUser.role) === -1
       ) {
         // role not authorised so redirect to not-authorized page
-        this.router.navigate(["/auth/errors/page-401"]);
+        this.router.navigate(['/auth/errors/page-401']);
         return false;
       }
       // logged in so return true

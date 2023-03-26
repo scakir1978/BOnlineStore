@@ -16,5 +16,17 @@
   "THEMECUSTOMIZERTITLE": "Gerçek Zamanlı Özelleştirin ve Önizleyin",
   "SKIN": "Görünüm",
   "PRODUCTION": "Üretim",
-  "FORMULATYPES": "Formül Tipleri"
+  "FORMULATYPES": "Formül Tipleri",
+  "NOTAUTHORIZEDMESSAGE1": "Yetkisiz işlem yaptınız!",
+  "NOTAUTHORIZEDMESSAGE2": "Lütfen site yöneticisi ile iletişime geçiniz.",
+  "NOTAUTHORIZEDMESSAGE3": "Oturum açma sayfasına gidin.",
+  "LOADING": "Yükleniyor...",
+  "LAYOUT": "Düzen",
+  "CHOOSELAYOUT": "Düzeninizi seçin",
+  "VERTICAL": "Dikey",
+  "HORIZONTAL": "Yatay",
+  "TWOCOLUMN": "İki Sutün",
+  "SEMIBOX": "Yarı Kutu",
+  "COLORSCHEME": "Renk Şeması",
+  "CHOOSECOLORSCHEME": "Karanlık veya aydınlık şeması seçebilirsiniz."
 }

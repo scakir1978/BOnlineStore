@@ -1,43 +1,43 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { LayoutComponent } from "./layouts/layout.component";
+import { LayoutComponent } from './layouts/layout.component';
 
 // Auth
-import { AuthGuard } from "./core/guards/auth.guard";
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: LayoutComponent,
     loadChildren: () =>
-      import("./pages/pages.module").then((m) => m.PagesModule),
+      import('./pages/pages.module').then((m) => m.PagesModule),
     canActivate: [AuthGuard],
   },
   {
-    path: "auth",
+    path: 'auth',
     loadChildren: () =>
-      import("./account/account.module").then((m) => m.AccountModule),
+      import('./account/account.module').then((m) => m.AccountModule),
   },
   {
-    path: "identity",
+    path: 'identity',
     component: LayoutComponent,
     loadChildren: () =>
-      import("./callback/callback.module").then((m) => m.CallbackModule),
+      import('./callback/callback.module').then((m) => m.CallbackModule),
   },
   {
-    path: "definitions",
+    path: 'definitions',
     component: LayoutComponent,
     loadChildren: () =>
-      import("./definitions/definitions.module").then(
+      import('./definitions/definitions.module').then(
         (m) => m.DefinitionsModule
       ),
   },
   {
-    path: "production",
+    path: 'production',
     component: LayoutComponent,
     loadChildren: () =>
-      import("./production/production.module").then((m) => m.ProductionModule),
+      import('./production/production.module').then((m) => m.ProductionModule),
   },
 ];
 

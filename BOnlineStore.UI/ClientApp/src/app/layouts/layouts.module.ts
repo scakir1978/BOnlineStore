@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -19,8 +20,6 @@ import { HorizontalTopbarComponent } from './horizontal-topbar/horizontal-topbar
 import { TwoColumnComponent } from './two-column/two-column.component';
 import { TwoColumnSidebarComponent } from './two-column-sidebar/two-column-sidebar.component';
 
-
-
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -32,8 +31,9 @@ import { TwoColumnSidebarComponent } from './two-column-sidebar/two-column-sideb
     HorizontalComponent,
     HorizontalTopbarComponent,
     TwoColumnComponent,
-    TwoColumnSidebarComponent
+    TwoColumnSidebarComponent,
   ],
+  exports: [TranslateModule],
   imports: [
     CommonModule,
     RouterModule,
@@ -42,6 +42,6 @@ import { TwoColumnSidebarComponent } from './two-column-sidebar/two-column-sideb
     SimplebarAngularModule,
     TranslateModule,
   ],
-  providers: [LanguageService]
+  providers: [LanguageService, TranslateService],
 })
-export class LayoutsModule { }
+export class LayoutsModule {}
