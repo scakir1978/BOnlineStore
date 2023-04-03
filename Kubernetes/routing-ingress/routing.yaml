@@ -1,3 +1,5 @@
+#****** Bu yaml dosyasý kullanýlarak tls yapýlamadý. Aþaðýdaki komt ile gerçekleþtirildi. ******
+#kubectl create secret tls bonlinestore-com-certificate --cert=./bonlinestore.crt --key=./bonlinetore-decrypted.key 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
