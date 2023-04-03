@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { LayoutSettings } from "../models/layout.service.models";
+import { Injectable } from '@angular/core';
+import { LayoutSettings } from '../models/layout.service.models';
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class LayoutService {
   constructor() {}
 
@@ -32,37 +32,38 @@ export class LayoutService {
       topBar: topBar,
     };
 
-    localStorage.setItem("layoutSettings", JSON.stringify(layoutSettings));
+    localStorage.setItem('layoutSettings', JSON.stringify(layoutSettings));
   }
 
   setLayoutModeFromTopbar(mode: string) {
     var layoutSettings = this.getLayoutSettings();
     layoutSettings.layoutMode = mode;
-    localStorage.setItem("layoutSettings", JSON.stringify(layoutSettings));
+    localStorage.setItem('layoutSettings', JSON.stringify(layoutSettings));
   }
 
   getLayoutSettings(): LayoutSettings {
     var layoutSettings: LayoutSettings = JSON.parse(
-      localStorage.getItem("layoutSettings")!
+      localStorage.getItem('layoutSettings')!
     );
 
     if (!layoutSettings) {
       layoutSettings = {
-        bodyImage: "none",
-        dataPreLoader: "false",
-        layoutMode: "dark",
-        layoutPosition: "fixed",
-        layoutType: "vertical",
-        layoutWidth: "fluid",
-        sideBarColor: "dark",
-        sideBarSize: "lg",
-        sideBarView: "default",
-        sideBarVisibility: "show",
-        topBar: "light",
+        bodyImage: 'none',
+        dataPreLoader: 'disable',
+        layoutMode: 'dark',
+        layoutPosition: 'fixed',
+        layoutType: 'vertical',
+        layoutWidth: 'fluid',
+        sideBarColor: 'dark',
+        sideBarSize: 'lg',
+        sideBarView: 'default',
+        sideBarVisibility: 'show',
+        topBar: 'light',
       };
+      localStorage.setItem('layoutSettings', JSON.stringify(layoutSettings));
     }
 
-    return JSON.parse(localStorage.getItem("layoutSettings")!);
+    return layoutSettings;
   }
 
   setLayoutSettingsToDocument(
@@ -70,55 +71,55 @@ export class LayoutService {
     document: Document,
     layoutSettings: LayoutSettings
   ) {
-    document.documentElement.setAttribute("data-layout", layoutType);
+    document.documentElement.setAttribute('data-layout', layoutType);
 
     document.documentElement.setAttribute(
-      "data-topbar",
+      'data-topbar',
       layoutSettings.topBar!
     );
 
     document.documentElement.setAttribute(
-      "data-sidebar",
+      'data-sidebar',
       layoutSettings.sideBarColor!
     );
 
     document.documentElement.setAttribute(
-      "data-layout-style",
+      'data-layout-style',
       layoutSettings.sideBarView!
     );
 
     document.documentElement.setAttribute(
-      "data-layout-mode",
+      'data-layout-mode',
       layoutSettings.layoutMode!
     );
 
     document.documentElement.setAttribute(
-      "data-layout-width",
+      'data-layout-width',
       layoutSettings.layoutWidth!
     );
 
     document.documentElement.setAttribute(
-      "data-layout-position",
+      'data-layout-position',
       layoutSettings.layoutPosition!
     );
 
     document.documentElement.setAttribute(
-      "data-preloader",
+      'data-preloader',
       layoutSettings.dataPreLoader!
     );
 
     document.documentElement.setAttribute(
-      "data-body-image",
+      'data-body-image',
       layoutSettings.bodyImage!
     );
 
     document.documentElement.setAttribute(
-      "data-sidebar-visibility",
+      'data-sidebar-visibility',
       layoutSettings.sideBarVisibility!
     );
 
     document.documentElement.setAttribute(
-      "ata-sidebar-size",
+      'data-sidebar-size',
       layoutSettings.sideBarSize!
     );
   }
