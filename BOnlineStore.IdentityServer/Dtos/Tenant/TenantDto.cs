@@ -1,4 +1,4 @@
-﻿using BOnlineStore.Shared.Models;
+﻿using BOnlineStore.IdentityServer.Models;
 
 namespace BOnlineStore.IdentityServer.Dtos
 {

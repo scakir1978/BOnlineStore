@@ -7,10 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
-using BOnlineStore.Shared;
 using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Dtos;
-using BOnlineStore.Shared.Constansts;
 using BOnlineStore.IdentityServer.Settings;
 
 namespace BOnlineStore.IdentityServer;
@@ -92,7 +90,7 @@ public class SeedData
             {
                 UserName = "scakir1978@hotmail.com",
                 Email = "scakir1978@hotmail.com",
-                Locale = GlobalConstants.english,
+                Locale = IdentityServerConstants.english,
                 TenantId = tenantDto.Id
             };
 
@@ -119,7 +117,7 @@ public class SeedData
                 Id = Guid.Parse("894326A8-AA25-4A33-25C0-08DA904CDDC4"),
                 Name = "Console.Log Deneme Şirketi",
                 CreateDateTime = DateTime.Now,
-                Adress = new Shared.Models.Adress
+                Adress = new Adress
                 {
                     Adress1 = "Beyaz Köşk Caddesi No:36 D:26",
                     CountryName = "Türkiye",

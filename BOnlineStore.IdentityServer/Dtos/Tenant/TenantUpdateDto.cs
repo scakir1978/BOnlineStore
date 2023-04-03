@@ -1,4 +1,4 @@
-﻿using BOnlineStore.Shared.Models;
+﻿using BOnlineStore.IdentityServer.Models;
 
 namespace BOnlineStore.IdentityServer.Dtos
 {
@@ -8,6 +8,6 @@ namespace BOnlineStore.IdentityServer.Dtos
         public string Name { get; set; }
         public Adress Adress { get; set; }
         public TaxInformation TaxInformation { get; set; }
-        
+
     }
 }

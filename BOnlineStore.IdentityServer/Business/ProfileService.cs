@@ -1,5 +1,5 @@
 ﻿using BOnlineStore.IdentityServer.Models;
-using BOnlineStore.Shared;
+using BOnlineStore.IdentityServer.Settings;
 using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -23,14 +23,14 @@ namespace BOnlineStore.IdentityServer.Business
         {
             var user = await _userManager.GetUserAsync(context.Subject);
 
-		    var claims = new List<Claim>
-		    {
-			    new Claim(IdentityServerConstants.ApiScopesDefinitionsTenantId, user.TenantId.ToString()),
+            var claims = new List<Claim>
+            {
+                new Claim(IdentityServerConstants.ApiScopesDefinitionsTenantId, user.TenantId.ToString()),
                 new Claim(IdentityServerConstants.ApiScopesDefinitionsLocale, user.Locale.Trim())
             };
 
-		    context.IssuedClaims.AddRange(claims);
-            
+            context.IssuedClaims.AddRange(claims);
+
         }
 
         public async Task IsActiveAsync(IsActiveContext context)
@@ -40,7 +40,7 @@ namespace BOnlineStore.IdentityServer.Business
             var user = await _userManager.FindByIdAsync(sub);
 
             context.IsActive = user != null;
-            
+
         }
     }
 }

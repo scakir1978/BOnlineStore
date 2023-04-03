@@ -1,6 +1,4 @@
 ﻿using BOnlineStore.IdentityServer.Settings;
-using BOnlineStore.Shared;
-using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 
 namespace BOnlineStore.IdentityServer;
@@ -15,10 +13,10 @@ public static class Config
 
     public static IEnumerable<ApiResource> ApiResources => new ApiResource[]
     {
-        new ApiResource(Shared.IdentityServerConstants.ApiResourcesDefinitions){ Scopes={ Shared.IdentityServerConstants.ApiScopesDefinitionsFullPermission}},
-        new ApiResource(Shared.IdentityServerConstants.ApiResourcesProduction){ Scopes={ Shared.IdentityServerConstants.ApiScopesProductionFullPermission}},
-        new ApiResource(Shared.IdentityServerConstants.ApiResourcesOrder){ Scopes={ Shared.IdentityServerConstants.ApiScopesOrderFullPermission}},
-        new ApiResource(Shared.IdentityServerConstants.ApiResourcesGateway){ Scopes={ Shared.IdentityServerConstants.ApiScopesGatewayFullPermission}},
+        new ApiResource(IdentityServerConstants.ApiResourcesDefinitions){ Scopes={ IdentityServerConstants.ApiScopesDefinitionsFullPermission}},
+        new ApiResource(IdentityServerConstants.ApiResourcesProduction){ Scopes={ IdentityServerConstants.ApiScopesProductionFullPermission}},
+        new ApiResource(IdentityServerConstants.ApiResourcesOrder){ Scopes={ IdentityServerConstants.ApiScopesOrderFullPermission}},
+        new ApiResource(IdentityServerConstants.ApiResourcesGateway){ Scopes={ IdentityServerConstants.ApiScopesGatewayFullPermission}},
         new ApiResource(Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName)
     };
 
@@ -33,10 +31,10 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope(Shared.IdentityServerConstants.ApiScopesDefinitionsFullPermission),
-            new ApiScope(Shared.IdentityServerConstants.ApiScopesProductionFullPermission),
-            new ApiScope(Shared.IdentityServerConstants.ApiScopesOrderFullPermission),
-            new ApiScope(Shared.IdentityServerConstants.ApiScopesGatewayFullPermission),
+            new ApiScope(IdentityServerConstants.ApiScopesDefinitionsFullPermission),
+            new ApiScope(IdentityServerConstants.ApiScopesProductionFullPermission),
+            new ApiScope(IdentityServerConstants.ApiScopesOrderFullPermission),
+            new ApiScope(IdentityServerConstants.ApiScopesGatewayFullPermission),
             new ApiScope(Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName),
         };
 
@@ -56,10 +54,10 @@ public static class Config
                 AllowedScopes =
                 {
                     //BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsTenantId, 
-                    Shared.IdentityServerConstants.ApiScopesDefinitionsFullPermission,
-                    Shared.IdentityServerConstants.ApiScopesProductionFullPermission,
-                    Shared.IdentityServerConstants.ApiScopesOrderFullPermission,
-                    Shared.IdentityServerConstants.ApiScopesGatewayFullPermission,
+                    IdentityServerConstants.ApiScopesDefinitionsFullPermission,
+                    IdentityServerConstants.ApiScopesProductionFullPermission,
+                    IdentityServerConstants.ApiScopesOrderFullPermission,
+                    IdentityServerConstants.ApiScopesGatewayFullPermission,
                     Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName,
                     Duende.IdentityServer.IdentityServerConstants.StandardScopes.OpenId,
                     Duende.IdentityServer.IdentityServerConstants.StandardScopes.Profile,

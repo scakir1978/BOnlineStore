@@ -10,7 +10,7 @@ using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Settings;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography.X509Certificates;
-using BOnlineStore.Shared;
+
 using Microsoft.AspNetCore.HttpOverrides;
 
 namespace BOnlineStore.IdentityServer;
@@ -80,7 +80,7 @@ internal static class HostingExtensions
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<ProfileService>();
 
-        if (builder.Configuration[AppSettingsKeysConstants.IdentityRunningMode] == "docker")
+        if (builder.Configuration[IdentityServerConstants.IdentityRunningMode] == "docker")
         {
             var certName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/bonlinestore.pfx";
             Log.Information(File.Exists(certName) == true ? $"Certificate status: {certName} found." : $"Certificate status: {certName} NOT FOUND!!!");
