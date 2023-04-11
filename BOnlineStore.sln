@@ -121,6 +121,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4964C439-379C-
 		Kubernetes\ui\deployment.yaml = Kubernetes\ui\deployment.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{EFE41373-F21F-490D-A15D-9D4C860E350F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{8579F60D-7110-400C-9BC5-CAE6D434BD89}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{B5D8814B-E685-48D6-95EE-93A01284F058}"
+	ProjectSection(SolutionItems) = preProject
+		Misc\Templates\Icons\dto.png = Misc\Templates\Icons\dto.png
+		Misc\Templates\Icons\Entity.png = Misc\Templates\Icons\Entity.png
+		Misc\Templates\Icons\Repository.png = Misc\Templates\Icons\Repository.png
+		Misc\Templates\Icons\Service.png = Misc\Templates\Icons\Service.png
+		Misc\Templates\Icons\Validator.png = Misc\Templates\Icons\Validator.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{6094E44F-868E-4E68-AE31-78E567337C64}"
+	ProjectSection(SolutionItems) = preProject
+		Misc\Templates\Sources\BOnlineStore Dto Items.zip = Misc\Templates\Sources\BOnlineStore Dto Items.zip
+		Misc\Templates\Sources\BOnlineStore Entity Item.zip = Misc\Templates\Sources\BOnlineStore Entity Item.zip
+		Misc\Templates\Sources\BOnlineStore Repository Items.zip = Misc\Templates\Sources\BOnlineStore Repository Items.zip
+		Misc\Templates\Sources\BOnlineStore Service Items.zip = Misc\Templates\Sources\BOnlineStore Service Items.zip
+		Misc\Templates\Sources\BOnlineStore Validator Item.zip = Misc\Templates\Sources\BOnlineStore Validator Item.zip
+		Misc\Templates\Sources\BOnlineStore.Services.Template.Api.zip = Misc\Templates\Sources\BOnlineStore.Services.Template.Api.zip
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -199,6 +222,9 @@ Global
 		{473C067D-4F36-45C7-BC51-53D01F0A2BC0} = {749EF661-EB48-4264-8785-5637B9A62C78}
 		{E2CC7CA3-2E6E-470D-9E21-E852462184FD} = {749EF661-EB48-4264-8785-5637B9A62C78}
 		{4964C439-379C-4411-A0D4-32FA1774FAC9} = {749EF661-EB48-4264-8785-5637B9A62C78}
+		{8579F60D-7110-400C-9BC5-CAE6D434BD89} = {EFE41373-F21F-490D-A15D-9D4C860E350F}
+		{B5D8814B-E685-48D6-95EE-93A01284F058} = {8579F60D-7110-400C-9BC5-CAE6D434BD89}
+		{6094E44F-868E-4E68-AE31-78E567337C64} = {8579F60D-7110-400C-9BC5-CAE6D434BD89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A12FA703-13AF-486D-90AA-45AC95F5C81E}

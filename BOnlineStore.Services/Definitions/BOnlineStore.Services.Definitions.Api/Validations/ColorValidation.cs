@@ -1,6 +1,5 @@
 ﻿using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
-using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Entities;
 using FluentValidation;
 using Microsoft.Extensions.Localization;

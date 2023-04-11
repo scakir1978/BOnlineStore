@@ -18,5 +18,7 @@ namespace BOnlineStore.Localization.Constants
         public const string ModelCodeNotEmpty = "ModelCodeNotEmpty";
         public const string ModelNameNotEmpty = "ModelNameNotEmpty";
         public const string ModelGroupNotEmpty = "ModelGroupNotEmpty";
+        public const string AssemblerNameNotEmpty = "AssemblerNameNotEmpty";
+        public const string AssemblerCodeNotEmpty = "AssemblerCodeNotEmpty";
     }
 }

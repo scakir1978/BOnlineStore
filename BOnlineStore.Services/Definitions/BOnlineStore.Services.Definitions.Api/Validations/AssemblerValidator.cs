@@ -6,15 +6,15 @@ using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Validations
 {
-    public class ColorGroupValidator : AbstractValidator<ColorGroup>
+    public class AssemblerValidator : AbstractValidator<Assembler>
     {
         private readonly IStringLocalizer<Language> _stringLocalizer;
-        public ColorGroupValidator(IStringLocalizer<Language> stringLocalizer)
+        public AssemblerValidator(IStringLocalizer<Language> stringLocalizer)
         {
             _stringLocalizer = stringLocalizer;
 
-            RuleFor(x => x.Name).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.ColorGroupNameNotEmpty]);
-            RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.ColorGroupCodeNotEmpty]);
+            RuleFor(x => x.Name).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.AssemblerNameNotEmpty]);
+            RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.AssemblerCodeNotEmpty]);
         }
 
     }
