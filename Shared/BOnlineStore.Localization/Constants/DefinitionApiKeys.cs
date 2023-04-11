@@ -20,5 +20,28 @@ namespace BOnlineStore.Localization.Constants
         public const string ModelGroupNotEmpty = "ModelGroupNotEmpty";
         public const string AssemblerNameNotEmpty = "AssemblerNameNotEmpty";
         public const string AssemblerCodeNotEmpty = "AssemblerCodeNotEmpty";
+        public const string UnitNameNotEmpty = "UnitNameNotEmpty";
+        public const string UnitCodeNotEmpty = "UnitCodeNotEmpty";
+        public const string GlassGroupNameNotEmpty = "GlassGroupNameNotEmpty";
+        public const string GlassGroupCodeNotEmpty = "GlassGroupCodeNotEmpty";
+        public const string LengthNameNotEmpty = "LengthNameNotEmpty";
+        public const string LengthCodeNotEmpty = "LengthCodeNotEmpty";
+        public const string RawMaterialGroupNameNotEmpty = "RawMaterialGroupNameNotEmpty";
+        public const string RawMaterialGroupCodeNotEmpty = "RawMaterialGroupCodeNotEmpty";
+        public const string RegionNameNotEmpty = "RegionNameNotEmpty";
+        public const string RegionCodeNotEmpty = "RegionCodeNotEmpty";
+        public const string TemplateNameNotEmpty = "TemplateNameNotEmpty";
+        public const string TemplateCodeNotEmpty = "TemplateCodeNotEmpty";
+        public const string CurrencyNameNotEmpty = "CurrencyNameNotEmpty";
+        public const string CurrencyCodeNotEmpty = "CurrencyCodeNotEmpty";
+        public const string ExpenseNameNotEmpty = "ExpenseNameNotEmpty";
+        public const string ExpenseCodeNotEmpty = "ExpenseCodeNotEmpty";
+        public const string GlassNameNotEmpty = "GlassNameNotEmpty";
+        public const string GlassCodeNotEmpty = "GlassCodeNotEmpty";
+        public const string GlassGroupNotEmpty = "GlassGroupNotEmpty";
+
+
+
+
     }
 }

@@ -3,26 +3,24 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
-    //Cam türleri için grup tanımlama
-
-    public class GlassGroup : Entity
+    public class Unit : Entity
     {
         public string Code { get; private set; }
         public string Name { get; private set; }
 
-        public GlassGroup() : base()
+        public Unit() : base()
         {
             Code = "";
             Name = "";
         }
 
-        public GlassGroup(Guid tenantId, string id, string code, string name) : base(tenantId, id)
+        public Unit(Guid tenantId, string id, string code, string name) : base(tenantId, id)
         {
             Code = code;
             Name = name;
         }
 
-        public void UpdateGlassGroup(string code, string name)
+        public void UpdateUnit(string code, string name)
         {
             Code = code;
             Name = name;

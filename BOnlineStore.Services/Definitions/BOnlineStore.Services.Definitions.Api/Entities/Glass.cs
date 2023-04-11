@@ -5,6 +5,8 @@ using System.Globalization;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
+    //Cam türü tanımlama
+
     public class Glass : Entity
     {
         public string Code { get; private set; }

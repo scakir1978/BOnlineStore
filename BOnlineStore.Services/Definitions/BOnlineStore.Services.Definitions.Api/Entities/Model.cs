@@ -4,6 +4,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
+    //Model tanımlama
+
     public class Model : Entity
     {
         public string Code { get; private set; }
