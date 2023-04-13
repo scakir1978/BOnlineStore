@@ -13,6 +13,16 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<IColorGroupRepository, ColorGroupRepository>();
             services.AddScoped<IModelRepository, ModelRepository>();
+            services.AddScoped<IAssemblerRepository, AssemblerRepository>();
+            services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+            services.AddScoped<IExpenseRepository, ExpenseRepository>();
+            services.AddScoped<IGlassRepository, GlassRepository>();
+            services.AddScoped<IGlassGroupRepository, GlassGroupRepository>();
+            services.AddScoped<ILengthRepository, LengthRepository>();
+            services.AddScoped<IRawMaterialGroupRepository, RawMaterialGroupRepository>();
+            services.AddScoped<IRegionRepository, RegionRepository>();
+            services.AddScoped<ITemplateRepository, TemplateRepository>();
+            services.AddScoped<IUnitRepository, UnitRepository>();
 
             return services;
         }

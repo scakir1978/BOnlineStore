@@ -1,8 +1,6 @@
 ﻿using BOnlineStore.Services.Definitions.Api.Entities;
-using BOnlineStore.Services.Definitions.Api.Services;
 using BOnlineStore.Services.Definitions.Api.Validations;
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 
 namespace BOnlineStore.Services.Definitions.Api.Injections
 {
@@ -14,6 +12,17 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IValidator<Color>, ColorValidator>();
             services.AddScoped<IValidator<ColorGroup>, ColorGroupValidator>();
             services.AddScoped<IValidator<Model>, ModelValidator>();
+            services.AddScoped<IValidator<Assembler>, AssemblerValidator>();
+            services.AddScoped<IValidator<Currency>, CurrencyValidator>();
+            services.AddScoped<IValidator<Expense>, ExpenseValidator>();
+            services.AddScoped<IValidator<Glass>, GlassValidator>();
+            services.AddScoped<IValidator<GlassGroup>, GlassGroupValidator>();
+            services.AddScoped<IValidator<Length>, LengthValidator>();
+            services.AddScoped<IValidator<RawMaterialGroup>, RawMaterialGroupValidator>();
+            services.AddScoped<IValidator<Region>, RegionValidator>();
+            services.AddScoped<IValidator<Template>, TemplateValidator>();
+            services.AddScoped<IValidator<Unit>, UnitValidator>();
+
 
             return services;
         }
