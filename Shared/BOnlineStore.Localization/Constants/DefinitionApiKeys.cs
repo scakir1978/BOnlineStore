@@ -39,9 +39,8 @@ namespace BOnlineStore.Localization.Constants
         public const string GlassNameNotEmpty = "GlassNameNotEmpty";
         public const string GlassCodeNotEmpty = "GlassCodeNotEmpty";
         public const string GlassGroupNotEmpty = "GlassGroupNotEmpty";
-
-
-
+        public const string BankNameNotEmpty = "BankNameNotEmpty";
+        public const string BankCodeNotEmpty = "BankCodeNotEmpty";
 
     }
 }
