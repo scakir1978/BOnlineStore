@@ -13,6 +13,15 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddSingleton(ModelMappings.RegisterMaps().CreateMapper());
             services.AddSingleton(ModelGroupMappings.RegisterMaps().CreateMapper());
             services.AddSingleton(CurrencyMappings.RegisterMaps().CreateMapper());
+            services.AddSingleton(ExpenseMappings.RegisterMaps().CreateMapper());
+            services.AddSingleton(GlassMappings.RegisterMaps().CreateMapper());
+            services.AddSingleton(GlassGroupMappings.RegisterMaps().CreateMapper());
+            services.AddSingleton(LengthMappings.RegisterMaps().CreateMapper());
+            services.AddSingleton(RawMaterialGroupMappings.RegisterMaps().CreateMapper());
+            services.AddSingleton(RegionMappings.RegisterMaps().CreateMapper());
+            services.AddSingleton(TemplateMappings.RegisterMaps().CreateMapper());
+            services.AddSingleton(UnitMappings.RegisterMaps().CreateMapper());
+
             return services;
         }
     }
