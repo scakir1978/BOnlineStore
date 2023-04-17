@@ -28,5 +28,7 @@
   "TWOCOLUMN": "Two Column",
   "SEMIBOX": "Semi Box",
   "COLORSCHEME": " Color Scheme",
-  "CHOOSECOLORSCHEME": "Choose Light or Dark Scheme."
+  "CHOOSECOLORSCHEME": "Choose Light or Dark Scheme.",
+  "ASSEMBLER": "Assembler",
+  "CURRENCY": "Currency"
 }

@@ -4,19 +4,14 @@ using BOnlineStore.Services.Definitions.Api.Entities;
 
 namespace BOnlineStore.Services.Definitions.Api.Mappings
 {
-    public class UnitMappings
+    public class UnitMappings : Profile
     {
-        public static MapperConfiguration RegisterMaps()
+        public UnitMappings()
         {
-            var mappingConfig = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Unit, UnitDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-                config.CreateMap<Unit, UnitCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-                config.CreateMap<Unit, UnitUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
-
-            });
-
-            return mappingConfig;
+            CreateMap<Unit, UnitDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<Unit, UnitCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<Unit, UnitUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
+
     }
 }

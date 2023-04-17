@@ -4,19 +4,15 @@ using BOnlineStore.Services.Definitions.Api.Entities;
 
 namespace BOnlineStore.Services.Definitions.Api.Mappings
 {
-    public class GlassMappings
+    public class GlassMappings : Profile
     {
-        public static MapperConfiguration RegisterMaps()
+        public GlassMappings()
         {
-            var mappingConfig = new MapperConfiguration(config =>
-            {
-                config.CreateMap<Glass, GlassDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-                config.CreateMap<Glass, GlassCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-                config.CreateMap<Glass, GlassUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<Glass, GlassDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<Glass, GlassCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<Glass, GlassUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            });
-
-            return mappingConfig;
         }
+
     }
 }

@@ -1,57 +1,69 @@
-import { MenuItem } from "./menu.model";
+import { MenuItem } from './menu.model';
 
 export const MENU: MenuItem[] = [
   {
     id: 1,
-    label: "DASHBOARD",
-    icon: "ri-dashboard-2-line",
+    label: 'DASHBOARD',
+    icon: 'ri-dashboard-2-line',
   },
   {
     id: 2,
-    label: "DEFINITIONS",
+    label: 'DEFINITIONS',
     isTitle: true,
   },
   {
     id: 3,
-    label: "DEFINITIONS",
-    icon: "ri-apps-2-line",
-    collapseid: "sidebarDefinitions",
+    label: 'DEFINITIONS',
+    icon: 'ri-apps-2-line',
+    collapseid: 'sidebarDefinitions',
     subItems: [
       {
         id: 4,
-        label: "MODELGROUPS",
-        link: "/definitions/model-groups",
+        label: 'MODELGROUPS',
+        link: '/definitions/model-groups',
         parentId: 3,
       },
       {
         id: 5,
-        label: "COLORGROUPS",
-        link: "/definitions/color-groups",
+        label: 'COLORGROUPS',
+        link: '/definitions/color-groups',
         parentId: 3,
       },
       {
         id: 6,
-        label: "COLOR",
-        link: "/definitions/color",
+        label: 'COLOR',
+        link: '/definitions/color',
+        parentId: 3,
+      },
+      {
+        id: 7,
+        label: 'ASSEMBLER',
+        link: '/definitions/assembler',
+        parentId: 3,
+      },
+      {
+        id: 8,
+        label: 'CURRENCY',
+        link: '/definitions/currency',
         parentId: 3,
       },
     ],
   },
   {
     id: 7,
-    label: "PRODUCTION",
+    label: 'PRODUCTION',
     isTitle: true,
   },
   {
     id: 8,
-    label: "PRODUCTION",
-    icon: "ri-layout-grid-line",
-    collapseid: "sidebarProduction",
+    label: 'PRODUCTION',
+    icon: 'ri-layout-grid-line',
+    collapseid: 'sidebarProduction',
     subItems: [
       {
         id: 9,
-        label: "FORMULATYPES",
-        link: "/production/formula-type",
+        label: 'FORMULATYPES',
+        link: '/production/formula-type',
         parentId: 8,
       },
     ],

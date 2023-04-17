@@ -4,19 +4,15 @@ using BOnlineStore.Services.Definitions.Api.Entities;
 
 namespace BOnlineStore.Services.Definitions.Api.Mappings
 {
-    public class RawMaterialGroupMappings
+    public class RawMaterialGroupMappings : Profile
     {
-        public static MapperConfiguration RegisterMaps()
+        public RawMaterialGroupMappings()
         {
-            var mappingConfig = new MapperConfiguration(config =>
-            {
-                config.CreateMap<RawMaterialGroup, RawMaterialGroupDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-                config.CreateMap<RawMaterialGroup, RawMaterialGroupCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-                config.CreateMap<RawMaterialGroup, RawMaterialGroupUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<RawMaterialGroup, RawMaterialGroupDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<RawMaterialGroup, RawMaterialGroupCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<RawMaterialGroup, RawMaterialGroupUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            });
-
-            return mappingConfig;
         }
+
     }
 }

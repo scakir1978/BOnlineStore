@@ -4,19 +4,15 @@ using BOnlineStore.Services.Definitions.Api.Entities;
 
 namespace BOnlineStore.Services.Definitions.Api.Mappings
 {
-    public class ColorGroupMappings
+    public class ColorGroupMappings : Profile
     {
-        public static MapperConfiguration RegisterMaps()
+        public ColorGroupMappings()
         {
-            var mappingConfig = new MapperConfiguration(config =>
-            {
-                config.CreateMap<ColorGroup, ColorGroupDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-                config.CreateMap<ColorGroup, ColorGroupCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-                config.CreateMap<ColorGroup, ColorGroupUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<ColorGroup, ColorGroupDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<ColorGroup, ColorGroupCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<ColorGroup, ColorGroupUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            });
-
-            return mappingConfig;
         }
+
     }
 }

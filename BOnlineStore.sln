@@ -136,8 +136,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Icons", "Icons", "{B5D8814B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{6094E44F-868E-4E68-AE31-78E567337C64}"
 	ProjectSection(SolutionItems) = preProject
+		Misc\Templates\Sources\BOnlineStore BackEnd Items.zip = Misc\Templates\Sources\BOnlineStore BackEnd Items.zip
+		Misc\Templates\Sources\BOnlineStore Controller Item.zip = Misc\Templates\Sources\BOnlineStore Controller Item.zip
 		Misc\Templates\Sources\BOnlineStore Dto Items.zip = Misc\Templates\Sources\BOnlineStore Dto Items.zip
 		Misc\Templates\Sources\BOnlineStore Entity Item.zip = Misc\Templates\Sources\BOnlineStore Entity Item.zip
+		Misc\Templates\Sources\BOnlineStore Mapping Items.zip = Misc\Templates\Sources\BOnlineStore Mapping Items.zip
 		Misc\Templates\Sources\BOnlineStore Repository Items.zip = Misc\Templates\Sources\BOnlineStore Repository Items.zip
 		Misc\Templates\Sources\BOnlineStore Service Items.zip = Misc\Templates\Sources\BOnlineStore Service Items.zip
 		Misc\Templates\Sources\BOnlineStore Validator Item.zip = Misc\Templates\Sources\BOnlineStore Validator Item.zip
