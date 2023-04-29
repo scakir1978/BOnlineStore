@@ -1,26 +1,26 @@
-import { environment } from "../../../environments/environment";
-import { BaseService } from "../../base-classes/base-services/base-service";
-import { DefinitionControllerNamesEnum } from "./../../base-classes/base-enums/definition-controller-names.enum";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { environment } from '../../../environments/environment';
+import { BaseService } from '../../base-classes/base-services/base-service';
+import { DefinitionsControllerNamesEnum } from '../../base-classes/base-enums/definitions-controller-names.enum';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
   RouterStateSnapshot,
-} from "@angular/router";
-import DataSource from "devextreme/data/data_source";
+} from '@angular/router';
+import DataSource from 'devextreme/data/data_source';
 
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ModelGroupService extends BaseService implements Resolve<any> {
   constructor(public override _http: HttpClient) {
     super(
       _http,
       environment.definitionsUrl,
-      DefinitionControllerNamesEnum.MODELGROUP
+      DefinitionsControllerNamesEnum.MODELGROUP
     );
   }
 

@@ -1,25 +1,25 @@
-import { DefinitionControllerNamesEnum } from "./../../base-classes/base-enums/definition-controller-names.enum";
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { DefinitionsControllerNamesEnum } from '../../base-classes/base-enums/definitions-controller-names.enum';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
   RouterStateSnapshot,
-} from "@angular/router";
-import DataSource from "devextreme/data/data_source";
-import { environment } from "../../../environments/environment";
-import { BaseService } from "../../base-classes/base-services/base-service";
-import { lastValueFrom, Observable, switchAll } from "rxjs";
+} from '@angular/router';
+import DataSource from 'devextreme/data/data_source';
+import { environment } from '../../../environments/environment';
+import { BaseService } from '../../base-classes/base-services/base-service';
+import { lastValueFrom, Observable, switchAll } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ColorGroupService extends BaseService implements Resolve<any> {
   constructor(public override _http: HttpClient) {
     super(
       _http,
       environment.definitionsUrl,
-      DefinitionControllerNamesEnum.COLORGROUP
+      DefinitionsControllerNamesEnum.COLORGROUP
     );
   }
 

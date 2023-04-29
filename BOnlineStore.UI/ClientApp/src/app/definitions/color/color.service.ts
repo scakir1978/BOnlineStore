@@ -1,26 +1,26 @@
-import { DefinitionControllerNamesEnum } from "./../../base-classes/base-enums/definition-controller-names.enum";
-import CustomStore from "devextreme/data/custom_store";
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { DefinitionsControllerNamesEnum } from '../../base-classes/base-enums/definitions-controller-names.enum';
+import CustomStore from 'devextreme/data/custom_store';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
   RouterStateSnapshot,
-} from "@angular/router";
-import { environment } from "../../../environments/environment";
-import { BaseService } from "../../base-classes/base-services/base-service";
-import DataSource from "devextreme/data/data_source";
-import { Observable } from "rxjs";
+} from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { BaseService } from '../../base-classes/base-services/base-service';
+import DataSource from 'devextreme/data/data_source';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ColorService extends BaseService implements Resolve<any> {
   constructor(public override _http: HttpClient) {
     super(
       _http,
       environment.definitionsUrl,
-      DefinitionControllerNamesEnum.COLOR
+      DefinitionsControllerNamesEnum.COLOR
     );
   }
 
@@ -36,7 +36,7 @@ export class ColorService extends BaseService implements Resolve<any> {
   getColorGroupDataSource(): CustomStore {
     return super.getBaseRawCustomStore(
       environment.definitionsUrl,
-      DefinitionControllerNamesEnum.COLORGROUP
+      DefinitionsControllerNamesEnum.COLORGROUP
     );
   }
 }

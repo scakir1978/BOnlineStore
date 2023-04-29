@@ -14,12 +14,12 @@ import { lastValueFrom, Observable, switchAll } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class AssemblerService extends BaseService implements Resolve<any> {
+export class ExpenseService extends BaseService implements Resolve<any> {
   constructor(public override _http: HttpClient) {
     super(
       _http,
       environment.definitionsUrl,
-      DefinitionsControllerNamesEnum.ASSEMBLER
+      DefinitionsControllerNamesEnum.EXPENSE
     );
   }
 

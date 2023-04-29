@@ -30,5 +30,7 @@
   "COLORSCHEME": "Renk Şeması",
   "CHOOSECOLORSCHEME": "Karanlık veya aydınlık şeması seçebilirsiniz.",
   "ASSEMBLER": "Montör",
-  "CURRENCY": "Döviz"
+  "CURRENCY": "Döviz",
+  "EXPENSE": "Gider",
+  "RAWMATERIALGROUPS": "Hammadde Grupları"
 }

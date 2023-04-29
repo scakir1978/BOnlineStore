@@ -6,15 +6,22 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { defineElement } from 'lord-icon-element';
 import { AssemblerModule } from './assembler/assembler.module';
 import { CurrencyModule } from './currency/currency.module';
+import { ExpenseModule } from './expense/expense.module';
+import { RawMaterialGroupModule } from './raw-material-group/raw-material-group.module';
+import { RawMaterialComponent } from './raw-material/raw-material.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    RawMaterialComponent
+  ],
   imports: [
     ModelGroupModule,
     ColorGroupModule,
     ColorModule,
     AssemblerModule,
     CurrencyModule,
+    ExpenseModule,
+    RawMaterialGroupModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

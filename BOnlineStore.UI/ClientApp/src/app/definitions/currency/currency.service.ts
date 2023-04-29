@@ -1,4 +1,4 @@
-import { DefinitionControllerNamesEnum } from '../../base-classes/base-enums/definition-controller-names.enum';
+import { DefinitionsControllerNamesEnum } from '../../base-classes/base-enums/definitions-controller-names.enum';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
@@ -19,7 +19,7 @@ export class CurrencyService extends BaseService implements Resolve<any> {
     super(
       _http,
       environment.definitionsUrl,
-      DefinitionControllerNamesEnum.CURRENCY
+      DefinitionsControllerNamesEnum.CURRENCY
     );
   }
 

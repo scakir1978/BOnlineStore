@@ -30,5 +30,7 @@
   "COLORSCHEME": " Color Scheme",
   "CHOOSECOLORSCHEME": "Choose Light or Dark Scheme.",
   "ASSEMBLER": "Assembler",
-  "CURRENCY": "Currency"
+  "CURRENCY": "Currency",
+  "EXPENSE": "Expense",
+  "RAWMATERIALGROUPS": "Raw Material Groups"
 }
