@@ -8,4 +8,6 @@ export enum DefinitionsControllerNamesEnum {
   GLASSGROUP = 'GlassGroup',
   GLASS = 'Glass',
   RAWMATERIALGROUP = 'RawMaterialGroup',
+  REGION = 'Region',
+  TEMPLATE = 'Template',
 }

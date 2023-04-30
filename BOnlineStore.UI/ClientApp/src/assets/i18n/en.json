@@ -32,5 +32,7 @@
   "ASSEMBLER": "Assembler",
   "CURRENCY": "Currency",
   "EXPENSE": "Expense",
-  "RAWMATERIALGROUPS": "Raw Material Groups"
+  "RAWMATERIALGROUPS": "Raw Material Groups",
+  "REGION": "Region",
+  "TEMPLATE": "Template"
 }

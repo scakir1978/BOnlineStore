@@ -59,6 +59,18 @@ export const MENU: MenuItem[] = [
         link: '/definitions/raw-material-groups',
         parentId: 30,
       },
+      {
+        id: 110,
+        label: 'REGION',
+        link: '/definitions/region',
+        parentId: 30,
+      },
+      {
+        id: 120,
+        label: 'TEMPLATE',
+        link: '/definitions/template',
+        parentId: 30,
+      },
     ],
   },
   {

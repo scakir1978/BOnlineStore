@@ -1314,10 +1314,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@bonlinestore/schematics@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/@bonlinestore/schematics/-/schematics-1.0.6.tgz"
-  integrity sha512-Y2gAl8D1GJu/UYFzvlJsw2sZD/VH05DwX00ujF1/6cm1QaOzdc26zxSkil6+0iq81T0zSkWO0mQUPLtTwnEWnw==
+"@bonlinestore/schematics@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.npmjs.org/@bonlinestore/schematics/-/schematics-1.0.14.tgz"
+  integrity sha512-TQNj2FgkuShUVh+xTABrbvfiDLFKddFUKK8jYze716GhpCJDWQZ0hA9CtUkP3N9t97IRH+phg846uiKdEBAbTw==
   dependencies:
     "@angular-devkit/core" "^15.2.6"
     "@angular-devkit/schematics" "^15.2.6"

@@ -1,19 +1,17 @@
-import lottie from 'lottie-web';
+import { TemplateModule } from './template/template.module';
 import { ColorModule } from './color/color.module';
 import { ColorGroupModule } from './color-group/color-group.module';
 import { ModelGroupModule } from './model-group/model-group.module';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { defineElement } from 'lord-icon-element';
 import { AssemblerModule } from './assembler/assembler.module';
 import { CurrencyModule } from './currency/currency.module';
 import { ExpenseModule } from './expense/expense.module';
 import { RawMaterialGroupModule } from './raw-material-group/raw-material-group.module';
-import { RawMaterialComponent } from './raw-material/raw-material.component';
+import { RegionModule } from './region/region.module';
+import lottie from 'lottie-web';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { defineElement } from 'lord-icon-element';
 
 @NgModule({
-  declarations: [
-    RawMaterialComponent
-  ],
   imports: [
     ModelGroupModule,
     ColorGroupModule,
@@ -22,6 +20,8 @@ import { RawMaterialComponent } from './raw-material/raw-material.component';
     CurrencyModule,
     ExpenseModule,
     RawMaterialGroupModule,
+    RegionModule,
+    TemplateModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
