@@ -35,5 +35,7 @@
   "RAWMATERIALGROUPS": "Raw Material Groups",
   "REGION": "Region",
   "TEMPLATE": "Template",
-  "BANK": "Bank"
+  "BANK": "Bank",
+  "LENGTH": "Length",
+  "UNIT": "Unit"
 }

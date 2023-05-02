@@ -11,4 +11,6 @@ export enum DefinitionsControllerNamesEnum {
   REGION = 'Region',
   TEMPLATE = 'Template',
   BANK = 'Bank',
+  LENGTH = 'Length',
+  UNIT = 'Unit',
 }

@@ -77,6 +77,18 @@ export const MENU: MenuItem[] = [
         link: '/definitions/bank',
         parentId: 30,
       },
+      {
+        id: 140,
+        label: 'LENGTH',
+        link: '/definitions/length',
+        parentId: 30,
+      },
+      {
+        id: 150,
+        label: 'UNIT',
+        link: '/definitions/unit',
+        parentId: 30,
+      },
     ],
   },
   {

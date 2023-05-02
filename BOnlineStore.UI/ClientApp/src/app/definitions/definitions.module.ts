@@ -1,3 +1,5 @@
+import { UnitModule } from './unit/unit.module';
+import { LengthModule } from './length/length.module';
 import { BankModule } from './bank/bank.module';
 import { TemplateModule } from './template/template.module';
 import { ColorModule } from './color/color.module';
@@ -24,6 +26,8 @@ import { defineElement } from 'lord-icon-element';
     RegionModule,
     TemplateModule,
     BankModule,
+  LengthModule,
+  UnitModule,
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
