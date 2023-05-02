@@ -10,4 +10,5 @@ export enum DefinitionsControllerNamesEnum {
   RAWMATERIALGROUP = 'RawMaterialGroup',
   REGION = 'Region',
   TEMPLATE = 'Template',
+  BANK = 'Bank',
 }

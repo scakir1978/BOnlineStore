@@ -71,6 +71,12 @@ export const MENU: MenuItem[] = [
         link: '/definitions/template',
         parentId: 30,
       },
+      {
+        id: 130,
+        label: 'BANK',
+        link: '/definitions/bank',
+        parentId: 30,
+      },
     ],
   },
   {

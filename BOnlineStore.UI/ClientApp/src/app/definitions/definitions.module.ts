@@ -1,3 +1,4 @@
+import { BankModule } from './bank/bank.module';
 import { TemplateModule } from './template/template.module';
 import { ColorModule } from './color/color.module';
 import { ColorGroupModule } from './color-group/color-group.module';
@@ -22,7 +23,8 @@ import { defineElement } from 'lord-icon-element';
     RawMaterialGroupModule,
     RegionModule,
     TemplateModule,
-  ],
+    BankModule,
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DefinitionsModule {
