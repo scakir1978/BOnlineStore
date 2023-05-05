@@ -32,10 +32,12 @@
   "ASSEMBLER": "Assembler",
   "CURRENCY": "Currency",
   "EXPENSE": "Expense",
+  "RAWMATERIALGROUP": "Raw Material Group",
   "RAWMATERIALGROUPS": "Raw Material Groups",
   "REGION": "Region",
   "TEMPLATE": "Template",
   "BANK": "Bank",
   "LENGTH": "Length",
-  "UNIT": "Unit"
+  "UNIT": "Unit",
+  "TEMPLATECODES": "Template Codes"
 }

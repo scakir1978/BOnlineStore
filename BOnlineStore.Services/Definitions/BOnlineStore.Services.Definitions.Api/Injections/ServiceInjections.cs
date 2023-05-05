@@ -7,6 +7,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
         public static IServiceCollection AddServiceInjections(this IServiceCollection services)
         {
             services.AddScoped<IModelGroupService, ModelGroupService>();
+            services.AddScoped<IBankService, BankService>();
             services.AddScoped<IColorService, ColorService>();
             services.AddScoped<IColorGroupService, ColorGroupService>();
             services.AddScoped<IModelService, ModelService>();

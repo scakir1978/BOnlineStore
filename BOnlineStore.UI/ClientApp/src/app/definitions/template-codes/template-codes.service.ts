@@ -14,12 +14,12 @@ import { lastValueFrom, Observable, switchAll } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
-export class TemplateService extends BaseService implements Resolve<any> {
+export class TemplateCodesService extends BaseService implements Resolve<any> {
   constructor(public override _http: HttpClient) {
     super(
       _http,
       environment.definitionsUrl,
-      DefinitionsControllerNamesEnum.TEMPLATE
+      DefinitionsControllerNamesEnum.TEMPLATECODES
     );
   }
 

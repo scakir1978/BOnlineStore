@@ -23,6 +23,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IRegionRepository, RegionRepository>();
             services.AddScoped<ITemplateRepository, TemplateRepository>();
             services.AddScoped<IUnitRepository, UnitRepository>();
+            services.AddScoped<IBankRepository, BankRepository>();
 
             return services;
         }

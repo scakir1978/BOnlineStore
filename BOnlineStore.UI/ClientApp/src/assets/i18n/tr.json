@@ -32,10 +32,12 @@
   "ASSEMBLER": "Montör",
   "CURRENCY": "Döviz",
   "EXPENSE": "Gider",
+  "RAWMATERIALGROUP": "Hammadde Grupları",
   "RAWMATERIALGROUPS": "Hammadde Grupları",
   "REGION": "Bölge",
   "TEMPLATE": "Şablon",
   "BANK": "Banka",
   "LENGTH": "Boy",
-  "UNIT": "Birim"
+  "UNIT": "Birim",
+  "TEMPLATECODES": "Şablon Kodları"
 }

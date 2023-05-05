@@ -67,8 +67,8 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 120,
-        label: 'TEMPLATE',
-        link: '/definitions/template',
+        label: 'TEMPLATECODES',
+        link: '/definitions/template-codes',
         parentId: 30,
       },
       {

@@ -1,7 +1,7 @@
+import { TemplateCodesModule } from './template-codes/template-codes.module';
 import { UnitModule } from './unit/unit.module';
 import { LengthModule } from './length/length.module';
 import { BankModule } from './bank/bank.module';
-import { TemplateModule } from './template/template.module';
 import { ColorModule } from './color/color.module';
 import { ColorGroupModule } from './color-group/color-group.module';
 import { ModelGroupModule } from './model-group/model-group.module';
@@ -24,11 +24,11 @@ import { defineElement } from 'lord-icon-element';
     ExpenseModule,
     RawMaterialGroupModule,
     RegionModule,
-    TemplateModule,
     BankModule,
-  LengthModule,
-  UnitModule,
-],
+    LengthModule,
+    UnitModule,
+    TemplateCodesModule,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DefinitionsModule {

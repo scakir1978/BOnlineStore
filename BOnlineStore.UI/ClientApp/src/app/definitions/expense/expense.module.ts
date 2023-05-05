@@ -9,7 +9,7 @@ import { ExpenseService } from './expense.service';
 
 const routes: Routes = [
   {
-    path: 'assembler',
+    path: 'expense',
     component: ExpenseComponent,
     canActivate: [AuthGuard],
     resolve: {
