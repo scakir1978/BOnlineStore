@@ -13,6 +13,8 @@ import { RegionModule } from './region/region.module';
 import lottie from 'lottie-web';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { defineElement } from 'lord-icon-element';
+import { GlassModule } from './glass/glass.module';
+import { GlassGroupModule } from './glass-group/glass-group.module';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import { defineElement } from 'lord-icon-element';
     LengthModule,
     UnitModule,
     TemplateCodesModule,
+    GlassModule,
+    GlassGroupModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

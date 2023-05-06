@@ -9,7 +9,7 @@ import { ColorGroupService } from './color-group.service';
 
 const routes: Routes = [
   {
-    path: 'color-groups',
+    path: 'color-group',
     component: ColorGroupComponent,
     canActivate: [AuthGuard],
     resolve: {

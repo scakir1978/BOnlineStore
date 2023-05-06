@@ -9,7 +9,7 @@ import { GlassGroupService } from './glass-group.service';
 
 const routes: Routes = [
   {
-    path: 'color-groups',
+    path: 'glass-group',
     component: GlassGroupComponent,
     canActivate: [AuthGuard],
     resolve: {

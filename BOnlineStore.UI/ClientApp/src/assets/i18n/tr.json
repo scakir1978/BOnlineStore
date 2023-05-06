@@ -32,6 +32,7 @@
   "ASSEMBLER": "Montör",
   "CURRENCY": "Döviz",
   "EXPENSE": "Gider",
+  "RAWMATERIAL": "Hammadde",
   "RAWMATERIALGROUP": "Hammadde Grupları",
   "RAWMATERIALGROUPS": "Hammadde Grupları",
   "REGION": "Bölge",
@@ -39,5 +40,16 @@
   "BANK": "Banka",
   "LENGTH": "Boy",
   "UNIT": "Birim",
-  "TEMPLATECODES": "Şablon Kodları"
+  "TEMPLATECODES": "Şablon Kodları",
+  "MODEL": "Model",
+  "PANEL": "Panel",
+  "MODELDEFINITIONSTITLE": "Model Tanımlamaları",
+  "NEW": "Yeni",
+  "RAWMATERIALDEFINITIONSTITLE": "Hammadde Tanımlamaları",
+  "ASSEMBLYDEFINITIONSTITLE": "Montaj Tanımlamaları",
+  "ASSEMBLYLIMITS": "Ölçü/Montaj Limitleri",
+  "OTHERDEFINITIONSTITLE": "Diğer Tanımlamalar",
+  "GLASSGROUPS": "Cam Desen Grupları",
+  "GLASSGROUP": "Cam Desen Grubu",
+  "GLASS": "Cam Deseni"
 }

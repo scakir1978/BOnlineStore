@@ -39,5 +39,17 @@
   "BANK": "Bank",
   "LENGTH": "Length",
   "UNIT": "Unit",
-  "TEMPLATECODES": "Template Codes"
+  "TEMPLATECODES": "Template Codes",
+  "MODEL": "Model",
+  "PANEL": "Panel",
+  "MODELDEFINITIONSTITLE": "Model Definitions",
+  "NEW": "New",
+  "RAWMATERIALDEFINITIONSTITLE": "Raw Material Definitions",
+  "RAWMATERIAL": "Raw Material",
+  "ASSEMBLYDEFINITIONSTITLE": "Assembly Definitions",
+  "ASSEMBLYLIMITS": "Measure/Assembly Limits",
+  "OTHERDEFINITIONSTITLE": "Other Definitions",
+  "GLASSGROUPS": "Glass Pattern Groups",
+  "GLASSGROUP": "Glass Pattern Group",
+  "GLASS": "Glass Pattern"
 }
