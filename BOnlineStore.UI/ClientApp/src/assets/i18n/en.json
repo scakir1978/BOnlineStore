@@ -51,5 +51,10 @@
   "OTHERDEFINITIONSTITLE": "Other Definitions",
   "GLASSGROUPS": "Glass Pattern Groups",
   "GLASSGROUP": "Glass Pattern Group",
-  "GLASS": "Glass Pattern"
+  "GLASS": "Glass Pattern",
+  "PRODUCTIONDEFINITIONSTITLE": "Production Definitions",
+  "RECIPETYPE": "Recipe Type",
+  "FIRMDEFINITIONSTITLE": "Firm Definitions",
+  "FIRMTYPE": "Firm Type",
+  "FIRM": "Firm"
 }

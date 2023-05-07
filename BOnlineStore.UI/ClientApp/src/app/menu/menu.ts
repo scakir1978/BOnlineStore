@@ -78,8 +78,14 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 130,
-        label: 'OTHERDEFINITIONSTITLE',
+        label: 'PRODUCTIONDEFINITIONSTITLE',
         isTitle: true,
+        parentId: 20,
+      },
+      {
+        id: 135,
+        label: 'RECIPETYPE',
+        link: '/definitions/recipe-type',
         parentId: 20,
       },
       {
@@ -119,13 +125,37 @@ export const MENU: MenuItem[] = [
         parentId: 20,
       },
       {
-        id: 150,
+        id: 195,
         label: 'UNIT',
         link: '/definitions/unit',
         parentId: 20,
       },
       {
+        id: 198,
+        label: 'FIRMDEFINITIONSTITLE',
+        isTitle: true,
+        parentId: 20,
+      },
+      {
         id: 200,
+        label: 'FIRM',
+        link: '/definitions/firm',
+        parentId: 20,
+      },
+      {
+        id: 201,
+        label: 'FIRMTYPE',
+        link: '/definitions/firm-type',
+        parentId: 20,
+      },
+      {
+        id: 208,
+        label: 'OTHERDEFINITIONSTITLE',
+        isTitle: true,
+        parentId: 20,
+      },
+      {
+        id: 209,
         label: 'CURRENCY',
         link: '/definitions/currency',
         parentId: 20,

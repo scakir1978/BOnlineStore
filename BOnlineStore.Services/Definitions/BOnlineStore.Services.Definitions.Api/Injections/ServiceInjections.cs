@@ -21,6 +21,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<ITemplateService, TemplateService>();
             services.AddScoped<IUnitService, UnitService>();
+            services.AddScoped<IFirmTypeService, FirmTypeService>();
 
             return services;
         }

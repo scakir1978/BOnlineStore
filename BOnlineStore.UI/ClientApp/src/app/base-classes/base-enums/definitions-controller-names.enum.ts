@@ -14,4 +14,5 @@ export enum DefinitionsControllerNamesEnum {
   LENGTH = 'Length',
   UNIT = 'Unit',
   TEMPLATECODES = 'Template',
+  FIRMTYPE = 'FirmType',
 }

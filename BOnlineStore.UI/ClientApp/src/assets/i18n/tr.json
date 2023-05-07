@@ -51,5 +51,10 @@
   "OTHERDEFINITIONSTITLE": "Diğer Tanımlamalar",
   "GLASSGROUPS": "Cam Desen Grupları",
   "GLASSGROUP": "Cam Desen Grubu",
-  "GLASS": "Cam Deseni"
+  "GLASS": "Cam Deseni",
+  "PRODUCTIONDEFINITIONSTITLE": "Üretim Tanımlamaları",
+  "RECIPETYPE": "Reçete Türü",
+  "FIRMDEFINITIONSTITLE": "Cari Tanımlamaları",
+  "FIRMTYPE": "Cari Tipi",
+  "FIRM": "Cari"
 }

@@ -24,6 +24,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<ITemplateRepository, TemplateRepository>();
             services.AddScoped<IUnitRepository, UnitRepository>();
             services.AddScoped<IBankRepository, BankRepository>();
+            services.AddScoped<IFirmTypeRepository, FirmTypeRepository>();
 
             return services;
         }

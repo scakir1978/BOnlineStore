@@ -1,3 +1,4 @@
+import { FirmTypeModule } from './firm-type/firm-type.module';
 import { TemplateCodesModule } from './template-codes/template-codes.module';
 import { UnitModule } from './unit/unit.module';
 import { LengthModule } from './length/length.module';
@@ -32,7 +33,8 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     TemplateCodesModule,
     GlassModule,
     GlassGroupModule,
-  ],
+    FirmTypeModule,
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DefinitionsModule {
