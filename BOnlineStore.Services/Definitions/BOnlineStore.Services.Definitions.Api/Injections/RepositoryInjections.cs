@@ -19,12 +19,14 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IGlassRepository, GlassRepository>();
             services.AddScoped<IGlassGroupRepository, GlassGroupRepository>();
             services.AddScoped<ILengthRepository, LengthRepository>();
+            services.AddScoped<IRawMaterialRepository, RawMaterialRepository>();
             services.AddScoped<IRawMaterialGroupRepository, RawMaterialGroupRepository>();
             services.AddScoped<IRegionRepository, RegionRepository>();
             services.AddScoped<ITemplateRepository, TemplateRepository>();
             services.AddScoped<IUnitRepository, UnitRepository>();
             services.AddScoped<IBankRepository, BankRepository>();
             services.AddScoped<IFirmTypeRepository, FirmTypeRepository>();
+
 
             return services;
         }

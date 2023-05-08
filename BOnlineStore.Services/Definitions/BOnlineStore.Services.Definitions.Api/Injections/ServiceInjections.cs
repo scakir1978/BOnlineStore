@@ -17,6 +17,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IGlassService, GlassService>();
             services.AddScoped<IGlassGroupService, GlassGroupService>();
             services.AddScoped<ILengthService, LengthService>();
+            services.AddScoped<IRawMaterialService, RawMaterialService>();
             services.AddScoped<IRawMaterialGroupService, RawMaterialGroupService>();
             services.AddScoped<IRegionService, RegionService>();
             services.AddScoped<ITemplateService, TemplateService>();

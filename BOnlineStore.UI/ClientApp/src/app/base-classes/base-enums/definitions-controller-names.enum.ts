@@ -15,4 +15,5 @@ export enum DefinitionsControllerNamesEnum {
   UNIT = 'Unit',
   TEMPLATECODES = 'Template',
   FIRMTYPE = 'FirmType',
+  RAWMATERIAL = 'RawMaterial',
 }

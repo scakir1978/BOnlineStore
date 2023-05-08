@@ -27,7 +27,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             ModelGroupId = modelGroupId;
         }
 
-        public void UpdateModelGroup(string code, string name, string modelGroupId)
+        public void UpdateModel(string code, string name, string modelGroupId)
         {
             Code = code;
             Name = name;

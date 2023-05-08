@@ -4,9 +4,9 @@
     {
         public string? Code { get; set; }
         public string? Name { get; set; }
-        public string GlassGroupId { get; set; }
+        public string? GlassGroupId { get; set; }
 
-        public GlassUpdateDto(string? code, string? name, string glassGroupId)
+        public GlassUpdateDto(string? code, string? name, string? glassGroupId)
         {
             Code = code;
             Name = name;

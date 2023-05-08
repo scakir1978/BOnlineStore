@@ -26,6 +26,8 @@ namespace BOnlineStore.Localization.Constants
         public const string GlassGroupCodeNotEmpty = "GlassGroupCodeNotEmpty";
         public const string LengthNameNotEmpty = "LengthNameNotEmpty";
         public const string LengthCodeNotEmpty = "LengthCodeNotEmpty";
+        public const string RawMaterialNameNotEmpty = "RawMaterialNameNotEmpty";
+        public const string RawMaterialCodeNotEmpty = "RawMaterialCodeNotEmpty";
         public const string RawMaterialGroupNameNotEmpty = "RawMaterialGroupNameNotEmpty";
         public const string RawMaterialGroupCodeNotEmpty = "RawMaterialGroupCodeNotEmpty";
         public const string RegionNameNotEmpty = "RegionNameNotEmpty";

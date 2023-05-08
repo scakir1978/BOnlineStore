@@ -46,6 +46,8 @@
   "NEW": "New",
   "RAWMATERIALDEFINITIONSTITLE": "Raw Material Definitions",
   "RAWMATERIAL": "Raw Material",
+  "RAWMATERIALINFO": "Raw Material Informations",
+  "RAWMATERIALDETAILS": "Raw Material Details",
   "ASSEMBLYDEFINITIONSTITLE": "Assembly Definitions",
   "ASSEMBLYLIMITS": "Measure/Assembly Limits",
   "OTHERDEFINITIONSTITLE": "Other Definitions",
@@ -56,5 +58,9 @@
   "RECIPETYPE": "Recipe Type",
   "FIRMDEFINITIONSTITLE": "Firm Definitions",
   "FIRMTYPE": "Firm Type",
-  "FIRM": "Firm"
+  "FIRM": "Firm",
+  "STOCKSUBDETAIL": "Stock Sub Detail",
+  "COLORED": "Colored",
+  "GLASSPATTERN": "Glass Pattern",
+  "NONE": "None"
 }

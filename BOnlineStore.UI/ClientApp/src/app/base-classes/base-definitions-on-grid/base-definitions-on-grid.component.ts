@@ -1,18 +1,18 @@
-import { Component, OnInit, OnDestroy, ViewChild, Inject } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
-import { Subject } from "rxjs";
+import { Component, OnInit, OnDestroy, ViewChild, Inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 
-import * as ExcelJS from "exceljs";
-import { EventEmitter } from "@angular/core";
-import { saveAs } from "file-saver";
-import { exportDataGrid as exportDataGridExcel } from "devextreme/excel_exporter";
+import * as ExcelJS from 'exceljs';
+import { EventEmitter } from '@angular/core';
+import { saveAs } from 'file-saver';
+import { exportDataGrid as exportDataGridExcel } from 'devextreme/excel_exporter';
 
-import { exportDataGrid as exportDataGridPdf } from "devextreme/pdf_exporter";
-import { jsPDF } from "jspdf";
-import { DxDataGridComponent } from "devextreme-angular";
+import { exportDataGrid as exportDataGridPdf } from 'devextreme/pdf_exporter';
+import { jsPDF } from 'jspdf';
+import { DxDataGridComponent } from 'devextreme-angular';
 
 @Component({
-  selector: "app-base-definitions-on-grid",
+  selector: 'app-base-definitions-on-grid',
   template: `<p>base works!</p>`,
   styles: [],
 })
@@ -54,7 +54,7 @@ export class BaseDefinitionsOnGridComponent implements OnInit, OnDestroy {
 
   onExporting(e: any) {
     e.fileName = this.fileName;
-    if (e.format === "xslx") {
+    if (e.format === 'xslx') {
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet(this.fileName);
 
@@ -65,30 +65,36 @@ export class BaseDefinitionsOnGridComponent implements OnInit, OnDestroy {
       }).then(() => {
         workbook.xlsx.writeBuffer().then((buffer) => {
           saveAs(
-            new Blob([buffer], { type: "application/octet-stream" }),
-            this.fileName + ".xlsx"
+            new Blob([buffer], { type: 'application/octet-stream' }),
+            this.fileName + '.xlsx'
           );
         });
       });
       e.cancel = true;
     }
-    if (e.format === "pdf") {
+    if (e.format === 'pdf') {
       const doc = new jsPDF();
       exportDataGridPdf({
         jsPDFDocument: doc,
         component: e.component,
         indent: 5,
       }).then(() => {
-        doc.save(this.fileName + ".pdf");
+        doc.save(this.fileName + '.pdf');
       });
     }
   }
 
   private createBreadCrumb() {
-    this.breadCrumbItems = [
-      { label: this._translate.instant(this.parentKey) },
-      { label: this._translate.instant(this.componentKey), active: true },
-    ];
+    this._translate.onLangChange.subscribe((lang) => {
+      this._translate
+        .get([this.parentKey, this.componentKey])
+        .subscribe((translations) => {
+          this.breadCrumbItems = [
+            { label: translations[this.parentKey] },
+            { label: translations[this.componentKey], active: true },
+          ];
+        });
+    });
   }
 
   refreshDataGrid() {

@@ -18,6 +18,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IValidator<Glass>, GlassValidator>();
             services.AddScoped<IValidator<GlassGroup>, GlassGroupValidator>();
             services.AddScoped<IValidator<Length>, LengthValidator>();
+            services.AddScoped<IValidator<RawMaterial>, RawMaterialValidator>();
             services.AddScoped<IValidator<RawMaterialGroup>, RawMaterialGroupValidator>();
             services.AddScoped<IValidator<Region>, RegionValidator>();
             services.AddScoped<IValidator<Template>, TemplateValidator>();
