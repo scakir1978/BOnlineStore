@@ -28,7 +28,20 @@ export class RawMaterialComponent extends BaseDefinitionsOnGridComponent {
       'DEFINITIONS' //breadCrump için kullanılacak componenetin bağlı olduğu parent menü
     );
 
+    //Varsayılan olarak çalışıyor.
+    _translate
+      .get(['NONE', 'COLORED', 'GLASSPATTERN', 'LENGTH'])
+      .subscribe((translations) => {
+        this.stokSubDetailItems = [
+          { id: 0, text: translations.NONE },
+          { id: 1, text: translations.COLORED },
+          { id: 2, text: translations.GLASSPATTERN },
+          { id: 3, text: translations.LENGTH },
+        ];
+      });
+
     _translate.onLangChange.subscribe((lang) => {
+      //Ayrıca dil değiştiğinde de çalışıyor.
       _translate
         .get(['NONE', 'COLORED', 'GLASSPATTERN', 'LENGTH'])
         .subscribe((translations) => {
@@ -43,5 +56,9 @@ export class RawMaterialComponent extends BaseDefinitionsOnGridComponent {
 
     this.rawMaterialDataSource = _rawMaterialService.getDataSource();
     this.unitDataSource = _rawMaterialService.getUnitDataSource();
+    this.rawMaterialGroupDataSource =
+      _rawMaterialService.getRawMaterialGroupDataSource();
+    this.rawMaterialMasterGroupDataSource =
+      _rawMaterialService.getRawMaterialMasterGroupDataSource();
   }
 }

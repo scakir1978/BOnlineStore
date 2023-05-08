@@ -31,35 +31,158 @@
       [showTitle]="false"
     >
     </dxo-popup>
-    <dxo-form>
+    <dxo-form [labelMode]="'floating'">
+      <!-- Hammadde Bilgileri -->
       <dxi-item
         itemType="group"
         [colCount]="2"
         [colSpan]="2"
         caption="{{ 'RAWMATERIALINFO' | translate }}"
       >
-        <dxi-item
-          dataField="code"
-          caption="{{ 'CODE' | translate }}"
-        ></dxi-item>
-        <dxi-item
-          dataField="name"
-          caption="{{ 'CODE' | translate }}"
-        ></dxi-item>
-        <dxi-item
-          dataField="stockUnit01Id"
-          caption="{{ 'STOCKUNIT' | translate }}"
-        >
+        <dxi-item dataField="code"></dxi-item>
+        <dxi-item dataField="name"></dxi-item>
+      </dxi-item>
+      <!-- Stok birim ve dönüşüm oranları -->
+      <dxi-item
+        itemType="group"
+        [colCount]="5"
+        [colSpan]="2"
+        caption="{{ 'STOCKINFO' | translate }}"
+      >
+        <!-- Stok birim ve oran 01 -->
+        <dxi-item itemType="group" [colCount]="1">
+          <dxi-item dataField="stockUnit01Id"> </dxi-item>
+          <dxi-item
+            dataField="stockUnitTransformationRatio01"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.0000'
+            }"
+          >
+          </dxi-item>
         </dxi-item>
+        <!-- Üretim birim ve oran 01 -->
+        <dxi-item itemType="group" [colCount]="1">
+          <dxi-item dataField="productUnit01Id"> </dxi-item>
+          <dxi-item
+            dataField="productUnitTransformationRatio01"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.0000'
+            }"
+          >
+          </dxi-item>
+        </dxi-item>
+        <!-- Stok birim ve oran 02 -->
+        <dxi-item itemType="group" [colCount]="1">
+          <dxi-item dataField="stockUnit02Id"> </dxi-item>
+          <dxi-item
+            dataField="stockUnitTransformationRatio02"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.0000'
+            }"
+          >
+          </dxi-item>
+        </dxi-item>
+        <!-- Stok birim ve oran 03 -->
+        <dxi-item itemType="group" [colCount]="1">
+          <dxi-item dataField="stockUnit03Id"> </dxi-item>
+          <dxi-item
+            dataField="stockUnitTransformationRatio03"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.0000'
+            }"
+          >
+          </dxi-item>
+        </dxi-item>
+        <!-- Stok alt detayları -->
         <dxi-item
           dataField="stockSubDetail"
           caption="{{ 'STOCKSUBDETAIL' | translate }}"
+          [colSpan]="2"
           editorType="dxRadioGroup"
           [editorOptions]="{
             dataSource: stokSubDetailItems,
             layout: 'horizontal',
             valueExpr: 'id',
             displayExpr: 'text'
+          }"
+        >
+        </dxi-item>
+      </dxi-item>
+      <!-- Stok diğer bilgileri -->
+      <dxi-item itemType="group" [colCount]="5" [colSpan]="2">
+        <!-- KDV -->
+        <dxi-item
+          dataField="vatRatio"
+          editorType="dxNumberBox"
+          [editorOptions]="{
+            format: '#,##0.00'
+          }"
+        >
+        </dxi-item>
+        <!-- Kritik miktar -->
+        <dxi-item
+          dataField="criticalAmount"
+          editorType="dxNumberBox"
+          [editorOptions]="{
+            format: '#,##0.00'
+          }"
+        >
+        </dxi-item>
+        <!-- Transfer tarihi -->
+        <dxi-item dataField="transferDate"> </dxi-item>
+        <!-- Ana grup -->
+        <dxi-item dataField="baseGroupId"> </dxi-item>
+        <!-- Grup -->
+        <dxi-item dataField="groupId"> </dxi-item>
+      </dxi-item>
+      <!-- Fiyat bilgileri -->
+      <dxi-item
+        itemType="group"
+        [colCount]="5"
+        [colSpan]="2"
+        caption="{{ 'PRICEINFO' | translate }}"
+      >
+        <dxi-item
+          dataField="salePrice01"
+          editorType="dxNumberBox"
+          [editorOptions]="{
+            format: '#,##0.00'
+          }"
+        >
+        </dxi-item>
+        <dxi-item
+          dataField="salePrice02"
+          editorType="dxNumberBox"
+          [editorOptions]="{
+            format: '#,##0.00'
+          }"
+        >
+        </dxi-item>
+        <dxi-item
+          dataField="salePrice03"
+          editorType="dxNumberBox"
+          [editorOptions]="{
+            format: '#,##0.00'
+          }"
+        >
+        </dxi-item>
+        <dxi-item
+          dataField="purchasePrice01"
+          editorType="dxNumberBox"
+          [editorOptions]="{
+            format: '#,##0.00'
+          }"
+        >
+        </dxi-item>
+        <dxi-item
+          dataField="purchasePrice02"
+          editorType="dxNumberBox"
+          [editorOptions]="{
+            format: '#,##0.00'
           }"
         >
         </dxi-item>
@@ -119,5 +242,148 @@
   >
     <dxo-lookup [dataSource]="unitDataSource" displayExpr="name" valueExpr="id">
     </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="stockUnitTransformationRatio01"
+    dataType="number"
+    caption="{{ 'STOCKUNITTRANSFORMATIONRATIO' | translate }}"
+    format=",##0.###"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="stockUnit02Id"
+    caption="{{ 'STOCKUNIT02' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup [dataSource]="unitDataSource" displayExpr="name" valueExpr="id">
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="stockUnitTransformationRatio02"
+    dataType="number"
+    caption="{{ 'STOCKUNITTRANSFORMATIONRATIO02' | translate }}"
+    format="#,##0.00"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="stockUnit03Id"
+    caption="{{ 'STOCKUNIT03' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup [dataSource]="unitDataSource" displayExpr="name" valueExpr="id">
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="stockUnitTransformationRatio03"
+    dataType="number"
+    caption="{{ 'STOCKUNITTRANSFORMATIONRATIO03' | translate }}"
+    format="#,##0.00"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="productUnit01Id"
+    caption="{{ 'PRODUCTIONUNIT' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup [dataSource]="unitDataSource" displayExpr="name" valueExpr="id">
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="productUnitTransformationRatio01"
+    dataType="number"
+    caption="{{ 'PRODUCTUNITTRANSFORMATIONRATIO' | translate }}"
+    format=",##0.###"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="vatRatio"
+    dataType="number"
+    caption="{{ 'VATRATIO' | translate }}"
+    format=",##0.###"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="criticalAmount"
+    dataType="number"
+    caption="{{ 'CRITICALAMOUNT' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="transferDate"
+    dataType="date"
+    caption="{{ 'TRANSFERDATE' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="baseGroupId"
+    caption="{{ 'BASEGROUP' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="rawMaterialMasterGroupDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="groupId"
+    caption="{{ 'GROUP' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="rawMaterialGroupDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="salePrice01"
+    dataType="number"
+    caption="{{ 'SALEPRICE01' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="salePrice02"
+    dataType="number"
+    caption="{{ 'SALEPRICE02' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="salePrice03"
+    dataType="number"
+    caption="{{ 'SALEPRICE03' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="purchasePrice01"
+    dataType="number"
+    caption="{{ 'PURCHASEPRICE01' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="purchasePrice02"
+    dataType="number"
+    caption="{{ 'PURCHASEPRICE02' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
   </dxi-column>
 </dx-data-grid>

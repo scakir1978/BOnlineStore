@@ -85,6 +85,15 @@ export class BaseDefinitionsOnGridComponent implements OnInit, OnDestroy {
   }
 
   private createBreadCrumb() {
+    this._translate
+      .get([this.parentKey, this.componentKey])
+      .subscribe((translations) => {
+        this.breadCrumbItems = [
+          { label: translations[this.parentKey] },
+          { label: translations[this.componentKey], active: true },
+        ];
+      });
+
     this._translate.onLangChange.subscribe((lang) => {
       this._translate
         .get([this.parentKey, this.componentKey])

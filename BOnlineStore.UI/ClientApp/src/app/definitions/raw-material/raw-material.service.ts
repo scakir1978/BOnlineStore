@@ -16,6 +16,7 @@ import CustomStore from 'devextreme/data/custom_store';
   providedIn: 'root',
 })
 export class RawMaterialService extends BaseService implements Resolve<any> {
+  stokSubDetailItems: any[] = [];
   constructor(public override _http: HttpClient) {
     super(
       _http,
