@@ -83,5 +83,15 @@
   "SALEPRICE03": "Satış Fiyatı-3",
   "PURCHASEPRICE01": "Alış Fiyatı-1",
   "PURCHASEPRICE02": "Alış Fiyatı-2",
-  "TRANSFERDATE": "Devir Tarihi"
+  "TRANSFERDATE": "Devir Tarihi",
+  "RAWMATERIALLIST": "Hammadde Listesi",
+  "PANELRAWMATERIALLIST": "Panel İçin Hammadde Listesi",
+  "RECIPERAWMATERIALLIST": "Reçete İçin Hammadde Listesi",
+  "RECIPEANDPANELRAWMATERIALLIST": "Reçete ve Panel İçin Hammadde Listeleri",
+  "GLASSPATTENRRAWMATERIALLIST": "Cam Desenleri İçin Hammadde Listeleri",
+  "GLASSLENGTHRAWMATERIAL": "Kabin Cam Boyu",
+  "GLASSWIDTHRAWMATERIAL": "Kabin Cam Eni",
+  "PANELGLASSLENGTHRAWMATERIAL": "Panel Cam Boyu",
+  "PANELGLASSWIDTHRAWMATERIAL": "Panel Cam Eni",
+  "RECIPETYPEINFO": "Reçete Türü Detayları"
 }

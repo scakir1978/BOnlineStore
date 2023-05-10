@@ -16,4 +16,5 @@ export enum DefinitionsControllerNamesEnum {
   TEMPLATECODES = 'Template',
   FIRMTYPE = 'FirmType',
   RAWMATERIAL = 'RawMaterial',
+  RECIPETYPE = 'RecipeType',
 }

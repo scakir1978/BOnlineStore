@@ -1,0 +1,350 @@
+<app-breadcrumbs
+  title="{{ 'DEFINITIONS' | translate }}"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+
+<dx-data-grid
+  id="gridContainer"
+  [dataSource]="recipeTypeDataSource"
+  [showBorders]="true"
+  [remoteOperations]="true"
+  [repaintChangesOnly]="true"
+  [showColumnLines]="true"
+  [showRowLines]="true"
+  [rowAlternationEnabled]="true"
+  (onExporting)="onExporting($event)"
+  (onInitNewRow)="onInitNewRow($event)"
+>
+  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+  <dxo-filter-row [visible]="true"> </dxo-filter-row>
+  <dxo-header-filter [visible]="true"> </dxo-header-filter>
+  <dxo-editing
+    mode="popup"
+    [allowAdding]="true"
+    [allowDeleting]="true"
+    [allowUpdating]="true"
+    [useIcons]="true"
+    [refreshMode]="'full'"
+    [confirmDelete]="true"
+  >
+    <dxo-form [labelMode]="'floating'">
+      <!-- Reçete kod ve ad bilgileri -->
+      <dxi-item
+        itemType="group"
+        [colCount]="2"
+        [colSpan]="2"
+        caption="{{ 'RECIPETYPEINFO' | translate }}"
+      >
+        <dxi-item dataField="code"></dxi-item>
+        <dxi-item dataField="name"></dxi-item>
+      </dxi-item>
+      <dxi-item itemType="tabbed" [colSpan]="2">
+        <dxo-tab-panel-options [deferRendering]="false">
+        </dxo-tab-panel-options>
+        <dxi-tab
+          title="{{ 'RECIPEANDPANELRAWMATERIALLIST' | translate }}"
+          [colCount]="2"
+        >
+          <dxi-item dataField="rawMaterialIds"></dxi-item>
+          <dxi-item dataField="panelRawMaterialIds"></dxi-item>
+        </dxi-tab>
+        <dxi-tab
+          title="{{ 'GLASSPATTENRRAWMATERIALLIST' | translate }}"
+          [colCount]="4"
+        >
+          <dxi-item dataField="glassLengthRawMaterialIds"></dxi-item>
+          <dxi-item dataField="glassWidthRawMaterialIds"></dxi-item>
+          <dxi-item dataField="panelGlassLengthRawMaterialIds"></dxi-item>
+          <dxi-item dataField="panelGlassWidthRawMaterialIds"></dxi-item>
+        </dxi-tab>
+      </dxi-item>
+    </dxo-form>
+  </dxo-editing>
+
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager
+    [visible]="true"
+    [displayMode]="'full'"
+    [showPageSizeSelector]="true"
+    [showInfo]="true"
+    [showNavigationButtons]="true"
+  >
+  </dxo-pager>
+
+  <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+  <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
+  <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
+
+  <dxo-group-panel [visible]="true"></dxo-group-panel>
+  <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
+
+  <dxo-toolbar>
+    <dxi-item location="after">
+      <div *dxTemplate>
+        <dx-button icon="refresh" (onClick)="refreshDataGrid($event)">
+        </dx-button>
+      </div>
+    </dxi-item>
+    <dxi-item name="groupPanel"></dxi-item>
+    <dxi-item name="addRowButton"></dxi-item>
+    <dxi-item name="saveButton"></dxi-item>
+    <dxi-item name="revertButton"></dxi-item>
+    <dxi-item name="exportButton"></dxi-item>
+    <dxi-item name="columnChooserButton"></dxi-item>
+  </dxo-toolbar>
+
+  <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
+  </dxi-column>
+  <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="rawMaterialIds"
+    caption="{{ 'RECIPERAWMATERIALLIST' | translate }}"
+    [visible]="false"
+    [showInColumnChooser]="false"
+    editCellTemplate="rawMaterialIdsTemplate"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="panelRawMaterialIds"
+    caption="{{ 'PANELRAWMATERIALLIST' | translate }}"
+    [visible]="false"
+    [showInColumnChooser]="false"
+    editCellTemplate="panelRawMaterialIdsTemplate"
+  >
+  </dxi-column>
+  <!-- Kabin Cam Boyu -->
+  <dxi-column
+    dataField="glassLengthRawMaterialIds"
+    caption="{{ 'GLASSLENGTHRAWMATERIAL' | translate }}"
+    [visible]="false"
+    [showInColumnChooser]="false"
+    editCellTemplate="glassLengthRawMaterialIdsTemplate"
+  >
+  </dxi-column>
+  <!-- Kabin Cam Eni -->
+  <dxi-column
+    dataField="glassWidthRawMaterialIds"
+    caption="{{ 'GLASSWIDTHRAWMATERIAL' | translate }}"
+    [visible]="false"
+    [showInColumnChooser]="false"
+    editCellTemplate="glassWidthRawMaterialIdsTemplate"
+  >
+  </dxi-column>
+  <!-- Panel Cam Boyu -->
+  <dxi-column
+    dataField="panelGlassLengthRawMaterialIds"
+    caption="{{ 'PANELGLASSLENGTHRAWMATERIAL' | translate }}"
+    [visible]="false"
+    [showInColumnChooser]="false"
+    editCellTemplate="panelGlassLengthRawMaterialIdsTemplate"
+  >
+  </dxi-column>
+  <!-- Panel Cam Eni -->
+  <dxi-column
+    dataField="panelGlassWidthRawMaterialIds"
+    caption="{{ 'PANELGLASSWIDTHRAWMATERIAL' | translate }}"
+    [visible]="false"
+    [showInColumnChooser]="false"
+    editCellTemplate="panelGlassWidthRawMaterialIdsTemplate"
+  >
+  </dxi-column>
+  <div *dxTemplate="let data of 'rawMaterialIdsTemplate'">
+    <dx-data-grid
+      [dataSource]="data.value"
+      keyExpr="id"
+      [showBorders]="true"
+      [repaintChangesOnly]="true"
+      [showColumnLines]="true"
+      [showRowLines]="true"
+      [rowAlternationEnabled]="true"
+      (onSaved)="onSaved($event, data)"
+    >
+      <dxi-column
+        dataField="id"
+        caption="{{ 'RECIPERAWMATERIALLIST' | translate }}"
+      >
+        <dxo-lookup
+          [dataSource]="rawMaterialDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxo-editing
+        mode="row"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+        [confirmDelete]="true"
+      ></dxo-editing>
+    </dx-data-grid>
+  </div>
+  <div *dxTemplate="let panelData of 'panelRawMaterialIdsTemplate'">
+    <dx-data-grid
+      [dataSource]="panelData.value"
+      keyExpr="id"
+      [showBorders]="true"
+      [repaintChangesOnly]="true"
+      [showColumnLines]="true"
+      [showRowLines]="true"
+      [rowAlternationEnabled]="true"
+      (onSaved)="onSaved($event, panelData)"
+    >
+      <dxi-column
+        dataField="id"
+        caption="{{ 'PANELRAWMATERIALLIST' | translate }}"
+      >
+        <dxo-lookup
+          [dataSource]="rawMaterialDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxo-editing
+        mode="row"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+        [confirmDelete]="true"
+      ></dxo-editing>
+    </dx-data-grid>
+  </div>
+  <div *dxTemplate="let glassLengthData of 'glassLengthRawMaterialIdsTemplate'">
+    <dx-data-grid
+      [dataSource]="glassLengthData.value"
+      keyExpr="id"
+      [showBorders]="true"
+      [repaintChangesOnly]="true"
+      [showColumnLines]="true"
+      [showRowLines]="true"
+      [rowAlternationEnabled]="true"
+      (onSaved)="onSaved($event, glassLengthData)"
+    >
+      <dxi-column
+        dataField="id"
+        caption="{{ 'GLASSLENGTHRAWMATERIAL' | translate }}"
+      >
+        <dxo-lookup
+          [dataSource]="rawMaterialDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxo-editing
+        mode="row"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+        [confirmDelete]="true"
+      ></dxo-editing>
+    </dx-data-grid>
+  </div>
+  <div *dxTemplate="let glassWidthData of 'glassWidthRawMaterialIdsTemplate'">
+    <dx-data-grid
+      [dataSource]="glassWidthData.value"
+      keyExpr="id"
+      [showBorders]="true"
+      [repaintChangesOnly]="true"
+      [showColumnLines]="true"
+      [showRowLines]="true"
+      [rowAlternationEnabled]="true"
+      (onSaved)="onSaved($event, glassWidthData)"
+    >
+      <dxi-column
+        dataField="id"
+        caption="{{ 'GLASSWIDTHRAWMATERIAL' | translate }}"
+      >
+        <dxo-lookup
+          [dataSource]="rawMaterialDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxo-editing
+        mode="row"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+        [confirmDelete]="true"
+      ></dxo-editing>
+    </dx-data-grid>
+  </div>
+  <div
+    *dxTemplate="
+      let panelGlassLengthData of 'panelGlassLengthRawMaterialIdsTemplate'
+    "
+  >
+    <dx-data-grid
+      [dataSource]="panelGlassLengthData.value"
+      keyExpr="id"
+      [showBorders]="true"
+      [repaintChangesOnly]="true"
+      [showColumnLines]="true"
+      [showRowLines]="true"
+      [rowAlternationEnabled]="true"
+      (onSaved)="onSaved($event, panelGlassLengthData)"
+    >
+      <dxi-column
+        dataField="id"
+        caption="{{ 'PANELGLASSLENGTHRAWMATERIAL' | translate }}"
+      >
+        <dxo-lookup
+          [dataSource]="rawMaterialDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxo-editing
+        mode="row"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+        [confirmDelete]="true"
+      ></dxo-editing>
+    </dx-data-grid>
+  </div>
+  <div
+    *dxTemplate="
+      let panelGlassWidthData of 'panelGlassWidthRawMaterialIdsTemplate'
+    "
+  >
+    <dx-data-grid
+      [dataSource]="panelGlassWidthData.value"
+      keyExpr="id"
+      [showBorders]="true"
+      [repaintChangesOnly]="true"
+      [showColumnLines]="true"
+      [showRowLines]="true"
+      [rowAlternationEnabled]="true"
+      (onSaved)="onSaved($event, panelGlassWidthData)"
+    >
+      <dxi-column
+        dataField="id"
+        caption="{{ 'PANELGLASSWIDTHRAWMATERIAL' | translate }}"
+      >
+        <dxo-lookup
+          [dataSource]="rawMaterialDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxo-editing
+        mode="row"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+        [confirmDelete]="true"
+      ></dxo-editing>
+    </dx-data-grid>
+  </div>
+</dx-data-grid>

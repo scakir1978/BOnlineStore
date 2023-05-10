@@ -1,3 +1,4 @@
+import { RecipeTypeModule } from './recipe-type/recipe-type.module';
 import { RawMaterialModule } from './raw-material/raw-material.module';
 import { FirmTypeModule } from './firm-type/firm-type.module';
 import { TemplateCodesModule } from './template-codes/template-codes.module';
@@ -36,6 +37,7 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     GlassGroupModule,
     FirmTypeModule,
   RawMaterialModule,
+  RecipeTypeModule,
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

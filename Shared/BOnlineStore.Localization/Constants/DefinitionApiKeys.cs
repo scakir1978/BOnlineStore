@@ -45,6 +45,8 @@ namespace BOnlineStore.Localization.Constants
         public const string BankCodeNotEmpty = "BankCodeNotEmpty";
         public const string FirmTypeNameNotEmpty = "FirmTypeNameNotEmpty";
         public const string FirmTypeCodeNotEmpty = "FirmTypeCodeNotEmpty";
+        public const string RecipeTypeNameNotEmpty = "RecipeTypeNameNotEmpty";
+        public const string RecipeTypeCodeNotEmpty = "RecipecleTypeCodeNotEmpty";
 
     }
 }

@@ -83,5 +83,15 @@
   "SALEPRICE03": "Sale Price-3",
   "PURCHASEPRICE01": "Purchase Price-1",
   "PURCHASEPRICE02": "Purchase Price-2",
-  "TRANSFERDATE": "Transfer Date"
+  "TRANSFERDATE": "Transfer Date",
+  "RAWMATERIALLIST": "Raw Material List",
+  "PANELRAWMATERIALLIST": "Panel Raw Material List",
+  "RECIPERAWMATERIALLIST": "Recipe Raw Material List",
+  "RECIPEANDPANELRAWMATERIALLIST": "Raw Material List for Recipe and Panel",
+  "GLASSPATTENRRAWMATERIALLIST": "Raw Material List for Glass Pattern",
+  "GLASSLENGTHRAWMATERIAL": "Cabinet Glass Length",
+  "GLASSWIDTHRAWMATERIAL": "Cabinet Glass Width",
+  "PANELGLASSLENGTHRAWMATERIAL": "Panel Glass Length",
+  "PANELGLASSWIDTHRAWMATERIAL": "Panel Glass Width",
+  "RECIPETYPEINFO": "Recipe Type Details"
 }

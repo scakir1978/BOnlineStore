@@ -45,7 +45,7 @@ namespace BOnlineStore.Generic.Service
             await IsRecordExists(id);
 
             return _mapper.Map<TEntityDto>(await _repository.GetByIdAsync(id));
-        }       
+        }
 
         public virtual async Task<TEntityDto> AddAsync(TCreateInput input)
         {
