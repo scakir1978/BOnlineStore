@@ -1,37 +1,19 @@
-﻿using BOnlineStore.Services.Definitions.Api.Entities;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using BOnlineStore.Shared.Entities;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace BOnlineStore.Services.Definitions.Api.Dtos
+namespace BOnlineStore.Services.Definitions.Api
 {
-    public class ModelUpdateDto
+    public class Panel : Entity
     {
-        /// <summary>
-        /// Model Kodu
-        /// </summary>
-        public string? Code { get; set; }
-
-        /// <summary>
-        /// Model Açıklaması
-        /// </summary>
-        public string? Name { get; set; }
+        public string Code { get; private set; }
+        public string Name { get; private set; } //Açıklama
 
         /// <summary>
         /// Model Grup Id
         /// </summary>
-        public string? ModelGroupId { get; set; }
-
-        /// <summary>
-        /// Yan Panel Id
-        /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? SidePanelId { get; private set; }
-
-        /// <summary>
-        /// Panel Id
-        /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? PanelId { get; private set; }
+        public string? ModelGroupId { get; private set; }
 
         /// <summary>
         /// Reçete Türü Id
@@ -64,22 +46,32 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// </summary>
         public string? Picture { get; private set; }
 
-        public ModelUpdateDto(
-            string? code, string? name, string? modelGroupId, string? sidePanelId = null, string? panelId = null,
-            string? recipeTypeId = null, decimal? wastageRatio = null, decimal? wastageAmount = null,
-            decimal? workmanshipRatio = null, decimal? workmanshipAmount = null, string? picture = null)
+        public Panel() : base()
+        {
+            Code = "";
+            Name = "";
+        }
+
+        public Panel(
+            Guid tenantId, string id, string code, string name, string? modelGroupId = null, string? recipeTypeId = null,
+            decimal? wastageRatio = null, decimal? wastageAmount = null, decimal? workmanshipRatio = null,
+            decimal? workmanshipAmount = null, string? picture = null) : base(tenantId, id)
         {
             Code = code;
             Name = name;
             ModelGroupId = modelGroupId;
-            SidePanelId = sidePanelId;
-            PanelId = panelId;
             RecipeTypeId = recipeTypeId;
             WastageRatio = wastageRatio;
             WastageAmount = wastageAmount;
             WorkmanshipRatio = workmanshipRatio;
             WorkmanshipAmount = workmanshipAmount;
             Picture = picture;
+        }
+
+        public void UpdatePanel(string code, string name)
+        {
+            Code = code;
+            Name = name;
         }
     }
 }

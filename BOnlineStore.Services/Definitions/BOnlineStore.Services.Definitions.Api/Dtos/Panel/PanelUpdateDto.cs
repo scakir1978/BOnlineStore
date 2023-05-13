@@ -1,37 +1,25 @@
-﻿using BOnlineStore.Services.Definitions.Api.Entities;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
-    public class ModelUpdateDto
+    public class PanelUpdateDto
     {
         /// <summary>
-        /// Model Kodu
+        /// Panel Kodu
         /// </summary>
         public string? Code { get; set; }
 
         /// <summary>
-        /// Model Açıklaması
+        /// Panel Açıklaması 
         /// </summary>
         public string? Name { get; set; }
 
         /// <summary>
         /// Model Grup Id
         /// </summary>
-        public string? ModelGroupId { get; set; }
-
-        /// <summary>
-        /// Yan Panel Id
-        /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? SidePanelId { get; private set; }
-
-        /// <summary>
-        /// Panel Id
-        /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string? PanelId { get; private set; }
+        public string? ModelGroupId { get; private set; }
 
         /// <summary>
         /// Reçete Türü Id
@@ -64,16 +52,14 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// </summary>
         public string? Picture { get; private set; }
 
-        public ModelUpdateDto(
-            string? code, string? name, string? modelGroupId, string? sidePanelId = null, string? panelId = null,
-            string? recipeTypeId = null, decimal? wastageRatio = null, decimal? wastageAmount = null,
-            decimal? workmanshipRatio = null, decimal? workmanshipAmount = null, string? picture = null)
+        public PanelUpdateDto(
+            string? code, string? name, string? modelGroupId = null, string? recipeTypeId = null,
+            decimal? wastageRatio = null, decimal? wastageAmount = null, decimal? workmanshipRatio = null,
+            decimal? workmanshipAmount = null, string? picture = null)
         {
             Code = code;
             Name = name;
             ModelGroupId = modelGroupId;
-            SidePanelId = sidePanelId;
-            PanelId = panelId;
             RecipeTypeId = recipeTypeId;
             WastageRatio = wastageRatio;
             WastageAmount = wastageAmount;

@@ -26,6 +26,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IValidator<Bank>, BankValidator>();
             services.AddScoped<IValidator<FirmType>, FirmTypeValidator>();
             services.AddScoped<IValidator<RecipeType>, RecipeTypeValidator>();
+            services.AddScoped<IValidator<Panel>, PanelValidator>();
 
 
             return services;

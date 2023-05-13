@@ -17,4 +17,5 @@ export enum DefinitionsControllerNamesEnum {
   FIRMTYPE = 'FirmType',
   RAWMATERIAL = 'RawMaterial',
   RECIPETYPE = 'RecipeType',
+  PANEL = 'Panel',
 }

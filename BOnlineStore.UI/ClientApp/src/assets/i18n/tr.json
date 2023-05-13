@@ -94,5 +94,13 @@
   "PANELGLASSLENGTHRAWMATERIAL": "Panel Cam Boyu",
   "PANELGLASSWIDTHRAWMATERIAL": "Panel Cam Eni",
   "RECIPETYPEINFO": "Reçete Türü Detayları",
-  "DUPLICATEKEY": "Aynı kaydı tekrar giremezsiniz."
+  "DUPLICATEKEY": "Aynı kaydı tekrar giremezsiniz.",
+  "PANELINFO": "Panel Detayları",
+  "MODELGROUP": "Model Grubu",
+  "DESCRIPTION": "Açıklama",
+  "WASTAGERATIO": "Fire Oranı (%)",
+  "WORKMANSHIPRATIO": "İşçilik Oranı (%)",
+  "WASTAGEAMOUNT": "Fire Tutarı",
+  "WORKMANSHIPAMOUNT": "İşçilik Tutarı",
+  "PICTURE": "Resim"
 }

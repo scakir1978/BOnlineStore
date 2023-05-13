@@ -27,7 +27,7 @@ export const MENU: MenuItem[] = [
       {
         id: 50,
         label: 'PANEL',
-        link: '/definitions/models',
+        link: '/definitions/panel',
         parentId: 20,
       },
       {

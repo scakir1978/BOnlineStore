@@ -65,6 +65,7 @@ export abstract class BaseService {
   getBaseRawCustomStore(
     serviceUrl: string = this._serviceUrl,
     controllerName: string = this._controllerName,
+    functionName: string = 'Load',
     keys: any = 'id'
   ): CustomStore {
     return new CustomStore({
@@ -72,7 +73,7 @@ export abstract class BaseService {
       loadMode: 'raw',
       load: (loadOptions) =>
         this.sendRequest(
-          serviceUrl + controllerName + '/Load',
+          serviceUrl + controllerName + '/' + functionName,
           'LOAD',
           null!,
           loadOptions

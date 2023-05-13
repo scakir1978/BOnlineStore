@@ -94,5 +94,13 @@
   "PANELGLASSLENGTHRAWMATERIAL": "Panel Glass Length",
   "PANELGLASSWIDTHRAWMATERIAL": "Panel Glass Width",
   "RECIPETYPEINFO": "Recipe Type Details",
-  "DUPLICATEKEY": "Dublicate record not allowed"
+  "DUPLICATEKEY": "Dublicate record not allowed",
+  "PANELINFO": "Panel Details",
+  "MODELGROUP": "Model Group",
+  "DESCRIPTION": "Description",
+  "WASTAGERATIO": "Wastage Ratio (%)",
+  "WORKMANSHIPRATIO": "Workmanship Ratio (%)",
+  "WASTAGEAMOUNT": "Wastage Amount",
+  "WORKMANSHIPAMOUNT": "Workmanship Amountı",
+  "PICTURE": "Picture"
 }

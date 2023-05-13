@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BOnlineStore.Services.Definitions.Api.Dtos;
-using BOnlineStore.Services.Definitions.Api.Entities;
 
 namespace BOnlineStore.Services.Definitions.Api
 {
@@ -22,6 +21,7 @@ namespace BOnlineStore.Services.Definitions.Api
                 .ForMember(dest => dest.PanelRawMaterialIds, opt => opt.Condition(src => (src.PanelRawMaterialIds != null)));
 
             CreateMap<RawMaterialId, RawMaterialIdDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<RecipeType, RecipeTypeForComboDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
 
         }
 
