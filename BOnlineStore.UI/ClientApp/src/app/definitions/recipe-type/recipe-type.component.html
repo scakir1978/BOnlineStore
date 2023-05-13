@@ -163,6 +163,7 @@
       [showRowLines]="true"
       [rowAlternationEnabled]="true"
       (onSaved)="onSaved($event, data)"
+      (onRowInserting)="onRowInserting($event)"
     >
       <dxi-column
         dataField="id"
@@ -177,10 +178,11 @@
       </dxi-column>
       <dxo-editing
         mode="row"
-        [allowUpdating]="true"
+        [allowUpdating]="false"
         [allowAdding]="true"
         [allowDeleting]="true"
         [confirmDelete]="true"
+        [useIcons]="true"
       ></dxo-editing>
     </dx-data-grid>
   </div>
@@ -194,6 +196,7 @@
       [showRowLines]="true"
       [rowAlternationEnabled]="true"
       (onSaved)="onSaved($event, panelData)"
+      (onRowInserting)="onRowInserting($event)"
     >
       <dxi-column
         dataField="id"
@@ -208,10 +211,11 @@
       </dxi-column>
       <dxo-editing
         mode="row"
-        [allowUpdating]="true"
+        [allowUpdating]="false"
         [allowAdding]="true"
         [allowDeleting]="true"
         [confirmDelete]="true"
+        [useIcons]="true"
       ></dxo-editing>
     </dx-data-grid>
   </div>
@@ -239,10 +243,11 @@
       </dxi-column>
       <dxo-editing
         mode="row"
-        [allowUpdating]="true"
+        [allowUpdating]="false"
         [allowAdding]="true"
         [allowDeleting]="true"
         [confirmDelete]="true"
+        [useIcons]="true"
       ></dxo-editing>
     </dx-data-grid>
   </div>
@@ -270,10 +275,11 @@
       </dxi-column>
       <dxo-editing
         mode="row"
-        [allowUpdating]="true"
+        [allowUpdating]="false"
         [allowAdding]="true"
         [allowDeleting]="true"
         [confirmDelete]="true"
+        [useIcons]="true"
       ></dxo-editing>
     </dx-data-grid>
   </div>
@@ -305,10 +311,11 @@
       </dxi-column>
       <dxo-editing
         mode="row"
-        [allowUpdating]="true"
+        [allowUpdating]="false"
         [allowAdding]="true"
         [allowDeleting]="true"
         [confirmDelete]="true"
+        [useIcons]="true"
       ></dxo-editing>
     </dx-data-grid>
   </div>
@@ -340,10 +347,11 @@
       </dxi-column>
       <dxo-editing
         mode="row"
-        [allowUpdating]="true"
+        [allowUpdating]="false"
         [allowAdding]="true"
         [allowDeleting]="true"
         [confirmDelete]="true"
+        [useIcons]="true"
       ></dxo-editing>
     </dx-data-grid>
   </div>

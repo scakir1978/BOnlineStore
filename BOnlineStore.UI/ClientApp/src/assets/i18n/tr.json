@@ -93,5 +93,6 @@
   "GLASSWIDTHRAWMATERIAL": "Kabin Cam Eni",
   "PANELGLASSLENGTHRAWMATERIAL": "Panel Cam Boyu",
   "PANELGLASSWIDTHRAWMATERIAL": "Panel Cam Eni",
-  "RECIPETYPEINFO": "Reçete Türü Detayları"
+  "RECIPETYPEINFO": "Reçete Türü Detayları",
+  "DUPLICATEKEY": "Aynı kaydı tekrar giremezsiniz."
 }

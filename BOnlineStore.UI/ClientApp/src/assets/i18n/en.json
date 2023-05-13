@@ -93,5 +93,6 @@
   "GLASSWIDTHRAWMATERIAL": "Cabinet Glass Width",
   "PANELGLASSLENGTHRAWMATERIAL": "Panel Glass Length",
   "PANELGLASSWIDTHRAWMATERIAL": "Panel Glass Width",
-  "RECIPETYPEINFO": "Recipe Type Details"
+  "RECIPETYPEINFO": "Recipe Type Details",
+  "DUPLICATEKEY": "Dublicate record not allowed"
 }
