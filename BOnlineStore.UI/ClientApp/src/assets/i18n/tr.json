@@ -102,5 +102,8 @@
   "WORKMANSHIPRATIO": "İşçilik Oranı (%)",
   "WASTAGEAMOUNT": "Fire Tutarı",
   "WORKMANSHIPAMOUNT": "İşçilik Tutarı",
-  "PICTURE": "Resim"
+  "PICTURE": "Resim",
+  "MODELINFO": "Model Detayları",
+  "SIDEPANEL": "Yan Panel",
+  "FILESIZE300KBERROR": "Resim boyutu 300KB' den büyük olamaz."
 }

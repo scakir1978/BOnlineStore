@@ -1,3 +1,4 @@
+import { ModelModule } from './model/model.module';
 import { PanelModule } from './panel/panel.module';
 import { RecipeTypeModule } from './recipe-type/recipe-type.module';
 import { RawMaterialModule } from './raw-material/raw-material.module';
@@ -37,10 +38,11 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     GlassModule,
     GlassGroupModule,
     FirmTypeModule,
-  RawMaterialModule,
-  RecipeTypeModule,
-  PanelModule,
-],
+    RawMaterialModule,
+    RecipeTypeModule,
+    PanelModule,
+    ModelModule,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DefinitionsModule {

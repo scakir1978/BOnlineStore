@@ -18,4 +18,5 @@ export enum DefinitionsControllerNamesEnum {
   RAWMATERIAL = 'RawMaterial',
   RECIPETYPE = 'RecipeType',
   PANEL = 'Panel',
+  MODEL = 'Model',
 }

@@ -5,7 +5,7 @@
 
 <dx-data-grid
   id="gridContainer"
-  [dataSource]="panelDataSource"
+  [dataSource]="modelDataSource"
   [showBorders]="true"
   [remoteOperations]="true"
   [repaintChangesOnly]="true"
@@ -32,12 +32,14 @@
         itemType="group"
         [colCount]="2"
         [colSpan]="2"
-        caption="{{ 'PANELINFO' | translate }}"
+        caption="{{ 'MODELINFO' | translate }}"
       >
-        <dxi-item itemType="group" [colCount]="1">
+        <dxi-item itemType="group" [colCount]="2">
           <dxi-item dataField="code"></dxi-item>
           <dxi-item dataField="name"></dxi-item>
           <dxi-item dataField="modelGroupId"></dxi-item>
+          <dxi-item dataField="sidePanelId"></dxi-item>
+          <dxi-item dataField="panelId"></dxi-item>
           <dxi-item dataField="recipeTypeId"></dxi-item>
           <dxi-item
             dataField="wastageRatio"
@@ -134,8 +136,33 @@
     caption="{{ 'MODELGROUP' | translate }}"
     [visible]="false"
   >
+    <dxi-validation-rule type="required"></dxi-validation-rule>
     <dxo-lookup
       [dataSource]="modelGroupDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="sidePanelId"
+    caption="{{ 'SIDEPANEL' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="panelDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="panelId"
+    caption="{{ 'PANEL' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="panelDataSource"
       displayExpr="name"
       valueExpr="id"
     >
@@ -197,7 +224,7 @@
       class="uploadedImage"
       [src]="data.value"
       [hidden]="isPictureNotLoaded(data.value)"
-      style="object-fit: contain; width: 45%; height: 45%"
+      style="object-fit: contain; width: 25%; height: 25%"
     />
     <dx-file-uploader
       #fileUploader
@@ -205,6 +232,7 @@
       accept="image/*"
       uploadMode="useForm"
       (onValueChanged)="onValueChanged($event, data)"
-    ></dx-file-uploader>
+    >
+    </dx-file-uploader>
   </div>
 </dx-data-grid>

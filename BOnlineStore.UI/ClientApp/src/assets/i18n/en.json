@@ -102,5 +102,8 @@
   "WORKMANSHIPRATIO": "Workmanship Ratio (%)",
   "WASTAGEAMOUNT": "Wastage Amount",
   "WORKMANSHIPAMOUNT": "Workmanship Amountı",
-  "PICTURE": "Picture"
+  "PICTURE": "Picture",
+  "MODELINFO": "Model Details",
+  "SIDEPANEL": "Side Panel",
+  "FILESIZE300KBERROR": "Image size cannot be larger than 300KB."
 }
