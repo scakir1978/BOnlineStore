@@ -28,6 +28,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IFirmTypeRepository, FirmTypeRepository>();
             services.AddScoped<IRecipeTypeRepository, RecipeTypeRepository>();
             services.AddScoped<IPanelRepository, PanelRepository>();
+            services.AddScoped<IMeasurementAssemblyLimitsRepository, MeasurementAssemblyLimitsRepository>();
 
 
             return services;

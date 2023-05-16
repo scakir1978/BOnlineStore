@@ -17,7 +17,7 @@ import { DxDataGridComponent } from 'devextreme-angular';
   styles: [],
 })
 export class BaseDefinitionsOnGridComponent implements OnInit, OnDestroy {
-  dataGrid!: DxDataGridComponent;
+  @ViewChild(DxDataGridComponent) dataGrid: DxDataGridComponent;
 
   // public
 

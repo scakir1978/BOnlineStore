@@ -66,8 +66,8 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 110,
-        label: 'ASSEMBLYLIMITS',
-        link: '/definitions/assembly-limits',
+        label: 'MEASUREMENTASSEMBLYLIMITS',
+        link: '/definitions/measurement-assembly-limits',
         parentId: 20,
       },
       {

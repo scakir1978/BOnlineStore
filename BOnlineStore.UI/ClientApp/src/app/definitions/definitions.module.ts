@@ -1,3 +1,4 @@
+import { MeasurementAssemblyLimitsModule } from './measurement-assembly-limits/measurement-assembly-limits.module';
 import { ModelModule } from './model/model.module';
 import { PanelModule } from './panel/panel.module';
 import { RecipeTypeModule } from './recipe-type/recipe-type.module';
@@ -42,6 +43,7 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     RecipeTypeModule,
     PanelModule,
     ModelModule,
+    MeasurementAssemblyLimitsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

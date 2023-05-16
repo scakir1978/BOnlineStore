@@ -49,6 +49,10 @@ namespace BOnlineStore.Localization.Constants
         public const string RecipeTypeCodeNotEmpty = "RecipeTypeCodeNotEmpty";
         public const string PanelNameNotEmpty = "PanelNameNotEmpty";
         public const string PanelCodeNotEmpty = "PanelCodeNotEmpty";
+        public const string MeasurementAssemblyLimitsDayNotEmpty = "MeasurementAssemblyLimitsDayNotEmpty";
+        public const string MeasurementAssemblyLimitsAssemblerNotEmpty = "MeasurementAssemblyLimitsAssemblerNotEmpty";
+        public const string MeasurementAssemblyLimitsQuantitiesNotEmpty = "MeasurementAssemblyLimitsQuantitiesNotEmpty";
+        public const string MeasurementAssemblyLimitsRegionsNotEmpty = "MeasurementAssemblyLimitsRegionsNotEmpty";
 
     }
 }

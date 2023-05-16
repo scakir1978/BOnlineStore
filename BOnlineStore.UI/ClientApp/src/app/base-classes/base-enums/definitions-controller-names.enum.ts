@@ -19,4 +19,5 @@ export enum DefinitionsControllerNamesEnum {
   RECIPETYPE = 'RecipeType',
   PANEL = 'Panel',
   MODEL = 'Model',
+  MEASUREMENTASSEMBLYLIMITS = 'MeasurementAssemblyLimits',
 }

@@ -105,5 +105,18 @@
   "PICTURE": "Picture",
   "MODELINFO": "Model Details",
   "SIDEPANEL": "Side Panel",
-  "FILESIZE300KBERROR": "Image size cannot be larger than 300KB."
+  "FILESIZE300KBERROR": "Image size cannot be larger than 300KB.",
+  "MEASUREMENTASSEMBLYLIMITS": "Measurement/Assembly Limits",
+  "MONDAY": "Monday",
+  "TUESDAY": "Tuesday",
+  "WEDNESDAY": "Wednesday",
+  "THURSDAY": "Thursday",
+  "FRIDAY": "Friday",
+  "SATURDAY": "Saturday",
+  "SUNDAY": "Sunday",
+  "DAY": "Day",
+  "ATLEASTONEREGIONENTEREDERROR": "At least one region entered.",
+  "ATLEASTONEQUANTITYENTERED": "You must enter one of the measurement or assembly quantity information.",
+  "ASSEMBLYQUANTITY": "Assembler Quantity",
+  "MEASUREMENTQUANTITY": "Measurement Quantity"
 }

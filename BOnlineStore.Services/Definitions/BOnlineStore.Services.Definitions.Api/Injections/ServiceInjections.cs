@@ -25,6 +25,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IFirmTypeService, FirmTypeService>();
             services.AddScoped<IRecipeTypeService, RecipeTypeService>();
             services.AddScoped<IPanelService, PanelService>();
+            services.AddScoped<IMeasurementAssemblyLimitsService, MeasurementAssemblyLimitsService>();
 
             return services;
         }
