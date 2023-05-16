@@ -23,9 +23,9 @@ namespace BOnlineStore.Services.Definitions.Api
                 .WithMessage(_stringLocalizer[DefinitionApiKeys.MeasurementAssemblyLimitsQuantitiesNotEmpty]);
             RuleFor(x => x).Must(x => !string.IsNullOrWhiteSpace(x.Region01Id) ||
                                       !string.IsNullOrWhiteSpace(x.Region02Id) ||
-                                      !string.IsNullOrWhiteSpace(x.Region03Id) || 
+                                      !string.IsNullOrWhiteSpace(x.Region03Id) ||
                                       !string.IsNullOrWhiteSpace(x.Region04Id) ||
-                                      string.IsNullOrWhiteSpace(x.Region05Id))
+                                      !string.IsNullOrWhiteSpace(x.Region05Id))
                 .WithMessage(_stringLocalizer[DefinitionApiKeys.MeasurementAssemblyLimitsRegionsNotEmpty]); ;
 
 
