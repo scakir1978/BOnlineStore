@@ -71,6 +71,12 @@ export const MENU: MenuItem[] = [
         parentId: 20,
       },
       {
+        id: 115,
+        label: 'ASSEMBLYPRICE',
+        link: '/definitions/assembly-price',
+        parentId: 20,
+      },
+      {
         id: 120,
         label: 'ASSEMBLER',
         link: '/definitions/assembler',

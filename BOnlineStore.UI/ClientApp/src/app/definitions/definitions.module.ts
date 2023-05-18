@@ -1,3 +1,4 @@
+import { AssemblyPriceModule } from './assembly-price/assembly-price.module';
 import { MeasurementAssemblyLimitsModule } from './measurement-assembly-limits/measurement-assembly-limits.module';
 import { ModelModule } from './model/model.module';
 import { PanelModule } from './panel/panel.module';
@@ -44,7 +45,8 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     PanelModule,
     ModelModule,
     MeasurementAssemblyLimitsModule,
-  ],
+    AssemblyPriceModule,
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DefinitionsModule {

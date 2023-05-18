@@ -20,4 +20,5 @@ export enum DefinitionsControllerNamesEnum {
   PANEL = 'Panel',
   MODEL = 'Model',
   MEASUREMENTASSEMBLYLIMITS = 'MeasurementAssemblyLimits',
+  ASSEMBLYPRICE = 'AssemblyPrice',
 }

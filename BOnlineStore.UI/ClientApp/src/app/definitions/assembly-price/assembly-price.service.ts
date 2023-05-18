@@ -11,23 +11,16 @@ import { environment } from '../../../environments/environment';
 import { BaseService } from '../../base-classes/base-services/base-service';
 import { lastValueFrom, Observable, switchAll } from 'rxjs';
 import CustomStore from 'devextreme/data/custom_store';
-import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MeasurementAssemblyLimitsService
-  extends BaseService
-  implements Resolve<any>
-{
-  constructor(
-    public override _http: HttpClient,
-    public _translate: TranslateService
-  ) {
+export class AssemblyPriceService extends BaseService implements Resolve<any> {
+  constructor(public override _http: HttpClient) {
     super(
       _http,
       environment.definitionsUrl,
-      DefinitionsControllerNamesEnum.MEASUREMENTASSEMBLYLIMITS
+      DefinitionsControllerNamesEnum.ASSEMBLYPRICE
     );
   }
 
@@ -40,13 +33,6 @@ export class MeasurementAssemblyLimitsService
     return super.getBaseDataSource();
   }
 
-  getAssemblerDataSource(): CustomStore {
-    return super.getBaseRawCustomStore(
-      environment.definitionsUrl,
-      DefinitionsControllerNamesEnum.ASSEMBLER
-    );
-  }
-
   getRegionDataSource(): CustomStore {
     return super.getBaseRawCustomStore(
       environment.definitionsUrl,
@@ -54,20 +40,10 @@ export class MeasurementAssemblyLimitsService
     );
   }
 
-  getDaysDataSource(): Observable<any> {
-    return this._translate.get([
-      'MONDAY',
-      'TUESDAY',
-      'WEDNESDAY',
-      'THURSDAY',
-      'FRIDAY',
-      'SATURDAY',
-      'SUNDAY',
-    ]);
+  getGlassDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.GLASS
+    );
   }
-}
-
-export class Day {
-  id: number;
-  name: string;
 }

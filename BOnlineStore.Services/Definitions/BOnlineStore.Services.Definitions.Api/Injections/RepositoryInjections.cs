@@ -14,6 +14,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IColorGroupRepository, ColorGroupRepository>();
             services.AddScoped<IModelRepository, ModelRepository>();
             services.AddScoped<IAssemblerRepository, AssemblerRepository>();
+            services.AddScoped<IAssemblyPriceRepository, AssemblyPriceRepository>();
             services.AddScoped<ICurrencyRepository, CurrencyRepository>();
             services.AddScoped<IExpenseRepository, ExpenseRepository>();
             services.AddScoped<IGlassRepository, GlassRepository>();

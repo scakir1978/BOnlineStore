@@ -118,5 +118,8 @@
   "ATLEASTONEREGIONENTEREDERROR": "At least one region entered.",
   "ATLEASTONEQUANTITYENTERED": "You must enter one of the measurement or assembly quantity information.",
   "ASSEMBLYQUANTITY": "Assembler Quantity",
-  "MEASUREMENTQUANTITY": "Measurement Quantity"
+  "MEASUREMENTQUANTITY": "Measurement Quantity",
+  "ASSEMBLYPRICE": "Assembly Prices",
+  "DEALERPRICE": "Dealer Price",
+  "ASSEMBLERPRICE": "Assembler Price"
 }

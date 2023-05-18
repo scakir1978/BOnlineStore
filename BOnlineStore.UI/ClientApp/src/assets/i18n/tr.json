@@ -118,5 +118,8 @@
   "ATLEASTONEREGIONENTEREDERROR": "En az bir tane bölge girmelisiniz.",
   "ATLEASTONEQUANTITYENTERED": "Ölçü veya Montaj adedi bilgisinden birisini girmelisiniz.",
   "ASSEMBLYQUANTITY": "Montaj Adedi",
-  "MEASUREMENTQUANTITY": "Ölçü Adedi"
+  "MEASUREMENTQUANTITY": "Ölçü Adedi",
+  "ASSEMBLYPRICE": "Montaj Fiyatı Belirleme",
+  "DEALERPRICE": "Bayi Fiyatı",
+  "ASSEMBLERPRICE": "Montör Fiyatı"
 }

@@ -12,6 +12,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IColorGroupService, ColorGroupService>();
             services.AddScoped<IModelService, ModelService>();
             services.AddScoped<IAssemblerService, AssemblerService>();
+            services.AddScoped<IAssemblyPriceService, AssemblyPriceService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IExpenseService, ExpenseService>();
             services.AddScoped<IGlassService, GlassService>();
