@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
+    /// <summary>
+    /// Renk grubu
+    /// </summary>
     public class ColorGroup : Entity
     {
         public string Code { get; private set; }

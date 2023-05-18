@@ -29,6 +29,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IValidator<RecipeType>, RecipeTypeValidator>();
             services.AddScoped<IValidator<Panel>, PanelValidator>();
             services.AddScoped<IValidator<MeasurementAssemblyLimits>, MeasurementAssemblyLimitsValidator>();
+            services.AddScoped<IValidator<ExchangeRate>, ExchangeRateValidator>();
 
 
             return services;

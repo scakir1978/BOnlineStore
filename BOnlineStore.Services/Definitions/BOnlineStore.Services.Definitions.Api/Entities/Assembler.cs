@@ -3,7 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
-    //Montör tanımlama
+    /// <summary>
+    /// Montör tanımlama
+    /// </summary>
     public class Assembler : Entity
     {
         public string Code { get; private set; }

@@ -3,7 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
-    //Döviz kodu tanımlama
+    /// <summary>
+    /// Döviz kodu tanımlama
+    /// </summary>
     public class Currency : Entity
     {
         public string Code { get; private set; }

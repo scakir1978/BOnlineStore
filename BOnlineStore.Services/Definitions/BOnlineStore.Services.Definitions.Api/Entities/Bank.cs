@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api
 {
+    /// <summary>
+    /// Banka
+    /// </summary>
     public class Bank : Entity
     {
         public string Code { get; private set; }

@@ -121,5 +121,12 @@
   "MEASUREMENTQUANTITY": "Measurement Quantity",
   "ASSEMBLYPRICE": "Assembly Prices",
   "DEALERPRICE": "Dealer Price",
-  "ASSEMBLERPRICE": "Assembler Price"
+  "ASSEMBLERPRICE": "Assembler Price",
+  "EXCHANGERATE": "Exchange Rate",
+  "EXCANGERATEDATE": "Exchange Rate Date",
+  "BUYINGRATE": "Buying Rate",
+  "SALESRATE": "Sales Rate",
+  "EFFECTIVEBUYINGRATE": "Effective Buying Rate",
+  "EFFECTIVESALESRATE": "Effective Sales Rate",
+  "SPECIALRATE": "Special Rate"
 }

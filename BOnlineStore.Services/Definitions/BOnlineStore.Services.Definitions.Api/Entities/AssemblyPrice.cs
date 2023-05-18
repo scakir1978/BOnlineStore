@@ -5,16 +5,19 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api
 {
+    /// <summary>
+    /// Montaj fiyatları
+    /// </summary>
     public class AssemblyPrice : Entity
     {
         /// <summary>
-        /// Bölge Kodu
+        /// Bölge kodu
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
         public string? RegionId { get; private set; }
 
         /// <summary>
-        /// Cam Türü Kodu
+        /// Cam türü kodu
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
         public string? GlassId { get; private set; }
@@ -35,8 +38,6 @@ namespace BOnlineStore.Services.Definitions.Api
             GlassId = "";
             DealerPrice = 0;
             AssemblerPrice = 0;
-
-
         }
 
         public AssemblyPrice(Guid tenantId, string id, string? regionId = null, string? glassId = null, decimal? dealerPrice = null, decimal? assemblerPrice = null) : base(tenantId, id)

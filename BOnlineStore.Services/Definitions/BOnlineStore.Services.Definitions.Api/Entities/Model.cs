@@ -5,7 +5,9 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
     //Model tanımlama
-
+    /// <summary>
+    /// Model
+    /// </summary>
     public class Model : Entity
     {
         /// <summary>

@@ -5,13 +5,17 @@ using System.Globalization;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
-    //Cam türü tanımlama
-
+    /// <summary>
+    /// Cam türü
+    /// </summary>
     public class Glass : Entity
     {
         public string Code { get; private set; }
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Cam grubu
+        /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
         public string GlassGroupId { get; private set; }
 

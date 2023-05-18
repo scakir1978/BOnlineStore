@@ -1,4 +1,5 @@
-﻿using BOnlineStore.Services.Definitions.Api.Services;
+﻿using BOnlineStore.Services.Definitions.Api.Repositories;
+using BOnlineStore.Services.Definitions.Api.Services;
 
 namespace BOnlineStore.Services.Definitions.Api.Injections
 {
@@ -27,6 +28,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IRecipeTypeService, RecipeTypeService>();
             services.AddScoped<IPanelService, PanelService>();
             services.AddScoped<IMeasurementAssemblyLimitsService, MeasurementAssemblyLimitsService>();
+            services.AddScoped<IExchangeRateService, ExchangeRateService>();
 
             return services;
         }

@@ -3,8 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
-    //Cam türleri için grup tanımlama
-
+    /// <summary>
+    /// Cam türleri için grup
+    /// </summary>
     public class GlassGroup : Entity
     {
         public string Code { get; private set; }

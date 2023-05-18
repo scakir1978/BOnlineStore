@@ -4,6 +4,9 @@ using MongoDB.Bson;
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
     //Şablon tanımlama
+    /// <summary>
+    /// Şablon
+    /// </summary>
     public class Template : Entity
     {
         public string Code { get; private set; }

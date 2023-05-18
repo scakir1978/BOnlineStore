@@ -3,12 +3,15 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
+    /// <summary>
+    /// Model grubu
+    /// </summary>
     public class ModelGroup : Entity
     {
         public string Code { get; private set; }
         public string Name { get; private set; }
 
-        public ModelGroup(): base()
+        public ModelGroup() : base()
         {
             Code = "";
             Name = "";

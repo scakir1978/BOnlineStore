@@ -3,7 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
-    //Gider tanımlama
+    /// <summary>
+    /// Gider tanımlama
+    /// </summary>
     public class Expense : Entity
     {
         public string Code { get; private set; }

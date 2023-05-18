@@ -4,6 +4,9 @@ using MongoDB.Bson;
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
     //Bölge tanımlama
+    /// <summary>
+    /// Bölge
+    /// </summary>
     public class Region : Entity
     {
         public string Code { get; private set; }

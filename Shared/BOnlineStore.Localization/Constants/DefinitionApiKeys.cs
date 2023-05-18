@@ -53,6 +53,8 @@ namespace BOnlineStore.Localization.Constants
         public const string MeasurementAssemblyLimitsAssemblerNotEmpty = "MeasurementAssemblyLimitsAssemblerNotEmpty";
         public const string MeasurementAssemblyLimitsQuantitiesNotEmpty = "MeasurementAssemblyLimitsQuantitiesNotEmpty";
         public const string MeasurementAssemblyLimitsRegionsNotEmpty = "MeasurementAssemblyLimitsRegionsNotEmpty";
+        public const string ExchangeRateDateNotEmpty = "ExchangeRateDateNotEmpty";
+        public const string CurrencyIdNotEmpty = "CurrencyIdNotEmpty";
 
     }
 }

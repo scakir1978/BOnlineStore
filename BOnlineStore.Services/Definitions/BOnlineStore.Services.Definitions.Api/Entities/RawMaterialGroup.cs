@@ -4,6 +4,9 @@ using MongoDB.Bson;
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
     //Hammadde grubu tanımlama
+    /// <summary>
+    /// Hammadde grubu
+    /// </summary>
     public class RawMaterialGroup : Entity
     {
         public string Code { get; private set; }

@@ -4,6 +4,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api
 {
+    /// <summary>
+    /// Panel
+    /// </summary>
     public class Panel : Entity
     {
         public string Code { get; private set; }

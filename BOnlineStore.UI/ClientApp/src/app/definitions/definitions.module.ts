@@ -1,3 +1,4 @@
+import { ExchangeRateModule } from './exchange-rate/exchange-rate.module';
 import { AssemblyPriceModule } from './assembly-price/assembly-price.module';
 import { MeasurementAssemblyLimitsModule } from './measurement-assembly-limits/measurement-assembly-limits.module';
 import { ModelModule } from './model/model.module';
@@ -46,6 +47,7 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     ModelModule,
     MeasurementAssemblyLimitsModule,
     AssemblyPriceModule,
+  ExchangeRateModule,
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

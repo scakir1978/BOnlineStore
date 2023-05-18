@@ -3,7 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
-    //Boy tanımlama
+    /// <summary>
+    /// Boy
+    /// </summary>
     public class Length : Entity
     {
         public string Code { get; private set; }

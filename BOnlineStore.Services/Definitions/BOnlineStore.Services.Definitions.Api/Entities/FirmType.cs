@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api
 {
+    /// <summary>
+    /// Firma tipi (Cari tip)
+    /// </summary>
     public class FirmType : Entity
     {
         public string Code { get; private set; }

@@ -4,6 +4,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
+    /// <summary>
+    /// Renk
+    /// </summary>
     public class Color : Entity
     {
         public string Code { get; private set; }

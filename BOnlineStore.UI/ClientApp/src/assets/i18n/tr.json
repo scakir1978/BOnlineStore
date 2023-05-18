@@ -121,5 +121,12 @@
   "MEASUREMENTQUANTITY": "Ölçü Adedi",
   "ASSEMBLYPRICE": "Montaj Fiyatı Belirleme",
   "DEALERPRICE": "Bayi Fiyatı",
-  "ASSEMBLERPRICE": "Montör Fiyatı"
+  "ASSEMBLERPRICE": "Montör Fiyatı",
+  "EXCHANGERATE": "Kur",
+  "EXCANGERATEDATE": "Kur Tarihi",
+  "BUYINGRATE": "Alış Kuru",
+  "SALESRATE": "Satış Kuru",
+  "EFFECTIVEBUYINGRATE": "Efektif Alış Kuru",
+  "EFFECTIVESALESRATE": "Efektif Satış Kuru",
+  "SPECIALRATE": "Özel Kur"
 }

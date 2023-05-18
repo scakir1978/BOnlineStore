@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
+    /// <summary>
+    /// Birim
+    /// </summary>
     public class Unit : Entity
     {
         public string Code { get; private set; }

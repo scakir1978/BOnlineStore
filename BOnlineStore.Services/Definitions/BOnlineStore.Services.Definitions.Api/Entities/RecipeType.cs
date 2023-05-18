@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api
 {
+    /// <summary>
+    /// Reçete türü
+    /// </summary>
     public class RecipeType : Entity
     {
         public string Code { get; private set; }
