@@ -1,0 +1,19 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
+	<TemplateData>
+		<DefaultName>RepositoryName.cs</DefaultName>
+		<Name>BOnlineStore Repository Items</Name>
+		<Description>Girilen dosya ismine göre repsitory ve interface nesnelerini oluşturan şablon.</Description>
+		<ProjectType>CSharp</ProjectType>
+		<TemplateGroupID>AspNetCore</TemplateGroupID>
+		<SortOrder>10</SortOrder>
+		<Icon>__TemplateIcon.png</Icon>
+	</TemplateData>
+	<TemplateContent>
+		<References />
+		<ProjectItem SubType="" TargetFileName="$fileinputname$Repository.cs" ReplaceParameters="true">Repository.cs</ProjectItem>
+		<ProjectItem SubType="" TargetFileName="I$fileinputname$Repository.cs" ReplaceParameters="true">IRepository.cs</ProjectItem>
+		<CustomParameters>
+			<CustomParameter Name="$className$" Value="$fileinputname$"/>
+		</CustomParameters>
+	</TemplateContent>
+</VSTemplate>

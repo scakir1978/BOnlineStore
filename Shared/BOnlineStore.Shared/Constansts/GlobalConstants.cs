@@ -9,6 +9,7 @@
         public const string swaggerScheme = "Bearer";
         public const string swaggerBearerFormat = "JWT";
         public const string swaggerAuthorization = "Authorization";
+        public const string CodeUniqueControlRule = "CodeUniqueControlRule";
 
     }
 }

@@ -4,7 +4,7 @@ using BOnlineStore.Services.Definitions.Api.Entities;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 
-namespace BOnlineStore.Services.Definitions.Api
+namespace BOnlineStore.Services.Definitions.Api.Validations
 {
     public class BankValidator : AbstractValidator<Bank>
     {

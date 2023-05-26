@@ -9,8 +9,8 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class CurrencyRepository : Repository<Currency>, ICurrencyRepository
     {
-        public CurrencyRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<Currency> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public CurrencyRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+            : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

@@ -9,8 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class ExchangeRateRepository : Repository<ExchangeRate>, IExchangeRateRepository
     {
-        public ExchangeRateRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<ExchangeRate> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public ExchangeRateRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer) : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

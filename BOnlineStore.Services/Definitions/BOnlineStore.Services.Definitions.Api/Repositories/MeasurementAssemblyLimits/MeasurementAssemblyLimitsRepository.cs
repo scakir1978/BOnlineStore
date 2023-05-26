@@ -9,8 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class MeasurementAssemblyLimitsRepository : Repository<MeasurementAssemblyLimits>, IMeasurementAssemblyLimitsRepository
     {
-        public MeasurementAssemblyLimitsRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<MeasurementAssemblyLimits> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public MeasurementAssemblyLimitsRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer) : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

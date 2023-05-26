@@ -9,8 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class RegionRepository : Repository<Region>, IRegionRepository
     {
-        public RegionRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<Region> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public RegionRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer) : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

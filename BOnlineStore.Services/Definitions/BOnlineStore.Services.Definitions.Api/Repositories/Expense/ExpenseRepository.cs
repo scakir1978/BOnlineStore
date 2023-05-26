@@ -9,8 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class ExpenseRepository : Repository<Expense>, IExpenseRepository
     {
-        public ExpenseRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<Expense> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public ExpenseRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer) : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

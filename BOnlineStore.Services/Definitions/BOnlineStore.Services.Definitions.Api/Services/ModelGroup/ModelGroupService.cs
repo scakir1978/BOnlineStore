@@ -13,16 +13,12 @@ namespace BOnlineStore.Services.Definitions.Api.Services
 {
     public class ModelGroupService : Service<ModelGroup, ModelGroupDto, ModelGroupCreateDto, ModelGroupUpdateDto>, IModelGroupService
     {
-        private readonly IModelGroupRepository _repository;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Language> _stringLocalizer;
-
-        public ModelGroupService(IModelGroupRepository repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer) : base(repository, mapper, stringLocalizer)
-        {
-            _repository = repository;
-            _mapper = mapper;
-            _stringLocalizer = stringLocalizer;
-        }
+        public ModelGroupService(
+            IModelGroupRepository repository,
+            IMapper mapper,
+            IStringLocalizer<Language> stringLocalizer,
+            IValidator<ModelGroup> validator) : base(repository, mapper, stringLocalizer, validator)
+        { }
         
     }
 }

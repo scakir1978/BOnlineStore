@@ -128,5 +128,6 @@
   "SALESRATE": "Satış Kuru",
   "EFFECTIVEBUYINGRATE": "Efektif Alış Kuru",
   "EFFECTIVESALESRATE": "Efektif Satış Kuru",
-  "SPECIALRATE": "Özel Kur"
+  "SPECIALRATE": "Özel Kur",
+  "CITY": "Şehir"
 }

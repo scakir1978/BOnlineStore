@@ -1,6 +1,5 @@
 ﻿using BOnlineStore.Shared.Entity;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
@@ -17,14 +16,12 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
 
         /// <summary>
         /// Model Grup Id
-        /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
+        /// </summary>         
         public string? ModelGroupId { get; private set; }
 
         /// <summary>
         /// Reçete Türü Id
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? RecipeTypeId { get; private set; }
 
         /// <summary>

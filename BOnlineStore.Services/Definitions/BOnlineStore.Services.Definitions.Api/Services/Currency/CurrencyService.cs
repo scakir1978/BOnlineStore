@@ -4,22 +4,19 @@ using BOnlineStore.Localization;
 using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Entities;
 using BOnlineStore.Services.Definitions.Api.Repositories;
+using FluentValidation;
 using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
     public class CurrencyService : Service<Currency, CurrencyDto, CurrencyCreateDto, CurrencyUpdateDto>, ICurrencyService
     {
-        private readonly ICurrencyRepository _repository;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Language> _stringLocalizer;
-
-        public CurrencyService(ICurrencyRepository repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer) : base(repository, mapper, stringLocalizer)
-        {
-            _repository = repository;
-            _mapper = mapper;
-            _stringLocalizer = stringLocalizer;
-        }
+        public CurrencyService(
+            ICurrencyRepository repository,
+            IMapper mapper,
+            IStringLocalizer<Language> stringLocalizer,
+            IValidator<Currency> validator) : base(repository, mapper, stringLocalizer, validator)
+        { }
 
     }
 }

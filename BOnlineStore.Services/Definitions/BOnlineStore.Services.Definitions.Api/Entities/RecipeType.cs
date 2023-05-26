@@ -1,7 +1,7 @@
 ﻿using BOnlineStore.Shared.Entities;
 using MongoDB.Bson;
 
-namespace BOnlineStore.Services.Definitions.Api
+namespace BOnlineStore.Services.Definitions.Api.Entities
 {
     /// <summary>
     /// Reçete türü

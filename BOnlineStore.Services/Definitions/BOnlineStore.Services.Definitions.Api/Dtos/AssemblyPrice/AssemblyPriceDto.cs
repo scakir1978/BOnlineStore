@@ -1,6 +1,4 @@
 ﻿using BOnlineStore.Shared.Entity;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
@@ -9,13 +7,11 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Bölge Kodu
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? RegionId { get; private set; }
 
         /// <summary>
         /// Cam Türü Kodu
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? GlassId { get; private set; }
 
         /// <summary>

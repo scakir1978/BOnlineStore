@@ -128,5 +128,6 @@
   "SALESRATE": "Sales Rate",
   "EFFECTIVEBUYINGRATE": "Effective Buying Rate",
   "EFFECTIVESALESRATE": "Effective Sales Rate",
-  "SPECIALRATE": "Special Rate"
+  "SPECIALRATE": "Special Rate",
+  "CITY": "City"
 }

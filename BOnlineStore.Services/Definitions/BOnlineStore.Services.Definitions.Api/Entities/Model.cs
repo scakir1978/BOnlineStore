@@ -76,7 +76,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         }
 
         public Model(
-            Guid tenantId, string id, string code, string name, string? modelGroupId, string? sidePanelId = null,
+            Guid tenantId, string id, string code, string name, string? modelGroupId = null, string? sidePanelId = null,
             string? panelId = null, string? recipeTypeId = null, decimal? wastageRatio = null,
             decimal? wastageAmount = null, decimal? workmanshipRatio = null, decimal? workmanshipAmount = null,
             string? picture = null) : base(tenantId, id)

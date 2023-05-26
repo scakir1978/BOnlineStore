@@ -8,8 +8,8 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class TemplateRepository : Repository<Template>, ITemplateRepository
     {
-        public TemplateRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<Template> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public TemplateRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+            : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

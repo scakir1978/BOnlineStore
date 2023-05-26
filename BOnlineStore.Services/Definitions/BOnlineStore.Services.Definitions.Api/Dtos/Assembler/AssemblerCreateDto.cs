@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
+    /// <summary>
+    /// Montör tanımlama
+    /// </summary>
     public class AssemblerCreateDto : EntityDto
     {
         public string Code { get; set; }

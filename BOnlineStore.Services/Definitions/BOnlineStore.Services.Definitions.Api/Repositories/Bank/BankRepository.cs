@@ -9,8 +9,8 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class BankRepository : Repository<Bank>, IBankRepository
     {
-        public BankRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<Bank> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public BankRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+            : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

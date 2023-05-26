@@ -9,8 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class LengthRepository : Repository<Length>, ILengthRepository
     {
-        public LengthRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<Length> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public LengthRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer) : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

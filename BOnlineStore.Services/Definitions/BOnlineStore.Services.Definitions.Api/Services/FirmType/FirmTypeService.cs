@@ -4,22 +4,19 @@ using BOnlineStore.Localization;
 using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Entities;
 using BOnlineStore.Services.Definitions.Api.Repositories;
+using FluentValidation;
 using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
     public class FirmTypeService : Service<FirmType, FirmTypeDto, FirmTypeCreateDto, FirmTypeUpdateDto>, IFirmTypeService
     {
-        private readonly IFirmTypeRepository _repository;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Language> _stringLocalizer;
-
-        public FirmTypeService(IFirmTypeRepository repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer) : base(repository, mapper, stringLocalizer)
-        {
-            _repository = repository;
-            _mapper = mapper;
-            _stringLocalizer = stringLocalizer;
-        }
+        public FirmTypeService(
+            IFirmTypeRepository repository,
+            IMapper mapper,
+            IStringLocalizer<Language> stringLocalizer,
+            IValidator<FirmType> validator) : base(repository, mapper, stringLocalizer, validator)
+        { }
 
     }
 }

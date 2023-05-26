@@ -2,7 +2,7 @@
 using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Entities;
 
-namespace BOnlineStore.Services.Definitions.Api
+namespace BOnlineStore.Services.Definitions.Api.Mappings
 {
     public class AssemblyPriceMappings : Profile
     {

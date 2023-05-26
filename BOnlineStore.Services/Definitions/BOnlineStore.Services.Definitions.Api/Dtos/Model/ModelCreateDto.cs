@@ -1,6 +1,5 @@
 ﻿using BOnlineStore.Shared.Entity;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
@@ -23,20 +22,17 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
 
         /// <summary>
         /// Yan Panel Id
-        /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
+        /// </summary>        
         public string? SidePanelId { get; private set; }
 
         /// <summary>
         /// Panel Id
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? PanelId { get; private set; }
 
         /// <summary>
         /// Reçete Türü Id
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? RecipeTypeId { get; private set; }
 
         /// <summary>

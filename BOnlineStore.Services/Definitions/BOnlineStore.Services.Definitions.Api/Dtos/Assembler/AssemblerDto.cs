@@ -1,9 +1,10 @@
 ﻿using BOnlineStore.Shared.Entity;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
+    /// <summary>
+    /// Montör tanımlama (Montajcı)
+    /// </summary>
     public class AssemblerDto : EntityDto
     {
         public string Code { get; set; }

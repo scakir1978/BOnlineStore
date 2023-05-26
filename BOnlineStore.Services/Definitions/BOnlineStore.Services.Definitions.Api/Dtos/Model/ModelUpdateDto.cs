@@ -1,8 +1,4 @@
-﻿using BOnlineStore.Services.Definitions.Api.Entities;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson;
-
-namespace BOnlineStore.Services.Definitions.Api.Dtos
+﻿namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     public class ModelUpdateDto
     {
@@ -24,19 +20,16 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Yan Panel Id
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? SidePanelId { get; private set; }
 
         /// <summary>
         /// Panel Id
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? PanelId { get; private set; }
 
         /// <summary>
         /// Reçete Türü Id
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
         public string? RecipeTypeId { get; private set; }
 
         /// <summary>

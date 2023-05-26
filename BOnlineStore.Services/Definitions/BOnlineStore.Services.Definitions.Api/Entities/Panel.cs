@@ -2,7 +2,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BOnlineStore.Services.Definitions.Api
+namespace BOnlineStore.Services.Definitions.Api.Entities
 {
     /// <summary>
     /// Panel

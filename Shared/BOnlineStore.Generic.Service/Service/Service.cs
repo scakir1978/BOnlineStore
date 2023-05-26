@@ -2,6 +2,7 @@
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
 using BOnlineStore.MongoDb.GenericRepository;
+using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Entities;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
@@ -22,12 +23,14 @@ namespace BOnlineStore.Generic.Service
         private readonly IMapper _mapper;
         private readonly IRepository<TEntity> _repository;
         private readonly IStringLocalizer<Language> _stringLocalizer;
+        private readonly IValidator<TEntity> _validator;
 
-        public Service(IRepository<TEntity> repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer)
+        public Service(IRepository<TEntity> repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer, IValidator<TEntity> validator)
         {
             _repository = repository;
             _mapper = mapper;
             _stringLocalizer = stringLocalizer;
+            _validator = validator;
         }
 
         public IQueryable<TEntity> Load(Expression<Func<TEntity, bool>>? predicate = null)
@@ -51,6 +54,8 @@ namespace BOnlineStore.Generic.Service
         {
             var entity = _mapper.Map<TEntity>(input);
 
+            await ValidateAndThrowAddAsync(entity);
+
             var entityAdded = await _repository.AddAsync(entity);
 
             var entityDto = _mapper.Map<TEntityDto>(entityAdded);
@@ -60,7 +65,15 @@ namespace BOnlineStore.Generic.Service
 
         public virtual async Task<bool> AddRangeAsync(IEnumerable<TCreateInput> inputs)
         {
-            return await _repository.AddRangeAsync(_mapper.Map<List<TEntity>>(inputs));
+            var entityList = _mapper.Map<List<TEntity>>(inputs);
+
+            //Validate Control
+            foreach (var entity in entityList)
+            {
+                await ValidateAndThrowAddAsync(entity);
+            }
+
+            return await _repository.AddRangeAsync(entityList);
         }
 
         public virtual async Task<TEntityDto> DeleteAsync(TEntityDto input)
@@ -82,7 +95,9 @@ namespace BOnlineStore.Generic.Service
         public virtual async Task<TEntityDto> UpdateAsync(string id, TUpdateInput input)
         {
             #region Record Control            
+
             TEntity updateEntity = await _repository.GetByIdAsync(id);
+
             if (updateEntity == null)
             {
                 throw new Exception(_stringLocalizer[SharedKeys.RecordNotFound, typeof(TEntity).Name, id]);
@@ -90,7 +105,12 @@ namespace BOnlineStore.Generic.Service
 
             #endregion
 
-            return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(id, _mapper.Map(input, updateEntity)));
+            updateEntity = _mapper.Map<TEntity>(input);
+
+            //Validation Control
+            await ValidateAndThrowAsync(updateEntity);
+
+            return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(id, updateEntity));
 
         }
 
@@ -105,7 +125,12 @@ namespace BOnlineStore.Generic.Service
             }
             #endregion
 
-            return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(_mapper.Map(input, updateEntity), predicate));
+            updateEntity = _mapper.Map<TEntity>(input);
+
+            //Validation Control
+            await ValidateAndThrowAsync(updateEntity);
+
+            return _mapper.Map<TEntityDto>(await _repository.UpdateAsync(updateEntity, predicate));
         }
 
         private async Task IsRecordExists(string id)
@@ -115,6 +140,28 @@ namespace BOnlineStore.Generic.Service
             if (entity == null)
                 throw new Exception(_stringLocalizer[SharedKeys.RecordNotFound, typeof(TEntity).Name, id]);
         }
+
+        private async Task ValidateAndThrowAsync(TEntity entity)
+        {
+            var validationResult = await _validator.ValidateAsync(entity);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
+            }
+        }
+
+        private async Task ValidateAndThrowAddAsync(TEntity entity)
+        {
+            var validationResult = await _validator.ValidateAsync(entity, options => { options.IncludeRuleSets(GlobalConstants.CodeUniqueControlRule); });
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
+            }
+        }
+
+
 
 
     }

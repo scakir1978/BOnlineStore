@@ -18,15 +18,13 @@ namespace BOnlineStore.MongoDb.GenericRepository
         protected readonly IContext _context;
         protected readonly IMongoCollection<TEntity> _entity;
         protected readonly IStringLocalizer<Language> _stringLocalizer;
-        protected readonly IValidator<TEntity> _validator;
 
-        protected Repository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<TEntity> validator, IStringLocalizer<Language> stringLocalizer)
+        protected Repository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
         {
             _context = context;
             this._entity = _context.GetCollection<TEntity>(typeof(TEntity).Name);
             _httpContextAccessor = httpContextAccessor;
             _stringLocalizer = stringLocalizer;
-            _validator = validator;
         }
 
         public virtual IQueryable<TEntity> Load(Expression<Func<TEntity, bool>>? predicate = null)
@@ -50,25 +48,14 @@ namespace BOnlineStore.MongoDb.GenericRepository
 
         public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
-            #region Validation Control
-            await ValidateAndThrowAsync(entity);    
-            #endregion
-
             var options = new InsertOneOptions { BypassDocumentValidation = false };
             entity.SetTenant(GetTenantId());
             await _entity.InsertOneAsync(entity, options);
             return entity;
-        }       
+        }
 
         public virtual async Task<bool> AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            #region Validation Control
-            foreach (var entity in entities)
-            {
-                await ValidateAndThrowAsync(entity);
-            }
-            #endregion
-
             var options = new BulkWriteOptions { IsOrdered = false, BypassDocumentValidation = false };
 
             foreach (var entity in entities)
@@ -81,10 +68,6 @@ namespace BOnlineStore.MongoDb.GenericRepository
 
         public virtual async Task<TEntity> UpdateAsync(string id, TEntity entity)
         {
-            #region Validation Control
-            await ValidateAndThrowAsync(entity);
-            #endregion
-
             var options = new FindOneAndReplaceOptions<TEntity> { ReturnDocument = ReturnDocument.After };
             entity.SetTenant(GetTenantId());
             return await _entity.FindOneAndReplaceAsync<TEntity>(x => x.TenantId == GetTenantId() && x.Id == id, entity, options);
@@ -92,10 +75,6 @@ namespace BOnlineStore.MongoDb.GenericRepository
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity, Expression<Func<TEntity, bool>> predicate)
         {
-            #region Validation Control
-            await ValidateAndThrowAsync(entity);
-            #endregion
-
             var options = new FindOneAndReplaceOptions<TEntity> { ReturnDocument = ReturnDocument.After };
             entity.SetTenant(GetTenantId());
             return await _entity.FindOneAndReplaceAsync(predicate, entity, options);
@@ -122,14 +101,5 @@ namespace BOnlineStore.MongoDb.GenericRepository
             return new Guid(tenantId);
         }
 
-        private async Task ValidateAndThrowAsync(TEntity entity)
-        {
-            var validationResult = await _validator.ValidateAsync(entity);
-
-            if (!validationResult.IsValid)
-            {
-                throw new ValidationException(_stringLocalizer[SharedKeys.ValidationErrors], validationResult.Errors);
-            }
-        }
     }
 }

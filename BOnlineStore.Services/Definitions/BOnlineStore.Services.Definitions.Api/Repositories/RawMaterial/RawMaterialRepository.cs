@@ -9,8 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class RawMaterialRepository : Repository<RawMaterial>, IRawMaterialRepository
     {
-        public RawMaterialRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<RawMaterial> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public RawMaterialRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer) : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

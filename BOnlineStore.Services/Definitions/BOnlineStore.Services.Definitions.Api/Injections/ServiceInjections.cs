@@ -29,6 +29,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IPanelService, PanelService>();
             services.AddScoped<IMeasurementAssemblyLimitsService, MeasurementAssemblyLimitsService>();
             services.AddScoped<IExchangeRateService, ExchangeRateService>();
+            services.AddScoped<ICityService, CityService>();
 
             return services;
         }

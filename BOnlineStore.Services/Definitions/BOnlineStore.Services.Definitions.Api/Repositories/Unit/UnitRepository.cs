@@ -9,8 +9,8 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class UnitRepository : Repository<Unit>, IUnitRepository
     {
-        public UnitRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<Unit> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public UnitRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+            : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

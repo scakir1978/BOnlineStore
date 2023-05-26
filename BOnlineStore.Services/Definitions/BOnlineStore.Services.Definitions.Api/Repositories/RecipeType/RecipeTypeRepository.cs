@@ -9,8 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class RecipeTypeRepository : Repository<RecipeType>, IRecipeTypeRepository
     {
-        public RecipeTypeRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<RecipeType> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public RecipeTypeRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer) : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

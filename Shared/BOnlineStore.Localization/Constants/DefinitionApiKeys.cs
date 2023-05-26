@@ -20,6 +20,7 @@ namespace BOnlineStore.Localization.Constants
         public const string ModelGroupNotEmpty = "ModelGroupNotEmpty";
         public const string AssemblerNameNotEmpty = "AssemblerNameNotEmpty";
         public const string AssemblerCodeNotEmpty = "AssemblerCodeNotEmpty";
+        public const string AssemblerCodeMustBeUnique = "AssemblerCodeMustBeUnique";
         public const string UnitNameNotEmpty = "UnitNameNotEmpty";
         public const string UnitCodeNotEmpty = "UnitCodeNotEmpty";
         public const string GlassGroupNameNotEmpty = "GlassGroupNameNotEmpty";
@@ -55,6 +56,17 @@ namespace BOnlineStore.Localization.Constants
         public const string MeasurementAssemblyLimitsRegionsNotEmpty = "MeasurementAssemblyLimitsRegionsNotEmpty";
         public const string ExchangeRateDateNotEmpty = "ExchangeRateDateNotEmpty";
         public const string CurrencyIdNotEmpty = "CurrencyIdNotEmpty";
+        public const string CityNameNotEmpty = "CityNameNotEmpty";
+        public const string CityCodeNotEmpty = "CityCodeNotEmpty";
+        public const string CityCodeMustBeUnique = "CityCodeMustBeUnique";
+        public const string DistrictNameNotEmpty = "DistrictNameNotEmpty";
+        public const string DistrictCodeNotEmpty = "DistrictCodeNotEmpty";
+        public const string DistrictCodeMustBeUnique = "DistrictCodeMustBeUnique";
+        public const string FirmNameNotEmpty = "FirmNameNotEmpty";
+        public const string FirmCodeNotEmpty = "FirmCodeNotEmpty";
+        public const string FirmCodeMustBeUnique = "FirmCodeMustBeUnique";
+
+
 
     }
 }

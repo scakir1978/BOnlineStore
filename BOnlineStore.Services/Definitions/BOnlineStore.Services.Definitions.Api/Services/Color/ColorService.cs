@@ -13,21 +13,13 @@ namespace BOnlineStore.Services.Definitions.Api.Services
 {
     public class ColorService : Service<Color, ColorDto, ColorCreateDto, ColorUpdateDto>, IColorService
     {
-        private readonly IColorRepository _repository;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Language> _stringLocalizer;
+        public ColorService(
+            IColorRepository repository,
+            IMapper mapper,
+            IStringLocalizer<Language> stringLocalizer,
+            IValidator<Color> validator) : base(repository, mapper, stringLocalizer, validator)
+        { }
 
-        public ColorService(IColorRepository repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer) : base(repository, mapper, stringLocalizer)
-        {
-            _repository = repository;
-            _mapper = mapper;
-            _stringLocalizer = stringLocalizer;
-        }
-
-        public void Sort()
-        {
-
-        }
 
     }
 }

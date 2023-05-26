@@ -5,7 +5,7 @@ using BOnlineStore.Shared.Controllers;
 using DevExtreme.AspNet.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BOnlineStore.Services.Definitions.Api
+namespace BOnlineStore.Services.Definitions.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

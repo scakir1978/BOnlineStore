@@ -1,6 +1,5 @@
 ﻿using BOnlineStore.Shared.Entity;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {

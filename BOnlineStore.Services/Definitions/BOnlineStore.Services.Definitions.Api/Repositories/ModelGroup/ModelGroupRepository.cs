@@ -9,8 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class ModelGroupRepository : Repository<ModelGroup>, IModelGroupRepository
     {
-        public ModelGroupRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<ModelGroup> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public ModelGroupRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer) : base(context, httpContextAccessor, stringLocalizer)
         {}
     }
 }

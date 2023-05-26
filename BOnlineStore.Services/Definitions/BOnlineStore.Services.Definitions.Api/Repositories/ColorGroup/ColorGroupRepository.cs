@@ -9,8 +9,8 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class ColorGroupRepository : Repository<ColorGroup>, IColorGroupRepository
     {
-        public ColorGroupRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<ColorGroup> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
-        {}
+        public ColorGroupRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+            : base(context, httpContextAccessor, stringLocalizer)
+        { }
     }
 }

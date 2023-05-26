@@ -9,8 +9,8 @@ namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
     public class AssemblyPriceRepository : Repository<AssemblyPrice>, IAssemblyPriceRepository
     {
-        public AssemblyPriceRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<AssemblyPrice> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public AssemblyPriceRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+            : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }

@@ -22,4 +22,5 @@ export enum DefinitionsControllerNamesEnum {
   MEASUREMENTASSEMBLYLIMITS = 'MeasurementAssemblyLimits',
   ASSEMBLYPRICE = 'AssemblyPrice',
   EXCHANGERATE = 'ExchangeRate',
+  CITY = 'City',
 }

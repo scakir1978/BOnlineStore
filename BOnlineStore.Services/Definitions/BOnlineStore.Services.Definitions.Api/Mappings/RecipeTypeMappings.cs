@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BOnlineStore.Services.Definitions.Api.Dtos;
+using BOnlineStore.Services.Definitions.Api.Entities;
 
 namespace BOnlineStore.Services.Definitions.Api
 {

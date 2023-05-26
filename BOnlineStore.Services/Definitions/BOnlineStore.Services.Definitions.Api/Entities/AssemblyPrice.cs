@@ -1,9 +1,8 @@
-﻿using BOnlineStore.Services.Definitions.Api.Entities;
-using BOnlineStore.Shared.Entities;
+﻿using BOnlineStore.Shared.Entities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BOnlineStore.Services.Definitions.Api
+namespace BOnlineStore.Services.Definitions.Api.Entities
 {
     /// <summary>
     /// Montaj fiyatları

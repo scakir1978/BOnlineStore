@@ -4,22 +4,15 @@ using BOnlineStore.Localization;
 using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Entities;
 using BOnlineStore.Services.Definitions.Api.Repositories;
+using FluentValidation;
 using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
     public class RegionService : Service<Region, RegionDto, RegionCreateDto, RegionUpdateDto>, IRegionService
     {
-        private readonly IRegionRepository _repository;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Language> _stringLocalizer;
-
-        public RegionService(IRegionRepository repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer) : base(repository, mapper, stringLocalizer)
-        {
-            _repository = repository;
-            _mapper = mapper;
-            _stringLocalizer = stringLocalizer;
-        }
+        public RegionService(IRegionRepository repository, IMapper mapper, IStringLocalizer<Language> stringLocalizer, IValidator<Region> validator) : base(repository, mapper, stringLocalizer, validator)
+        { }
 
     }
 }

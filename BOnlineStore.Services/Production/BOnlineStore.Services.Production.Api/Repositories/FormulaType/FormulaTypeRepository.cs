@@ -9,8 +9,8 @@ namespace BOnlineStore.Services.Production.Api.Repositories
 {
     public class FormulaTypeRepository : Repository<FormulaType>, IFormulaTypeRepository
     {
-        public FormulaTypeRepository(IContext context, IHttpContextAccessor httpContextAccessor, IValidator<FormulaType> validator, IStringLocalizer<Language> stringLocalizer)
-            : base(context, httpContextAccessor, validator, stringLocalizer)
+        public FormulaTypeRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+            : base(context, httpContextAccessor, stringLocalizer)
         { }
     }
 }
