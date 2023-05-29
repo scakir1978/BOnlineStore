@@ -30,8 +30,6 @@ namespace BOnlineStore.Services.Definitions.Api.Validations
                 RuleFor(x => x).Must(CodeUniqueControl).WithMessage(_stringLocalizer[DefinitionApiKeys.CityCodeMustBeUnique]);
             });
 
-
-
         }
 
         private bool CodeUniqueControl(City city)
