@@ -22,7 +22,7 @@ namespace BOnlineStore.Services.Definitions.Api.Validations
             RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.DistrictCodeNotEmpty]);
 
             //Bu rule sadece kayıt ekleme işlemi sırasında devreye giriyor.
-            //Oda repository üzerinden kayıt ekleme işlemi olduğunda aşağıdaki gibi bir kod çalıştırılacak sağlanıyor.
+            //Oda service üzerinden kayıt ekleme işlemi olduğunda aşağıdaki gibi bir kod çalıştırılacak sağlanıyor.
             //var validationResult = await _validator.ValidateAsync(entity, options => { options.IncludeRuleSets(GlobalConstants.CodeUniqueControlRule); });
             RuleSet(GlobalConstants.CodeUniqueControlRule, () =>
             {
