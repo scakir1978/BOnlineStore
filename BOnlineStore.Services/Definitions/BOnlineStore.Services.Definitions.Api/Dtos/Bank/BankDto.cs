@@ -4,10 +4,13 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
+    /// <summary>
+    /// Banka
+    /// </summary>
     public class BankDto : EntityDto
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string? Code { get; set; }
+        public string? Name { get; set; }
 
         public BankDto(string id, string code, string name)
         {

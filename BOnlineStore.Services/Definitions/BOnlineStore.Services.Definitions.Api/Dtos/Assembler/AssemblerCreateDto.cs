@@ -4,12 +4,18 @@ using MongoDB.Bson;
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     /// <summary>
-    /// Montör tanımlama
+    /// Montör (Montajcı) eklemek için kullanılan dto
     /// </summary>
     public class AssemblerCreateDto : EntityDto
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        /// <summary>
+        /// Montör kodu.
+        /// </summary>
+        public string? Code { get; set; }
+        /// <summary>
+        /// Montör adı.
+        /// </summary>
+        public string? Name { get; set; }
 
         public AssemblerCreateDto(string code, string name)
         {

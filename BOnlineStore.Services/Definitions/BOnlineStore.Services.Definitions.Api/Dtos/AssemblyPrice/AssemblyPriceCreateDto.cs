@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
+    /// <summary>
+    /// Montaj fiyatı eklemek için kullanılan dto
+    /// </summary>
     public class AssemblyPriceCreateDto : EntityDto
     {
         /// <summary>

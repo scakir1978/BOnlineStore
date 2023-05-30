@@ -153,7 +153,7 @@ namespace BOnlineStore.Generic.Service
 
         private async Task ValidateAndThrowAddAsync(TEntity entity)
         {
-            var validationResult = await _validator.ValidateAsync(entity, options => { options.IncludeRuleSets(GlobalConstants.CodeUniqueControlRule); });
+            var validationResult = await _validator.ValidateAsync(entity, options => { options.IncludeRuleSets(GlobalConstants.CodeUniqueControlRule).IncludeRulesNotInRuleSet(); });
 
             if (!validationResult.IsValid)
             {

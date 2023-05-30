@@ -10,12 +10,12 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Şehir/İl Kodu
         /// </summary>
-        public string Code { get; private set; }
+        public string? Code { get; private set; }
 
         /// <summary>
         /// Şehir/İl Adı
         /// </summary>
-        public string Name { get; private set; }
+        public string? Name { get; private set; }
 
         /// <summary>
         /// Bölge Id

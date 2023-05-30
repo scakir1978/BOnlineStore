@@ -1,7 +1,7 @@
 ﻿namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     /// <summary>
-    /// Montör tanımlama (Montajcı)
+    /// Montör (Montajcı) güncellemek için kullanılan dto
     /// </summary>
     public class AssemblerUpdateDto
     {

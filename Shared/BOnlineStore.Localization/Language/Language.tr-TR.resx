@@ -150,6 +150,9 @@
   <data name="ModelCodeNotEmpty" xml:space="preserve">
     <value>Model kodu boş olamaz.</value>
   </data>
+  <data name="ModelGroupCodeMustBeUnique" xml:space="preserve">
+    <value>Model grup kodu daha önce girilmiş.</value>
+  </data>
   <data name="ModelGroupCodeNotEmpty" xml:space="preserve">
     <value>Model grup kodu boş olamaz.</value>
   </data>

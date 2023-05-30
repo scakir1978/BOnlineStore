@@ -2,6 +2,9 @@
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
+    /// <summary>
+    /// Montaj fiyatı
+    /// </summary>
     public class AssemblyPriceDto : EntityDto
     {
         /// <summary>

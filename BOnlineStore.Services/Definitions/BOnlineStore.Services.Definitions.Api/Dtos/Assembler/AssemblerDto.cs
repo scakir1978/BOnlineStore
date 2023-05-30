@@ -7,8 +7,8 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
     /// </summary>
     public class AssemblerDto : EntityDto
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string? Code { get; set; }
+        public string? Name { get; set; }
 
         public AssemblerDto(string id, string code, string name)
         {

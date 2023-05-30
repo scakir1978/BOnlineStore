@@ -161,6 +161,10 @@
     <value>Model code cannot be empty.</value>
     <comment>Model kodu boş olamaz.</comment>
   </data>
+  <data name="ModelGroupCodeMustBeUnique" xml:space="preserve">
+    <value>Model group code must be unique.</value>
+    <comment>Model grup kodu daha önce girilmiş.</comment>
+  </data>
   <data name="ModelGroupCodeNotEmpty" xml:space="preserve">
     <value>Model group code cannot be empty.</value>
     <comment>Model grup kodu boş olamaz.</comment>

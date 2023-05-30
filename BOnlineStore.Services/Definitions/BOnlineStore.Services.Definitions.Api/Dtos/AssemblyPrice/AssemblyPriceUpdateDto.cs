@@ -3,6 +3,9 @@ using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
+    /// <summary>
+    /// /// Montaj fiyatı güncellemek için kullanılan dto
+    /// </summary>
     public class AssemblyPriceUpdateDto
     {
         /// <summary>

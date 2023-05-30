@@ -1,7 +1,7 @@
 ﻿namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     /// <summary>
-    /// Şehir
+    /// Şehir güncellemek için kullanılan dto.
     /// </summary>
     public class CityUpdateDto
     {
