@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
-    public interface IDistrictService : IService<District, DistrictDto, DistrictCreateDto, DistrictUpdateDto>
+    public interface ICountyService : IService<County, CountyDto, CountyCreateDto, CountyUpdateDto>
     {
     }
 }

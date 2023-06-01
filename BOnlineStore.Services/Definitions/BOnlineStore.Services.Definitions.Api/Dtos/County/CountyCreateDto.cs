@@ -1,9 +1,12 @@
-﻿namespace BOnlineStore.Services.Definitions.Api.Dtos
+﻿using BOnlineStore.Shared.Entity;
+using MongoDB.Bson;
+
+namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     /// <summary>
     /// İlçe
     /// </summary>
-    public class DistrictUpdateDto
+    public class CountyCreateDto : EntityDto
     {
         /// <summary>
         /// İlçe kodu.
@@ -19,8 +22,9 @@
         /// </summary>        
         public string? CityId { get; private set; }
 
-        public DistrictUpdateDto(string? code, string? name, string? cityId = null)
+        public CountyCreateDto(string code, string name, string? cityId = null)
         {
+            Id = ObjectId.GenerateNewId().ToString();
             Code = code;
             Name = name;
             CityId = cityId;

@@ -31,7 +31,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IValidator<MeasurementAssemblyLimits>, MeasurementAssemblyLimitsValidator>();
             services.AddScoped<IValidator<ExchangeRate>, ExchangeRateValidator>();
             services.AddScoped<IValidator<City>, CityValidator>();
-            services.AddScoped<IValidator<District>, DistrictValidator>();
+            services.AddScoped<IValidator<County>, CountyValidator>();
 
 
             return services;

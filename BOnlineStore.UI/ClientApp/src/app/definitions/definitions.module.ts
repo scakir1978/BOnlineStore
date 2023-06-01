@@ -1,4 +1,4 @@
-import { DistrictModule } from './district/district.module';
+import { CountyModule } from './county/county.module';
 import { CityModule } from './city/city.module';
 import { ExchangeRateModule } from './exchange-rate/exchange-rate.module';
 import { AssemblyPriceModule } from './assembly-price/assembly-price.module';
@@ -49,10 +49,10 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     ModelModule,
     MeasurementAssemblyLimitsModule,
     AssemblyPriceModule,
-  ExchangeRateModule,
-  CityModule,
-  DistrictModule,
-],
+    ExchangeRateModule,
+    CityModule,
+    CountyModule,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DefinitionsModule {

@@ -1,25 +1,25 @@
-import { SharedModule } from './../../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { DevExtremeModule } from 'devextreme-angular';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthGuard } from './../../core/guards/auth.guard';
-import { DistrictComponent } from './district.component';
-import { DistrictService } from './district.service';
+import { AuthGuard } from '../../core/guards/auth.guard';
+import { CountyComponent } from './county.component';
+import { CountyService } from './county.service';
 
 const routes: Routes = [
   {
-    path: 'district',
-    component: DistrictComponent,
+    path: 'county',
+    component: CountyComponent,
     canActivate: [AuthGuard],
     resolve: {
-        District: DistrictService,
+      County: CountyService,
     },
   },
 ];
 
 @NgModule({
-  declarations: [DistrictComponent],
+  declarations: [CountyComponent],
   imports: [
     RouterModule.forChild(routes),
     TranslateModule,
@@ -27,6 +27,6 @@ const routes: Routes = [
     SharedModule,
   ],
   exports: [TranslateModule],
-  providers: [DistrictService, TranslateService],
+  providers: [CountyService, TranslateService],
 })
-export class DistrictModule {}
+export class CountyModule {}

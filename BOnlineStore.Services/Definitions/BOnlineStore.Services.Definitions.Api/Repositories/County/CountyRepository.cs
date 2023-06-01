@@ -5,9 +5,9 @@ using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
-    public class DistrictRepository : Repository<District>, IDistrictRepository
+    public class CountyRepository : Repository<County>, ICountyRepository
     {
-        public DistrictRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+        public CountyRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
             : base(context, httpContextAccessor, stringLocalizer)
         { }
     }

@@ -7,7 +7,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
     /// <summary>
     /// İlçe
     /// </summary>
-    public class District : Entity
+    public class County : Entity
     {
         /// <summary>
         /// İlçe kodu.
@@ -25,20 +25,20 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public string? CityId { get; private set; }
 
-        public District() : base()
+        public County() : base()
         {
             Code = "";
             Name = "";
         }
 
-        public District(Guid tenantId, string id, string code, string name, string? cityId = null) : base(tenantId, id)
+        public County(Guid tenantId, string id, string code, string name, string? cityId = null) : base(tenantId, id)
         {
             Code = code;
             Name = name;
             CityId = cityId;
         }
 
-        public void UpdateDistrict(string code, string name, string? cityId = null)
+        public void UpdateCounty(string code, string name, string? cityId = null)
         {
             Code = code;
             Name = name;

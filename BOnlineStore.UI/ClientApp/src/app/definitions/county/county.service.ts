@@ -15,12 +15,12 @@ import CustomStore from 'devextreme/data/custom_store';
 @Injectable({
   providedIn: 'root',
 })
-export class DistrictService extends BaseService implements Resolve<any> {
+export class CountyService extends BaseService implements Resolve<any> {
   constructor(public override _http: HttpClient) {
     super(
       _http,
       environment.definitionsUrl,
-      DefinitionsControllerNamesEnum.DISTRICT
+      DefinitionsControllerNamesEnum.COUNTY
     );
   }
 

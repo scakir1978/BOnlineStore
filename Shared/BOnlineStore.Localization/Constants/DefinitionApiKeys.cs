@@ -77,9 +77,9 @@ namespace BOnlineStore.Localization.Constants
         public const string CityNameNotEmpty = "CityNameNotEmpty";
         public const string CityCodeNotEmpty = "CityCodeNotEmpty";
         public const string CityCodeMustBeUnique = "CityCodeMustBeUnique";
-        public const string DistrictNameNotEmpty = "DistrictNameNotEmpty";
-        public const string DistrictCodeNotEmpty = "DistrictCodeNotEmpty";
-        public const string DistrictCodeMustBeUnique = "DistrictCodeMustBeUnique";
+        public const string CountyNameNotEmpty = "CountyNameNotEmpty";
+        public const string CountyCodeNotEmpty = "CountyCodeNotEmpty";
+        public const string CountyCodeMustBeUnique = "CountyCodeMustBeUnique";
         public const string FirmNameNotEmpty = "FirmNameNotEmpty";
         public const string FirmCodeNotEmpty = "FirmCodeNotEmpty";
         public const string FirmCodeMustBeUnique = "FirmCodeMustBeUnique";

@@ -1,31 +1,26 @@
-﻿using BOnlineStore.Shared.Entity;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace BOnlineStore.Services.Definitions.Api.Dtos
+﻿namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     /// <summary>
     /// İlçe
     /// </summary>
-    public class DistrictDto : EntityDto
+    public class CountyUpdateDto
     {
         /// <summary>
         /// İlçe kodu.
         /// </summary>
-        public string Code { get; set; }
+        public string? Code { get; set; }
         /// <summary>
         /// İlçe adı.
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Şehir Id
         /// </summary>        
         public string? CityId { get; private set; }
 
-        public DistrictDto(string id, string code, string name, string? cityId = null)
+        public CountyUpdateDto(string? code, string? name, string? cityId = null)
         {
-            Id = id;
             Code = code;
             Name = name;
             CityId = cityId;

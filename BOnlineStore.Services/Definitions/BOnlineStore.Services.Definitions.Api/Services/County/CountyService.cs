@@ -9,13 +9,13 @@ using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
-    public class DistrictService : Service<District, DistrictDto, DistrictCreateDto, DistrictUpdateDto>, IDistrictService
+    public class CountyService : Service<County, CountyDto, CountyCreateDto, CountyUpdateDto>, ICountyService
     {
-        public DistrictService(
-            IDistrictRepository repository,
+        public CountyService(
+            ICountyRepository repository,
             IMapper mapper,
             IStringLocalizer<Language> stringLocalizer,
-            IValidator<District> validator) : base(repository, mapper, stringLocalizer, validator)
+            IValidator<County> validator) : base(repository, mapper, stringLocalizer, validator)
         { }
 
     }
