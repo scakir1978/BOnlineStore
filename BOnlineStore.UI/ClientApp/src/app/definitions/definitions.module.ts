@@ -1,3 +1,4 @@
+import { DistrictModule } from './district/district.module';
 import { CityModule } from './city/city.module';
 import { ExchangeRateModule } from './exchange-rate/exchange-rate.module';
 import { AssemblyPriceModule } from './assembly-price/assembly-price.module';
@@ -50,6 +51,7 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     AssemblyPriceModule,
   ExchangeRateModule,
   CityModule,
+  DistrictModule,
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

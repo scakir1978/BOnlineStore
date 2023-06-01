@@ -23,4 +23,5 @@ export enum DefinitionsControllerNamesEnum {
   ASSEMBLYPRICE = 'AssemblyPrice',
   EXCHANGERATE = 'ExchangeRate',
   CITY = 'City',
+  DISTRICT = 'District',
 }

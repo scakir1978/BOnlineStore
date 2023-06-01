@@ -4,16 +4,31 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
+    /// <summary>
+    /// İlçe
+    /// </summary>
     public class DistrictDto : EntityDto
     {
+        /// <summary>
+        /// İlçe kodu.
+        /// </summary>
         public string Code { get; set; }
+        /// <summary>
+        /// İlçe adı.
+        /// </summary>
         public string Name { get; set; }
 
-        public DistrictDto(string id, string code, string name)
+        /// <summary>
+        /// Şehir Id
+        /// </summary>        
+        public string? CityId { get; private set; }
+
+        public DistrictDto(string id, string code, string name, string? cityId = null)
         {
             Id = id;
             Code = code;
             Name = name;
+            CityId = cityId;
         }
     }
 }

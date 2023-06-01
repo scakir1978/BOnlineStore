@@ -191,6 +191,12 @@ export const MENU: MenuItem[] = [
         parentId: 20,
       },
       {
+        id: 282,
+        label: 'DISTRICT',
+        link: '/definitions/district',
+        parentId: 20,
+      },
+      {
         id: 290,
         label: 'BANK',
         link: '/definitions/bank',
