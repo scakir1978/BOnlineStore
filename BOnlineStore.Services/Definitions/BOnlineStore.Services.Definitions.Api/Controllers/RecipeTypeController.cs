@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class RecipeTypeController : ControllerShared
     {
-        private protected IRecipeTypeService _RecipeTypeService;
+        private protected IRecipeTypeService _recipeTypeService;
         private protected IMapper _mapper;
 
-        public RecipeTypeController(IRecipeTypeService RecipeTypeService, IMapper mapper)
+        public RecipeTypeController(IRecipeTypeService recipeTypeService, IMapper mapper)
         {
-            _RecipeTypeService = RecipeTypeService;
+            _recipeTypeService = recipeTypeService;
             _mapper = mapper;
         }
 
@@ -24,44 +24,44 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<RecipeTypeDto>>(_RecipeTypeService.Load().ToList()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<RecipeTypeDto>>(_recipeTypeService.Load().ToList()), loadOptions));
         }
 
         [HttpPost("LoadForCombo")]
         public IActionResult LoadForCombo(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<RecipeTypeForComboDto>>(_RecipeTypeService.Load().ToList()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<RecipeTypeForComboDto>>(_recipeTypeService.Load().ToList()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _RecipeTypeService.GetAsync());
+            return CreateSuccessActionResultInstance(await _recipeTypeService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _RecipeTypeService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _recipeTypeService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(RecipeTypeCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _RecipeTypeService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _recipeTypeService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, RecipeTypeUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _RecipeTypeService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _recipeTypeService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _RecipeTypeService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _recipeTypeService.DeleteAsync(id));
         }
 
     }

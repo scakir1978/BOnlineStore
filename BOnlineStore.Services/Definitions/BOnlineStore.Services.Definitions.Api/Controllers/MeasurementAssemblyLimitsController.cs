@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class MeasurementAssemblyLimitsController : ControllerShared
     {
-        private protected IMeasurementAssemblyLimitsService _MeasurementAssemblyLimitsService;
+        private protected IMeasurementAssemblyLimitsService _measurementAssemblyLimitsService;
         private protected IMapper _mapper;
 
-        public MeasurementAssemblyLimitsController(IMeasurementAssemblyLimitsService MeasurementAssemblyLimitsService, IMapper mapper)
+        public MeasurementAssemblyLimitsController(IMeasurementAssemblyLimitsService measurementAssemblyLimitsService, IMapper mapper)
         {
-            _MeasurementAssemblyLimitsService = MeasurementAssemblyLimitsService;
+            _measurementAssemblyLimitsService = measurementAssemblyLimitsService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<MeasurementAssemblyLimitsDto>(_MeasurementAssemblyLimitsService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<MeasurementAssemblyLimitsDto>(_measurementAssemblyLimitsService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _MeasurementAssemblyLimitsService.GetAsync());
+            return CreateSuccessActionResultInstance(await _measurementAssemblyLimitsService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _MeasurementAssemblyLimitsService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _measurementAssemblyLimitsService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(MeasurementAssemblyLimitsCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _MeasurementAssemblyLimitsService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _measurementAssemblyLimitsService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, MeasurementAssemblyLimitsUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _MeasurementAssemblyLimitsService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _measurementAssemblyLimitsService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _MeasurementAssemblyLimitsService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _measurementAssemblyLimitsService.DeleteAsync(id));
         }
 
     }

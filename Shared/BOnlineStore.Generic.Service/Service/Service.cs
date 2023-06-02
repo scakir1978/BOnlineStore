@@ -105,7 +105,7 @@ namespace BOnlineStore.Generic.Service
 
             #endregion
 
-            updateEntity = _mapper.Map<TEntity>(input);
+            _mapper.Map(input, updateEntity);
 
             //Validation Control
             await ValidateAndThrowAsync(updateEntity);
@@ -125,7 +125,7 @@ namespace BOnlineStore.Generic.Service
             }
             #endregion
 
-            updateEntity = _mapper.Map<TEntity>(input);
+            _mapper.Map(input, updateEntity);
 
             //Validation Control
             await ValidateAndThrowAsync(updateEntity);

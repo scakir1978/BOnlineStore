@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class FirmTypeController : ControllerShared
     {
-        private protected IFirmTypeService _FirmTypeService;
+        private protected IFirmTypeService _firmTypeService;
         private protected IMapper _mapper;
 
-        public FirmTypeController(IFirmTypeService FirmTypeService, IMapper mapper)
+        public FirmTypeController(IFirmTypeService firmTypeService, IMapper mapper)
         {
-            _FirmTypeService = FirmTypeService;
+            _firmTypeService = firmTypeService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<FirmTypeDto>(_FirmTypeService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<FirmTypeDto>(_firmTypeService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _FirmTypeService.GetAsync());
+            return CreateSuccessActionResultInstance(await _firmTypeService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _FirmTypeService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _firmTypeService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(FirmTypeCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _FirmTypeService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _firmTypeService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, FirmTypeUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _FirmTypeService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _firmTypeService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _FirmTypeService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _firmTypeService.DeleteAsync(id));
         }
 
     }

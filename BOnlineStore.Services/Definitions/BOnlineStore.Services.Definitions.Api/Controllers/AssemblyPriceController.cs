@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class AssemblyPriceController : ControllerShared
     {
-        private protected IAssemblyPriceService _AssemblyPriceService;
+        private protected IAssemblyPriceService _assemblyPriceService;
         private protected IMapper _mapper;
 
-        public AssemblyPriceController(IAssemblyPriceService AssemblyPriceService, IMapper mapper)
+        public AssemblyPriceController(IAssemblyPriceService assemblyPriceService, IMapper mapper)
         {
-            _AssemblyPriceService = AssemblyPriceService;
+            _assemblyPriceService = assemblyPriceService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<AssemblyPriceDto>(_AssemblyPriceService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<AssemblyPriceDto>(_assemblyPriceService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _AssemblyPriceService.GetAsync());
+            return CreateSuccessActionResultInstance(await _assemblyPriceService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _AssemblyPriceService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _assemblyPriceService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(AssemblyPriceCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _AssemblyPriceService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _assemblyPriceService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, AssemblyPriceUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _AssemblyPriceService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _assemblyPriceService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _AssemblyPriceService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _assemblyPriceService.DeleteAsync(id));
         }
 
     }

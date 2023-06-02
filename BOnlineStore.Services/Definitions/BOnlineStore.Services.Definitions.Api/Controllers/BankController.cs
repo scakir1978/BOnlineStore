@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class BankController : ControllerShared
     {
-        private protected IBankService _BankService;
+        private protected IBankService _bankService;
         private protected IMapper _mapper;
 
-        public BankController(IBankService BankService, IMapper mapper)
+        public BankController(IBankService bankService, IMapper mapper)
         {
-            _BankService = BankService;
+            _bankService = bankService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<BankDto>(_BankService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<BankDto>(_bankService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _BankService.GetAsync());
+            return CreateSuccessActionResultInstance(await _bankService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _BankService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _bankService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(BankCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _BankService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _bankService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, BankUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _BankService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _bankService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _BankService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _bankService.DeleteAsync(id));
         }
 
     }

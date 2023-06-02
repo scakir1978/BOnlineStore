@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class CityController : ControllerShared
     {
-        private protected ICityService _CityService;
+        private protected ICityService _cityService;
         private protected IMapper _mapper;
 
-        public CityController(ICityService CityService, IMapper mapper)
+        public CityController(ICityService cityService, IMapper mapper)
         {
-            _CityService = CityService;
+            _cityService = cityService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<CityDto>(_CityService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<CityDto>(_cityService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _CityService.GetAsync());
+            return CreateSuccessActionResultInstance(await _cityService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _CityService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _cityService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(CityCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _CityService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _cityService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, CityUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _CityService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _cityService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _CityService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _cityService.DeleteAsync(id));
         }
 
     }

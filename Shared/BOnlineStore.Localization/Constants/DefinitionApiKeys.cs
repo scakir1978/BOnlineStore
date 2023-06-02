@@ -23,7 +23,9 @@ namespace BOnlineStore.Localization.Constants
         public const string ModelGroupNotEmpty = "ModelGroupNotEmpty";
         public const string ModelCodeMustBeUnique = "ModelCodeMustBeUnique";
         public const string AssemblerNameNotEmpty = "AssemblerNameNotEmpty";
+        public const string AssemblerNameMaxLength = "AssemblerNameMaxLength";
         public const string AssemblerCodeNotEmpty = "AssemblerCodeNotEmpty";
+        public const string AssemblerCodeMaxLength = "AssemblerCodeMaxLength";
         public const string AssemblerCodeMustBeUnique = "AssemblerCodeMustBeUnique";
         public const string UnitNameNotEmpty = "UnitNameNotEmpty";
         public const string UnitCodeNotEmpty = "UnitCodeNotEmpty";

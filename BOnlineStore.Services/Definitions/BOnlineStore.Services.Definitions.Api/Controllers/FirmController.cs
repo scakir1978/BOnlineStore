@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class FirmController : ControllerShared
     {
-        private protected IFirmService _FirmService;
+        private protected IFirmService _firmService;
         private protected IMapper _mapper;
 
-        public FirmController(IFirmService FirmService, IMapper mapper)
+        public FirmController(IFirmService firmService, IMapper mapper)
         {
-            _FirmService = FirmService;
+            _firmService = firmService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<FirmDto>(_FirmService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<FirmDto>(_firmService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _FirmService.GetAsync());
+            return CreateSuccessActionResultInstance(await _firmService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _FirmService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _firmService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(FirmCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _FirmService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _firmService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, FirmUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _FirmService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _firmService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _FirmService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _firmService.DeleteAsync(id));
         }
 
     }

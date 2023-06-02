@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class ColorGroupController : ControllerShared
     {
-        private protected IColorGroupService _ColorGroupService;
+        private protected IColorGroupService _colorGroupService;
         private protected IMapper _mapper;
 
-        public ColorGroupController(IColorGroupService ColorGroupService, IMapper mapper)
+        public ColorGroupController(IColorGroupService colorGroupService, IMapper mapper)
         {
-            _ColorGroupService = ColorGroupService;
+            _colorGroupService = colorGroupService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ColorGroupDto>(_ColorGroupService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ColorGroupDto>(_colorGroupService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _ColorGroupService.GetAsync());
+            return CreateSuccessActionResultInstance(await _colorGroupService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _ColorGroupService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _colorGroupService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(ColorGroupCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _ColorGroupService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _colorGroupService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, ColorGroupUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _ColorGroupService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _colorGroupService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _ColorGroupService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _colorGroupService.DeleteAsync(id));
         }
 
     }

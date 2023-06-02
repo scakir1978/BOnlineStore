@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
     [ApiController]
     public class ExchangeRateController : ControllerShared
     {
-        private protected IExchangeRateService _ExchangeRateService;
+        private protected IExchangeRateService _exchangeRateService;
         private protected IMapper _mapper;
 
-        public ExchangeRateController(IExchangeRateService ExchangeRateService, IMapper mapper)
+        public ExchangeRateController(IExchangeRateService exchangeRateService, IMapper mapper)
         {
-            _ExchangeRateService = ExchangeRateService;
+            _exchangeRateService = exchangeRateService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ExchangeRateDto>(_ExchangeRateService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ExchangeRateDto>(_exchangeRateService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _ExchangeRateService.GetAsync());
+            return CreateSuccessActionResultInstance(await _exchangeRateService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _ExchangeRateService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _exchangeRateService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(ExchangeRateCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _ExchangeRateService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _exchangeRateService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, ExchangeRateUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _ExchangeRateService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _exchangeRateService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _ExchangeRateService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _exchangeRateService.DeleteAsync(id));
         }
 
     }
