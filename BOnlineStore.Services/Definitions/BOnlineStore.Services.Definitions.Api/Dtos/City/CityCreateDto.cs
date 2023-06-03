@@ -19,16 +19,22 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         public string? Name { get; private set; }
 
         /// <summary>
+        /// Ülke Id
+        /// </summary>
+        public string? CountryId { get; private set; }
+
+        /// <summary>
         /// Bölge Id
         /// </summary>        
         public string? RegionId { get; private set; }
 
-        public CityCreateDto(string code, string name, string? regionId = null)
+        public CityCreateDto(string code, string name, string? regionId = null, string? countryId = null)
         {
             Id = ObjectId.GenerateNewId().ToString();
             Code = code;
             Name = name;
             RegionId = regionId;
+            CountryId = countryId;
         }
     }
 }

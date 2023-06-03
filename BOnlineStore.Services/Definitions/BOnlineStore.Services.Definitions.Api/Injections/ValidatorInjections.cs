@@ -32,6 +32,8 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IValidator<ExchangeRate>, ExchangeRateValidator>();
             services.AddScoped<IValidator<City>, CityValidator>();
             services.AddScoped<IValidator<County>, CountyValidator>();
+            services.AddScoped<IValidator<Country>, CountryValidator>();
+            services.AddScoped<IValidator<District>, DistrictValidator>();
 
 
             return services;

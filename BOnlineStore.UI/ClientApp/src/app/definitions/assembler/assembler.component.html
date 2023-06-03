@@ -64,8 +64,18 @@
   </dxi-column>
   <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
     <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="50"
+      message="{{ 'CODEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
   </dxi-column>
   <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
     <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
   </dxi-column>
 </dx-data-grid>

@@ -43,10 +43,6 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         public string? TaxOffice { get; private set; }
 
 
-
-
-
-
         public Firm() : base()
         {
             Code = "";

@@ -1,19 +1,32 @@
 ﻿using BOnlineStore.Shared.Entity;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
+    /// <summary>
+    /// Bölge
+    /// </summary>
     public class RegionDto : EntityDto
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        /// <summary>
+        /// Bölge kodu.
+        /// </summary>
+        public string? Code { get; set; }
+        /// <summary>
+        /// Bölge adı.
+        /// </summary>
+        public string? Name { get; set; }
 
-        public RegionDto(string id, string code, string name)
+        /// <summary>
+        /// Ülke Id.
+        /// </summary>
+        public string? CountryId { get; private set; }
+
+        public RegionDto(string id, string code, string name, string? countryId = null)
         {
             Id = id;
             Code = code;
             Name = name;
+            CountryId = countryId;
         }
     }
 }

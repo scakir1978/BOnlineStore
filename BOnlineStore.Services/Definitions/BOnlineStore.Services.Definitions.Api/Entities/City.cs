@@ -20,6 +20,12 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         public string Name { get; private set; }
 
         /// <summary>
+        /// Ülke Id
+        /// </summary>
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? CountryId { get; private set; }
+
+        /// <summary>
         /// Bölge Id
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
@@ -31,18 +37,20 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             Name = "";
         }
 
-        public City(Guid tenantId, string id, string code, string name, string? regionId = null) : base(tenantId, id)
+        public City(Guid tenantId, string id, string code, string name, string? regionId = null, string? countryId = null) : base(tenantId, id)
         {
             Code = code;
             Name = name;
             RegionId = regionId;
+            CountryId = countryId;
         }
 
-        public void UpdateCity(string code, string name, string? regionId = null)
+        public void UpdateCity(string code, string name, string? regionId = null, string? countryId = null)
         {
             Code = code;
             Name = name;
             RegionId = regionId;
+            CountryId = countryId;
         }
     }
 }

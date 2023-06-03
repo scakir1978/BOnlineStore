@@ -2,6 +2,8 @@
   "GENERAL": "General",
   "DASHBOARD": "Dashboard",
   "CHANGEPASSWORD": "Change Password",
+  "CODEMAXLENGTH": "The code field can have a maximum length of 50.",
+  "NAMEMAXLENGTH": "The name field can have a maximum length of 250.",
   "UPLOAD": "Upload",
   "ACCOUNTSETTINGS": "Account Settings",
   "PAGES": "Pages",
@@ -130,5 +132,7 @@
   "EFFECTIVESALESRATE": "Effective Sales Rate",
   "SPECIALRATE": "Special Rate",
   "CITY": "City",
-  "COUNTY": "County"
+  "COUNTY": "County",
+  "COUNTRY": "Country",
+  "DISTRICT": "District"
 }

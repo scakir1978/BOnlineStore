@@ -85,8 +85,15 @@ namespace BOnlineStore.Localization.Constants
         public const string FirmNameNotEmpty = "FirmNameNotEmpty";
         public const string FirmCodeNotEmpty = "FirmCodeNotEmpty";
         public const string FirmCodeMustBeUnique = "FirmCodeMustBeUnique";
-
-
-
+        public const string CountryNameNotEmpty = "CountryNameNotEmpty";
+        public const string CountryNameMaxLength = "CountryNameMaxLength";
+        public const string CountryCodeNotEmpty = "CountryCodeNotEmpty";
+        public const string CountryCodeMaxLength = "CountryCodeMaxLength";
+        public const string CountryCodeMustBeUnique = "CountryCodeMustBeUnique";
+        public const string DistrictNameNotEmpty = "DistrictNameNotEmpty";
+        public const string DistrictNameMaxLength = "DistrictNameMaxLength";
+        public const string DistrictCodeNotEmpty = "DistrictCodeNotEmpty";
+        public const string DistrictCodeMaxLength = "DistrictCodeMaxLength";
+        public const string DistrictCodeMustBeUnique = "DistrictCodeMustBeUnique";
     }
 }

@@ -24,4 +24,6 @@ export enum DefinitionsControllerNamesEnum {
   EXCHANGERATE = 'ExchangeRate',
   CITY = 'City',
   COUNTY = 'County',
+  COUNTRY = 'Country',
+  DISTRICT = 'District',
 }

@@ -2,6 +2,8 @@
   "GENERAL": "Genel",
   "DASHBOARD": "Panel",
   "CHANGEPASSWORD": "Şifre Değiştir",
+  "CODEMAXLENGTH": "Kod alanının uzunluğu 50 karateri geçemez.",
+  "NAMEMAXLENGTH": "Adı alanının uzunluğu 250 karateri geçemez.",
   "UPLOAD": "Yükle",
   "ACCOUNTSETTINGS": "Hesap Ayarları",
   "PAGES": "Sayfalar",
@@ -130,5 +132,7 @@
   "EFFECTIVESALESRATE": "Efektif Satış Kuru",
   "SPECIALRATE": "Özel Kur",
   "CITY": "Şehir",
-  "COUNTY": "İlçe"
+  "COUNTY": "İlçe",
+  "COUNTRY": "Ülke",
+  "DISTRICT": "Mahalle"
 }

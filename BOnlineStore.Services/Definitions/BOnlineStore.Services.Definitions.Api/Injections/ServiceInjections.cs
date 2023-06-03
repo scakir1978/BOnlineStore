@@ -31,6 +31,8 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IExchangeRateService, ExchangeRateService>();
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<ICountyService, CountyService>();
+            services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IDistrictService, DistrictService>();
 
             return services;
         }

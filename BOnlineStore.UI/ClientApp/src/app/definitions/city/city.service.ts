@@ -39,4 +39,11 @@ export class CityService extends BaseService implements Resolve<any> {
       DefinitionsControllerNamesEnum.REGION
     );
   }
+
+  getCountryDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.COUNTRY
+    );
+  }
 }

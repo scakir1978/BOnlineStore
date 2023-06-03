@@ -180,20 +180,32 @@ export const MENU: MenuItem[] = [
       },
       {
         id: 280,
+        label: 'COUNTRY',
+        link: '/definitions/country',
+        parentId: 20,
+      },
+      {
+        id: 281,
         label: 'REGION',
         link: '/definitions/region',
         parentId: 20,
       },
       {
-        id: 281,
+        id: 282,
         label: 'CITY',
         link: '/definitions/city',
         parentId: 20,
       },
       {
-        id: 282,
+        id: 283,
         label: 'COUNTY',
         link: '/definitions/county',
+        parentId: 20,
+      },
+      {
+        id: 284,
+        label: 'DISTRICT',
+        link: '/definitions/district',
         parentId: 20,
       },
       {

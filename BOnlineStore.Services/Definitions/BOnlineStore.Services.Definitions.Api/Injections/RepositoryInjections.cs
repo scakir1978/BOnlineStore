@@ -33,6 +33,8 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IExchangeRateRepository, ExchangeRateRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<ICountyRepository, CountyRepository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IDistrictRepository, DistrictRepository>();
 
 
             return services;

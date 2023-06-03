@@ -1,3 +1,5 @@
+import { DistrictModule } from './district/district.module';
+import { CountryModule } from './country/country.module';
 import { CountyModule } from './county/county.module';
 import { CityModule } from './city/city.module';
 import { ExchangeRateModule } from './exchange-rate/exchange-rate.module';
@@ -52,7 +54,9 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     ExchangeRateModule,
     CityModule,
     CountyModule,
-  ],
+    CountryModule,
+  DistrictModule,
+],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DefinitionsModule {

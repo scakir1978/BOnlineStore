@@ -68,4 +68,12 @@
   <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
     <dxi-validation-rule type="required"></dxi-validation-rule>
   </dxi-column>
+  <dxi-column dataField="countryId" caption="{{ 'COUNTRY' | translate }}">
+    <dxo-lookup
+      [dataSource]="countryDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
 </dx-data-grid>

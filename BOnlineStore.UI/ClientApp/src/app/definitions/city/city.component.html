@@ -13,6 +13,7 @@
   [showRowLines]="true"
   [rowAlternationEnabled]="true"
   (onExporting)="onExporting($event)"
+  (onEditorPreparing)="onEditorPreparing($event)"
 >
   <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
@@ -68,9 +69,22 @@
   <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
     <dxi-validation-rule type="required"></dxi-validation-rule>
   </dxi-column>
+  <dxi-column
+    dataField="countryId"
+    [setCellValue]="setCountryValue"
+    caption="{{ 'COUNTRY' | translate }}"
+  >
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxo-lookup
+      [dataSource]="countryDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
   <dxi-column dataField="regionId" caption="{{ 'REGION' | translate }}">
     <dxo-lookup
-      [dataSource]="regionDataSource"
+      [dataSource]="getFilteredRegions"
       displayExpr="name"
       valueExpr="id"
     >
