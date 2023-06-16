@@ -26,4 +26,5 @@ export enum DefinitionsControllerNamesEnum {
   COUNTY = 'County',
   COUNTRY = 'Country',
   DISTRICT = 'District',
+  FIRM = 'Firm',
 }

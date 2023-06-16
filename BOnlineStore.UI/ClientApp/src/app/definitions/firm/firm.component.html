@@ -1,0 +1,538 @@
+<app-breadcrumbs
+  title="{{ 'DEFINITIONS' | translate }}"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+
+<dx-data-grid
+  id="gridContainer"
+  [dataSource]="firmDataSource"
+  [showBorders]="true"
+  [remoteOperations]="true"
+  [repaintChangesOnly]="true"
+  [showColumnLines]="true"
+  [showRowLines]="true"
+  [rowAlternationEnabled]="true"
+  (onExporting)="onExporting($event)"
+>
+  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+  <dxo-filter-row [visible]="true"> </dxo-filter-row>
+  <dxo-header-filter [visible]="true"> </dxo-header-filter>
+  <dxo-editing
+    mode="popup"
+    [allowAdding]="true"
+    [allowDeleting]="true"
+    [allowUpdating]="true"
+    [useIcons]="true"
+    [refreshMode]="'full'"
+    [confirmDelete]="true"
+  >
+    <dxo-form labelMode="floating">
+      <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+        <dxi-item
+          itemType="group"
+          caption="{{ 'GENERALINFORMATION' | translate }}"
+        >
+          <dxi-item dataField="code"></dxi-item>
+          <dxi-item dataField="name"></dxi-item>
+          <dxi-item dataField="title"></dxi-item>
+          <dxi-item itemType="group" [colCount]="2">
+            <dxi-item dataField="firmTypeId"></dxi-item>
+            <dxi-item dataField="competentPerson"></dxi-item>
+            <dxi-item dataField="customerRepresentative"></dxi-item>
+            <dxi-item dataField="taxNumber"></dxi-item>
+            <dxi-item dataField="taxAdministration"></dxi-item>
+          </dxi-item>
+        </dxi-item>
+        <dxi-item
+          itemType="group"
+          [colCount]="2"
+          caption="{{ 'ADRESSINFORMATION' | translate }}"
+        >
+          <dxi-item dataField="countryId"></dxi-item>
+          <dxi-item dataField="regionId"></dxi-item>
+          <dxi-item dataField="cityId"></dxi-item>
+          <dxi-item dataField="countyId"></dxi-item>
+          <dxi-item dataField="districtId"></dxi-item>
+          <dxi-item dataField="postalCode"></dxi-item>
+          <dxi-item
+            dataField="adress"
+            [colSpan]="2"
+            editorType="dxTextArea"
+            [editorOptions]="{ height: 85 }"
+          ></dxi-item>
+        </dxi-item>
+        <dxi-item
+          itemType="group"
+          caption="{{ 'PHONEEMAILINFORMATION' | translate }}"
+          [colCount]="2"
+        >
+          <dxi-item
+            dataField="cellPhoneNumber1"
+            [editorOptions]="{ mask: '(000) 000-0000' }"
+          ></dxi-item>
+          <dxi-item
+            dataField="cellPhoneNumber2"
+            [editorOptions]="{ mask: '(000) 000-0000' }"
+          ></dxi-item>
+          <dxi-item
+            dataField="telephoneNumber1"
+            [editorOptions]="{ mask: '(000) 000-0000' }"
+          ></dxi-item>
+          <dxi-item
+            dataField="telephoneNumber2"
+            [editorOptions]="{ mask: '(000) 000-0000' }"
+          ></dxi-item>
+          <dxi-item
+            dataField="telephoneNumber3"
+            [editorOptions]="{ mask: '(000) 000-0000' }"
+          ></dxi-item>
+          <dxi-item
+            dataField="faxNumber"
+            [editorOptions]="{ mask: '(000) 000-0000' }"
+          ></dxi-item>
+          <dxi-item dataField="eMail"></dxi-item>
+        </dxi-item>
+        <dxi-item
+          itemType="group"
+          caption="{{ 'COMMERCIALINFORMATION' | translate }}"
+          [colCount]="4"
+        >
+          <dxi-item
+            dataField="advanceDiscount1"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.00'
+            }"
+          ></dxi-item>
+          <dxi-item
+            dataField="advanceDiscount2"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.00'
+            }"
+          ></dxi-item>
+          <dxi-item
+            dataField="forwardDiscount"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.00'
+            }"
+          ></dxi-item>
+          <dxi-item
+            dataField="valor"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0'
+            }"
+          ></dxi-item>
+          <dxi-item dataField="paymentMethod"></dxi-item>
+          <dxi-item dataField="transactionType"></dxi-item>
+          <dxi-item dataField="specialCode"></dxi-item>
+          <dxi-item
+            dataField="riskLimit"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.00'
+            }"
+          ></dxi-item>
+          <dxi-item
+            dataField="vatRatioForInvoice"
+            [colSpan]="2"
+            editorType="dxCheckBox"
+          >
+          </dxi-item>
+          <dxi-item
+            dataField="vatRatio"
+            [colSpan]="2"
+            editorType="dxNumberBox"
+            [editorOptions]="{
+              format: '#,##0.00'
+            }"
+          ></dxi-item>
+          <dxi-item
+            dataField="explanations"
+            [colSpan]="4"
+            editorType="dxTextArea"
+            [editorOptions]="{ height: 85 }"
+          ></dxi-item>
+        </dxi-item>
+      </dxi-item>
+    </dxo-form>
+  </dxo-editing>
+
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager
+    [visible]="true"
+    [displayMode]="'full'"
+    [showPageSizeSelector]="true"
+    [showInfo]="true"
+    [showNavigationButtons]="true"
+  >
+  </dxo-pager>
+
+  <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+  <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
+  <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
+
+  <dxo-group-panel [visible]="true"></dxo-group-panel>
+  <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
+
+  <dxo-toolbar>
+    <dxi-item location="after">
+      <div *dxTemplate>
+        <dx-button icon="refresh" (onClick)="refreshDataGrid($event)">
+        </dx-button>
+      </div>
+    </dxi-item>
+    <dxi-item name="groupPanel"></dxi-item>
+    <dxi-item name="addRowButton"></dxi-item>
+    <dxi-item name="saveButton"></dxi-item>
+    <dxi-item name="revertButton"></dxi-item>
+    <dxi-item name="exportButton"></dxi-item>
+    <dxi-item name="columnChooserButton"></dxi-item>
+  </dxo-toolbar>
+
+  <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
+  </dxi-column>
+  <dxi-column dataField="firmTypeId" caption="{{ 'FIRMTYPE' | translate }}">
+    <dxo-lookup
+      [dataSource]="firmTypeDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="50"
+      message="{{ 'CODEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column dataField="title" caption="{{ 'TITLE' | translate }}">
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'TITLEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+
+  <dxi-column
+    dataField="competentPerson"
+    caption="{{ 'COMPETENTPERSON' | translate }}"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'COMPETENTPERSONMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="customerRepresentative"
+    caption="{{ 'CUSTOMERREPRESENTATIVE' | translate }}"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'CUSTOMERREPRESENTATIVEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column dataField="taxNumber" caption="{{ 'TAXNUMBER' | translate }}">
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'TAXNUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="taxAdministration"
+    caption="{{ 'TAXADMINISTRATION' | translate }}"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'TAXADMINISTRATIONMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="countryId"
+    caption="{{ 'COUNTRY' | translate }}"
+    [setCellValue]="setCountryValue"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="countryDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="regionId"
+    caption="{{ 'REGION' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="getFilteredRegions"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="cityId"
+    caption="{{ 'CITY' | translate }}"
+    [visible]="false"
+    [setCellValue]="setCityValue"
+  >
+    <dxo-lookup
+      [dataSource]="getFilteredCities"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="countyId"
+    caption="{{ 'COUNTY' | translate }}"
+    [visible]="false"
+    [setCellValue]="setCountyValue"
+  >
+    <dxo-lookup
+      [dataSource]="getFilteredCounties"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="districtId"
+    caption="{{ 'DISTRICT' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="getFilteredDistricts"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="postalCode"
+    caption="{{ 'POSTALCODE' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="10"
+      message="{{ 'POSTALCODEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="adress"
+    caption="{{ 'ADRESS' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="500"
+      message="{{ 'ADRESSMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="cellPhoneNumber1"
+    caption="{{ 'CELLPHONENUMBER' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'CELLPHONENUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="cellPhoneNumber2"
+    caption="{{ 'CELLPHONENUMBER' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'CELLPHONENUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="telephoneNumber1"
+    caption="{{ 'TELEPHONENUMBER' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'TELEPHONENUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="telephoneNumber2"
+    caption="{{ 'TELEPHONENUMBER' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'TELEPHONENUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="telephoneNumber3"
+    caption="{{ 'TELEPHONENUMBER' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'TELEPHONENUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="faxNumber"
+    caption="{{ 'FAXNUMBER' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'FAXNUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="eMail"
+    caption="{{ 'EMAIL' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'EMAILMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="paymentMethod"
+    caption="{{ 'PAYMENTMETHOD' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="50"
+      message="{{ 'PAYMENTMETHODMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="transactionType"
+    caption="{{ 'TRANSACTIONTYPE' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="50"
+      message="{{ 'TRANSACTIONTYPEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="specialCode"
+    caption="{{ 'SPECIALCODE' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="50"
+      message="{{ 'SPECIALCODEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="riskLimit"
+    dataType="number"
+    caption="{{ 'RISKLIMIT' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="advanceDiscount1"
+    dataType="number"
+    caption="{{ 'ADVANCEDISCOUNT' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="advanceDiscount2"
+    dataType="number"
+    caption="{{ 'ADVANCEDISCOUNT' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="forwardDiscount"
+    dataType="number"
+    caption="{{ 'FORWARDDISCOUNT' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="valor"
+    dataType="number"
+    caption="{{ 'VALOR' | translate }}"
+    format=",##0"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="vatRatioForInvoice"
+    caption="{{ 'VATRATIOFORINVOICE' | translate }}"
+    dataType="boolean"
+    [visible]="false"
+  ></dxi-column>
+  <dxi-column
+    dataField="vatRatio"
+    dataType="number"
+    caption="{{ 'VATRATIO' | translate }}"
+    format=",##0"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="transactionType"
+    caption="{{ 'TRANSACTIONTYPE' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="50"
+      message="{{ 'TRANSACTIONTYPEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="explanations"
+    caption="{{ 'EXPLANATIONS' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="500"
+      message="{{ 'EXPLANATIONSMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+</dx-data-grid>

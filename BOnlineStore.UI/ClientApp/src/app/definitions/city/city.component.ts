@@ -40,13 +40,7 @@ export class CityComponent extends BaseDefinitionsOnGridComponent {
   }
 
   setCountryValue(this: Column, newData: any, value: any, currentRowData: any) {
-    newData.countryId = null;
+    newData.regionId = null;
     this.defaultSetCellValue(newData, value, currentRowData);
-  }
-
-  onEditorPreparing(e) {
-    if (e.parentType === 'dataRow' && e.dataField === 'CityID') {
-      e.editorOptions.disabled = typeof e.row.data.StateID !== 'number';
-    }
   }
 }

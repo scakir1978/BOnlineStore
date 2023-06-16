@@ -1,3 +1,4 @@
+import { FirmModule } from './firm/firm.module';
 import { DistrictModule } from './district/district.module';
 import { CountryModule } from './country/country.module';
 import { CountyModule } from './county/county.module';
@@ -56,6 +57,7 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     CountyModule,
     CountryModule,
   DistrictModule,
+  FirmModule,
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
