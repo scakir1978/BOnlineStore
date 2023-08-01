@@ -19,6 +19,8 @@ export class VerticalComponent implements OnInit {
       this.layoutService.getLayoutSettings()
     );
 
+    this.changeLoader(this.layoutService.getLayoutSettings().dataPreLoader);
+
     window.addEventListener('resize', function () {
       if (document.documentElement.clientWidth <= 767) {
         document.documentElement.setAttribute('data-sidebar-size', '');
@@ -71,6 +73,19 @@ export class VerticalComponent implements OnInit {
     if (rightBar != null) {
       rightBar.classList.toggle('show');
       rightBar.setAttribute('style', 'visibility: visible;');
+    }
+  }
+
+  changeLoader(loader: string) {
+    document.documentElement.setAttribute('data-preloader', loader);
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+      setTimeout(function () {
+        (document.getElementById('preloader') as HTMLElement).style.opacity =
+          '0';
+        (document.getElementById('preloader') as HTMLElement).style.visibility =
+          'hidden';
+      }, 1000);
     }
   }
 }

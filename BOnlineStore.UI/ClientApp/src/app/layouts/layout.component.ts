@@ -1,7 +1,7 @@
-import { LayoutService } from "./../core/services/layout.service";
-import { Component, OnInit } from "@angular/core";
+import { LayoutService } from './../core/services/layout.service';
+import { Component, OnInit } from '@angular/core';
 
-import { EventService } from "../core/services/event.service";
+import { EventService } from '../core/services/event.service';
 import {
   LAYOUT_VERTICAL,
   LAYOUT_HORIZONTAL,
@@ -12,12 +12,12 @@ import {
   SIDEBAR_SIZE,
   SIDEBAR_COLOR,
   TOPBAR,
-} from "./layout.model";
+} from './layout.model';
 
 @Component({
-  selector: "app-layout",
-  templateUrl: "./layout.component.html",
-  styleUrls: ["./layout.component.scss"],
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss'],
 })
 
 /**
@@ -38,9 +38,8 @@ export class LayoutComponent implements OnInit {
     if (layoutSettings && layoutSettings.layoutType) {
       this.layoutType = layoutSettings.layoutType;
     }
-
     // listen to event and change the layout, theme, etc
-    this.eventService.subscribe("changeLayout", (layout) => {
+    this.eventService.subscribe('changeLayout', (layout) => {
       this.layoutType = layout;
     });
   }

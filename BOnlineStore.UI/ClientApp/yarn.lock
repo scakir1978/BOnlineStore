@@ -4474,7 +4474,7 @@ core-js-compat@^3.25.1:
   dependencies:
     browserslist "^4.21.4"
 
-core-js@^3.0.1, core-js@^3.19.1, core-js@^3.6.0, core-js@^3.8.3:
+core-js@^3.0.1, core-js@^3.26.0, core-js@^3.6.0, core-js@^3.8.3:
   version "3.27.0"
   resolved "https://registry.npmjs.org/core-js/-/core-js-3.27.0.tgz"
   integrity sha512-wY6cKosevs430KRkHUIsvepDXHGjlXOZO3hYXNyqpD6JvB0X28aXyv0t1Y1vZMwE7SoKmtfa6IASHCPN52FwBQ==
@@ -4696,44 +4696,44 @@ detect-passive-events@^2.0.3:
   dependencies:
     detect-it "^4.0.1"
 
-devexpress-diagram@2.1.68:
-  version "2.1.68"
-  resolved "https://registry.npmjs.org/devexpress-diagram/-/devexpress-diagram-2.1.68.tgz"
-  integrity sha512-MCyJFbtjcp74ARQnJcQegBS1Nu+9Qt9q7FnPRza76CvUnPR0jNoHeO26FxSaA3NX0WW7JxmAqxaFWMhMBOanCg==
+devexpress-diagram@2.1.75:
+  version "2.1.75"
+  resolved "https://registry.npmjs.org/devexpress-diagram/-/devexpress-diagram-2.1.75.tgz"
+  integrity sha512-/9/GJQkmNHRTWEYWwcoE0aNXQdaiq4JOQ61i2KLcnU0tMiwKHvW5Q+DX/og5UjmtBINn41O/eZl0SUJ8bxIjTw==
   dependencies:
     "@devexpress/utils" "1.3.16"
     es6-object-assign "^1.1.0"
 
-devexpress-gantt@4.1.39:
-  version "4.1.39"
-  resolved "https://registry.npmjs.org/devexpress-gantt/-/devexpress-gantt-4.1.39.tgz"
-  integrity sha512-WR4WZyPLCMOAc8LFfntaKa/qmAdLbaM2EN0Jr13Xrup3Kt5wKB2ucNbZBolESklmBOq0L5WNGujPms/ltJ/9kQ==
+devexpress-gantt@4.1.47:
+  version "4.1.47"
+  resolved "https://registry.npmjs.org/devexpress-gantt/-/devexpress-gantt-4.1.47.tgz"
+  integrity sha512-FEcg7+Sew0jzo4++1bpoyzRejOZX7CxYUx8UiYWXR/Ei2nRcpOzYVqqb1nJMgWKIl0z0H1t4xulNQdRQ8u+/Xw==
   dependencies:
     "@devexpress/utils" "1.4.1"
     tslib "2.3.1"
 
-devextreme-angular@^22.2.4:
-  version "22.2.4"
-  resolved "https://registry.npmjs.org/devextreme-angular/-/devextreme-angular-22.2.4.tgz"
-  integrity sha512-B+6Shcb5zRPU8hnpAu4CIWHBGZou4y8l81RbEjg/26wgP6ZBnAFkdRLsaWkclhLiNBo8SvNd2aucgrlaeNZckQ==
+devextreme-angular@^23.1.4:
+  version "23.1.4"
+  resolved "https://registry.npmjs.org/devextreme-angular/-/devextreme-angular-23.1.4.tgz"
+  integrity sha512-00v2LZVA6r/Y6v99SbjPWRmAEs00774RlWCgEM31YpYQSHqXZn6wvImx2ZmtVNO/Ci0OsAI2RDby349QwX2+TQ==
   dependencies:
     "@angular-devkit/schematics" "^12.2.18"
     devextreme-schematics latest
     inferno-server "7.4.11"
     tslib "^2.2.0"
 
-devextreme-quill@1.5.20:
-  version "1.5.20"
-  resolved "https://registry.npmjs.org/devextreme-quill/-/devextreme-quill-1.5.20.tgz"
-  integrity sha512-1za3UXfXV5diQjVyOwJQv1rGI05ZItZKsg0L45os8FU4/QW8QDr7NArQbzkGSbvAcea/frMEbH4X/VRzAvyagw==
+devextreme-quill@1.6.2:
+  version "1.6.2"
+  resolved "https://registry.npmjs.org/devextreme-quill/-/devextreme-quill-1.6.2.tgz"
+  integrity sha512-V/JVVDDm7PsBgpS3qetSWVzNS3RJI9H+0kH/4lDbkvV53/fJfdvCecY4aWKOVKT/0V7Q7iRSzw6tmGoI0Zogww==
   dependencies:
-    core-js "^3.19.1"
-    eventemitter3 "^4.0.0"
+    core-js "^3.26.0"
+    eventemitter3 "^4.0.7"
     lodash.clonedeep "^4.5.0"
     lodash.isequal "^4.5.0"
-    lodash.merge "^4.5.0"
-    parchment "2.0.0-dev.2"
-    quill-delta "4.2.2"
+    lodash.merge "^4.6.2"
+    parchment "^2.0.1"
+    quill-delta "^5.0.0"
 
 devextreme-schematics@latest:
   version "1.5.1"
@@ -4751,16 +4751,16 @@ devextreme-showdown@^1.0.1:
   dependencies:
     yargs "^17.2.1"
 
-devextreme@^22.2.4:
-  version "22.2.4"
-  resolved "https://registry.npmjs.org/devextreme/-/devextreme-22.2.4.tgz"
-  integrity sha512-r2AKkDdNiPEYNzMKqV3hRwvu/6ZTWUju6fN5BfHD9oKRFqoxGrssYaDhDyFBvtGwdXZN3HfDrlKSYKF1UMlUlQ==
+devextreme@^23.1.4:
+  version "23.1.4"
+  resolved "https://registry.npmjs.org/devextreme/-/devextreme-23.1.4.tgz"
+  integrity sha512-Lywv3urWJMN8Ab8SWxvnTcap5uvOae1fEnaF6ZoKKFrZCx5WDDisFFe3PeldgZ51xrFv71TkRha+29t5cnVxQg==
   dependencies:
     "@babel/runtime" "^7.12.1"
     "@devextreme/runtime" "3.0.11"
-    devexpress-diagram "2.1.68"
-    devexpress-gantt "4.1.39"
-    devextreme-quill "1.5.20"
+    devexpress-diagram "2.1.75"
+    devexpress-gantt "4.1.47"
+    devextreme-quill "1.6.2"
     devextreme-showdown "^1.0.1"
     inferno "^7.4.9"
     inferno-hydrate "^7.4.9"
@@ -5092,7 +5092,7 @@ eventemitter-asyncresource@^1.0.0:
   resolved "https://registry.npmjs.org/eventemitter-asyncresource/-/eventemitter-asyncresource-1.0.0.tgz"
   integrity sha512-39F7TBIV0G7gTelxwbEqnwhp90eqCPON1k0NwNfwhgKn4Co4ybUbj2pECcXT0B3ztRKZ7Pw1JujUUgmQJHcVAQ==
 
-eventemitter3@^4.0.0:
+eventemitter3@^4.0.0, eventemitter3@^4.0.7:
   version "4.0.7"
   resolved "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
@@ -5195,6 +5195,11 @@ fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
+
+fast-diff@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/fast-diff/-/fast-diff-1.3.0.tgz"
+  integrity sha512-VxPP4NqbUjj6MaAOafWeUn2cXWLcCtljklUtZf0Ind4XQ+QPtmA0b18zZy0jIQx+ExRVCR/ZQpBmik5lXshNsw==
 
 fast-diff@1.2.0:
   version "1.2.0"
@@ -6426,7 +6431,7 @@ lodash.memoize@^4.1.2:
   resolved "https://registry.npmjs.org/lodash.memoize/-/lodash.memoize-4.1.2.tgz"
   integrity sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==
 
-lodash.merge@^4.5.0:
+lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.npmjs.org/lodash.merge/-/lodash.merge-4.6.2.tgz"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
@@ -7323,10 +7328,10 @@ parchment@^1.1.2:
   resolved "https://registry.npmjs.org/parchment/-/parchment-1.1.4.tgz"
   integrity sha512-J5FBQt/pM2inLzg4hEWmzQx/8h8D0CiDxaG3vyp9rKrQRSDgBlhjdP5jQGgosEajXPSQouXGHOmVdgo7QmJuOg==
 
-parchment@2.0.0-dev.2:
-  version "2.0.0-dev.2"
-  resolved "https://registry.npmjs.org/parchment/-/parchment-2.0.0-dev.2.tgz"
-  integrity sha512-4fgRny4pPISoML08Zp7poi52Dff3E2G1ORTi2D/acJ/RiROdDAMDB6VcQNfBcmehrX5Wixp6dxh6JjLyE5yUNQ==
+parchment@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/parchment/-/parchment-2.0.1.tgz"
+  integrity sha512-VBKrlEoZCBD+iwoeag0QTtY1Cti+Ma4nLpVYcc/uus/wHhMsPOi5InH3RL1s4aekahPZpabcS2ToKyGf7RMH/g==
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -7636,12 +7641,21 @@ queue-microtask@^1.2.2:
   resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-quill-delta@^4.0.1, quill-delta@4.2.2:
+quill-delta@^4.0.1:
   version "4.2.2"
   resolved "https://registry.npmjs.org/quill-delta/-/quill-delta-4.2.2.tgz"
   integrity sha512-qjbn82b/yJzOjstBgkhtBjN2TNK+ZHP/BgUQO+j6bRhWQQdmj2lH6hXG7+nwwLF41Xgn//7/83lxs9n2BkTtTg==
   dependencies:
     fast-diff "1.2.0"
+    lodash.clonedeep "^4.5.0"
+    lodash.isequal "^4.5.0"
+
+quill-delta@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/quill-delta/-/quill-delta-5.1.0.tgz"
+  integrity sha512-X74oCeRI4/p0ucjb5Ma8adTXd9Scumz367kkMK5V/IatcX6A0vlgLgKbzXWy5nZmCGeNJm2oQX0d2Eqj+ZIlCA==
+  dependencies:
+    fast-diff "^1.3.0"
     lodash.clonedeep "^4.5.0"
     lodash.isequal "^4.5.0"
 

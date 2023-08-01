@@ -1,10 +1,10 @@
-import { LayoutService } from "./../../core/services/layout.service";
-import { Component, OnInit } from "@angular/core";
+import { LayoutService } from './../../core/services/layout.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: "app-two-column",
-  templateUrl: "./two-column.component.html",
-  styleUrls: ["./two-column.component.scss"],
+  selector: 'app-two-column',
+  templateUrl: './two-column.component.html',
+  styleUrls: ['./two-column.component.scss'],
 })
 
 /**
@@ -18,10 +18,12 @@ export class TwoColumnComponent implements OnInit {
     //console.log('layout =>', document.documentElement.getAttribute('data-layout'))
 
     this.layoutService.setLayoutSettingsToDocument(
-      "twocolumn",
+      'twocolumn',
       document,
       this.layoutService.getLayoutSettings()
     );
+
+    this.changeLoader(this.layoutService.getLayoutSettings().dataPreLoader);
 
     /*document.documentElement.setAttribute('data-layout', 'twocolumn');
     document.documentElement.setAttribute('data-topbar', 'light');
@@ -33,13 +35,13 @@ export class TwoColumnComponent implements OnInit {
     document.documentElement.setAttribute('data-preloader', 'disable');
     document.documentElement.setAttribute('data-body-image', 'img-3');*/
 
-    window.addEventListener("resize", function () {
+    window.addEventListener('resize', function () {
       if (document.documentElement.clientWidth <= 767) {
-        document.documentElement.setAttribute("data-layout", "vertical");
-        document.getElementById("side-bar")?.classList.remove("d-none");
+        document.documentElement.setAttribute('data-layout', 'vertical');
+        document.getElementById('side-bar')?.classList.remove('d-none');
       } else {
-        document.documentElement.setAttribute("data-layout", "twocolumn");
-        document.getElementById("side-bar")?.classList.add("d-none");
+        document.documentElement.setAttribute('data-layout', 'twocolumn');
+        document.getElementById('side-bar')?.classList.add('d-none');
       }
     });
   }
@@ -49,9 +51,9 @@ export class TwoColumnComponent implements OnInit {
    */
   onToggleMobileMenu() {
     if (document.documentElement.clientWidth <= 767) {
-      document.body.classList.toggle("vertical-sidebar-enable");
+      document.body.classList.toggle('vertical-sidebar-enable');
     } else {
-      document.body.classList.toggle("twocolumn-panel");
+      document.body.classList.toggle('twocolumn-panel');
     }
   }
 
@@ -59,19 +61,32 @@ export class TwoColumnComponent implements OnInit {
    * on settings button clicked from topbar
    */
   onSettingsButtonClicked() {
-    document.body.classList.toggle("right-bar-enabled");
-    const rightBar = document.getElementById("theme-settings-offcanvas");
+    document.body.classList.toggle('right-bar-enabled');
+    const rightBar = document.getElementById('theme-settings-offcanvas');
     if (rightBar != null) {
-      rightBar.classList.toggle("show");
-      rightBar.setAttribute("style", "visibility: visible;");
+      rightBar.classList.toggle('show');
+      rightBar.setAttribute('style', 'visibility: visible;');
     }
   }
 
   isTwoColumnLayoutRequested() {
-    return "twocolumn" === document.documentElement.getAttribute("data-layout");
+    return 'twocolumn' === document.documentElement.getAttribute('data-layout');
   }
 
   issemiboxLayoutRequested() {
-    return "semibox" === document.documentElement.getAttribute("data-layout");
+    return 'semibox' === document.documentElement.getAttribute('data-layout');
+  }
+
+  changeLoader(loader: string) {
+    document.documentElement.setAttribute('data-preloader', loader);
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+      setTimeout(function () {
+        (document.getElementById('preloader') as HTMLElement).style.opacity =
+          '0';
+        (document.getElementById('preloader') as HTMLElement).style.visibility =
+          'hidden';
+      }, 1000);
+    }
   }
 }
