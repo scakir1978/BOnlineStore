@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
-    public interface IPriceListMasterService : IService<PriceListMaster, PriceListMasterDto, PriceListMasterCreateDto, PriceListMasterUpdateDto>
+    public interface IPriceListService : IService<PriceListMaster, PriceListMasterDto, PriceListMasterCreateDto, PriceListMasterUpdateDto>
     {
     }
 }

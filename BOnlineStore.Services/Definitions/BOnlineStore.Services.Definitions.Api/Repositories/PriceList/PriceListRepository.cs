@@ -5,9 +5,9 @@ using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
-    public class PriceListMasterRepository : Repository<PriceListMaster>, IPriceListMasterRepository
+    public class PriceListRepository : Repository<PriceListMaster>, IPriceListRepository
     {
-        public PriceListMasterRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+        public PriceListRepository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
             : base(context, httpContextAccessor, stringLocalizer)
         { }
     }

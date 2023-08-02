@@ -11,9 +11,9 @@ namespace BOnlineStore.Services.Definitions.Api.Validations
     public class PriceListMasterValidator : AbstractValidator<PriceListMaster>
     {
         private readonly IStringLocalizer<Language> _stringLocalizer;
-        private readonly IPriceListMasterRepository _repository;
+        private readonly IPriceListRepository _repository;
 
-        public PriceListMasterValidator(IStringLocalizer<Language> stringLocalizer, IPriceListMasterRepository repository)
+        public PriceListMasterValidator(IStringLocalizer<Language> stringLocalizer, IPriceListRepository repository)
         {
             _stringLocalizer = stringLocalizer;
             _repository = repository;

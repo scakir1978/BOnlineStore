@@ -9,14 +9,14 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PriceListMasterController : ControllerShared
+    public class PriceListController : ControllerShared
     {
-        private protected IPriceListMasterService _PriceListMasterService;
+        private protected IPriceListService _priceListService;
         private protected IMapper _mapper;
 
-        public PriceListMasterController(IPriceListMasterService PriceListMasterService, IMapper mapper)
+        public PriceListController(IPriceListService PriceListMasterService, IMapper mapper)
         {
-            _PriceListMasterService = PriceListMasterService;
+            _priceListService = PriceListMasterService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,37 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<PriceListMasterDto>(_PriceListMasterService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<PriceListMasterDto>(_priceListService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _PriceListMasterService.GetAsync());
+            return CreateSuccessActionResultInstance(await _priceListService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _PriceListMasterService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _priceListService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(PriceListMasterCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _PriceListMasterService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _priceListService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, PriceListMasterUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _PriceListMasterService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _priceListService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _PriceListMasterService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _priceListService.DeleteAsync(id));
         }
 
     }

@@ -9,10 +9,10 @@ using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
-    public class PriceListMasterService : Service<PriceListMaster, PriceListMasterDto, PriceListMasterCreateDto, PriceListMasterUpdateDto>, IPriceListMasterService
+    public class PriceListService : Service<PriceListMaster, PriceListMasterDto, PriceListMasterCreateDto, PriceListMasterUpdateDto>, IPriceListService
     {
-        public PriceListMasterService(
-            IPriceListMasterRepository repository,
+        public PriceListService(
+            IPriceListRepository repository,
             IMapper mapper,
             IStringLocalizer<Language> stringLocalizer,
             IValidator<PriceListMaster> validator) : base(repository, mapper, stringLocalizer, validator)

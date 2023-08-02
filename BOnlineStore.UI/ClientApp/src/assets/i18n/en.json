@@ -135,5 +135,6 @@
   "COUNTY": "County",
   "COUNTRY": "Country",
   "DISTRICT": "District",
-  "FIRM": "Firm"
+  "FIRM": "Firm",
+  "PRICELIST": "Price List"
 }

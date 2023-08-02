@@ -1,3 +1,4 @@
+import { PriceListModule } from './price-list/price-list.module';
 import { FirmModule } from './firm/firm.module';
 import { DistrictModule } from './district/district.module';
 import { CountryModule } from './country/country.module';
@@ -58,6 +59,7 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     CountryModule,
   DistrictModule,
   FirmModule,
+  PriceListModule,
 ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

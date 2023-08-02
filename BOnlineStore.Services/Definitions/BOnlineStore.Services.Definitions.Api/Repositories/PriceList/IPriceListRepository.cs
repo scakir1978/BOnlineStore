@@ -3,7 +3,7 @@ using BOnlineStore.Services.Definitions.Api.Entities;
 
 namespace BOnlineStore.Services.Definitions.Api.Repositories
 {
-    public interface IPriceListMasterRepository : IRepository<PriceListMaster>
+    public interface IPriceListRepository : IRepository<PriceListMaster>
     {
     }
 }
