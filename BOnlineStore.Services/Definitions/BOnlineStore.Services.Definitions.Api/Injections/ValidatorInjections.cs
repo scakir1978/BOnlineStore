@@ -35,6 +35,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IValidator<County>, CountyValidator>();
             services.AddScoped<IValidator<Country>, CountryValidator>();
             services.AddScoped<IValidator<District>, DistrictValidator>();
+            services.AddScoped<IValidator<PriceListMaster>, PriceListMasterValidator>();
 
 
             return services;

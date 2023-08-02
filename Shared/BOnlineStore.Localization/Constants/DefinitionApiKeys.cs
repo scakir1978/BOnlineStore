@@ -95,5 +95,10 @@ namespace BOnlineStore.Localization.Constants
         public const string DistrictCodeNotEmpty = "DistrictCodeNotEmpty";
         public const string DistrictCodeMaxLength = "DistrictCodeMaxLength";
         public const string DistrictCodeMustBeUnique = "DistrictCodeMustBeUnique";
+        public const string PriceListMasterNameNotEmpty = "PriceListMasterNameNotEmpty";
+        public const string PriceListMasterNameMaxLength = "PriceListMasterNameMaxLength";
+        public const string PriceListMasterCodeNotEmpty = "PriceListMasterCodeNotEmpty";
+        public const string PriceListMasterCodeMaxLength = "PriceListMasterCodeMaxLength";
+        public const string PriceListMasterCodeMustBeUnique = "PriceListMasterCodeMustBeUnique";
     }
 }

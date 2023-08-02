@@ -71,10 +71,19 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             Picture = picture;
         }
 
-        public void UpdatePanel(string code, string name)
+        public void UpdatePanel(string code, string name, string? modelGroupId = null, string? recipeTypeId = null,
+            decimal? wastageRatio = null, decimal? wastageAmount = null, decimal? workmanshipRatio = null,
+            decimal? workmanshipAmount = null, string? picture = null)
         {
             Code = code;
             Name = name;
+            ModelGroupId = modelGroupId;
+            RecipeTypeId = recipeTypeId;
+            WastageRatio = wastageRatio;
+            WastageAmount = wastageAmount;
+            WorkmanshipRatio = workmanshipRatio;
+            WorkmanshipAmount = workmanshipAmount;
+            Picture = picture;
         }
     }
 }

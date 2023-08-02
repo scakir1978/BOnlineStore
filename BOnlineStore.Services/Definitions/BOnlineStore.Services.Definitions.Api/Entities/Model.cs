@@ -94,11 +94,22 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             Picture = picture;
         }
 
-        public void UpdateModel(string code, string name, string? modelGroupId)
+        public void UpdateModel(string code, string name, string? modelGroupId, string? sidePanelId = null,
+            string? panelId = null, string? recipeTypeId = null, decimal? wastageRatio = null,
+            decimal? wastageAmount = null, decimal? workmanshipRatio = null, decimal? workmanshipAmount = null,
+            string? picture = null)
         {
             Code = code;
             Name = name;
             ModelGroupId = modelGroupId;
+            SidePanelId = sidePanelId;
+            PanelId = panelId;
+            RecipeTypeId = recipeTypeId;
+            WastageRatio = wastageRatio;
+            WastageAmount = wastageAmount;
+            WorkmanshipRatio = workmanshipRatio;
+            WorkmanshipAmount = workmanshipAmount;
+            Picture = picture;
         }
     }
 }

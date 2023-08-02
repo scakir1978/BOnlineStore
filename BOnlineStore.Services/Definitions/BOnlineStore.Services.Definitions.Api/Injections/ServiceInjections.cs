@@ -34,6 +34,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<ICountyService, CountyService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IDistrictService, DistrictService>();
+            services.AddScoped<IPriceListMasterService, PriceListMasterService>();
 
             return services;
         }
