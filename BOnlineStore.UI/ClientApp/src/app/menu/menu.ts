@@ -137,6 +137,12 @@ export const MENU: MenuItem[] = [
         parentId: 20,
       },
       {
+        id: 201,
+        label: 'PRICELIST',
+        link: '/definitions/price-list',
+        parentId: 20,
+      },
+      {
         id: 210,
         label: 'FIRMDEFINITIONSTITLE',
         isTitle: true,

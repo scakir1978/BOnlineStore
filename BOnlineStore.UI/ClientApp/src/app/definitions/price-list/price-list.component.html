@@ -17,7 +17,8 @@
   <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
   <dxo-header-filter [visible]="true"> </dxo-header-filter>
-  <dxo-editing
+
+  <!-- <dxo-editing
     mode="batch"
     [allowAdding]="true"
     [allowDeleting]="true"
@@ -26,7 +27,7 @@
     [refreshMode]="'full'"
     [confirmDelete]="true"
   >
-  </dxo-editing>
+  </dxo-editing> -->
 
   <dxo-paging [pageSize]="10"></dxo-paging>
   <dxo-pager
@@ -60,22 +61,21 @@
     <dxi-item name="columnChooserButton"></dxi-item>
   </dxo-toolbar>
 
-  <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
+  <dxi-column dataField="id" [visible]="false"> </dxi-column>
+  <dxi-column dataField="code" caption="{{ 'PRICELISTCODE' | translate }}">
   </dxi-column>
-  <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
-    <dxi-validation-rule type="required"></dxi-validation-rule>
-    <dxi-validation-rule
-      type="stringLength"
-      [max]="50"
-      message="{{ 'CODEMAXLENGTH' | translate }}"
-    ></dxi-validation-rule>
+  <dxi-column dataField="name" caption="{{ 'PRICELISTNAME' | translate }}">
   </dxi-column>
-  <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
-    <dxi-validation-rule type="required"></dxi-validation-rule>
-    <dxi-validation-rule
-      type="stringLength"
-      [max]="250"
-      message="{{ 'NAMEMAXLENGTH' | translate }}"
-    ></dxi-validation-rule>
+  <dxi-column
+    dataField="firstDate"
+    dataType="date"
+    caption="{{ 'PRICELISTFIRSTDATE' | translate }}"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="endDate"
+    dataType="date"
+    caption="{{ 'PRICELISTENDDATE' | translate }}"
+  >
   </dxi-column>
 </dx-data-grid>

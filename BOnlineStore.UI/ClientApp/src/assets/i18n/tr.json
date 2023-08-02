@@ -160,5 +160,8 @@
   "VATRATIOFORINVOICE": "Tanımlanana KDV oranı fatura etkilesin mi?",
   "EXPLANATIONS": "Açıklamalar",
   "ADRESS": "Adres",
-  "PRICELIST": "Fiyat Listesi"
+  "PRICELISTCODE": "Fiyat Listesi Kodu",
+  "PRICELISTNAME": "Fiyat Listesi Adı",
+  "PRICELISTFIRSTDATE": "Geçerlilik Tarihi Başlangıcı",
+  "PRICELISTENDDATE": "Geçerlilik Tarihi Bitişi"
 }

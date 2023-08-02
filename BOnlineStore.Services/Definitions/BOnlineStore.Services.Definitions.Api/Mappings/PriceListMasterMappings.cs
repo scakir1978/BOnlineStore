@@ -9,6 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Mappings
         public PriceListMasterMappings()
         {
             CreateMap<PriceListMaster, PriceListMasterDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<PriceListMaster, PriceListMasterLoadDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
             CreateMap<PriceListMaster, PriceListMasterCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
             CreateMap<PriceListMaster, PriceListMasterUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation()
                 .ForMember(dest => dest.Code, opt => opt.Condition(src => (src.Code != null)))

@@ -135,6 +135,9 @@
   "COUNTY": "County",
   "COUNTRY": "Country",
   "DISTRICT": "District",
-  "FIRM": "Firm",
-  "PRICELIST": "Price List"
+  "PRICELIST": "Price List",
+  "PRICELISTCODE": "Price List Code",
+  "PRICELISTNAME": "Price List Name",
+  "PRICELISTFIRSTDATE": "Validity Date Start",
+  "PRICELISTENDDATE": "Validity Date End"
 }
