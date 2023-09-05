@@ -3,7 +3,7 @@
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     /// <summary>
-    /// Fiyat listesi detay entity.
+    ///Fiyat listesi detay entity.
     /// </summary>
     public class PriceListDetailDto
     {

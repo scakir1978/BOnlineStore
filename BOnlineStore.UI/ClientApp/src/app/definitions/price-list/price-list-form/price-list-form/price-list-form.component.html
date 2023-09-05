@@ -1,0 +1,21 @@
+<form (ngSubmit)="onSubmit()" #form="ngForm">
+  <dx-form
+    id="priceListMaster"
+    [formData]="priceListMaster"
+    [labelMode]="'floating'"
+    [showColonAfterLabel]="true"
+  >
+    <dxi-item dataField="priceListMaster.code" caption="Fiyat Listesi No">
+    </dxi-item>
+    <dxi-item dataField="priceListMaster.name" caption="Açıklama"> </dxi-item>
+    <dxi-item itemType="group" caption="Fiyat Listesinin Geçerlilik Süresi">
+      <dxi-item dataField="priceListMaster.firstDate" caption="Başlangıç">
+      </dxi-item>
+      <dxi-item dataField="priceListMaster.endDate" caption="Bitiş"> </dxi-item>
+    </dxi-item>
+    <dxi-item itemType="button" horizontalAlignment="left" buttonOptions="">
+      <dxi-item itemType="button" horizontalAlignment="left" buttonOptions="">
+      </dxi-item>
+    </dxi-item>
+  </dx-form>
+</form>

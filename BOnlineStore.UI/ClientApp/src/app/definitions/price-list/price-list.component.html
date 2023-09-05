@@ -14,7 +14,16 @@
   [rowAlternationEnabled]="true"
   (onExporting)="onExporting($event)"
 >
-  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+  <dxo-column-chooser [enabled]="true" [mode]="'select'">
+    <dxo-search [enabled]="true"></dxo-search>
+
+    <dxo-selection [allowSelectAll]="true"></dxo-selection>
+    <dxo-position
+      my="right top"
+      at="right bottom"
+      of=".dx-datagrid-column-chooser-button"
+    ></dxo-position>
+  </dxo-column-chooser>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
   <dxo-header-filter [visible]="true"> </dxo-header-filter>
 
@@ -53,10 +62,12 @@
         </dx-button>
       </div>
     </dxi-item>
+    <dxi-item location="after">
+      <div *dxTemplate>
+        <dx-button icon="add" (onClick)="newPriceList($event)"> </dx-button>
+      </div>
+    </dxi-item>
     <dxi-item name="groupPanel"></dxi-item>
-    <dxi-item name="addRowButton"></dxi-item>
-    <dxi-item name="saveButton"></dxi-item>
-    <dxi-item name="revertButton"></dxi-item>
     <dxi-item name="exportButton"></dxi-item>
     <dxi-item name="columnChooserButton"></dxi-item>
   </dxo-toolbar>
@@ -77,5 +88,17 @@
     dataType="date"
     caption="{{ 'PRICELISTENDDATE' | translate }}"
   >
+  </dxi-column>
+  <dxi-column type="buttons" [showInColumnChooser]="false">
+    <dxi-button
+      hint="{{ 'EDIT' | translate }}"
+      icon="edit"
+      (onClick)="editPriceList($event)"
+    ></dxi-button>
+    <dxi-button
+      hint="{{ 'DELETE' | translate }}"
+      icon="remove"
+      (onClick)="removePriceList($event)"
+    ></dxi-button>
   </dxi-column>
 </dx-data-grid>

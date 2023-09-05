@@ -6,7 +6,7 @@
     public class PriceListGlassDifferenceDto
     {
         /// <summary>
-        /// Ölçü
+        /// Cam türü id
         /// </summary>
         public string? GlassId { get; private set; }
 

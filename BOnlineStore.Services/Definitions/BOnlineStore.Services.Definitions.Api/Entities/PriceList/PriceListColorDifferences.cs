@@ -3,12 +3,12 @@
 namespace BOnlineStore.Services.Definitions.Api.Entities
 {
     /// <summary>
-    /// Ölçü farklarından oluşan fiyat bilgileri
+    /// Renk farklarından oluşan fiyat bilgileri
     /// </summary>
     public class PriceListColorDifference : IdEntity, IAggregateRoot
     {
         /// <summary>
-        /// Ölçü
+        /// Renk id
         /// </summary>
         public string? ColorId { get; private set; }
 

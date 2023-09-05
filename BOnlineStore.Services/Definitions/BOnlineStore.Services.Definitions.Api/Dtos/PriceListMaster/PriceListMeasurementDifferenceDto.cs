@@ -1,7 +1,7 @@
 ﻿namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     /// <summary>
-    /// Ölçü farkları
+    /// Fiyat listesi ölçü farkları
     /// </summary>
     public class PriceListMeasurementDifferenceDto
     {
