@@ -2,11 +2,7 @@ import { DefinitionsControllerNamesEnum } from '../../base-classes/base-enums/de
 import CustomStore from 'devextreme/data/custom_store';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { BaseService } from '../../base-classes/base-services/base-service';
 import DataSource from 'devextreme/data/data_source';
@@ -15,7 +11,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class GlassService extends BaseService implements Resolve<any> {
+export class GlassService extends BaseService  {
   constructor(public override _http: HttpClient) {
     super(
       _http,

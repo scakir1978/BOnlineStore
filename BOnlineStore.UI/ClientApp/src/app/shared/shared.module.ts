@@ -1,28 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbNavModule, NgbAccordionModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbNavModule,
+  NgbAccordionModule,
+  NgbDropdownModule,
+} from '@ng-bootstrap/ng-bootstrap';
 
 // Counter
-import { CountToModule } from 'angular-count-to';
+//import { CountToModule } from 'angular-count-to';
 
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 
 import { ScrollspyDirective } from './scrollspy.directive';
 
 @NgModule({
-  declarations: [
-    BreadcrumbsComponent,
-    ScrollspyDirective,
-  ],
+  declarations: [BreadcrumbsComponent, ScrollspyDirective],
   imports: [
     CommonModule,
     NgbNavModule,
     NgbAccordionModule,
     NgbDropdownModule,
-    CountToModule
+    //CountToModule
   ],
-  exports: [BreadcrumbsComponent,
-    ScrollspyDirective,
-  ]
+  exports: [BreadcrumbsComponent, ScrollspyDirective],
 })
-export class SharedModule { }
+export class SharedModule {}
