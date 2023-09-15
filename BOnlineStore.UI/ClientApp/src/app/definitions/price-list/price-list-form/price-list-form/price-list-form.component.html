@@ -5,17 +5,60 @@
     [labelMode]="'floating'"
     [showColonAfterLabel]="true"
   >
-    <dxi-item dataField="priceListMaster.code" caption="Fiyat Listesi No">
-    </dxi-item>
-    <dxi-item dataField="priceListMaster.name" caption="Açıklama"> </dxi-item>
-    <dxi-item itemType="group" caption="Fiyat Listesinin Geçerlilik Süresi">
-      <dxi-item dataField="priceListMaster.firstDate" caption="Başlangıç">
+    <dxi-item itemType="group" [colCount]="4" caption="Genel Bilgiler">
+      <dxi-item dataField="code">
+        <dxo-label text="Fiyat Listesi Kodu"> </dxo-label>
       </dxi-item>
-      <dxi-item dataField="priceListMaster.endDate" caption="Bitiş"> </dxi-item>
-    </dxi-item>
-    <dxi-item itemType="button" horizontalAlignment="left" buttonOptions="">
-      <dxi-item itemType="button" horizontalAlignment="left" buttonOptions="">
+      <dxi-item dataField="name">
+        <dxo-label text="Açıklama"> </dxo-label>
       </dxi-item>
+      <dxi-item dataField="firstDate" editorType="dxDateBox">
+        <dxo-label text="Başlangıç Tarihi"> </dxo-label>
+      </dxi-item>
+      <dxi-item dataField="endDate" editorType="dxDateBox">
+        <dxo-label text="Bitiş Tarihi"> </dxo-label>
+      </dxi-item>
+    </dxi-item>
+    <dxi-item itemType="group" caption="Detay Bilgiler">
+      <dxi-item dataField="priceListDetails">
+        <div *dxTemplate="let priceListeDetailData of 'priceListDetails'">
+          <dx-data-grid
+            [dataSource]="priceListeDetailData"
+            keyExpr="priceListId"
+            [showBorders]="true"
+            [repaintChangesOnly]="true"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [rowAlternationEnabled]="true"
+            (onSaved)="onSaved($event, priceListeDetailData)"
+          >
+            <dxi-column dataField="priceListId"> </dxi-column>
+            <dxi-column dataField="modelId"> </dxi-column>
+            <dxi-column dataField="colorId">
+              <dxo-lookup
+                [dataSource]="colorDataSource"
+                displayExpr="name"
+                valueExpr="id"
+              >
+              </dxo-lookup>
+            </dxi-column>
+            <dxo-editing
+              mode="row"
+              [allowUpdating]="true"
+              [allowAdding]="true"
+              [allowDeleting]="true"
+              [confirmDelete]="true"
+              [useIcons]="true"
+            ></dxo-editing>
+          </dx-data-grid>
+        </div>
+      </dxi-item>
+    </dxi-item>
+    <dxi-item
+      itemType="button"
+      horizontalAlignment="left"
+      [buttonOptions]="buttonOptions"
+    >
     </dxi-item>
   </dx-form>
 </form>

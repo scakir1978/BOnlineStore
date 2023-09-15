@@ -3,31 +3,32 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
-<dx-data-grid
-  id="gridContainer"
-  [dataSource]="priceListDataSource"
-  [showBorders]="true"
-  [remoteOperations]="true"
-  [repaintChangesOnly]="true"
-  [showColumnLines]="true"
-  [showRowLines]="true"
-  [rowAlternationEnabled]="true"
-  (onExporting)="onExporting($event)"
->
-  <dxo-column-chooser [enabled]="true" [mode]="'select'">
-    <dxo-search [enabled]="true"></dxo-search>
+<div *ngIf="!formActive">
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="priceListDataSource"
+    [showBorders]="true"
+    [remoteOperations]="true"
+    [repaintChangesOnly]="true"
+    [showColumnLines]="true"
+    [showRowLines]="true"
+    [rowAlternationEnabled]="true"
+    (onExporting)="onExporting($event)"
+  >
+    <dxo-column-chooser [enabled]="true" [mode]="'select'">
+      <dxo-search [enabled]="true"></dxo-search>
 
-    <dxo-selection [allowSelectAll]="true"></dxo-selection>
-    <dxo-position
-      my="right top"
-      at="right bottom"
-      of=".dx-datagrid-column-chooser-button"
-    ></dxo-position>
-  </dxo-column-chooser>
-  <dxo-filter-row [visible]="true"> </dxo-filter-row>
-  <dxo-header-filter [visible]="true"> </dxo-header-filter>
+      <dxo-selection [allowSelectAll]="true"></dxo-selection>
+      <dxo-position
+        my="right top"
+        at="right bottom"
+        of=".dx-datagrid-column-chooser-button"
+      ></dxo-position>
+    </dxo-column-chooser>
+    <dxo-filter-row [visible]="true"> </dxo-filter-row>
+    <dxo-header-filter [visible]="true"> </dxo-header-filter>
 
-  <!-- <dxo-editing
+    <!-- <dxo-editing
     mode="batch"
     [allowAdding]="true"
     [allowDeleting]="true"
@@ -38,67 +39,76 @@
   >
   </dxo-editing> -->
 
-  <dxo-paging [pageSize]="10"></dxo-paging>
-  <dxo-pager
-    [visible]="true"
-    [displayMode]="'full'"
-    [showPageSizeSelector]="true"
-    [showInfo]="true"
-    [showNavigationButtons]="true"
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+      [visible]="true"
+      [displayMode]="'full'"
+      [showPageSizeSelector]="true"
+      [showInfo]="true"
+      [showNavigationButtons]="true"
+    >
+    </dxo-pager>
+
+    <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+    <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
+    <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
+
+    <dxo-group-panel [visible]="true"></dxo-group-panel>
+    <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
+
+    <dxo-toolbar>
+      <dxi-item location="after">
+        <div *dxTemplate>
+          <dx-button icon="refresh" (onClick)="refreshDataGrid($event)">
+          </dx-button>
+        </div>
+      </dxi-item>
+      <dxi-item location="after">
+        <div *dxTemplate>
+          <dx-button icon="add" (onClick)="newPriceList($event)"> </dx-button>
+        </div>
+      </dxi-item>
+      <dxi-item name="groupPanel"></dxi-item>
+      <dxi-item name="exportButton"></dxi-item>
+      <dxi-item name="columnChooserButton"></dxi-item>
+    </dxo-toolbar>
+
+    <dxi-column dataField="id" [visible]="false"> </dxi-column>
+    <dxi-column dataField="code" caption="{{ 'PRICELISTCODE' | translate }}">
+    </dxi-column>
+    <dxi-column dataField="name" caption="{{ 'PRICELISTNAME' | translate }}">
+    </dxi-column>
+    <dxi-column
+      dataField="firstDate"
+      dataType="date"
+      caption="{{ 'PRICELISTFIRSTDATE' | translate }}"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="endDate"
+      dataType="date"
+      caption="{{ 'PRICELISTENDDATE' | translate }}"
+    >
+    </dxi-column>
+    <dxi-column type="buttons" [showInColumnChooser]="false">
+      <dxi-button
+        hint="{{ 'EDIT' | translate }}"
+        icon="edit"
+        (onClick)="editPriceList($event)"
+      ></dxi-button>
+      <dxi-button
+        hint="{{ 'DELETE' | translate }}"
+        icon="remove"
+        (onClick)="removePriceList($event)"
+      ></dxi-button>
+    </dxi-column>
+  </dx-data-grid>
+</div>
+
+<div *ngIf="formActive">
+  <app-price-list-form
+    [priceListMaster]="priceListMaster"
+    (closeForm)="submitForm($event)"
   >
-  </dxo-pager>
-
-  <dxo-filter-panel [visible]="true"></dxo-filter-panel>
-  <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
-  <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
-
-  <dxo-group-panel [visible]="true"></dxo-group-panel>
-  <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
-
-  <dxo-toolbar>
-    <dxi-item location="after">
-      <div *dxTemplate>
-        <dx-button icon="refresh" (onClick)="refreshDataGrid($event)">
-        </dx-button>
-      </div>
-    </dxi-item>
-    <dxi-item location="after">
-      <div *dxTemplate>
-        <dx-button icon="add" (onClick)="newPriceList($event)"> </dx-button>
-      </div>
-    </dxi-item>
-    <dxi-item name="groupPanel"></dxi-item>
-    <dxi-item name="exportButton"></dxi-item>
-    <dxi-item name="columnChooserButton"></dxi-item>
-  </dxo-toolbar>
-
-  <dxi-column dataField="id" [visible]="false"> </dxi-column>
-  <dxi-column dataField="code" caption="{{ 'PRICELISTCODE' | translate }}">
-  </dxi-column>
-  <dxi-column dataField="name" caption="{{ 'PRICELISTNAME' | translate }}">
-  </dxi-column>
-  <dxi-column
-    dataField="firstDate"
-    dataType="date"
-    caption="{{ 'PRICELISTFIRSTDATE' | translate }}"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="endDate"
-    dataType="date"
-    caption="{{ 'PRICELISTENDDATE' | translate }}"
-  >
-  </dxi-column>
-  <dxi-column type="buttons" [showInColumnChooser]="false">
-    <dxi-button
-      hint="{{ 'EDIT' | translate }}"
-      icon="edit"
-      (onClick)="editPriceList($event)"
-    ></dxi-button>
-    <dxi-button
-      hint="{{ 'DELETE' | translate }}"
-      icon="remove"
-      (onClick)="removePriceList($event)"
-    ></dxi-button>
-  </dxi-column>
-</dx-data-grid>
+  </app-price-list-form>
+</div>

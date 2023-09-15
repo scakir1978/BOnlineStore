@@ -8,6 +8,7 @@ import { AuthGuard } from './../../core/guards/auth.guard';
 import { PriceListComponent } from './price-list.component';
 import { PriceListService } from './price-list.service';
 import { PriceListFormComponent } from './price-list-form/price-list-form/price-list-form.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -28,6 +29,7 @@ const routes: Routes = [
     DevExtremeModule,
     SharedModule,
     FormsModule,
+    CommonModule,
   ],
   exports: [TranslateModule],
   providers: [PriceListService, TranslateService],
