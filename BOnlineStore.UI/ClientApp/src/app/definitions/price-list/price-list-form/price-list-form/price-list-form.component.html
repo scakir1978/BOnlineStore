@@ -1,4 +1,95 @@
-<form (ngSubmit)="onSubmit()" #form="ngForm">
+<div class="title">Genel Bilgiler</div>
+<div class="row">
+  <div class="col pb-2">
+    <dx-text-box
+      [(value)]="priceListMaster.code"
+      label="Fiyat Listesi Kodu"
+      placeholder="Fiyat listesi kodunu yazınız..."
+      [stylingMode]="'outlined'"
+      [labelMode]="'floating'"
+    ></dx-text-box>
+  </div>
+  <div class="col pb-2">
+    <dx-text-box
+      [(value)]="priceListMaster.name"
+      label="Açıklama"
+      [stylingMode]="'outlined'"
+      [labelMode]="'floating'"
+    ></dx-text-box>
+  </div>
+  <div class="col pb-2">
+    <dx-date-box
+      type="date"
+      label="Başlangıç Tarihi"
+      [(value)]="priceListMaster.firstDate"
+      [inputAttr]="{ 'aria-label': 'Date' }"
+      [stylingMode]="'outlined'"
+      [labelMode]="'floating'"
+    >
+    </dx-date-box>
+  </div>
+  <div class="col pb-2">
+    <dx-date-box
+      type="date"
+      label="Bitiş Tarihi"
+      [(value)]="priceListMaster.endDate"
+      [inputAttr]="{ 'aria-label': 'Date' }"
+      [stylingMode]="'outlined'"
+      [labelMode]="'floating'"
+    >
+    </dx-date-box>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <dx-data-grid
+      [(dataSource)]="priceListMaster.priceListDetails"
+      keyExpr="priceListId"
+      [showBorders]="true"
+      [repaintChangesOnly]="true"
+      [showColumnLines]="true"
+      [showRowLines]="true"
+      [rowAlternationEnabled]="true"
+    >
+      <dxi-column dataField="priceListId"> </dxi-column>
+      <dxi-column dataField="modelId"> </dxi-column>
+      <dxi-column dataField="colorId">
+        <dxo-lookup
+          [dataSource]="colorDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxo-editing
+        mode="row"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true"
+        [confirmDelete]="true"
+        [useIcons]="true"
+      ></dxo-editing>
+    </dx-data-grid>
+  </div>
+</div>
+<div class="row align-items-end">
+  <div class="col float-end">
+    <dx-button
+      text="Kaydet"
+      type="normal"
+      icon="save"
+      (onClick)="onSubmit()"
+    ></dx-button>
+    <dx-button
+      text="Vazgeç"
+      type="normal"
+      icon="close"
+      (onClick)="onSubmit()"
+    ></dx-button>
+  </div>
+</div>
+
+<!-- <form (ngSubmit)="onSubmit()" #form="ngForm">
   <dx-form
     id="priceListMaster"
     [formData]="priceListMaster"
@@ -61,4 +152,4 @@
     >
     </dxi-item>
   </dx-form>
-</form>
+</form> -->
