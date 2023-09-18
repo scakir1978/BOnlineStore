@@ -36,6 +36,7 @@ export interface IPriceListMeasurementDifference {
 
 /** Fiyat listesi detay entity. */
 export interface IPriceListDetail {
+  id: string;
   /** Fiyat listesi id */
   priceListId: string | null;
   /** Model id */

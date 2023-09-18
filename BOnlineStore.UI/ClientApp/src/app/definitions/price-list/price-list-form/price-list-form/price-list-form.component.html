@@ -41,7 +41,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col">
+  <div class="col pb-3">
     <dx-data-grid
       [(dataSource)]="priceListMaster.priceListDetails"
       keyExpr="priceListId"
@@ -50,10 +50,17 @@
       [showColumnLines]="true"
       [showRowLines]="true"
       [rowAlternationEnabled]="true"
+      (onInitNewRow)="onInitNewRow($event)"
     >
-      <dxi-column dataField="priceListId"> </dxi-column>
-      <dxi-column dataField="modelId"> </dxi-column>
-      <dxi-column dataField="colorId">
+      <dxi-column dataField="modelId" caption="Model">
+        <dxo-lookup
+          [dataSource]="modelDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxi-column dataField="colorId" caption="Renk">
         <dxo-lookup
           [dataSource]="colorDataSource"
           displayExpr="name"
@@ -61,8 +68,135 @@
         >
         </dxo-lookup>
       </dxi-column>
+      <dxi-column dataField="glassId" caption="Cam">
+        <dxo-lookup
+          [dataSource]="glassDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxi-column
+        dataField="firstWidth01"
+        dataType="number"
+        caption="En-1 İlk"
+        format=",##0.##"
+      >
+      </dxi-column>
+      <dxi-column
+        dataField="lastWidth01"
+        dataType="number"
+        caption="En-1 Son"
+        format=",##0.##"
+      >
+      </dxi-column>
+      <dxi-column
+        dataField="firstWidth02"
+        dataType="number"
+        caption="En-2 İlk"
+        format=",##0.##"
+      >
+      </dxi-column>
+      <dxi-column
+        dataField="lastWidth02"
+        dataType="number"
+        caption="En-2 Son"
+        format=",##0.##"
+      >
+      </dxi-column>
+      <dxi-column
+        dataField="firstHeight"
+        dataType="number"
+        caption="Yükseklik İlk"
+        format=",##0.##"
+      >
+      </dxi-column>
+      <dxi-column
+        dataField="lastHeight"
+        dataType="number"
+        caption="Yükseklik Son"
+        format=",##0.##"
+      >
+      </dxi-column>
+      <dxi-column
+        dataField="salePrice"
+        dataType="number"
+        caption="Satış Fiyatı"
+        format=",##0.##"
+      >
+      </dxi-column>
+      <dxi-column dataField="currencyId" caption="Döviz Kodu">
+        <dxo-lookup
+          [dataSource]="currencyDataSource"
+          displayExpr="name"
+          valueExpr="id"
+        >
+        </dxo-lookup>
+      </dxi-column>
+      <dxi-column
+        dataField="priceListMeasurementDifferences"
+        caption="Ölçü Farkları (Yükseklik)"
+        [visible]="false"
+        [showInColumnChooser]="false"
+        editCellTemplate="priceListMeasurementDifferencesTemplate"
+      >
+      </dxi-column>
+      <div *dxTemplate="let data of 'priceListMeasurementDifferencesTemplate'">
+        <dx-data-grid
+          id="priceListMeasurementDifferencesGrid"
+          [dataSource]="data.value"
+          keyExpr="measurement"
+          [showBorders]="true"
+          [repaintChangesOnly]="true"
+          [showColumnLines]="true"
+          [showRowLines]="true"
+          [rowAlternationEnabled]="true"
+          (onSaved)="onSaved($event, data)"
+          (onRowInserting)="
+            onRowInsertingPriceListMeasurementDifferences($event)
+          "
+        >
+          <dxi-column
+            dataField="measurement"
+            caption="Yükseklik Farkı"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="percentDifference"
+            caption="Fark (%)"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="currencyDifference"
+            caption="Fark"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="salePrice"
+            caption="Satış Fiyatı"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+          <dxo-editing
+            mode="row"
+            [allowUpdating]="true"
+            [allowAdding]="true"
+            [allowDeleting]="true"
+            [confirmDelete]="true"
+            [useIcons]="true"
+          ></dxo-editing>
+        </dx-data-grid>
+      </div>
+
       <dxo-editing
-        mode="row"
+        mode="popup"
         [allowUpdating]="true"
         [allowAdding]="true"
         [allowDeleting]="true"
@@ -73,7 +207,7 @@
   </div>
 </div>
 <div class="row align-items-end">
-  <div class="col float-end">
+  <div class="text-sm-end d-none d-sm-block">
     <dx-button
       text="Kaydet"
       type="normal"

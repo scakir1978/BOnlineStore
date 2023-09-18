@@ -8,17 +8,17 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Model Kodu
         /// </summary>
-        public string Code { get; set; }
+        public string Code { get; private set; }
 
         /// <summary>
         /// Model Açıklaması
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Model Grup Id
         /// </summary>
-        public string ModelGroupId { get; set; }
+        public string ModelGroupId { get; private set; }
 
         /// <summary>
         /// Yan Panel Id

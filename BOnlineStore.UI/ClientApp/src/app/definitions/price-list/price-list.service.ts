@@ -35,4 +35,26 @@ export class PriceListService extends BaseService {
       DefinitionsControllerNamesEnum.COLOR
     );
   }
+
+  getGlassDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.GLASS
+    );
+  }
+
+  getCurrencyDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.CURRENCY
+    );
+  }
+
+  getModelDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.MODEL,
+      'LoadForCombo'
+    );
+  }
 }
