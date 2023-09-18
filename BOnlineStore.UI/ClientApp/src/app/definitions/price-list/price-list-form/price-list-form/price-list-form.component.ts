@@ -3,6 +3,7 @@ import { PriceListMaster } from '../../models/price-list-form-model';
 import CustomStore from 'devextreme/data/custom_store';
 import { PriceListService } from '../../price-list.service';
 import { TranslateService } from '@ngx-translate/core';
+import { PriceListFormGridTypeEnum } from '../../models/price-list-form-grid-type.enum';
 
 @Component({
   selector: 'app-price-list-form',
@@ -17,6 +18,13 @@ export class PriceListFormComponent {
   public modelDataSource: CustomStore;
   public glassDataSource: CustomStore;
   public currencyDataSource: CustomStore;
+
+  public gridColorDifferenceEnum: PriceListFormGridTypeEnum =
+    PriceListFormGridTypeEnum.COLORDIFFERENCE;
+  public gridGlassDifferenceEnum: PriceListFormGridTypeEnum =
+    PriceListFormGridTypeEnum.GLASSDIFFERENCE;
+  public gridMeasurementDifferenceEnum: PriceListFormGridTypeEnum =
+    PriceListFormGridTypeEnum.MEASUREMENTDIFFERENCE;
 
   /**
    *
@@ -46,13 +54,31 @@ export class PriceListFormComponent {
     data.setValue(values);
   }
 
-  onRowInsertingPriceListMeasurementDifferences(e) {
+  onRowInserting(e: any, gridType: PriceListFormGridTypeEnum) {
     var values: any[] = [];
     values = e.component.getDataSource().items();
 
-    const found = values.find((data) => {
-      return data.measurement === e.data.measurement;
-    });
+    var found = false;
+
+    switch (gridType) {
+      case PriceListFormGridTypeEnum.COLORDIFFERENCE:
+        found = values.find((data) => {
+          return data.colorId === e.data.colorId;
+        });
+        break;
+      case PriceListFormGridTypeEnum.GLASSDIFFERENCE:
+        found = values.find((data) => {
+          return data.glassId === e.data.glassId;
+        });
+        break;
+      case PriceListFormGridTypeEnum.MEASUREMENTDIFFERENCE:
+        found = values.find((data) => {
+          return data.measurement === e.data.measurement;
+        });
+        break;
+      default:
+        break;
+    }
 
     if (found) {
       e.cancel = true;

@@ -133,6 +133,8 @@
         >
         </dxo-lookup>
       </dxi-column>
+
+      <!-- Ölçü Farkları  -->
       <dxi-column
         dataField="priceListMeasurementDifferences"
         caption="Ölçü Farkları (Yükseklik)"
@@ -153,7 +155,7 @@
           [rowAlternationEnabled]="true"
           (onSaved)="onSaved($event, data)"
           (onRowInserting)="
-            onRowInsertingPriceListMeasurementDifferences($event)
+            onRowInserting($event, gridMeasurementDifferenceEnum)
           "
         >
           <dxi-column
@@ -184,6 +186,7 @@
             format=",##0.##"
           >
           </dxi-column>
+
           <dxo-editing
             mode="row"
             [allowUpdating]="true"
@@ -194,7 +197,133 @@
           ></dxo-editing>
         </dx-data-grid>
       </div>
+      <!-- Ölçü Farkları  -->
 
+      <!-- Renk Türü Farkları  -->
+      <dxi-column
+        dataField="priceListColorDifferences"
+        caption="Renk Türü Farkları"
+        [visible]="false"
+        [showInColumnChooser]="false"
+        editCellTemplate="priceListColorDifferencesTemplate"
+      >
+      </dxi-column>
+      <div *dxTemplate="let data of 'priceListColorDifferencesTemplate'">
+        <dx-data-grid
+          [dataSource]="data.value"
+          keyExpr="colorId"
+          [showBorders]="true"
+          [repaintChangesOnly]="true"
+          [showColumnLines]="true"
+          [showRowLines]="true"
+          [rowAlternationEnabled]="true"
+          (onSaved)="onSaved($event, data)"
+          (onRowInserting)="onRowInserting($event, gridColorDifferenceEnum)"
+        >
+          <dxi-column dataField="colorId" caption="Renk">
+            <dxo-lookup
+              [dataSource]="colorDataSource"
+              displayExpr="name"
+              valueExpr="id"
+            >
+            </dxo-lookup>
+          </dxi-column>
+          <dxi-column
+            dataField="percentDifference"
+            caption="Fark (%)"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="currencyDifference"
+            caption="Fark"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="salePrice"
+            caption="Satış Fiyatı"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+
+          <dxo-editing
+            mode="row"
+            [allowUpdating]="true"
+            [allowAdding]="true"
+            [allowDeleting]="true"
+            [confirmDelete]="true"
+            [useIcons]="true"
+          ></dxo-editing>
+        </dx-data-grid>
+      </div>
+      <!-- Renk Türü Farkları  -->
+
+      <!-- Cam Türü Farkları  -->
+      <dxi-column
+        dataField="priceListGlassDifferences"
+        caption="Cam Türü Farkları"
+        [visible]="false"
+        [showInColumnChooser]="false"
+        editCellTemplate="priceListGlassDifferencesTemplate"
+      >
+      </dxi-column>
+      <div *dxTemplate="let data of 'priceListGlassDifferencesTemplate'">
+        <dx-data-grid
+          [dataSource]="data.value"
+          keyExpr="glassId"
+          [showBorders]="true"
+          [repaintChangesOnly]="true"
+          [showColumnLines]="true"
+          [showRowLines]="true"
+          [rowAlternationEnabled]="true"
+          (onSaved)="onSaved($event, data)"
+          (onRowInserting)="onRowInserting($event, gridGlassDifferenceEnum)"
+        >
+          <dxi-column dataField="glassId" caption="Cam Türü">
+            <dxo-lookup
+              [dataSource]="glassDataSource"
+              displayExpr="name"
+              valueExpr="id"
+            >
+            </dxo-lookup>
+          </dxi-column>
+          <dxi-column
+            dataField="percentDifference"
+            caption="Fark (%)"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="currencyDifference"
+            caption="Fark"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+          <dxi-column
+            dataField="salePrice"
+            caption="Satış Fiyatı"
+            dataType="number"
+            format=",##0.##"
+          >
+          </dxi-column>
+
+          <dxo-editing
+            mode="row"
+            [allowUpdating]="true"
+            [allowAdding]="true"
+            [allowDeleting]="true"
+            [confirmDelete]="true"
+            [useIcons]="true"
+          ></dxo-editing>
+        </dx-data-grid>
+      </div>
+      <!-- Cam Türü Farkları  -->
       <dxo-editing
         mode="popup"
         [allowUpdating]="true"
@@ -202,7 +331,51 @@
         [allowDeleting]="true"
         [confirmDelete]="true"
         [useIcons]="true"
-      ></dxo-editing>
+      >
+        <dxo-form labelMode="floating">
+          <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+            <dxi-item itemType="group">
+              <dxi-item
+                itemType="group"
+                caption="{{ 'GENERALINFORMATION' | translate }}"
+              >
+                <dxi-item dataField="modelId"></dxi-item>
+                <dxi-item dataField="colorId"></dxi-item>
+                <dxi-item dataField="glassId"></dxi-item>
+              </dxi-item>
+              <dxi-item itemType="group" caption="Ölçüler" [colCount]="2">
+                <dxi-item dataField="firstWidth01"></dxi-item>
+                <dxi-item dataField="lastWidth01"></dxi-item>
+                <dxi-item dataField="firstWidth02"></dxi-item>
+                <dxi-item dataField="lastWidth02"></dxi-item>
+                <dxi-item dataField="firstHeight"></dxi-item>
+                <dxi-item dataField="lastHeight"></dxi-item>
+              </dxi-item>
+              <dxi-item
+                itemType="group"
+                caption="Fiyat Bilgileri"
+                [colCount]="2"
+              >
+                <dxi-item dataField="salePrice"></dxi-item>
+                <dxi-item dataField="currencyId"></dxi-item>
+              </dxi-item>
+            </dxi-item>
+            <dxi-item itemType="group">
+              <dxi-item itemType="group" caption="Ölçü Farkları (Yükseklik)">
+                <dxi-item
+                  dataField="priceListMeasurementDifferences"
+                ></dxi-item>
+              </dxi-item>
+              <dxi-item itemType="group" caption="Cam Türü Farkları">
+                <dxi-item dataField="priceListGlassDifferences"></dxi-item>
+              </dxi-item>
+              <dxi-item itemType="group" caption="Renk Türü Farkları">
+                <dxi-item dataField="priceListColorDifferences"></dxi-item>
+              </dxi-item>
+            </dxi-item>
+          </dxi-item>
+        </dxo-form>
+      </dxo-editing>
     </dx-data-grid>
   </div>
 </div>
