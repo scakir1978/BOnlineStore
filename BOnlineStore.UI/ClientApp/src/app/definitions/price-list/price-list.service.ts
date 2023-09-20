@@ -7,6 +7,8 @@ import { environment } from '../../../environments/environment';
 import { BaseService } from '../../base-classes/base-services/base-service';
 import { lastValueFrom, Observable, switchAll } from 'rxjs';
 import CustomStore from 'devextreme/data/custom_store';
+import { PriceListMaster } from './models/price-list-form-model';
+import { HttpRequestMethodsEnum } from 'app/base-classes/base-enums/http-request-methods.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +57,38 @@ export class PriceListService extends BaseService {
       environment.definitionsUrl,
       DefinitionsControllerNamesEnum.MODEL,
       'LoadForCombo'
+    );
+  }
+
+  priceListInsert(priceListData: PriceListMaster) {
+    this.sendRequest(
+      environment.definitionsUrl +
+        DefinitionsControllerNamesEnum.PRICELIST +
+        '/Insert',
+      HttpRequestMethodsEnum.INSERT,
+      '',
+      priceListData
+    );
+  }
+
+  priceListUpdate(priceListData: PriceListMaster, key: string) {
+    this.sendRequest(
+      environment.definitionsUrl +
+        DefinitionsControllerNamesEnum.PRICELIST +
+        '/Update',
+      HttpRequestMethodsEnum.UPDATE,
+      key,
+      priceListData
+    );
+  }
+
+  priceListDelete(key: string) {
+    this.sendRequest(
+      environment.definitionsUrl +
+        DefinitionsControllerNamesEnum.PRICELIST +
+        '/Update',
+      HttpRequestMethodsEnum.DELETE,
+      key
     );
   }
 }

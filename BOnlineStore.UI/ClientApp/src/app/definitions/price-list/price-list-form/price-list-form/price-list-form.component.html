@@ -1,5 +1,5 @@
-<div class="title">Genel Bilgiler</div>
-<div class="row">
+<div class="h3 pb-1">Genel Bilgiler</div>
+<div class="row pb-4">
   <div class="col pb-2">
     <dx-text-box
       [(value)]="priceListMaster.code"
@@ -40,6 +40,7 @@
     </dx-date-box>
   </div>
 </div>
+<div class="h3 pb-1 text-decoration-underline">Fiyat Listesi Detayları</div>
 <div class="row">
   <div class="col pb-3">
     <dx-data-grid
@@ -79,6 +80,7 @@
       <dxi-column
         dataField="firstWidth01"
         dataType="number"
+        alignment="right"
         caption="En-1 İlk"
         format=",##0.##"
       >
@@ -344,19 +346,61 @@
                 <dxi-item dataField="glassId"></dxi-item>
               </dxi-item>
               <dxi-item itemType="group" caption="Ölçüler" [colCount]="2">
-                <dxi-item dataField="firstWidth01"></dxi-item>
-                <dxi-item dataField="lastWidth01"></dxi-item>
-                <dxi-item dataField="firstWidth02"></dxi-item>
-                <dxi-item dataField="lastWidth02"></dxi-item>
-                <dxi-item dataField="firstHeight"></dxi-item>
-                <dxi-item dataField="lastHeight"></dxi-item>
+                <dxi-item
+                  dataField="firstWidth01"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="lastWidth01"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="firstWidth02"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="lastWidth02"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="firstHeight"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="lastHeight"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
               </dxi-item>
               <dxi-item
                 itemType="group"
                 caption="Fiyat Bilgileri"
                 [colCount]="2"
               >
-                <dxi-item dataField="salePrice"></dxi-item>
+                <dxi-item
+                  dataField="salePrice"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
                 <dxi-item dataField="currencyId"></dxi-item>
               </dxi-item>
             </dxi-item>
@@ -381,82 +425,7 @@
 </div>
 <div class="row align-items-end">
   <div class="text-sm-end d-none d-sm-block">
-    <dx-button
-      text="Kaydet"
-      type="normal"
-      icon="save"
-      (onClick)="onSubmit()"
-    ></dx-button>
-    <dx-button
-      text="Vazgeç"
-      type="normal"
-      icon="close"
-      (onClick)="onSubmit()"
-    ></dx-button>
+    <dx-button text="Kaydet" type="normal" (onClick)="onSubmit()"></dx-button>
+    <dx-button text="Vazgeç" type="normal" (onClick)="onSubmit()"></dx-button>
   </div>
 </div>
-
-<!-- <form (ngSubmit)="onSubmit()" #form="ngForm">
-  <dx-form
-    id="priceListMaster"
-    [formData]="priceListMaster"
-    [labelMode]="'floating'"
-    [showColonAfterLabel]="true"
-  >
-    <dxi-item itemType="group" [colCount]="4" caption="Genel Bilgiler">
-      <dxi-item dataField="code">
-        <dxo-label text="Fiyat Listesi Kodu"> </dxo-label>
-      </dxi-item>
-      <dxi-item dataField="name">
-        <dxo-label text="Açıklama"> </dxo-label>
-      </dxi-item>
-      <dxi-item dataField="firstDate" editorType="dxDateBox">
-        <dxo-label text="Başlangıç Tarihi"> </dxo-label>
-      </dxi-item>
-      <dxi-item dataField="endDate" editorType="dxDateBox">
-        <dxo-label text="Bitiş Tarihi"> </dxo-label>
-      </dxi-item>
-    </dxi-item>
-    <dxi-item itemType="group" caption="Detay Bilgiler">
-      <dxi-item dataField="priceListDetails">
-        <div *dxTemplate="let priceListeDetailData of 'priceListDetails'">
-          <dx-data-grid
-            [dataSource]="priceListeDetailData"
-            keyExpr="priceListId"
-            [showBorders]="true"
-            [repaintChangesOnly]="true"
-            [showColumnLines]="true"
-            [showRowLines]="true"
-            [rowAlternationEnabled]="true"
-            (onSaved)="onSaved($event, priceListeDetailData)"
-          >
-            <dxi-column dataField="priceListId"> </dxi-column>
-            <dxi-column dataField="modelId"> </dxi-column>
-            <dxi-column dataField="colorId">
-              <dxo-lookup
-                [dataSource]="colorDataSource"
-                displayExpr="name"
-                valueExpr="id"
-              >
-              </dxo-lookup>
-            </dxi-column>
-            <dxo-editing
-              mode="row"
-              [allowUpdating]="true"
-              [allowAdding]="true"
-              [allowDeleting]="true"
-              [confirmDelete]="true"
-              [useIcons]="true"
-            ></dxo-editing>
-          </dx-data-grid>
-        </div>
-      </dxi-item>
-    </dxi-item>
-    <dxi-item
-      itemType="button"
-      horizontalAlignment="left"
-      [buttonOptions]="buttonOptions"
-    >
-    </dxi-item>
-  </dx-form>
-</form> -->

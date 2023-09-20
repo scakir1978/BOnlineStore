@@ -3,7 +3,7 @@ import { PriceListMaster } from '../../models/price-list-form-model';
 import CustomStore from 'devextreme/data/custom_store';
 import { PriceListService } from '../../price-list.service';
 import { TranslateService } from '@ngx-translate/core';
-import { PriceListFormGridTypeEnum } from '../../models/price-list-form-grid-type.enum';
+import { PriceListFormGridTypeEnum } from '../../enums/price-list-form-grid-type.enum';
 
 @Component({
   selector: 'app-price-list-form',

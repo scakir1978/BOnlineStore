@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import DataSource from 'devextreme/data/data_source';
 import { PriceListMaster } from './models/price-list-form-model';
 import { ObjectId } from 'bson';
+import { FormCrudTypeEnum } from 'app/base-classes/base-enums/form-crud-type.enum';
 
 @Component({
   selector: 'price-list',
@@ -15,6 +16,7 @@ export class PriceListComponent extends BaseDefinitionsOnGridComponent {
   public priceListDataSource: DataSource;
   public priceListMaster: PriceListMaster;
   public formActive: boolean = false;
+  public formCrudType: FormCrudTypeEnum;
 
   constructor(
     public override _translate: TranslateService,
@@ -34,10 +36,12 @@ export class PriceListComponent extends BaseDefinitionsOnGridComponent {
     var objectId = new ObjectId();
     this.formActive = true;
     this.priceListMaster = new PriceListMaster(objectId.toString());
-    this.priceListMaster.code = '123';
+    this.formCrudType = FormCrudTypeEnum.INSERT;
   }
 
-  editPriceList(e) {}
+  editPriceList(e) {
+    this.formCrudType = FormCrudTypeEnum.UPDATE;
+  }
 
   removePriceList(e) {}
 

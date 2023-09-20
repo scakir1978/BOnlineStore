@@ -4,6 +4,7 @@ import { Inject } from '@angular/core';
 import DataSource from 'devextreme/data/data_source';
 import { lastValueFrom, Observable } from 'rxjs';
 import CustomStore from 'devextreme/data/custom_store';
+import { HttpRequestMethodsEnum } from '../base-enums/http-request-methods.enum';
 
 export abstract class BaseService {
   constructor(
@@ -30,7 +31,7 @@ export abstract class BaseService {
         load: (loadOptions: any) =>
           this.sendRequest(
             serviceUrl + controllerName + '/Load  ',
-            'LOAD',
+            HttpRequestMethodsEnum.LOAD,
             null!,
             loadOptions
           ),
@@ -39,22 +40,36 @@ export abstract class BaseService {
         load: (loadOptions: any) =>
           this.sendRequest(
             serviceUrl + controllerName + '/Load  ',
-            'LOADPOST',
+            HttpRequestMethodsEnum.LOADPOST,
             null!,
             loadOptions
           ),
       }),
       ...(addInsertFunction == DatasourceFunctionsEnum.GETINSERT && {
         insert: (values: any) =>
-          this.sendRequest(serviceUrl + controllerName, 'INSERT', '', values),
+          this.sendRequest(
+            serviceUrl + controllerName,
+            HttpRequestMethodsEnum.INSERT,
+            '',
+            values
+          ),
       }),
       ...(addUpdateFunction == DatasourceFunctionsEnum.GETUPDATE && {
         update: (key: string, values: any) =>
-          this.sendRequest(serviceUrl + controllerName, 'UPDATE', key, values),
+          this.sendRequest(
+            serviceUrl + controllerName,
+            HttpRequestMethodsEnum.UPDATE,
+            key,
+            values
+          ),
       }),
       ...(addRemoveFunction == DatasourceFunctionsEnum.GETREMOVE && {
         remove: (key: string) =>
-          this.sendRequest(serviceUrl + controllerName, 'DELETE', key),
+          this.sendRequest(
+            serviceUrl + controllerName,
+            HttpRequestMethodsEnum.DELETE,
+            key
+          ),
       }),
     });
 
@@ -74,7 +89,7 @@ export abstract class BaseService {
       load: (loadOptions) =>
         this.sendRequest(
           serviceUrl + controllerName + '/' + functionName,
-          'LOAD',
+          HttpRequestMethodsEnum.LOAD,
           null!,
           loadOptions
         ),
@@ -83,27 +98,32 @@ export abstract class BaseService {
 
   sendRequest(
     url: string,
-    method = 'LOADPOST',
+    method: HttpRequestMethodsEnum = HttpRequestMethodsEnum.LOADPOST,
     key: string = '',
     data: any = {}
   ): any {
     let result;
 
     switch (method) {
-      case 'LOAD': //Comboboxlar için
+      case HttpRequestMethodsEnum.LOAD: //Comboboxlar için
         result = this._http.post(url, data);
         break;
-      case 'LOADPOST':
+      case HttpRequestMethodsEnum.LOADPOST:
         result = this._http.post(url, data);
         break;
-      case 'INSERT':
+      case HttpRequestMethodsEnum.GETALL:
+        result = this._http.get(url);
+        break;
+      case HttpRequestMethodsEnum.GETBYID:
+        result = this._http.get(url + '/' + key);
+        break;
+      case HttpRequestMethodsEnum.INSERT:
         result = this._http.post(url, data);
         break;
-      case 'UPDATE':
+      case HttpRequestMethodsEnum.UPDATE:
         result = this._http.put(url + '/' + key, data);
         break;
-
-      case 'DELETE':
+      case HttpRequestMethodsEnum.DELETE:
         result = this._http.delete(url + '/' + key);
         break;
     }
