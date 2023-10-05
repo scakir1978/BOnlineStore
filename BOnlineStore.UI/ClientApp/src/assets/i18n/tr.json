@@ -163,5 +163,7 @@
   "PRICELISTCODE": "Fiyat Listesi Kodu",
   "PRICELISTNAME": "Fiyat Listesi Adı",
   "PRICELISTFIRSTDATE": "Geçerlilik Tarihi Başlangıcı",
-  "PRICELISTENDDATE": "Geçerlilik Tarihi Bitişi"
+  "PRICELISTENDDATE": "Geçerlilik Tarihi Bitişi",
+  "EDIT": "Düzenle",
+  "DELETE": "Sil"
 }

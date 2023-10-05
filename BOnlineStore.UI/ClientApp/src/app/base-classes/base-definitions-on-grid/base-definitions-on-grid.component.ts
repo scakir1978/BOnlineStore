@@ -107,7 +107,8 @@ export class BaseDefinitionsOnGridComponent implements OnInit, OnDestroy {
   }
 
   refreshDataGrid() {
-    this.dataGrid.instance.refresh();
+    if (this.dataGrid && this.dataGrid.instance)
+      this.dataGrid.instance.refresh();
   }
 
   /**

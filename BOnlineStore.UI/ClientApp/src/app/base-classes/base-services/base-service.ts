@@ -2,7 +2,7 @@ import { DatasourceFunctionsEnum } from './../base-enums/datasource-functions.en
 import { HttpClient } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import DataSource from 'devextreme/data/data_source';
-import { lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import CustomStore from 'devextreme/data/custom_store';
 import { HttpRequestMethodsEnum } from '../base-enums/http-request-methods.enum';
 

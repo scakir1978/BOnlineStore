@@ -30,6 +30,10 @@ export class PriceListComponent extends BaseDefinitionsOnGridComponent {
     );
     this.formActive = false;
     this.priceListDataSource = _priceListService.getDataSource();
+
+    this.removePriceList = this.removePriceList.bind(this);
+    this.editPriceList = this.editPriceList.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   newPriceList(e) {
@@ -39,13 +43,37 @@ export class PriceListComponent extends BaseDefinitionsOnGridComponent {
     this.formCrudType = FormCrudTypeEnum.INSERT;
   }
 
-  editPriceList(e) {
+  async editPriceList(e) {
     this.formCrudType = FormCrudTypeEnum.UPDATE;
+    this.priceListMaster = await this._priceListService.getById(e.row.data.id);
+    this.formActive = true;
+    e.event.preventDefault();
   }
 
-  removePriceList(e) {}
+  removePriceList(e) {
+    this._priceListService.delete(e.row.data.id);
+    this.refreshDataGrid();
+    e.event.preventDefault();
+  }
 
-  submitForm(priceListMaster: PriceListMaster) {
+  async submitForm(priceListMaster: PriceListMaster) {
+    if (this.formCrudType == FormCrudTypeEnum.INSERT) {
+      try {
+        await this._priceListService.insert(priceListMaster);
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    }
+    if (this.formCrudType == FormCrudTypeEnum.UPDATE) {
+      this._priceListService.update(priceListMaster, priceListMaster.id);
+    }
+
+    this.formActive = false;
+    this.refreshDataGrid();
+  }
+
+  cancelForm() {
     this.formActive = false;
   }
 }

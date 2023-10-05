@@ -10,21 +10,21 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Fiyat listesi kodu.
         /// </summary>
-        public string? Code { get; private set; }
+        public string? Code { get; set; }
 
         /// <summary>
         /// Fiyatlistesi açıklaması veya adı
         /// </summary>
-        public string? Name { get; private set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Fiyat listesi geçerlilik süresi başlangıç tarihi
         /// </summary>
-        public DateTime? FirstDate { get; private set; }
+        public DateTime? FirstDate { get; set; }
 
         /// <summary>
         /// Fiyat listesi geçerlilik süresi bitiş tarihi
         /// </summary>
-        public DateTime? EndDate { get; private set; }
+        public DateTime? EndDate { get; set; }
     }
 }

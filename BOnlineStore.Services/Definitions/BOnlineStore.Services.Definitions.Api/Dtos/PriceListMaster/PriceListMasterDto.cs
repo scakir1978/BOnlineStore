@@ -12,42 +12,42 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Fiyat listesi kodu.
         /// </summary>
-        public string? Code { get; private set; }
+        public string? Code { get; set; }
 
         /// <summary>
         /// Fiyatlistesi açıklaması veya adı
         /// </summary>
-        public string? Name { get; private set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Fiyat listesi geçerlilik süresi başlangıç tarihi
         /// </summary>
-        public DateTime? FirstDate { get; private set; }
+        public DateTime? FirstDate { get; set; }
 
         /// <summary>
         /// Fiyat listesi geçerlilik süresi bitiş tarihi
         /// </summary>
-        public DateTime? EndDate { get; private set; }
+        public DateTime? EndDate { get; set; }
 
         /// <summary>
         /// Ölçü farklarından oluşan fiyat bilgileri
         /// </summary>
-        public List<PriceListMeasurementDifferenceDto>? PriceListMeasurementDifferences { get; private set; }
+        public List<PriceListMeasurementDifferenceDto>? PriceListMeasurementDifferences { get; set; }
 
         /// <summary>
         /// Cam deseni farklarından oluşan fiyat bilgileri
         /// </summary>
-        public List<PriceListGlassDifferenceDto>? PriceListGlassDifferences { get; private set; }
+        public List<PriceListGlassDifferenceDto>? PriceListGlassDifferences { get; set; }
 
         /// <summary>
         /// Renk farklarından oluşan fiyat bilgileri
         /// </summary>
-        public List<PriceListColorDifferenceDto>? PriceListColorDifferences { get; private set; }
+        public List<PriceListColorDifferenceDto>? PriceListColorDifferences { get; set; }
 
         /// <summary>
         /// Fiyat listesi detayları
         /// </summary>
-        public List<PriceListDetailDto>? PriceListDetails { get; private set; }
+        public List<PriceListDetailDto>? PriceListDetails { get; set; }
 
         public PriceListMasterDto(
             string id,

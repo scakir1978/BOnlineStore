@@ -139,5 +139,7 @@
   "PRICELISTCODE": "Price List Code",
   "PRICELISTNAME": "Price List Name",
   "PRICELISTFIRSTDATE": "Validity Date Start",
-  "PRICELISTENDDATE": "Validity Date End"
+  "PRICELISTENDDATE": "Validity Date End",
+  "EDIT": "Edit",
+  "DELETE": "Delete"
 }

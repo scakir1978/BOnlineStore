@@ -40,7 +40,7 @@
     </dx-date-box>
   </div>
 </div>
-<div class="h3 pb-1 text-decoration-underline">Fiyat Listesi Detayları</div>
+<div class="h3 pb-1">Fiyat Listesi Detayları</div>
 <div class="row">
   <div class="col pb-3">
     <dx-data-grid
@@ -149,7 +149,7 @@
         <dx-data-grid
           id="priceListMeasurementDifferencesGrid"
           [dataSource]="data.value"
-          keyExpr="measurement"
+          keyExpr="id"
           [showBorders]="true"
           [repaintChangesOnly]="true"
           [showColumnLines]="true"
@@ -159,6 +159,7 @@
           (onRowInserting)="
             onRowInserting($event, gridMeasurementDifferenceEnum)
           "
+          (onInitNewRow)="onInitNewRowDetailGrids($event)"
         >
           <dxi-column
             dataField="measurement"
@@ -213,7 +214,7 @@
       <div *dxTemplate="let data of 'priceListColorDifferencesTemplate'">
         <dx-data-grid
           [dataSource]="data.value"
-          keyExpr="colorId"
+          keyExpr="id"
           [showBorders]="true"
           [repaintChangesOnly]="true"
           [showColumnLines]="true"
@@ -221,6 +222,7 @@
           [rowAlternationEnabled]="true"
           (onSaved)="onSaved($event, data)"
           (onRowInserting)="onRowInserting($event, gridColorDifferenceEnum)"
+          (onInitNewRow)="onInitNewRowDetailGrids($event)"
         >
           <dxi-column dataField="colorId" caption="Renk">
             <dxo-lookup
@@ -276,7 +278,7 @@
       <div *dxTemplate="let data of 'priceListGlassDifferencesTemplate'">
         <dx-data-grid
           [dataSource]="data.value"
-          keyExpr="glassId"
+          keyExpr="id"
           [showBorders]="true"
           [repaintChangesOnly]="true"
           [showColumnLines]="true"
@@ -284,6 +286,7 @@
           [rowAlternationEnabled]="true"
           (onSaved)="onSaved($event, data)"
           (onRowInserting)="onRowInserting($event, gridGlassDifferenceEnum)"
+          (onInitNewRow)="onInitNewRowDetailGrids($event)"
         >
           <dxi-column dataField="glassId" caption="Cam Türü">
             <dxo-lookup
@@ -426,6 +429,11 @@
 <div class="row align-items-end">
   <div class="text-sm-end d-none d-sm-block">
     <dx-button text="Kaydet" type="normal" (onClick)="onSubmit()"></dx-button>
-    <dx-button text="Vazgeç" type="normal" (onClick)="onSubmit()"></dx-button>
+    <dx-button
+      text="Vazgeç"
+      type="normal"
+      (onClick)="onCancel()"
+      style="margin-left: 10px"
+    ></dx-button>
   </div>
 </div>

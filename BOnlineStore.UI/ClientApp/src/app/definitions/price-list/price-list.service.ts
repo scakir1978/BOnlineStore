@@ -14,7 +14,7 @@ import { HttpRequestMethodsEnum } from 'app/base-classes/base-enums/http-request
   providedIn: 'root',
 })
 export class PriceListService extends BaseService {
-  constructor(public override _http: HttpClient) {
+  constructor(public _http: HttpClient) {
     super(
       _http,
       environment.definitionsUrl,
@@ -60,34 +60,36 @@ export class PriceListService extends BaseService {
     );
   }
 
-  priceListInsert(priceListData: PriceListMaster) {
-    this.sendRequest(
-      environment.definitionsUrl +
-        DefinitionsControllerNamesEnum.PRICELIST +
-        '/Insert',
+  async insert(priceListData: PriceListMaster): Promise<any> {
+    return await this.sendRequest(
+      environment.definitionsUrl + DefinitionsControllerNamesEnum.PRICELIST,
       HttpRequestMethodsEnum.INSERT,
       '',
       priceListData
     );
   }
 
-  priceListUpdate(priceListData: PriceListMaster, key: string) {
+  update(priceListData: PriceListMaster, key: string) {
     this.sendRequest(
-      environment.definitionsUrl +
-        DefinitionsControllerNamesEnum.PRICELIST +
-        '/Update',
+      environment.definitionsUrl + DefinitionsControllerNamesEnum.PRICELIST,
       HttpRequestMethodsEnum.UPDATE,
       key,
       priceListData
     );
   }
 
-  priceListDelete(key: string) {
+  delete(key: string) {
     this.sendRequest(
-      environment.definitionsUrl +
-        DefinitionsControllerNamesEnum.PRICELIST +
-        '/Update',
+      environment.definitionsUrl + DefinitionsControllerNamesEnum.PRICELIST,
       HttpRequestMethodsEnum.DELETE,
+      key
+    );
+  }
+
+  async getById(key: string): Promise<any> {
+    return await this.sendRequest(
+      environment.definitionsUrl + DefinitionsControllerNamesEnum.PRICELIST,
+      HttpRequestMethodsEnum.GETBYID,
       key
     );
   }

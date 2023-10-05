@@ -45,6 +45,13 @@
     <dxo-group-panel [visible]="true"></dxo-group-panel>
     <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
 
+    <dxo-editing
+      mode="row"
+      [allowUpdating]="false"
+      [allowDeleting]="false"
+      [useIcons]="true"
+    ></dxo-editing>
+
     <dxo-toolbar>
       <dxi-item location="after">
         <div *dxTemplate>
@@ -83,12 +90,12 @@
       <dxi-button
         hint="{{ 'EDIT' | translate }}"
         icon="edit"
-        (onClick)="editPriceList($event)"
+        [onClick]="editPriceList"
       ></dxi-button>
       <dxi-button
         hint="{{ 'DELETE' | translate }}"
-        icon="remove"
-        (onClick)="removePriceList($event)"
+        icon="trash"
+        [onClick]="removePriceList"
       ></dxi-button>
     </dxi-column>
   </dx-data-grid>
@@ -98,6 +105,7 @@
   <app-price-list-form
     [priceListMaster]="priceListMaster"
     (closeForm)="submitForm($event)"
+    (cancelForm)="cancelForm()"
   >
   </app-price-list-form>
 </div>

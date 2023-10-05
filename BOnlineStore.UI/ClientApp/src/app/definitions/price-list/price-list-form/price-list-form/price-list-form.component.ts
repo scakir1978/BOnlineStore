@@ -4,6 +4,7 @@ import CustomStore from 'devextreme/data/custom_store';
 import { PriceListService } from '../../price-list.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PriceListFormGridTypeEnum } from '../../enums/price-list-form-grid-type.enum';
+import { ObjectId } from 'bson';
 
 @Component({
   selector: 'app-price-list-form',
@@ -13,6 +14,7 @@ import { PriceListFormGridTypeEnum } from '../../enums/price-list-form-grid-type
 export class PriceListFormComponent {
   @Input() priceListMaster: PriceListMaster;
   @Output() closeForm = new EventEmitter<any>();
+  @Output() cancelForm = new EventEmitter<any>();
 
   public colorDataSource: CustomStore;
   public modelDataSource: CustomStore;
@@ -47,6 +49,10 @@ export class PriceListFormComponent {
 
   onSubmit() {
     this.closeForm.emit(this.priceListMaster);
+  }
+
+  onCancel() {
+    this.cancelForm.emit();
   }
 
   onSaved(e: any, data: any) {
@@ -93,5 +99,10 @@ export class PriceListFormComponent {
     e.data.priceListMeasurementDifferences = [];
     e.data.priceListGlassDifferences = [];
     e.data.priceListColorDifferences = [];
+  }
+
+  onInitNewRowDetailGrids(e: any) {
+    var objectId = new ObjectId();
+    e.data.id = objectId.toString();
   }
 }
