@@ -69,8 +69,8 @@ export class PriceListService extends BaseService {
     );
   }
 
-  update(priceListData: PriceListMaster, key: string) {
-    this.sendRequest(
+  async update(priceListData: PriceListMaster, key: string): Promise<any> {
+    return await this.sendRequest(
       environment.definitionsUrl + DefinitionsControllerNamesEnum.PRICELIST,
       HttpRequestMethodsEnum.UPDATE,
       key,

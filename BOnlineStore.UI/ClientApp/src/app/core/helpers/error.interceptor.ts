@@ -30,7 +30,6 @@ export class ErrorInterceptor implements HttpInterceptor {
           location.reload();*/
         }
 
-        debugger;
         var error = err.error.message || err.statusText;
 
         if (err?.error?.errors) {
@@ -40,6 +39,18 @@ export class ErrorInterceptor implements HttpInterceptor {
           Object.entries(err.error.errors).forEach(
             ([key, value]) => (error += `${key}: ${value}` + '\n')
           );
+
+          /*err.error.errors.forEach((element: any) => {
+            error += element.Message + '\n';
+          });*/
+        }
+
+        //Fluent validator üzerinden gelen hastalar
+        if (err?.error?.Errors) {
+          error = '';
+          Object.entries(err.error.Errors).forEach((element: any) => {
+            error += element[1].Message + '\n';
+          });
 
           /*err.error.errors.forEach((element: any) => {
             error += element.Message + '\n';

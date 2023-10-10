@@ -41,12 +41,6 @@ export class PriceListFormComponent {
     this.currencyDataSource = _priceListService.getCurrencyDataSource();
   }
 
-  buttonOptions: any = {
-    text: 'Kaydet',
-    type: 'normal',
-    useSubmitBehavior: true,
-  };
-
   onSubmit() {
     this.closeForm.emit(this.priceListMaster);
   }
@@ -95,12 +89,16 @@ export class PriceListFormComponent {
     }
   }
 
+  //Detay gridde yeni kayıt ekleyince devreye giriyor
   onInitNewRow(e: any) {
+    var objectId = new ObjectId();
     e.data.priceListMeasurementDifferences = [];
     e.data.priceListGlassDifferences = [];
     e.data.priceListColorDifferences = [];
+    e.data.id = objectId.toString();
   }
 
+  //Detay kayıt girişinde, üç adet farklı gridin kayıt eklemesinde devreye giriyor.
   onInitNewRowDetailGrids(e: any) {
     var objectId = new ObjectId();
     e.data.id = objectId.toString();

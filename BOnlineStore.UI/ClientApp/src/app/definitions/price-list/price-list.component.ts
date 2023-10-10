@@ -6,6 +6,7 @@ import DataSource from 'devextreme/data/data_source';
 import { PriceListMaster } from './models/price-list-form-model';
 import { ObjectId } from 'bson';
 import { FormCrudTypeEnum } from 'app/base-classes/base-enums/form-crud-type.enum';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'price-list',
@@ -66,7 +67,15 @@ export class PriceListComponent extends BaseDefinitionsOnGridComponent {
       }
     }
     if (this.formCrudType == FormCrudTypeEnum.UPDATE) {
-      this._priceListService.update(priceListMaster, priceListMaster.id);
+      try {
+        await this._priceListService.update(
+          priceListMaster,
+          priceListMaster.id
+        );
+      } catch (error) {
+        this.showErrorMessage(error.message);
+        return;
+      }
     }
 
     this.formActive = false;
@@ -75,5 +84,15 @@ export class PriceListComponent extends BaseDefinitionsOnGridComponent {
 
   cancelForm() {
     this.formActive = false;
+  }
+
+  showErrorMessage(errorMessage) {
+    Swal.fire({
+      title: 'Bir hata oluştu!',
+      text: errorMessage,
+      icon: 'error',
+      confirmButtonColor: '#364574',
+      confirmButtonText: 'OK',
+    });
   }
 }
