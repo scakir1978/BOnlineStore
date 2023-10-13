@@ -21,6 +21,7 @@ pipelines:
               - docker
             caches:
               - docker
+    identity:
         - step:
             name: Identity Service Publish Docker Hub
             script:              
@@ -30,7 +31,8 @@ pipelines:
             services:
               - docker
             caches:
-              - docker      
+              - docker
+    production:
         - step:
             name: Production Service Publish Docker Hub
             script:              
@@ -41,6 +43,7 @@ pipelines:
               - docker
             caches:
               - docker
+    ui:
         - step:
             name: UI Publish Docker Hub
             script:              
