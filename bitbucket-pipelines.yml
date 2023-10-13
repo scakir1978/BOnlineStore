@@ -16,10 +16,10 @@ pipelines:
             script:
               - cd BOnlineStore.Services
               - cd Definitions
-              - cd BOnlineStore.Services.Definitions.Api
-              - echo ${DOCKERHUB_PASSWORD} | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+              - cd BOnlineStore.Services.Definitions.Api              
               - docker build -t scakir1978/definitions.bonlinestore.com:latest .
               - docker push scakir1978/definitions.bonlinestore.com:latest
+              - docker login -u scakir1978 -p Scag185489
             services:
               - docker
             caches:
