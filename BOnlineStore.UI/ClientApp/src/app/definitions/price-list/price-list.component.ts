@@ -88,7 +88,7 @@ export class PriceListComponent extends BaseDefinitionsOnGridComponent {
 
   showErrorMessage(errorMessage) {
     Swal.fire({
-      title: 'Bir hata oluştu!',
+      title: 'Değişiklikler kaydedilemedi.',
       text: errorMessage,
       icon: 'error',
       confirmButtonColor: '#364574',

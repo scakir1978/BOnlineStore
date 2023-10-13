@@ -39,9 +39,10 @@ export class PriceListFormComponent {
     this.modelDataSource = _priceListService.getModelDataSource();
     this.glassDataSource = _priceListService.getGlassDataSource();
     this.currencyDataSource = _priceListService.getCurrencyDataSource();
+    this.validateDates = this.validateDates.bind(this);
   }
 
-  onSubmit() {
+  onSubmit(e) {
     this.closeForm.emit(this.priceListMaster);
   }
 
@@ -102,5 +103,14 @@ export class PriceListFormComponent {
   onInitNewRowDetailGrids(e: any) {
     var objectId = new ObjectId();
     e.data.id = objectId.toString();
+  }
+
+  validateDates(e: any) {
+    if (
+      new Date(e.value).getTime() >
+      new Date(this.priceListMaster.endDate).getTime()
+    )
+      return false;
+    return true;
   }
 }

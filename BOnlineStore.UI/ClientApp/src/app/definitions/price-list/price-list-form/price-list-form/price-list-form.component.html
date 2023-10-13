@@ -1,439 +1,494 @@
-<div class="h3 pb-1">Genel Bilgiler</div>
-<div class="row pb-4">
-  <div class="col pb-2">
-    <dx-text-box
-      [(value)]="priceListMaster.code"
-      label="Fiyat Listesi Kodu"
-      placeholder="Fiyat listesi kodunu yazınız..."
-      [stylingMode]="'outlined'"
-      [labelMode]="'floating'"
-    ></dx-text-box>
+<form (submit)="onSubmit($event)">
+  <div class="h3 pb-1">{{ "GENERALINFORMATION" | translate }}</div>
+  <div class="row pb-4">
+    <div class="col pb-2">
+      <dx-text-box
+        [(value)]="priceListMaster.code"
+        label="{{ 'PRICELISTCODE' | translate }}"
+        placeholder="{{ 'ENTERPRICELISTCODE' | translate }}"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'PRICELISTCODENOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+    <div class="col pb-2">
+      <dx-text-box
+        [(value)]="priceListMaster.name"
+        label="{{ 'PRICELISTNAME' | translate }}"
+        placeholder="{{ 'ENTERPRICELISTNAME' | translate }}"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'PRICELISTNAMENOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+    <div class="col pb-2">
+      <dx-date-box
+        type="date"
+        label="{{ 'PRICELISTFIRSTDATE' | translate }}"
+        [(value)]="priceListMaster.firstDate"
+        [inputAttr]="{ 'aria-label': 'Date' }"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'PRICELISTFIRSTDATENOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+          <dxi-validation-rule
+            type="custom"
+            message="{{ 'PRICELISTDATECOMPARE' | translate }}"
+            [validationCallback]="validateDates"
+            [reevaluate]="true"
+          >
+          </dxi-validation-rule>
+        </dx-validator>
+      </dx-date-box>
+    </div>
+    <div class="col pb-2">
+      <dx-date-box
+        type="date"
+        label="{{ 'PRICELISTENDDATE' | translate }}"
+        [(value)]="priceListMaster.endDate"
+        [inputAttr]="{ 'aria-label': 'Date' }"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'PRICELISTENDDATENOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-date-box>
+    </div>
   </div>
-  <div class="col pb-2">
-    <dx-text-box
-      [(value)]="priceListMaster.name"
-      label="Açıklama"
-      [stylingMode]="'outlined'"
-      [labelMode]="'floating'"
-    ></dx-text-box>
-  </div>
-  <div class="col pb-2">
-    <dx-date-box
-      type="date"
-      label="Başlangıç Tarihi"
-      [(value)]="priceListMaster.firstDate"
-      [inputAttr]="{ 'aria-label': 'Date' }"
-      [stylingMode]="'outlined'"
-      [labelMode]="'floating'"
-    >
-    </dx-date-box>
-  </div>
-  <div class="col pb-2">
-    <dx-date-box
-      type="date"
-      label="Bitiş Tarihi"
-      [(value)]="priceListMaster.endDate"
-      [inputAttr]="{ 'aria-label': 'Date' }"
-      [stylingMode]="'outlined'"
-      [labelMode]="'floating'"
-    >
-    </dx-date-box>
-  </div>
-</div>
-<div class="h3 pb-1">Fiyat Listesi Detayları</div>
-<div class="row">
-  <div class="col pb-3">
-    <dx-data-grid
-      [(dataSource)]="priceListMaster.priceListDetails"
-      keyExpr="priceListId"
-      [showBorders]="true"
-      [repaintChangesOnly]="true"
-      [showColumnLines]="true"
-      [showRowLines]="true"
-      [rowAlternationEnabled]="true"
-      (onInitNewRow)="onInitNewRow($event)"
-    >
-      <dxi-column dataField="modelId" caption="Model">
-        <dxo-lookup
-          [dataSource]="modelDataSource"
-          displayExpr="name"
-          valueExpr="id"
+  <div class="h3 pb-1">{{ "PRICELISTDETAILS" | translate }}</div>
+  <div class="row">
+    <div class="col pb-3">
+      <dx-data-grid
+        [(dataSource)]="priceListMaster.priceListDetails"
+        keyExpr="priceListId"
+        [showBorders]="true"
+        [repaintChangesOnly]="true"
+        [showColumnLines]="true"
+        [showRowLines]="true"
+        [rowAlternationEnabled]="true"
+        (onInitNewRow)="onInitNewRow($event)"
+      >
+        <dxi-column dataField="modelId" caption="{{ 'MODEL' | translate }}">
+          <dxo-lookup
+            [dataSource]="modelDataSource"
+            displayExpr="name"
+            valueExpr="id"
+          >
+          </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="colorId" caption="{{ 'COLOR' | translate }}">
+          <dxo-lookup
+            [dataSource]="colorDataSource"
+            displayExpr="name"
+            valueExpr="id"
+          >
+          </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="glassId" caption="{{ 'GLASS' | translate }}">
+          <dxo-lookup
+            [dataSource]="glassDataSource"
+            displayExpr="name"
+            valueExpr="id"
+          >
+          </dxo-lookup>
+        </dxi-column>
+        <dxi-column
+          dataField="firstWidth01"
+          dataType="number"
+          alignment="right"
+          caption="{{ 'FIRSTWIDTH01' | translate }}"
+          format=",##0.##"
         >
-        </dxo-lookup>
-      </dxi-column>
-      <dxi-column dataField="colorId" caption="Renk">
-        <dxo-lookup
-          [dataSource]="colorDataSource"
-          displayExpr="name"
-          valueExpr="id"
+        </dxi-column>
+        <dxi-column
+          dataField="lastWidth01"
+          dataType="number"
+          caption="{{ 'LASTWIDTH01' | translate }}"
+          format=",##0.##"
         >
-        </dxo-lookup>
-      </dxi-column>
-      <dxi-column dataField="glassId" caption="Cam">
-        <dxo-lookup
-          [dataSource]="glassDataSource"
-          displayExpr="name"
-          valueExpr="id"
+        </dxi-column>
+        <dxi-column
+          dataField="firstWidth02"
+          dataType="number"
+          caption="{{ 'FIRSTWIDTH02' | translate }}"
+          format=",##0.##"
         >
-        </dxo-lookup>
-      </dxi-column>
-      <dxi-column
-        dataField="firstWidth01"
-        dataType="number"
-        alignment="right"
-        caption="En-1 İlk"
-        format=",##0.##"
-      >
-      </dxi-column>
-      <dxi-column
-        dataField="lastWidth01"
-        dataType="number"
-        caption="En-1 Son"
-        format=",##0.##"
-      >
-      </dxi-column>
-      <dxi-column
-        dataField="firstWidth02"
-        dataType="number"
-        caption="En-2 İlk"
-        format=",##0.##"
-      >
-      </dxi-column>
-      <dxi-column
-        dataField="lastWidth02"
-        dataType="number"
-        caption="En-2 Son"
-        format=",##0.##"
-      >
-      </dxi-column>
-      <dxi-column
-        dataField="firstHeight"
-        dataType="number"
-        caption="Yükseklik İlk"
-        format=",##0.##"
-      >
-      </dxi-column>
-      <dxi-column
-        dataField="lastHeight"
-        dataType="number"
-        caption="Yükseklik Son"
-        format=",##0.##"
-      >
-      </dxi-column>
-      <dxi-column
-        dataField="salePrice"
-        dataType="number"
-        caption="Satış Fiyatı"
-        format=",##0.##"
-      >
-      </dxi-column>
-      <dxi-column dataField="currencyId" caption="Döviz Kodu">
-        <dxo-lookup
-          [dataSource]="currencyDataSource"
-          displayExpr="name"
-          valueExpr="id"
+        </dxi-column>
+        <dxi-column
+          dataField="lastWidth02"
+          dataType="number"
+          caption="{{ 'LASTWIDTH02' | translate }}"
+          format=",##0.##"
         >
-        </dxo-lookup>
-      </dxi-column>
+        </dxi-column>
+        <dxi-column
+          dataField="firstHeight"
+          dataType="number"
+          caption="{{ 'FIRSTHEIGHT' | translate }}"
+          format=",##0.##"
+        >
+        </dxi-column>
+        <dxi-column
+          dataField="lastHeight"
+          dataType="number"
+          caption="{{ 'LASTHEIGHT' | translate }}"
+          format=",##0.##"
+        >
+        </dxi-column>
+        <dxi-column
+          dataField="salePrice"
+          dataType="number"
+          caption="{{ 'SALESPRICE' | translate }}"
+          format=",##0.##"
+        >
+        </dxi-column>
+        <dxi-column
+          dataField="currencyId"
+          caption="{{ 'CURRENCYCODE' | translate }}"
+        >
+          <dxo-lookup
+            [dataSource]="currencyDataSource"
+            displayExpr="name"
+            valueExpr="id"
+          >
+          </dxo-lookup>
+        </dxi-column>
 
-      <!-- Ölçü Farkları  -->
-      <dxi-column
-        dataField="priceListMeasurementDifferences"
-        caption="Ölçü Farkları (Yükseklik)"
-        [visible]="false"
-        [showInColumnChooser]="false"
-        editCellTemplate="priceListMeasurementDifferencesTemplate"
-      >
-      </dxi-column>
-      <div *dxTemplate="let data of 'priceListMeasurementDifferencesTemplate'">
-        <dx-data-grid
-          id="priceListMeasurementDifferencesGrid"
-          [dataSource]="data.value"
-          keyExpr="id"
-          [showBorders]="true"
-          [repaintChangesOnly]="true"
-          [showColumnLines]="true"
-          [showRowLines]="true"
-          [rowAlternationEnabled]="true"
-          (onSaved)="onSaved($event, data)"
-          (onRowInserting)="
-            onRowInserting($event, gridMeasurementDifferenceEnum)
-          "
-          (onInitNewRow)="onInitNewRowDetailGrids($event)"
+        <!-- Ölçü Farkları  -->
+        <dxi-column
+          dataField="priceListMeasurementDifferences"
+          [visible]="false"
+          [showInColumnChooser]="false"
+          editCellTemplate="priceListMeasurementDifferencesTemplate"
         >
-          <dxi-column
-            dataField="measurement"
-            caption="Yükseklik Farkı"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-          <dxi-column
-            dataField="percentDifference"
-            caption="Fark (%)"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-          <dxi-column
-            dataField="currencyDifference"
-            caption="Fark"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-          <dxi-column
-            dataField="salePrice"
-            caption="Satış Fiyatı"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-
-          <dxo-editing
-            mode="row"
-            [allowUpdating]="true"
-            [allowAdding]="true"
-            [allowDeleting]="true"
-            [confirmDelete]="true"
-            [useIcons]="true"
-          ></dxo-editing>
-        </dx-data-grid>
-      </div>
-      <!-- Ölçü Farkları  -->
-
-      <!-- Renk Türü Farkları  -->
-      <dxi-column
-        dataField="priceListColorDifferences"
-        caption="Renk Türü Farkları"
-        [visible]="false"
-        [showInColumnChooser]="false"
-        editCellTemplate="priceListColorDifferencesTemplate"
-      >
-      </dxi-column>
-      <div *dxTemplate="let data of 'priceListColorDifferencesTemplate'">
-        <dx-data-grid
-          [dataSource]="data.value"
-          keyExpr="id"
-          [showBorders]="true"
-          [repaintChangesOnly]="true"
-          [showColumnLines]="true"
-          [showRowLines]="true"
-          [rowAlternationEnabled]="true"
-          (onSaved)="onSaved($event, data)"
-          (onRowInserting)="onRowInserting($event, gridColorDifferenceEnum)"
-          (onInitNewRow)="onInitNewRowDetailGrids($event)"
+        </dxi-column>
+        <div
+          *dxTemplate="let data of 'priceListMeasurementDifferencesTemplate'"
         >
-          <dxi-column dataField="colorId" caption="Renk">
-            <dxo-lookup
-              [dataSource]="colorDataSource"
-              displayExpr="name"
-              valueExpr="id"
+          <dx-data-grid
+            id="priceListMeasurementDifferencesGrid"
+            [dataSource]="data.value"
+            keyExpr="id"
+            [showBorders]="true"
+            [repaintChangesOnly]="true"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [rowAlternationEnabled]="true"
+            (onSaved)="onSaved($event, data)"
+            (onRowInserting)="
+              onRowInserting($event, gridMeasurementDifferenceEnum)
+            "
+            (onInitNewRow)="onInitNewRowDetailGrids($event)"
+          >
+            <dxi-column
+              dataField="measurement"
+              caption="{{ 'HEIGHTDIFFERENCE' | translate }}"
+              dataType="number"
+              format=",##0.##"
             >
-            </dxo-lookup>
-          </dxi-column>
-          <dxi-column
-            dataField="percentDifference"
-            caption="Fark (%)"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-          <dxi-column
-            dataField="currencyDifference"
-            caption="Fark"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-          <dxi-column
-            dataField="salePrice"
-            caption="Satış Fiyatı"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-
-          <dxo-editing
-            mode="row"
-            [allowUpdating]="true"
-            [allowAdding]="true"
-            [allowDeleting]="true"
-            [confirmDelete]="true"
-            [useIcons]="true"
-          ></dxo-editing>
-        </dx-data-grid>
-      </div>
-      <!-- Renk Türü Farkları  -->
-
-      <!-- Cam Türü Farkları  -->
-      <dxi-column
-        dataField="priceListGlassDifferences"
-        caption="Cam Türü Farkları"
-        [visible]="false"
-        [showInColumnChooser]="false"
-        editCellTemplate="priceListGlassDifferencesTemplate"
-      >
-      </dxi-column>
-      <div *dxTemplate="let data of 'priceListGlassDifferencesTemplate'">
-        <dx-data-grid
-          [dataSource]="data.value"
-          keyExpr="id"
-          [showBorders]="true"
-          [repaintChangesOnly]="true"
-          [showColumnLines]="true"
-          [showRowLines]="true"
-          [rowAlternationEnabled]="true"
-          (onSaved)="onSaved($event, data)"
-          (onRowInserting)="onRowInserting($event, gridGlassDifferenceEnum)"
-          (onInitNewRow)="onInitNewRowDetailGrids($event)"
-        >
-          <dxi-column dataField="glassId" caption="Cam Türü">
-            <dxo-lookup
-              [dataSource]="glassDataSource"
-              displayExpr="name"
-              valueExpr="id"
+            </dxi-column>
+            <dxi-column
+              dataField="percentDifference"
+              caption="{{ 'PERCENTDIFFERENCE' | translate }}"
+              dataType="number"
+              format=",##0.##"
             >
-            </dxo-lookup>
-          </dxi-column>
-          <dxi-column
-            dataField="percentDifference"
-            caption="Fark (%)"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-          <dxi-column
-            dataField="currencyDifference"
-            caption="Fark"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
-          <dxi-column
-            dataField="salePrice"
-            caption="Satış Fiyatı"
-            dataType="number"
-            format=",##0.##"
-          >
-          </dxi-column>
+            </dxi-column>
+            <dxi-column
+              dataField="currencyDifference"
+              caption="{{ 'DIFFERENCE' | translate }}"
+              dataType="number"
+              format=",##0.##"
+            >
+            </dxi-column>
+            <dxi-column
+              dataField="salePrice"
+              caption="{{ 'SALESPRICE' | translate }}"
+              dataType="number"
+              format=",##0.##"
+            >
+            </dxi-column>
 
-          <dxo-editing
-            mode="row"
-            [allowUpdating]="true"
-            [allowAdding]="true"
-            [allowDeleting]="true"
-            [confirmDelete]="true"
-            [useIcons]="true"
-          ></dxo-editing>
-        </dx-data-grid>
-      </div>
-      <!-- Cam Türü Farkları  -->
-      <dxo-editing
-        mode="popup"
-        [allowUpdating]="true"
-        [allowAdding]="true"
-        [allowDeleting]="true"
-        [confirmDelete]="true"
-        [useIcons]="true"
-      >
-        <dxo-form labelMode="floating">
-          <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-            <dxi-item itemType="group">
-              <dxi-item
-                itemType="group"
-                caption="{{ 'GENERALINFORMATION' | translate }}"
+            <dxo-editing
+              mode="row"
+              [allowUpdating]="true"
+              [allowAdding]="true"
+              [allowDeleting]="true"
+              [confirmDelete]="true"
+              [useIcons]="true"
+            ></dxo-editing>
+          </dx-data-grid>
+        </div>
+        <!-- Ölçü Farkları  -->
+
+        <!-- Renk Türü Farkları  -->
+        <dxi-column
+          dataField="priceListColorDifferences"
+          [visible]="false"
+          [showInColumnChooser]="false"
+          editCellTemplate="priceListColorDifferencesTemplate"
+        >
+        </dxi-column>
+        <div *dxTemplate="let data of 'priceListColorDifferencesTemplate'">
+          <dx-data-grid
+            [dataSource]="data.value"
+            keyExpr="id"
+            [showBorders]="true"
+            [repaintChangesOnly]="true"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [rowAlternationEnabled]="true"
+            (onSaved)="onSaved($event, data)"
+            (onRowInserting)="onRowInserting($event, gridColorDifferenceEnum)"
+            (onInitNewRow)="onInitNewRowDetailGrids($event)"
+          >
+            <dxi-column dataField="colorId" caption="{{ 'COLOR' | translate }}">
+              <dxo-lookup
+                [dataSource]="colorDataSource"
+                displayExpr="name"
+                valueExpr="id"
               >
-                <dxi-item dataField="modelId"></dxi-item>
-                <dxi-item dataField="colorId"></dxi-item>
-                <dxi-item dataField="glassId"></dxi-item>
-              </dxi-item>
-              <dxi-item itemType="group" caption="Ölçüler" [colCount]="2">
-                <dxi-item
-                  dataField="firstWidth01"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="lastWidth01"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="firstWidth02"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="lastWidth02"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="firstHeight"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="lastHeight"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-              </dxi-item>
-              <dxi-item
-                itemType="group"
-                caption="Fiyat Bilgileri"
-                [colCount]="2"
+              </dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              dataField="percentDifference"
+              caption="{{ 'PERCENTDIFFERENCE' | translate }}"
+              dataType="number"
+              format=",##0.##"
+            >
+            </dxi-column>
+            <dxi-column
+              dataField="currencyDifference"
+              caption="{{ 'DIFFERENCE' | translate }}"
+              dataType="number"
+              format=",##0.##"
+            >
+            </dxi-column>
+            <dxi-column
+              dataField="salePrice"
+              caption="{{ 'SALESPRICE' | translate }}"
+              dataType="number"
+              format=",##0.##"
+            >
+            </dxi-column>
+
+            <dxo-editing
+              mode="row"
+              [allowUpdating]="true"
+              [allowAdding]="true"
+              [allowDeleting]="true"
+              [confirmDelete]="true"
+              [useIcons]="true"
+            ></dxo-editing>
+          </dx-data-grid>
+        </div>
+        <!-- Renk Türü Farkları  -->
+
+        <!-- Cam Türü Farkları  -->
+        <dxi-column
+          dataField="priceListGlassDifferences"
+          [visible]="false"
+          [showInColumnChooser]="false"
+          editCellTemplate="priceListGlassDifferencesTemplate"
+        >
+        </dxi-column>
+        <div *dxTemplate="let data of 'priceListGlassDifferencesTemplate'">
+          <dx-data-grid
+            [dataSource]="data.value"
+            keyExpr="id"
+            [showBorders]="true"
+            [repaintChangesOnly]="true"
+            [showColumnLines]="true"
+            [showRowLines]="true"
+            [rowAlternationEnabled]="true"
+            (onSaved)="onSaved($event, data)"
+            (onRowInserting)="onRowInserting($event, gridGlassDifferenceEnum)"
+            (onInitNewRow)="onInitNewRowDetailGrids($event)"
+          >
+            <dxi-column dataField="glassId" caption="{{ 'GLASS' | translate }}">
+              <dxo-lookup
+                [dataSource]="glassDataSource"
+                displayExpr="name"
+                valueExpr="id"
               >
+              </dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              dataField="percentDifference"
+              caption="{{ 'PERCENTDIFFERENCE' | translate }}"
+              dataType="number"
+              format=",##0.##"
+            >
+            </dxi-column>
+            <dxi-column
+              dataField="currencyDifference"
+              caption="{{ 'DIFFERENCE' | translate }}"
+              dataType="number"
+              format=",##0.##"
+            >
+            </dxi-column>
+            <dxi-column
+              dataField="salePrice"
+              caption="{{ 'SALESPRICE' | translate }}"
+              dataType="number"
+              format=",##0.##"
+            >
+            </dxi-column>
+
+            <dxo-editing
+              mode="row"
+              [allowUpdating]="true"
+              [allowAdding]="true"
+              [allowDeleting]="true"
+              [confirmDelete]="true"
+              [useIcons]="true"
+            ></dxo-editing>
+          </dx-data-grid>
+        </div>
+        <!-- Cam Türü Farkları  -->
+        <dxo-editing
+          mode="popup"
+          [allowUpdating]="true"
+          [allowAdding]="true"
+          [allowDeleting]="true"
+          [confirmDelete]="true"
+          [useIcons]="true"
+        >
+          <dxo-form labelMode="floating">
+            <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+              <dxi-item itemType="group">
                 <dxi-item
-                  dataField="salePrice"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item dataField="currencyId"></dxi-item>
+                  itemType="group"
+                  caption="{{ 'GENERALINFORMATION' | translate }}"
+                >
+                  <dxi-item dataField="modelId"></dxi-item>
+                  <dxi-item dataField="colorId"></dxi-item>
+                  <dxi-item dataField="glassId"></dxi-item>
+                </dxi-item>
+                <dxi-item
+                  itemType="group"
+                  caption="{{ 'MEASUREMENTS' | translate }}"
+                  [colCount]="2"
+                >
+                  <dxi-item
+                    dataField="firstWidth01"
+                    editorType="dxNumberBox"
+                    [editorOptions]="{
+                      format: '#,##0.00'
+                    }"
+                  ></dxi-item>
+                  <dxi-item
+                    dataField="lastWidth01"
+                    editorType="dxNumberBox"
+                    [editorOptions]="{
+                      format: '#,##0.00'
+                    }"
+                  ></dxi-item>
+                  <dxi-item
+                    dataField="firstWidth02"
+                    editorType="dxNumberBox"
+                    [editorOptions]="{
+                      format: '#,##0.00'
+                    }"
+                  ></dxi-item>
+                  <dxi-item
+                    dataField="lastWidth02"
+                    editorType="dxNumberBox"
+                    [editorOptions]="{
+                      format: '#,##0.00'
+                    }"
+                  ></dxi-item>
+                  <dxi-item
+                    dataField="firstHeight"
+                    editorType="dxNumberBox"
+                    [editorOptions]="{
+                      format: '#,##0.00'
+                    }"
+                  ></dxi-item>
+                  <dxi-item
+                    dataField="lastHeight"
+                    editorType="dxNumberBox"
+                    [editorOptions]="{
+                      format: '#,##0.00'
+                    }"
+                  ></dxi-item>
+                </dxi-item>
+                <dxi-item
+                  itemType="group"
+                  caption="{{ 'PRICEINFORMATION' | translate }}"
+                  [colCount]="2"
+                >
+                  <dxi-item
+                    dataField="salePrice"
+                    editorType="dxNumberBox"
+                    [editorOptions]="{
+                      format: '#,##0.00'
+                    }"
+                  ></dxi-item>
+                  <dxi-item dataField="currencyId"></dxi-item>
+                </dxi-item>
+              </dxi-item>
+              <dxi-item itemType="group">
+                <dxi-item
+                  itemType="group"
+                  caption="{{ 'MEASUREMENTDIFFERENCES' | translate }}"
+                >
+                  <dxi-item
+                    dataField="priceListMeasurementDifferences"
+                  ></dxi-item>
+                </dxi-item>
+                <dxi-item
+                  itemType="group"
+                  caption="{{ 'GLASSDIFFERENCES' | translate }}"
+                >
+                  <dxi-item dataField="priceListGlassDifferences"></dxi-item>
+                </dxi-item>
+                <dxi-item
+                  itemType="group"
+                  caption="{{ 'COLORDIFFERENCES' | translate }}"
+                >
+                  <dxi-item dataField="priceListColorDifferences"></dxi-item>
+                </dxi-item>
               </dxi-item>
             </dxi-item>
-            <dxi-item itemType="group">
-              <dxi-item itemType="group" caption="Ölçü Farkları (Yükseklik)">
-                <dxi-item
-                  dataField="priceListMeasurementDifferences"
-                ></dxi-item>
-              </dxi-item>
-              <dxi-item itemType="group" caption="Cam Türü Farkları">
-                <dxi-item dataField="priceListGlassDifferences"></dxi-item>
-              </dxi-item>
-              <dxi-item itemType="group" caption="Renk Türü Farkları">
-                <dxi-item dataField="priceListColorDifferences"></dxi-item>
-              </dxi-item>
-            </dxi-item>
-          </dxi-item>
-        </dxo-form>
-      </dxo-editing>
-    </dx-data-grid>
+          </dxo-form>
+        </dxo-editing>
+      </dx-data-grid>
+    </div>
   </div>
-</div>
-<div class="row align-items-end">
-  <div class="text-sm-end d-none d-sm-block">
-    <dx-button text="Kaydet" type="normal" (onClick)="onSubmit()"></dx-button>
-    <dx-button
-      text="Vazgeç"
-      type="normal"
-      (onClick)="onCancel()"
-      style="margin-left: 10px"
-    ></dx-button>
+  <div class="row align-items-end">
+    <div class="text-sm-end d-none d-sm-block">
+      <dx-button
+        text="{{ 'SAVE' | translate }}"
+        type="normal"
+        [useSubmitBehavior]="true"
+      ></dx-button>
+      <dx-button
+        text="{{ 'CANCEL' | translate }}"
+        type="normal"
+        (onClick)="onCancel()"
+        style="margin-left: 10px"
+      ></dx-button>
+    </div>
   </div>
-</div>
+</form>

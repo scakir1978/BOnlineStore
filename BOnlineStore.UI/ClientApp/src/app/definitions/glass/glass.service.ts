@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class GlassService extends BaseService  {
+export class GlassService extends BaseService {
   constructor(public override _http: HttpClient) {
     super(
       _http,
@@ -32,7 +32,7 @@ export class GlassService extends BaseService  {
   getGlassGroupDataSource(): CustomStore {
     return super.getBaseRawCustomStore(
       environment.definitionsUrl,
-      DefinitionsControllerNamesEnum.COLORGROUP
+      DefinitionsControllerNamesEnum.GLASSGROUP
     );
   }
 }

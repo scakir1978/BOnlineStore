@@ -85,7 +85,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDb", "MongoDb", "{D4125129-6F0D-4109-BE1F-C6F6A6C8D43C}"
 	ProjectSection(SolutionItems) = preProject
 		Kubernetes\mongodb\deployment.yaml = Kubernetes\mongodb\deployment.yaml
-		Kubernetes\mongodb\pv.yaml = Kubernetes\mongodb\pv.yaml
 		Kubernetes\mongodb\pvc.yaml = Kubernetes\mongodb\pvc.yaml
 		Kubernetes\mongodb\secret.yaml = Kubernetes\mongodb\secret.yaml
 		Kubernetes\mongodb\storage.yaml = Kubernetes\mongodb\storage.yaml

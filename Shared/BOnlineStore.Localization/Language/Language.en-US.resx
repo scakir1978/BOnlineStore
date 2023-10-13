@@ -181,6 +181,10 @@
     <value>Model name cannot be empty.</value>
     <comment>Model adı boş olamaz.</comment>
   </data>
+  <data name="PriceListMasterNameNotEmpty" xml:space="preserve">
+    <value>Price list name cannot be empty</value>
+    <comment>Fiyat listesi açıklaması boş olamaz.</comment>
+  </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>No record with id number {1} found in table {0}.</value>
     <comment>{0} tablosunda {1} id numaralı kayıt bulunamadı.</comment>

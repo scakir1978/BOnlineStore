@@ -165,6 +165,9 @@
   <data name="ModelNameNotEmpty" xml:space="preserve">
     <value>Model adı boş olamaz.</value>
   </data>
+  <data name="PriceListMasterNameNotEmpty" xml:space="preserve">
+    <value>Fiyat listesi açıklaması boş olamaz.</value>
+  </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>{0} tablosunda {1} id numaralı kayıt bulunamadı.</value>
   </data>

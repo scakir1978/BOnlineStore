@@ -5,6 +5,10 @@ import DataSource from 'devextreme/data/data_source';
 import { lastValueFrom } from 'rxjs';
 import CustomStore from 'devextreme/data/custom_store';
 import { HttpRequestMethodsEnum } from '../base-enums/http-request-methods.enum';
+import {
+  LoadResult,
+  LoadResultObject,
+} from 'devextreme/common/data/custom-store';
 
 export abstract class BaseService {
   constructor(
