@@ -13,6 +13,7 @@ pipelines:
     definitons:
         - step:
             name: Definitons Service Publish Docker Hub
+            deployment: DefinitionsProductionDeploy
             script:              
               - docker login -u scakir1978 -p Scag185489
               - docker-compose build definitions.bonlinestore.com
@@ -22,6 +23,7 @@ pipelines:
     identity:
         - step:
             name: Identity Service Publish Docker Hub
+            deployment: IdentityProductionDeploy
             script:              
               - docker login -u scakir1978 -p Scag185489
               - docker-compose build identity.bonlinestore.com
@@ -31,6 +33,7 @@ pipelines:
     production:
         - step:
             name: Production Service Publish Docker Hub
+            deployment: ProductionProductionDeploy
             script:              
               - docker login -u scakir1978 -p Scag185489
               - docker-compose build production.bonlinestore.com
@@ -40,6 +43,7 @@ pipelines:
     ui:
         - step:
             name: UI Publish Docker Hub
+            deployment: UIProductionDeploy
             script:              
               - docker login -u scakir1978 -p Scag185489
               - docker-compose build ui.bonlinestore.com
