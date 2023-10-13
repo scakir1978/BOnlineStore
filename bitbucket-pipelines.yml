@@ -40,4 +40,14 @@ pipelines:
             services:
               - docker
             caches:
-              - docker                    
+              - docker
+        - step:
+            name: UI Publish Docker Hub
+            script:              
+              - docker login -u scakir1978 -p Scag185489
+              - docker-compose build ui.bonlinestore.com
+              - docker push scakir1978/ui.bonlinestore.com:latest
+            services:
+              - docker
+            caches:
+              - docker              
