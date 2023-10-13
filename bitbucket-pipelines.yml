@@ -18,9 +18,7 @@ pipelines:
               - docker-compose build definitions.bonlinestore.com
               - docker push scakir1978/definitions.bonlinestore.com:latest
             services:
-              - docker
-            caches:
-              - docker
+              - docker            
     identity:
         - step:
             name: Identity Service Publish Docker Hub
@@ -29,9 +27,7 @@ pipelines:
               - docker-compose build identity.bonlinestore.com
               - docker push scakir1978/identity.bonlinestore.com:latest
             services:
-              - docker
-            caches:
-              - docker
+              - docker            
     production:
         - step:
             name: Production Service Publish Docker Hub
@@ -40,9 +36,7 @@ pipelines:
               - docker-compose build production.bonlinestore.com
               - docker push scakir1978/production.bonlinestore.com:latest
             services:
-              - docker
-            caches:
-              - docker
+              - docker            
     ui:
         - step:
             name: UI Publish Docker Hub
@@ -51,6 +45,4 @@ pipelines:
               - docker-compose build ui.bonlinestore.com
               - docker push scakir1978/ui.bonlinestore.com:latest
             services:
-              - docker
-            caches:
-              - docker              
+              - docker            
