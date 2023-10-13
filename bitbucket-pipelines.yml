@@ -1,35 +1,43 @@
-# This is an example Starter pipeline configuration
-# Use a skeleton to build, test and deploy using manual and parallel steps
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
+# Template docker-push
+
+# This template allows you to build and push your docker image to a Docker Hub account.
+# The workflow allows running tests, code linting and security scans on feature branches (as well as master).
+# The docker image will be validated and pushed to the docker registry after the code is merged to master.
+
+# Prerequisites: $DOCKERHUB_USERNAME, $DOCKERHUB_PASSWORD setup as deployment variables
 
 image: atlassian/default-image:3
 
 pipelines:
-  default:
-    - parallel:
-      - step:
-          name: 'Build and Test'
-          script:
-            - echo "Your build and test goes here..."
-      - step:
-          name: 'Lint'
-          script:
-            - echo "Your linting goes here..."
-      - step:
-          name: 'Security scan'
-          script:
-            - echo "Your security scan goes here..."
-
-    # The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
-    - step:
-        name: 'Deployment to Staging'
-        deployment: staging
-        script:
-          - echo "Your deployment to staging script goes here..."
-    - step:
-        name: 'Deployment to Production'
-        deployment: production
-        trigger: 'manual'
-        script:
-          - echo "Your deployment to production script goes here..."
+  custom:
+    definitons:
+        - step:
+            name: Definitons Service Publish Docker Hub
+            script:              
+              - docker login -u scakir1978 -p Scag185489
+              - docker-compose build definitions.bonlinestore.com
+              - docker push scakir1978/definitions.bonlinestore.com:latest
+            services:
+              - docker
+            caches:
+              - docker
+        - step:
+            name: Identity Service Publish Docker Hub
+            script:              
+              - docker login -u scakir1978 -p Scag185489
+              - docker-compose build identity.bonlinestore.com
+              - docker push scakir1978/identity.bonlinestore.com:latest
+            services:
+              - docker
+            caches:
+              - docker      
+        - step:
+            name: Production Service Publish Docker Hub
+            script:              
+              - docker login -u scakir1978 -p Scag185489
+              - docker-compose build production.bonlinestore.com
+              - docker push scakir1978/production.bonlinestore.com:latest
+            services:
+              - docker
+            caches:
+              - docker                    
