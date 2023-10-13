@@ -12,14 +12,11 @@ pipelines:
   custom:
     definitons:
         - step:
-            name: Publish
-            script:
-              - cd BOnlineStore.Services
-              - cd Definitions
-              - cd BOnlineStore.Services.Definitions.Api              
+            name: Definitons Service Publish Docker Hub
+            script:              
               - docker login -u scakir1978 -p Scag185489
-              - docker build -t scakir1978/definitions.bonlinestore.com:latest .
-              - docker push scakir1978/definitions.bonlinestore.com:latest              
+              - docker-compose build definitions.bonlinestore.com
+              - docker push scakir1978/definitions.bonlinestore.com:latest
             services:
               - docker
             caches:
