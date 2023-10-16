@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AssemblerNameMaxLength" xml:space="preserve">
+    <value>Montör adı 250 karakterden uzun olamaz. </value>
+  </data>
+  <data name="AssemblerNameNotEmpty" xml:space="preserve">
+    <value>Montör adı boş olamaz.</value>
+  </data>
   <data name="ColorCodeNotEmpty" xml:space="preserve">
     <value>Renk kodu boş olamaz.</value>
   </data>
