@@ -42,6 +42,7 @@ pipelines:
               - docker            
     ui:
         - step:
+            size: 2x
             name: UI Publish Docker Hub
             deployment: UIProductionDeploy
             script:              
