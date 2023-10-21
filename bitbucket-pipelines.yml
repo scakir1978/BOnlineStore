@@ -42,6 +42,7 @@ pipelines:
               - docker            
     ui:
         - step:
+            size: 2x
             name: UI Publish Docker Hub
             deployment: UIProductionDeploy
             script:              
@@ -49,8 +50,8 @@ pipelines:
               - docker-compose build ui.bonlinestore.com
               - docker push scakir1978/ui.bonlinestore.com:latest
             services:
-              - docker
+              - docker            
 definitions:
   services:
     docker:
-      memory: 2048  # reduce memory for docker-in-docker from 1GB to 512MB
+      memory: 3072  # reduce memory for docker-in-docker from 1GB to 512MB
