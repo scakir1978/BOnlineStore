@@ -17,7 +17,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         /// Cam grubu
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
-        public string GlassGroupId { get; private set; }
+        public string? GlassGroupId { get; private set; }
 
         public Glass() : base()
         {
@@ -25,14 +25,14 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             Name = "";
         }
 
-        public Glass(Guid tenantId, string id, string code, string name, string glassGroupId) : base(tenantId, id)
+        public Glass(Guid tenantId, string id, string code, string name, string? glassGroupId) : base(tenantId, id)
         {
             Code = code;
             Name = name;
             GlassGroupId = glassGroupId;
         }
 
-        public void UpdateGlass(string code, string name, string glassGroupId)
+        public void UpdateGlass(string code, string name, string? glassGroupId)
         {
             Code = code;
             Name = name;

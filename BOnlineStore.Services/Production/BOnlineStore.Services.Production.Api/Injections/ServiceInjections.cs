@@ -7,6 +7,7 @@ namespace BOnlineStore.Services.Production.Api.Injections
         public static IServiceCollection AddServiceInjections(this IServiceCollection services)
         {
             services.AddScoped<IFormulaTypeService, FormulaTypeService>();
+            services.AddScoped<IFormulaService, FormulaService>();
 
             return services;
         }

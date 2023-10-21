@@ -8,7 +8,6 @@ using BOnlineStore.Localization;
 using Microsoft.Extensions.Localization;
 using BOnlineStore.Localization.Constants;
 using FluentValidation;
-using static BOnlineStore.Shared.Enums;
 
 namespace BOnlineStore.MongoDb.GenericRepository
 {

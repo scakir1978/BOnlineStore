@@ -1,8 +1,8 @@
 ﻿namespace BOnlineStore.Shared
 {
-    public static partial class Enums
+    public static partial class ValidationTypeEnum
     {
-        public enum ValidationTypeEnum
+        public enum ValidationType
         {
             Update,
             Create

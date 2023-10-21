@@ -31,8 +31,4 @@
 		<ProjectReference Include="..\..\..\Shared\BOnlineStore.Shared\BOnlineStore.Shared.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Entities\" />
-	</ItemGroup>
-
 </Project>

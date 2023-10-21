@@ -9,6 +9,7 @@ namespace BOnlineStore.Services.Production.Api.Injections
             services.AddHttpContextAccessor();
 
             services.AddScoped<IFormulaTypeRepository, FormulaTypeRepository>();
+            services.AddScoped<IFormulaRepository, FormulaRepository>();
 
             return services;
         }

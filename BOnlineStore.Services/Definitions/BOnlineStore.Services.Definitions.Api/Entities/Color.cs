@@ -13,7 +13,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         public string Name { get; private set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string ColorGroupId { get; private set; }
+        public string? ColorGroupId { get; private set; }
 
         public Color() : base()
         {
@@ -21,14 +21,14 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             Name = "";
         }
 
-        public Color(Guid tenantId, string id, string code, string name, string colorGroupId) : base(tenantId, id)
+        public Color(Guid tenantId, string id, string code, string name, string? colorGroupId = null) : base(tenantId, id)
         {
             Code = code;
             Name = name;
             ColorGroupId = colorGroupId;
         }
 
-        public void UpdateColor(string code, string name, string colorGroupId)
+        public void UpdateColor(string code, string name, string? colorGroupId = null)
         {
             Code = code;
             Name = name;
