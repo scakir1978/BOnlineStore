@@ -191,5 +191,13 @@
   "COLORDIFFERENCES": "Renk Farkları",
   "SAVE": "Kaydet",
   "CANCEL": "Vazgeç",
-  "PRICELISTDETAILS": "Fiyat Listesi Detayları"
+  "PRICELISTDETAILS": "Fiyat Listesi Detayları",
+  "ISVARIABLE1REQUIRED": "Değişken-1",
+  "ISVARIABLE2REQUIRED": "Değişken-2",
+  "ISVARIABLE3REQUIRED": "Değişken-3",
+  "ISVARIABLE4REQUIRED": "Değişken-4",
+  "ISCONSTANT1REQUIRED": "Sabit-1",
+  "ISCONSTANT2REQUIRED": "Sabit-2",
+  "REQUIREDFIELDS": "Gerekli Değişkenler",
+  "FORMULA": "Formül Tanımları"
 }

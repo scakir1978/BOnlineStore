@@ -5,7 +5,7 @@
 
 <dx-data-grid
   id="gridContainer"
-  [dataSource]="formulaTypeDataSource"
+  [dataSource]="formulaDataSource"
   [showBorders]="true"
   [remoteOperations]="true"
   [repaintChangesOnly]="true"
@@ -13,7 +13,6 @@
   [showRowLines]="true"
   [rowAlternationEnabled]="true"
   (onExporting)="onExporting($event)"
-  (onInitNewRow)="onInitNewRow($event)"
 >
   <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
@@ -65,46 +64,18 @@
   </dxi-column>
   <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
     <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="50"
+      message="{{ 'CODEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
   </dxi-column>
   <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
     <dxi-validation-rule type="required"></dxi-validation-rule>
-  </dxi-column>
-  <dxi-column caption="{{ 'REQUIREDFIELDS' | translate }}" alignment="center">
-    <dxi-column
-      dataField="isVariable1Required"
-      dataType="boolean"
-      caption="{{ 'ISVARIABLE1REQUIRED' | translate }}"
-    >
-    </dxi-column>
-    <dxi-column
-      dataField="isVariable2Required"
-      dataType="boolean"
-      caption="{{ 'ISVARIABLE2REQUIRED' | translate }}"
-    >
-    </dxi-column>
-    <dxi-column
-      dataField="isVariable3Required"
-      dataType="boolean"
-      caption="{{ 'ISVARIABLE3REQUIRED' | translate }}"
-    >
-    </dxi-column>
-    <dxi-column
-      dataField="isVariable4Required"
-      dataType="boolean"
-      caption="{{ 'ISVARIABLE4REQUIRED' | translate }}"
-    >
-    </dxi-column>
-    <dxi-column
-      dataField="isConstant1Required"
-      dataType="boolean"
-      caption="{{ 'ISCONSTANT1REQUIRED' | translate }}"
-    >
-    </dxi-column>
-    <dxi-column
-      dataField="isConstant2Required"
-      dataType="boolean"
-      caption="{{ 'ISCONSTANT2REQUIRED' | translate }}"
-    >
-    </dxi-column>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
   </dxi-column>
 </dx-data-grid>

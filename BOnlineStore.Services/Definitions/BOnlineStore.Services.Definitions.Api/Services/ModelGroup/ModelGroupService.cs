@@ -7,7 +7,6 @@ using BOnlineStore.Services.Definitions.Api.Repositories;
 using BOnlineStore.Services.Definitions.Api.Validations;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using static BOnlineStore.Shared.Enums;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {
@@ -19,6 +18,6 @@ namespace BOnlineStore.Services.Definitions.Api.Services
             IStringLocalizer<Language> stringLocalizer,
             IValidator<ModelGroup> validator) : base(repository, mapper, stringLocalizer, validator)
         { }
-        
+
     }
 }

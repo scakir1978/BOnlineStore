@@ -1,9 +1,15 @@
+import { FormulaModule } from './formula/formula.module';
 import { FormulaTypeModule } from './formula-type/formula-type.module';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import lottie from 'lottie-web';
+import { defineElement } from 'lord-icon-element';
 
 @NgModule({
-  declarations: [],
-  imports: [FormulaTypeModule],
-  providers: [],
+  imports: [FormulaTypeModule, FormulaModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ProductionModule {}
+export class ProductionModule {
+  constructor() {
+    defineElement(lottie.loadAnimation);
+  }
+}

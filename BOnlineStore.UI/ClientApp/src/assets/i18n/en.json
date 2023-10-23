@@ -168,5 +168,13 @@
   "SAVE": "Save",
   "CANCEL": "Cancel",
   "PRICELISTDETAILS": "Price List Details",
-  "GENERALINFORMATION": "General Information"
+  "GENERALINFORMATION": "General Information",
+  "ISVARIABLE1REQUIRED": "Variable-1",
+  "ISVARIABLE2REQUIRED": "Variable-2",
+  "ISVARIABLE3REQUIRED": "Variable-3",
+  "ISVARIABLE4REQUIRED": "Variable-4",
+  "ISCONSTANT1REQUIRED": "Constant-1",
+  "ISCONSTANT2REQUIRED": "Constant-2",
+  "REQUIREDFIELDS": "Required Fields",
+  "FORMULA": "Formula Definitions"
 }

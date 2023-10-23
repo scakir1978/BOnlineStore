@@ -1,11 +1,9 @@
 ﻿using BOnlineStore.Shared;
+using BOnlineStore.Shared.Entity;
 
 namespace BOnlineStore.Services.Production.Api.Dtos
 {
-    /// <summary>
-    /// Formül güncellemek için kullanılan dto
-    /// </summary>
-    public class FormulaUpdateDto
+    public class FormulaLoadDto : EntityDto
     {
         /// <summary>
         ///Formül kodu
@@ -46,25 +44,5 @@ namespace BOnlineStore.Services.Production.Api.Dtos
         /// Formül türü
         /// </summary>
         public FormulaSortEnum.FormulaSort? FormulaSort { get; set; }
-
-        /// <summary>
-        /// Formülü oluşturan unsurların, düzgün matematiksel bir ifadeye dönülmesi için buradaki detaylara bilgi girilir.
-        /// </summary>
-        public List<FormulaDetailDto>? FormulaDetails { get; set; }
-
-        public FormulaUpdateDto(string? code, string? name, string? modelId = null, string? rawMaterialId = null,
-                                string? formulaTypeId = null, decimal? usageAmount = null,
-                                FormulaSortEnum.FormulaSort? formulaSort = null, string? formulaText = null, List<FormulaDetailDto>? formulaDetails = null)
-        {
-            Code = code;
-            Name = name;
-            ModelId = modelId;
-            RawMaterialId = rawMaterialId;
-            FormulaTypeId = formulaTypeId;
-            UsageAmount = usageAmount;
-            FormulaSort = formulaSort;
-            FormulaText = formulaText;
-            FormulaDetails = formulaDetails;
-        }
     }
 }

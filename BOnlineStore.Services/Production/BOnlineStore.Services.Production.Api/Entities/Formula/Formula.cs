@@ -1,5 +1,6 @@
 ﻿using BOnlineStore.Shared;
 using BOnlineStore.Shared.Entities;
+using BOnlineStore.Shared.Entity;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -8,7 +9,7 @@ namespace BOnlineStore.Services.Production.Api.Entities
     /// <summary>
     /// Formül tanımları
     /// </summary>
-    public class Formula : Entity
+    public class Formula : Entity, IAggregateRoot
     {
         /// <summary>
         /// Formül kodu
@@ -44,39 +45,20 @@ namespace BOnlineStore.Services.Production.Api.Entities
         public decimal? UsageAmount { get; private set; }
 
         /// <summary>
-        /// Değişken-1
+        /// Matematiksel olarak oluşan formül
         /// </summary>
-        public string? Variable1 { get; private set; }
-
-        /// <summary>
-        /// Değişken-2
-        /// </summary>
-        public string? Variable2 { get; private set; }
-
-        /// <summary>
-        /// Değişken-3
-        /// </summary>
-        public string? Variable3 { get; private set; }
-
-        /// <summary>
-        /// Değişken-4
-        /// </summary>
-        public string? Variable4 { get; private set; }
-
-        /// <summary>
-        /// Sabit-1
-        /// </summary>
-        public decimal? Constant1 { get; private set; }
-
-        /// <summary>
-        /// Sabit-2
-        /// </summary>
-        public decimal? Constant2 { get; private set; }
+        public string? FormulaText { get; private set; }
 
         /// <summary>
         /// Formül türü
         /// </summary>
         public FormulaSortEnum.FormulaSort? FormulaSort { get; private set; }
+
+        /// <summary>
+        /// Formülü oluşturan unsurların, düzgün matematiksel bir ifadeye dönülmesi için buradaki detaylara bilgi girilir.
+        /// </summary>
+        public List<FormulaDetail>? FormulaDetails { get; private set; }
+
 
         public Formula() : base()
         {
@@ -86,9 +68,7 @@ namespace BOnlineStore.Services.Production.Api.Entities
 
         public Formula(Guid tenantId, string id, string code, string name, string? modelId = null,
                        string? rawMaterialId = null, string? formulaTypeId = null, decimal? usageAmount = null,
-                       string? variable1 = null, string? variable2 = null, string? variable3 = null,
-                       string? variable4 = null, decimal? constant1 = null, decimal? constant2 = null,
-                       FormulaSortEnum.FormulaSort? formulaSort = null) : base(tenantId, id)
+                       FormulaSortEnum.FormulaSort? formulaSort = null, string? formulaText = null) : base(tenantId, id)
         {
             Code = code;
             Name = name;
@@ -96,20 +76,13 @@ namespace BOnlineStore.Services.Production.Api.Entities
             RawMaterialId = rawMaterialId;
             FormulaTypeId = formulaTypeId;
             UsageAmount = usageAmount;
-            Variable1 = variable1;
-            Variable2 = variable2;
-            Variable3 = variable3;
-            Variable4 = variable4;
-            Constant1 = constant1;
-            Constant2 = constant2;
             FormulaSort = formulaSort;
+            FormulaText = formulaText;
         }
 
         public void UpdateFormula(string code, string name, string? modelId = null,
                        string? rawMaterialId = null, string? formulaTypeId = null, decimal? usageAmount = null,
-                       string? variable1 = null, string? variable2 = null, string? variable3 = null,
-                       string? variable4 = null, decimal? constant1 = null, decimal? constant2 = null,
-                       FormulaSortEnum.FormulaSort? formulaSort = null)
+                       FormulaSortEnum.FormulaSort? formulaSort = null, string? formulaText = null)
         {
             Code = code;
             Name = name;
@@ -117,13 +90,8 @@ namespace BOnlineStore.Services.Production.Api.Entities
             RawMaterialId = rawMaterialId;
             FormulaTypeId = formulaTypeId;
             UsageAmount = usageAmount;
-            Variable1 = variable1;
-            Variable2 = variable2;
-            Variable3 = variable3;
-            Variable4 = variable4;
-            Constant1 = constant1;
-            Constant2 = constant2;
             FormulaSort = formulaSort;
+            FormulaText = formulaText;
         }
     }
 }

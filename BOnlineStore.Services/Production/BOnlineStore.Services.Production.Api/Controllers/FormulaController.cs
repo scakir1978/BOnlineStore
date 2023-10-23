@@ -24,7 +24,7 @@ namespace BOnlineStore.Services.Production.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<FormulaDto>(_FormulaService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<FormulaLoadDto>(_FormulaService.Load()), loadOptions));
         }
 
         [HttpGet]

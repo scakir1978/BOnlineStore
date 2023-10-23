@@ -239,6 +239,12 @@ export const MENU: MenuItem[] = [
         link: '/production/formula-type',
         parentId: 20010,
       },
+      {
+        id: 20030,
+        label: 'FORMULA',
+        link: '/production/formula',
+        parentId: 20010,
+      },
     ],
   },
 ];

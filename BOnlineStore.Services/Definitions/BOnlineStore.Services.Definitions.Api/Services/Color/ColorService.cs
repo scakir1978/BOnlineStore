@@ -7,7 +7,6 @@ using BOnlineStore.Services.Definitions.Api.Repositories;
 using BOnlineStore.Services.Definitions.Api.Validations;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
-using static BOnlineStore.Shared.Enums;
 
 namespace BOnlineStore.Services.Definitions.Api.Services
 {

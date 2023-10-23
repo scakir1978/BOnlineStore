@@ -57,10 +57,10 @@ import { GlassGroupModule } from './glass-group/glass-group.module';
     CityModule,
     CountyModule,
     CountryModule,
-  DistrictModule,
-  FirmModule,
-  PriceListModule,
-],
+    DistrictModule,
+    FirmModule,
+    PriceListModule,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DefinitionsModule {
