@@ -27,6 +27,13 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
             return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<RawMaterialDto>(_rawMaterialService.Load()), loadOptions));
         }
 
+        [HttpPost("LoadForCombo")]
+        public IActionResult LoadForCombo(DataSourceLoadOptionsBase loadOptions)
+        {
+            loadOptions.StringToLower = true;
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<RawMaterialForComboDto>(_rawMaterialService.Load()), loadOptions));
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {

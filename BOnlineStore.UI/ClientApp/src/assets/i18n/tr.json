@@ -199,5 +199,7 @@
   "ISCONSTANT1REQUIRED": "Sabit-1",
   "ISCONSTANT2REQUIRED": "Sabit-2",
   "REQUIREDFIELDS": "Gerekli Değişkenler",
-  "FORMULA": "Formül Tanımları"
+  "FORMULA": "Formül Tanımları",
+  "SAVERECORDERROR": "Değişiklikler kayıt edilemedi.",
+  "OK": "Tamam"
 }

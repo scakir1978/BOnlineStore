@@ -31,7 +31,7 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult LoadForCombo(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ModelComboDto>(_modelService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<ModelForComboDto>(_modelService.Load()), loadOptions));
         }
 
         [HttpGet]

@@ -2,7 +2,7 @@
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
-    public class ModelComboDto : EntityDto
+    public class ModelForComboDto : EntityDto
     {
         /// <summary>
         /// Model Kodu
@@ -12,9 +12,9 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Model Açıklaması
         /// </summary>
-        public string Name { get; private  set; }
+        public string Name { get; private set; }
 
-        public ModelComboDto(string code, string name)
+        public ModelForComboDto(string code, string name)
         {
             Code = code;
             Name = name;

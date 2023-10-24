@@ -1,0 +1,188 @@
+<form (submit)="onSubmit($event)">
+  <div class="h3 pb-1">{{ "GENERALINFORMATION" | translate }}</div>
+  <div class="row pb-4">
+    <div class="col pb-2">
+      <dx-text-box
+        [(value)]="formula.code"
+        label="{{ 'FORMULACODE' | translate }}"
+        placeholder="{{ 'ENTERFORMULACODE' | translate }}"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'FORMULACODENOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+    <div class="col pb-2">
+      <dx-text-box
+        [(value)]="formula.name"
+        label="{{ 'FORMULANAME' | translate }}"
+        placeholder="{{ 'ENTERFORMULANAME' | translate }}"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'FORMULANAMENOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+    <div class="col pb-2">
+      <dx-drop-down-box
+        label="{{ 'MODEL' | translate }}"
+        [(value)]="formula.modelId"
+        [inputAttr]="{ 'aria-label': 'Owner' }"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+        valueExpr="id"
+        displayExpr="name"
+        placeholder="{{ 'ENTERMODEL' | translate }}"
+        [showClearButton]="true"
+        [dataSource]="modelDataSource"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'FORMULAMODELNOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-drop-down-box>
+    </div>
+    <div class="col pb-2">
+      <dx-drop-down-box
+        label="{{ 'RAWMATERIAL' | translate }}"
+        [(value)]="formula.rawMaterialId"
+        [inputAttr]="{ 'aria-label': 'Owner' }"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+        valueExpr="id"
+        displayExpr="name"
+        placeholder="{{ 'ENTERRAWMATERIAL' | translate }}"
+        [showClearButton]="true"
+        [dataSource]="rawMaterialDataSource"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'FORMULARAWMATERIALNOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-drop-down-box>
+    </div>
+    <div class="col pb-2">
+      <dx-drop-down-box
+        label="{{ 'FORMULATYPE' | translate }}"
+        [(value)]="formula.formulaTypeId"
+        [inputAttr]="{ 'aria-label': 'Owner' }"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+        valueExpr="id"
+        displayExpr="name"
+        placeholder="{{ 'ENTERFORMULATYPE' | translate }}"
+        [showClearButton]="true"
+        [dataSource]="formulaTypeDataSource"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'FORMULATYPENOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-drop-down-box>
+    </div>
+    <div class="col pb-2">
+      <dx-number-box
+        [(value)]="formula.usageAmount"
+        label="{{ 'USAGEAMOUNT' | translate }}"
+        placeholder="{{ 'ENTERUSAGEAMOUNT' | translate }}"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+        format="#,##0.00"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'FORMULAUSAGEAMOUNTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-number-box>
+    </div>
+    <div class="col pb-2">
+      <dx-text-box
+        [(value)]="formula.formulaText"
+        label="{{ 'FORMULATEXT' | translate }}"
+        placeholder="{{ 'ENTERFORMULATEXT' | translate }}"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+        [disabled]="true"
+      >
+      </dx-text-box>
+    </div>
+  </div>
+  <div class="h3 pb-1">{{ "FORMULADETAILS" | translate }}</div>
+  <div class="row">
+    <div class="col pb-3">
+      <dx-data-grid
+        [(dataSource)]="formula.formulaDetails"
+        keyExpr="id"
+        [showBorders]="true"
+        [repaintChangesOnly]="true"
+        [showColumnLines]="true"
+        [showRowLines]="true"
+        [rowAlternationEnabled]="true"
+        (onInitNewRow)="onInitNewRow($event)"
+      >
+        <dxi-column
+          dataField="variableType"
+          caption="{{ 'VARIABLETYPE' | translate }}"
+        >
+          <dxo-lookup
+            [dataSource]="modelDataSource"
+            displayExpr="name"
+            valueExpr="id"
+          >
+          </dxo-lookup>
+        </dxi-column>
+        <dxi-column dataField="formulId" caption="{{ 'FORMUL' | translate }}">
+          <dxo-lookup
+            [dataSource]="formulaDataSource"
+            displayExpr="name"
+            valueExpr="id"
+          >
+          </dxo-lookup>
+        </dxi-column>
+
+        <dxo-editing
+          mode="row"
+          [allowUpdating]="true"
+          [allowAdding]="true"
+          [allowDeleting]="true"
+          [confirmDelete]="true"
+          [useIcons]="true"
+        >
+        </dxo-editing>
+      </dx-data-grid>
+    </div>
+  </div>
+  <div class="row align-items-end">
+    <div class="text-sm-end d-none d-sm-block">
+      <dx-button
+        text="{{ 'SAVE' | translate }}"
+        type="normal"
+        [useSubmitBehavior]="true"
+      ></dx-button>
+      <dx-button
+        text="{{ 'CANCEL' | translate }}"
+        type="normal"
+        (onClick)="onCancel()"
+        style="margin-left: 10px"
+      ></dx-button>
+    </div>
+  </div>
+</form>

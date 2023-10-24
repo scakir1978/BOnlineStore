@@ -88,11 +88,11 @@ export class PriceListComponent extends BaseDefinitionsOnGridComponent {
 
   showErrorMessage(errorMessage) {
     Swal.fire({
-      title: 'Değişiklikler kaydedilemedi.',
+      title: this._translate.instant('SAVERECORDERROR'),
       text: errorMessage,
       icon: 'error',
       confirmButtonColor: '#364574',
-      confirmButtonText: 'OK',
+      confirmButtonText: this._translate.instant('OK'),
     });
   }
 }

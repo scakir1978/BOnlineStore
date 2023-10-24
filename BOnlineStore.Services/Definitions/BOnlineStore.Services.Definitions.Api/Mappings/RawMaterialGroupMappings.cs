@@ -10,7 +10,9 @@ namespace BOnlineStore.Services.Definitions.Api.Mappings
         {
             CreateMap<RawMaterialGroup, RawMaterialGroupDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
             CreateMap<RawMaterialGroup, RawMaterialGroupCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
-            CreateMap<RawMaterialGroup, RawMaterialGroupUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            CreateMap<RawMaterialGroup, RawMaterialGroupUpdateDto>().DisableCtorValidation().ReverseMap()
+                .DisableCtorValidation()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
         }
 

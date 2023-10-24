@@ -176,5 +176,7 @@
   "ISCONSTANT1REQUIRED": "Constant-1",
   "ISCONSTANT2REQUIRED": "Constant-2",
   "REQUIREDFIELDS": "Required Fields",
-  "FORMULA": "Formula Definitions"
+  "FORMULA": "Formula Definitions",
+  "SAVERECORDERROR": "The changes could not be saved.",
+  "OK": "Ok"
 }
