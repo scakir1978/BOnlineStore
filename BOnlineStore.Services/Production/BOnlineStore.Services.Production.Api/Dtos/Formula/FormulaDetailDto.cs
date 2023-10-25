@@ -13,6 +13,11 @@ namespace BOnlineStore.Services.Production.Api.Dtos
         public string? VariableType { get; set; }
 
         /// <summary>
+        /// Eğer değişten tipi (VariableType) SABIT ise, Bu alana sayısal bir bilgi girilir..
+        /// </summary>
+        public decimal? VariableValue { get; set; }
+
+        /// <summary>
         /// Eğer değişten tipi (VariableType) SONUCDEGISKENI ise, formülde başka bir formül hesabının sonucu kullanılacak demektir. O yüzden formul id bilgisi bu alana kayıt edilir.
         /// </summary>
         public string? FormulId { get; set; }
@@ -20,13 +25,15 @@ namespace BOnlineStore.Services.Production.Api.Dtos
         public FormulaDetailDto()
         {
             VariableType = "";
+            VariableValue = 0;
             FormulId = null;
         }
 
-        public FormulaDetailDto(string? variableType = null, string? formulId = null)
+        public FormulaDetailDto(string? variableType = null, string? formulId = null, decimal? variableValue = null)
         {
             VariableType = variableType;
             FormulId = formulId;
+            VariableValue = variableValue;
         }
     }
 }

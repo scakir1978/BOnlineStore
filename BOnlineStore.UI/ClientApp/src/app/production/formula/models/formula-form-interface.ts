@@ -7,6 +7,10 @@ export interface IFormulaDetail {
 
   /** "(",")" parantez açma, kapama, dört işlem "+,-,*,/" ve değişkenler "EN1, EN2, EN3, YUKSEKLIK, SONUCDEGISKENI" ile sayısal değer içeren (1,5,20, 150) ifadelerinden biri olabilir. */
   variableType: string | null;
+
+  /** Eğer değişten tipi (VariableType) SABIT ise, Bu alana sayısal bir bilgi girilir. */
+  variableValue: number | null;
+
   /** Eğer değişten tipi (VariableType) SONUCDEGISKENI ise, formülde başka bir formül hesabının sonucu kullanılacak demektir. O yüzden formul id bilgisi bu alana kayıt edilir. */
   formulId: string | null;
 }

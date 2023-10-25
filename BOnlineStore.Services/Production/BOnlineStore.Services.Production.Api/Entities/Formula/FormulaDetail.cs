@@ -17,16 +17,24 @@ namespace BOnlineStore.Services.Production.Api.Entities
         /// </summary>
         public string? FormulId { get; private set; }
 
+        /// <summary>
+        /// Eğer değişten tipi (VariableType) SABIT ise, Bu alana sayısal bir bilgi girilir..
+        /// </summary>
+        public decimal? VariableValue { get; private set; }
+
         public FormulaDetail()
         {
             VariableType = "";
+            VariableValue = 0;
             FormulId = null;
+
         }
 
-        public FormulaDetail(string? variableType = null, string? formulId = null)
+        public FormulaDetail(string? variableType = null, string? formulId = null, decimal? variableValue = null)
         {
             VariableType = variableType;
             FormulId = formulId;
+            VariableValue = variableValue;
         }
     }
 }

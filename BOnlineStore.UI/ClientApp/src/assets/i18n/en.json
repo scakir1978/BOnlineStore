@@ -178,5 +178,11 @@
   "REQUIREDFIELDS": "Required Fields",
   "FORMULA": "Formula Definitions",
   "SAVERECORDERROR": "The changes could not be saved.",
-  "OK": "Ok"
+  "OK": "Ok",
+  "EN1": "Width-1",
+  "EN2": "Width-2",
+  "EN3": "Width-3",
+  "YUKSEKLIK": "Height",
+  "SONUCDEGISKENI": "Result Variable",
+  "SABIT": "Constant Value"
 }

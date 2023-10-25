@@ -201,5 +201,11 @@
   "REQUIREDFIELDS": "Gerekli Değişkenler",
   "FORMULA": "Formül Tanımları",
   "SAVERECORDERROR": "Değişiklikler kayıt edilemedi.",
-  "OK": "Tamam"
+  "OK": "Tamam",
+  "EN1": "En-1",
+  "EN2": "En-2",
+  "EN3": "En-3",
+  "YUKSEKLIK": "Yükseklik",
+  "SONUCDEGISKENI": "Sonuç Değişkeni",
+  "SABIT": "Sabit Değer"
 }

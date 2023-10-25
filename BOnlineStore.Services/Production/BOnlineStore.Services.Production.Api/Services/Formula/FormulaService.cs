@@ -18,5 +18,16 @@ namespace BOnlineStore.Services.Production.Api.Services
             IValidator<Formula> validator) : base(repository, mapper, stringLocalizer, validator)
         { }
 
+        public async Task<bool> ExecuteFormula(FormulaDetail formulaDetail)
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

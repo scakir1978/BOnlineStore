@@ -7,5 +7,6 @@ namespace BOnlineStore.Services.Production.Api.Services
 {
     public interface IFormulaService : IService<Formula, FormulaDto, FormulaCreateDto, FormulaUpdateDto>
     {
+        Task<bool> ExecuteFormula(FormulaDetail formulaDetail);
     }
 }

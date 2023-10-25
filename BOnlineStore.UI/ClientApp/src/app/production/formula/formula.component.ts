@@ -35,9 +35,9 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
       'PRODUCTION' //breadCrump için kullanılacak componenetin bağlı olduğu parent menü
     );
     this.formulaDataSource = _formulaService.getDataSource();
-    this.modelDataSource = _formulaService.getModelDataSource();
+    this.modelDataSource = _formulaService.getRawModelDataSource();
     this.rawMaterialDataSource = _formulaService.getRawMaterialDataSource();
-    this.formulaTypeDataSource = _formulaService.getFormulaTypeDataSource();
+    this.formulaTypeDataSource = _formulaService.getRawFormulaTypeDataSource();
 
     this.removeFormula = this.removeFormula.bind(this);
     this.editFormula = this.editFormula.bind(this);

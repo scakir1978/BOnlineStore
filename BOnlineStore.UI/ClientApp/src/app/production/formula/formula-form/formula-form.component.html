@@ -34,7 +34,7 @@
       </dx-text-box>
     </div>
     <div class="col pb-2">
-      <dx-drop-down-box
+      <dx-select-box
         label="{{ 'MODEL' | translate }}"
         [(value)]="formula.modelId"
         [inputAttr]="{ 'aria-label': 'Owner' }"
@@ -52,10 +52,10 @@
             message="{{ 'FORMULAMODELNOTEMPTY' | translate }}"
           ></dxi-validation-rule>
         </dx-validator>
-      </dx-drop-down-box>
+      </dx-select-box>
     </div>
     <div class="col pb-2">
-      <dx-drop-down-box
+      <dx-select-box
         label="{{ 'RAWMATERIAL' | translate }}"
         [(value)]="formula.rawMaterialId"
         [inputAttr]="{ 'aria-label': 'Owner' }"
@@ -73,28 +73,7 @@
             message="{{ 'FORMULARAWMATERIALNOTEMPTY' | translate }}"
           ></dxi-validation-rule>
         </dx-validator>
-      </dx-drop-down-box>
-    </div>
-    <div class="col pb-2">
-      <dx-drop-down-box
-        label="{{ 'FORMULATYPE' | translate }}"
-        [(value)]="formula.formulaTypeId"
-        [inputAttr]="{ 'aria-label': 'Owner' }"
-        [stylingMode]="'outlined'"
-        [labelMode]="'floating'"
-        valueExpr="id"
-        displayExpr="name"
-        placeholder="{{ 'ENTERFORMULATYPE' | translate }}"
-        [showClearButton]="true"
-        [dataSource]="formulaTypeDataSource"
-      >
-        <dx-validator>
-          <dxi-validation-rule
-            type="required"
-            message="{{ 'FORMULATYPENOTEMPTY' | translate }}"
-          ></dxi-validation-rule>
-        </dx-validator>
-      </dx-drop-down-box>
+      </dx-select-box>
     </div>
     <div class="col pb-2">
       <dx-number-box
@@ -112,6 +91,29 @@
           ></dxi-validation-rule>
         </dx-validator>
       </dx-number-box>
+    </div>
+  </div>
+  <div class="row pb-4">
+    <div class="col pb-2">
+      <dx-select-box
+        label="{{ 'FORMULATYPE' | translate }}"
+        [(value)]="formula.formulaTypeId"
+        [inputAttr]="{ 'aria-label': 'Owner' }"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+        valueExpr="id"
+        displayExpr="name"
+        placeholder="{{ 'ENTERFORMULATYPE' | translate }}"
+        [showClearButton]="true"
+        [dataSource]="formulaTypeDataSource"
+      >
+        <dx-validator>
+          <dxi-validation-rule
+            type="required"
+            message="{{ 'FORMULATYPENOTEMPTY' | translate }}"
+          ></dxi-validation-rule>
+        </dx-validator>
+      </dx-select-box>
     </div>
     <div class="col pb-2">
       <dx-text-box
@@ -137,21 +139,37 @@
         [showRowLines]="true"
         [rowAlternationEnabled]="true"
         (onInitNewRow)="onInitNewRow($event)"
+        (onEditorPreparing)="editorPreparing($event)"
+        (onRowInserted)="onRowInserted($event)"
       >
+        <dxo-row-dragging
+          [allowReordering]="true"
+          [onReorder]="onReorder"
+          [showDragIcons]="true"
+        ></dxo-row-dragging>
         <dxi-column
           dataField="variableType"
           caption="{{ 'VARIABLETYPE' | translate }}"
         >
           <dxo-lookup
-            [dataSource]="modelDataSource"
+            [(dataSource)]="formulaVariableTypes"
             displayExpr="name"
-            valueExpr="id"
+            valueExpr="code"
           >
           </dxo-lookup>
         </dxi-column>
+
+        <dxi-column
+          dataField="variableValue"
+          dataType="number"
+          format="#,##0.00"
+          caption="{{ 'VARIABLEVALUE' | translate }}"
+        >
+        </dxi-column>
+
         <dxi-column dataField="formulId" caption="{{ 'FORMUL' | translate }}">
           <dxo-lookup
-            [dataSource]="formulaDataSource"
+            [dataSource]="getFilteredFormulas"
             displayExpr="name"
             valueExpr="id"
           >
@@ -159,7 +177,7 @@
         </dxi-column>
 
         <dxo-editing
-          mode="row"
+          mode="cell"
           [allowUpdating]="true"
           [allowAdding]="true"
           [allowDeleting]="true"

@@ -57,5 +57,12 @@ namespace BOnlineStore.Services.Production.Api.Controllers
             return CreateSuccessActionResultInstance(await _FormulaService.DeleteAsync(id));
         }
 
+        [HttpPost("ExecuteFormula")]
+        public async IActionResult ExecuteFormula(FormulaDetailDto formulaDetail)
+        {
+            var isExecuted = _FormulaService.ExecuteFormula()
+            return CreateSuccessActionResultInstance();
+        }
+
     }
 }
