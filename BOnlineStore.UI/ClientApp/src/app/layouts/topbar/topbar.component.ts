@@ -181,10 +181,12 @@ export class TopbarComponent implements OnInit {
     this.countryName = text;
     this.flagvalue = flag;
     this.cookieValue = lang;
-    this.languageService.setLanguage(lang);
 
-    locale(lang);
     sessionStorage.setItem('locale', lang);
+    this.languageService.setLanguage(lang);
+    locale(lang);
+
+    window.location.reload();
   }
 
   /**

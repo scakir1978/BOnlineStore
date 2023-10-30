@@ -8,7 +8,7 @@ namespace BOnlineStore.Shared.Entities
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; private set ; }
+        public string Id { get; private set; }
 
 
         [BsonRepresentation(BsonType.String)]
@@ -28,6 +28,21 @@ namespace BOnlineStore.Shared.Entities
         public void SetTenant(Guid tenantId)
         {
             TenantId = tenantId;
+        }
+
+        public void SetId(string id)
+        {
+            Id = id;
+        }
+
+        public void SetId()
+        {
+            Id = ObjectId.GenerateNewId().ToString();
+        }
+
+        public string GetNewId()
+        {
+            return ObjectId.GenerateNewId().ToString();
         }
     }
 }

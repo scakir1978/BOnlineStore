@@ -34,8 +34,9 @@ export class FormulaFormComponent {
     this.formulaDataSource = _formulaService.getRawFormulaDataSource();
 
     this.onReorder = this.onReorder.bind(this);
-    this.onRowInserted = this.onRowInserted.bind(this);
+    this.onRowChange = this.onRowChange.bind(this);
     this.getFilteredFormulas = this.getFilteredFormulas.bind(this);
+    this.executeFormula = this.executeFormula.bind(this);
   }
 
   onSubmit(e) {
@@ -87,7 +88,7 @@ export class FormulaFormComponent {
     }
   }
 
-  onRowInserted(e) {
+  onRowChange(e) {
     this.formula.formulaText = this._formulaService.generateFormulaText(
       this.formula.formulaDetails
     );
@@ -98,5 +99,17 @@ export class FormulaFormComponent {
       store: this.formulaDataSource,
       filter: options.data ? ['modelId', '=', this.formula.modelId] : null,
     };
+  }
+
+  async executeFormula(e) {
+    var result = await this._formulaService.executeFormula(
+      this.formula.formulaDetails
+    );
+    return !!result;
+  }
+
+  usageAmountGreaterThanZero(e) {
+    var usageAmount = parseFloat(e.value.toString());
+    return usageAmount > 0;
   }
 }

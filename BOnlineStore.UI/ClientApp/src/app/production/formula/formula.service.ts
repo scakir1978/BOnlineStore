@@ -13,6 +13,7 @@ import { HttpRequestMethodsEnum } from 'app/base-classes/base-enums/http-request
 import { FormulaVariableTypes } from './models/formula-variable-types';
 import { TranslateService } from '@ngx-translate/core';
 import { IFormulaDetail } from './models/formula-form-interface';
+import { FormulaVariableTypeEnums } from 'app/base-classes/base-enums/formula-variable-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -106,21 +107,54 @@ export class FormulaService extends BaseService {
 
   getFormulaVariableTypes(): FormulaVariableTypes[] {
     var varibaleTypes: FormulaVariableTypes[] = [
-      { code: 'EN1', name: this._translate.instant('EN1') },
-      { code: 'EN2', name: this._translate.instant('EN2') },
-      { code: 'EN3', name: this._translate.instant('EN3') },
-      { code: 'YUKSEKLIK', name: this._translate.instant('YUKSEKLIK') },
       {
-        code: 'SONUCDEGISKENI',
-        name: this._translate.instant('SONUCDEGISKENI'),
+        code: FormulaVariableTypeEnums.EN1,
+        name: this._translate.instant(FormulaVariableTypeEnums.EN1),
       },
-      { code: 'SABIT', name: this._translate.instant('SABIT') },
-      { code: '(', name: '(' },
-      { code: ')', name: ')' },
-      { code: '+', name: '+' },
-      { code: '-', name: '-' },
-      { code: '*', name: '*' },
-      { code: '/', name: '/' },
+      {
+        code: FormulaVariableTypeEnums.EN2,
+        name: this._translate.instant(FormulaVariableTypeEnums.EN2),
+      },
+      {
+        code: FormulaVariableTypeEnums.EN3,
+        name: this._translate.instant(FormulaVariableTypeEnums.EN3),
+      },
+      {
+        code: FormulaVariableTypeEnums.YUKSEKLIK,
+        name: this._translate.instant(FormulaVariableTypeEnums.YUKSEKLIK),
+      },
+      {
+        code: FormulaVariableTypeEnums.SONUCDEGISKENI,
+        name: this._translate.instant(FormulaVariableTypeEnums.SONUCDEGISKENI),
+      },
+      {
+        code: FormulaVariableTypeEnums.SABIT,
+        name: this._translate.instant(FormulaVariableTypeEnums.SABIT),
+      },
+      {
+        code: FormulaVariableTypeEnums.PARANTEZAC,
+        name: FormulaVariableTypeEnums.PARANTEZAC,
+      },
+      {
+        code: FormulaVariableTypeEnums.PARANTEZKAPA,
+        name: FormulaVariableTypeEnums.PARANTEZKAPA,
+      },
+      {
+        code: FormulaVariableTypeEnums.ARTI,
+        name: FormulaVariableTypeEnums.ARTI,
+      },
+      {
+        code: FormulaVariableTypeEnums.EKSI,
+        name: FormulaVariableTypeEnums.EKSI,
+      },
+      {
+        code: FormulaVariableTypeEnums.CARPI,
+        name: FormulaVariableTypeEnums.CARPI,
+      },
+      {
+        code: FormulaVariableTypeEnums.BOLU,
+        name: FormulaVariableTypeEnums.BOLU,
+      },
     ];
 
     return varibaleTypes;
@@ -134,5 +168,16 @@ export class FormulaService extends BaseService {
     });
 
     return formulaText;
+  }
+
+  executeFormula(formulaDetails: IFormulaDetail[]): Promise<Object> {
+    return this.httpPostRequest('ExecuteFormulaTest', formulaDetails);
+  }
+
+  copyFormula(formulaId: string, modelId: string): Promise<Object> {
+    return this.httpPostRequest('CopyFormula', {
+      formulaId: formulaId,
+      modelId: modelId,
+    });
   }
 }

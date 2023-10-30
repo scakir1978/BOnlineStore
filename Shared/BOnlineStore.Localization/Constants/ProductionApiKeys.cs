@@ -10,5 +10,11 @@ namespace BOnlineStore.Localization.Constants
     {
         public const string FormulaTypeCodeNotEmpty = "FormulaTypeCodeNotEmpty";
         public const string FormulaTypeNameNotEmpty = "FormulaTypeNameNotEmpty";
+        public const string FormulaNameNotEmpty = "FormulaNameNotEmpty";
+        public const string FormulaNameMaxLength = "FormulaNameMaxLength";
+        public const string FormulaCodeNotEmpty = "FormulaCodeNotEmpty";
+        public const string FormulaCodeMaxLength = "FormulaCodeMaxLength";
+        public const string FormulaCodeMustBeUnique = "FormulaCodeMustBeUnique";
+        public const string FormulaIdNotFound = "FormulaIdNotFound";
     }
 }

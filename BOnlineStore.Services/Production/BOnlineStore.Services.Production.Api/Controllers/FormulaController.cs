@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BOnlineStore.Services.Production.Api.Dtos;
+using BOnlineStore.Services.Production.Api.Entities;
 using BOnlineStore.Services.Production.Api.Services;
 using BOnlineStore.Shared.Controllers;
 using DevExtreme.AspNet.Data;
@@ -11,12 +12,12 @@ namespace BOnlineStore.Services.Production.Api.Controllers
     [ApiController]
     public class FormulaController : ControllerShared
     {
-        private protected IFormulaService _FormulaService;
+        private protected IFormulaService _formulaService;
         private protected IMapper _mapper;
 
         public FormulaController(IFormulaService FormulaService, IMapper mapper)
         {
-            _FormulaService = FormulaService;
+            _formulaService = FormulaService;
             _mapper = mapper;
         }
 
@@ -24,44 +25,51 @@ namespace BOnlineStore.Services.Production.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<FormulaLoadDto>(_FormulaService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<FormulaLoadDto>>(_formulaService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _FormulaService.GetAsync());
+            return CreateSuccessActionResultInstance(await _formulaService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _FormulaService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _formulaService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(FormulaCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _FormulaService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _formulaService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, FormulaUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _FormulaService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _formulaService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _FormulaService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _formulaService.DeleteAsync(id));
         }
 
-        [HttpPost("ExecuteFormula")]
-        public async IActionResult ExecuteFormula(FormulaDetailDto formulaDetail)
+        [HttpPost("ExecuteFormulaTest")]
+        public async Task<IActionResult> ExecuteFormulaTest(List<FormulaDetailDto> formulaDetailsDto)
         {
-            var isExecuted = _FormulaService.ExecuteFormula()
-            return CreateSuccessActionResultInstance();
+            var isExecuted = await _formulaService.ExecuteFormulaTest(_mapper.Map<List<FormulaDetail>>(formulaDetailsDto));
+            return CreateSuccessActionResultInstance(isExecuted);
+        }
+
+        [HttpPost("CopyFormula")]
+        public async Task<IActionResult> CopyFormula(string formulaId, string modelId)
+        {
+            var result = await _formulaService.CopyFormula(formulaId, modelId);
+            return CreateSuccessActionResultInstance(result);
         }
 
     }

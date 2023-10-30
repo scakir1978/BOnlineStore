@@ -2,6 +2,6 @@
 {
     public class EntityDto
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
     }
 }

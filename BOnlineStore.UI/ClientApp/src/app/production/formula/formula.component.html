@@ -65,7 +65,11 @@
     </dxi-column>
     <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
     </dxi-column>
-    <dxi-column dataField="modelId" caption="{{ 'MODEL' | translate }}">
+    <dxi-column
+      dataField="modelId"
+      caption="{{ 'MODEL' | translate }}"
+      [hidingPriority]="4"
+    >
       <dxo-lookup
         [dataSource]="modelDataSource"
         displayExpr="name"
@@ -76,6 +80,7 @@
     <dxi-column
       dataField="rawMaterialId"
       caption="{{ 'RAWMATERIAL' | translate }}"
+      [hidingPriority]="3"
     >
       <dxo-lookup
         [dataSource]="rawMaterialDataSource"
@@ -87,6 +92,7 @@
     <dxi-column
       dataField="formulaTypeId"
       caption="{{ 'FORMULATYPE' | translate }}"
+      [hidingPriority]="2"
     >
       <dxo-lookup
         [dataSource]="formulaTypeDataSource"
@@ -100,11 +106,13 @@
       dataType="number"
       format="#,##0.00"
       caption="{{ 'USAGEAMOUNT' | translate }}"
+      [hidingPriority]="1"
     >
     </dxi-column>
     <dxi-column
       dataField="formulaText"
       caption="{{ 'FORMULATEXT' | translate }}"
+      [hidingPriority]="0"
     >
     </dxi-column>
     <dxi-column type="buttons" [showInColumnChooser]="false">
@@ -118,6 +126,11 @@
         icon="trash"
         [onClick]="removeFormula"
       ></dxi-button>
+      <dxi-button
+        hint="{{ 'COPY' | translate }}"
+        icon="copy"
+        [onClick]="showCopyFormulaPopup"
+      ></dxi-button>
     </dxi-column>
   </dx-data-grid>
 </div>
@@ -130,3 +143,59 @@
   >
   </app-formula-form>
 </div>
+
+<dx-popup
+  [width]="'auto'"
+  [height]="'auto'"
+  [showTitle]="true"
+  title="{{ 'COPYFORMULA' | translate }}"
+  [dragEnabled]="false"
+  [hideOnOutsideClick]="true"
+  [showCloseButton]="false"
+  [(visible)]="popupVisible"
+  [position]="'center'"
+>
+  <div *dxTemplate="let data of 'content'">
+    <form (submit)="copyFormula($event)">
+      <div class="text-left h7 pb-1">
+        {{ "ENTERCOPYFORMULAMODEL" | translate }}
+      </div>
+      <div class="row pb-3">
+        <dx-select-box
+          label="{{ 'MODEL' | translate }}"
+          [(value)]="copyModelId"
+          [inputAttr]="{ 'aria-label': 'Owner' }"
+          [stylingMode]="'outlined'"
+          [labelMode]="'floating'"
+          valueExpr="id"
+          displayExpr="name"
+          placeholder="{{ 'ENTERMODEL' | translate }}"
+          [showClearButton]="true"
+          [dataSource]="modelDataSource"
+        >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="{{ 'MODELNOTEMPTY' | translate }}"
+            ></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
+      </div>
+      <div class="row align-items-end">
+        <div class="text-end">
+          <dx-button
+            text="{{ 'COPY' | translate }}"
+            type="normal"
+            [useSubmitBehavior]="true"
+          ></dx-button>
+          <dx-button
+            text="{{ 'CANCEL' | translate }}"
+            type="normal"
+            (onClick)="cancelCopyFormula($event)"
+            style="margin-left: 10px"
+          ></dx-button>
+        </div>
+      </div>
+    </form>
+  </div>
+</dx-popup>

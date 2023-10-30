@@ -18,18 +18,18 @@ namespace BOnlineStore.Services.Production.Api.Validations
             _stringLocalizer = stringLocalizer;
             _repository = repository;
 
-            RuleFor(x => x.Name).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.FormulaNameNotEmpty]);
-            RuleFor(x => x.Name).MaximumLength(250).WithMessage(_stringLocalizer[DefinitionApiKeys.FormulaNameMaxLength]);
+            RuleFor(x => x.Name).NotEmpty().WithMessage(_stringLocalizer[ProductionApiKeys.FormulaNameNotEmpty]);
+            RuleFor(x => x.Name).MaximumLength(250).WithMessage(_stringLocalizer[ProductionApiKeys.FormulaNameMaxLength]);
 
-            RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.FormulaCodeNotEmpty]);
-            RuleFor(x => x.Code).MaximumLength(50).WithMessage(_stringLocalizer[DefinitionApiKeys.FormulaCodeMaxLength]);
+            RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[ProductionApiKeys.FormulaCodeNotEmpty]);
+            RuleFor(x => x.Code).MaximumLength(50).WithMessage(_stringLocalizer[ProductionApiKeys.FormulaCodeMaxLength]);
 
             //Bu rule sadece kayıt ekleme işlemi sırasında devreye giriyor.
             //Oda service üzerinden kayıt ekleme işlemi olduğunda aşağıdaki gibi bir kod çalıştırılacak sağlanıyor.
             //var validationResult = await _validator.ValidateAsync(entity, options => { options.IncludeRuleSets(GlobalConstants.CodeUniqueControlRule); });
             RuleSet(GlobalConstants.CodeUniqueControlRule, () =>
             {
-                RuleFor(x => x).Must(CodeUniqueControl).WithMessage(_stringLocalizer[DefinitionApiKeys.FormulaCodeMustBeUnique]);
+                RuleFor(x => x).Must(CodeUniqueControl).WithMessage(_stringLocalizer[ProductionApiKeys.FormulaCodeMustBeUnique]);
             });
         }
 

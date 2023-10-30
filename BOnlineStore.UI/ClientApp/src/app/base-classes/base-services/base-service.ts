@@ -2,7 +2,7 @@ import { DatasourceFunctionsEnum } from './../base-enums/datasource-functions.en
 import { HttpClient } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import DataSource from 'devextreme/data/data_source';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import CustomStore from 'devextreme/data/custom_store';
 import { HttpRequestMethodsEnum } from '../base-enums/http-request-methods.enum';
 import {
@@ -135,5 +135,19 @@ export abstract class BaseService {
     return lastValueFrom(result).then((response: any) =>
       method === 'LOAD' ? response.result.data : response.result
     );
+  }
+
+  httpPostRequest(
+    functionName: string,
+    data: any,
+    controllerName: string = this._controllerName,
+    serviceUrl: string = this._serviceUrl
+  ): Promise<Object> {
+    var request = this._http.post(
+      serviceUrl + controllerName + '/' + functionName,
+      data
+    );
+
+    return lastValueFrom(request).then((response: any) => response.result);
   }
 }

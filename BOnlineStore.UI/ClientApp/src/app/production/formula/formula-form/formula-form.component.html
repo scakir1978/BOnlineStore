@@ -49,7 +49,7 @@
         <dx-validator>
           <dxi-validation-rule
             type="required"
-            message="{{ 'FORMULAMODELNOTEMPTY' | translate }}"
+            message="{{ 'MODELNOTEMPTY' | translate }}"
           ></dxi-validation-rule>
         </dx-validator>
       </dx-select-box>
@@ -70,7 +70,7 @@
         <dx-validator>
           <dxi-validation-rule
             type="required"
-            message="{{ 'FORMULARAWMATERIALNOTEMPTY' | translate }}"
+            message="{{ 'RAWMATERIALNOTEMPTY' | translate }}"
           ></dxi-validation-rule>
         </dx-validator>
       </dx-select-box>
@@ -87,8 +87,14 @@
         <dx-validator>
           <dxi-validation-rule
             type="required"
-            message="{{ 'FORMULAUSAGEAMOUNTEMPTY' | translate }}"
+            message="{{ 'USAGEAMOUNTEMPTY' | translate }}"
           ></dxi-validation-rule>
+          <dxi-validation-rule
+            type="custom"
+            [validationCallback]="usageAmountGreaterThanZero"
+            message="{{ 'USAGEAMOUNTGREATERTHANZERO' | translate }}"
+          >
+          </dxi-validation-rule>
         </dx-validator>
       </dx-number-box>
     </div>
@@ -119,11 +125,17 @@
       <dx-text-box
         [(value)]="formula.formulaText"
         label="{{ 'FORMULATEXT' | translate }}"
-        placeholder="{{ 'ENTERFORMULATEXT' | translate }}"
         [stylingMode]="'outlined'"
         [labelMode]="'floating'"
-        [disabled]="true"
+        [readOnly]="true"
       >
+        <dx-validator>
+          <dxi-validation-rule
+            type="async"
+            message="{{ 'FORMULAERROR' | translate }}"
+            [validationCallback]="executeFormula"
+          ></dxi-validation-rule>
+        </dx-validator>
       </dx-text-box>
     </div>
   </div>
@@ -140,7 +152,8 @@
         [rowAlternationEnabled]="true"
         (onInitNewRow)="onInitNewRow($event)"
         (onEditorPreparing)="editorPreparing($event)"
-        (onRowInserted)="onRowInserted($event)"
+        (onRowInserted)="onRowChange($event)"
+        (onRowRemoved)="onRowChange($event)"
       >
         <dxo-row-dragging
           [allowReordering]="true"

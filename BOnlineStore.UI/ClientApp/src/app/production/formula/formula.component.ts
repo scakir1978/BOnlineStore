@@ -24,6 +24,13 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
   public formCrudType: FormCrudTypeEnum;
   public formula: Formula;
 
+  //Popup properties
+  public popupVisible = false;
+  public copyModelId: string;
+  public copyFormulaId: string;
+  copyButtonOptions: any;
+  closeButtonOptions: any;
+
   constructor(
     public override _translate: TranslateService,
     private _formulaService: FormulaService
@@ -42,8 +49,10 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
     this.removeFormula = this.removeFormula.bind(this);
     this.editFormula = this.editFormula.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.showCopyFormulaPopup = this.showCopyFormulaPopup.bind(this);
 
     this.formActive = false;
+    this.popupVisible = false;
   }
 
   newFormula(e) {
@@ -66,12 +75,16 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
     e.event.preventDefault();
   }
 
+  cancelForm() {
+    this.formActive = false;
+  }
+
   async submitForm(formula: Formula) {
     if (this.formCrudType == FormCrudTypeEnum.INSERT) {
       try {
         await this._formulaService.insert(formula);
       } catch (error) {
-        console.log(error);
+        this.showErrorMessage(error.message);
         return;
       }
     }
@@ -88,8 +101,28 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
     this.refreshDataGrid();
   }
 
-  cancelForm() {
-    this.formActive = false;
+  async copyFormula(e) {
+    try {
+      await this._formulaService.copyFormula(
+        this.copyFormulaId,
+        this.copyModelId
+      );
+      this.showSuccessMessage(this._translate.instant('COPYFORMULASUCCESS'));
+      this.popupVisible = false;
+      this.refreshDataGrid();
+    } catch (error) {
+      this.showErrorMessage(error.message);
+    }
+  }
+
+  cancelCopyFormula(e) {
+    this.popupVisible = false;
+  }
+
+  showCopyFormulaPopup(e) {
+    this.copyModelId = null;
+    this.copyFormulaId = e.row.data.id;
+    this.popupVisible = true;
   }
 
   showErrorMessage(errorMessage) {
@@ -97,6 +130,16 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
       title: this._translate.instant('SAVERECORDERROR'),
       text: errorMessage,
       icon: 'error',
+      confirmButtonColor: '#364574',
+      confirmButtonText: this._translate.instant('OK'),
+    });
+  }
+
+  showSuccessMessage(successMessage) {
+    Swal.fire({
+      title: this._translate.instant('INFORMATION'),
+      text: successMessage,
+      icon: 'success',
       confirmButtonColor: '#364574',
       confirmButtonText: this._translate.instant('OK'),
     });
