@@ -35,7 +35,7 @@ namespace BOnlineStore.Services.Production.Api.Validations
 
         private bool CodeUniqueControl(Formula entity)
         {
-            return !_repository.Load().Where(x => x.Code == entity.Code).Any();
+            return !_repository.Load().Where(x => x.Code == entity.Code && x.ModelId == entity.ModelId).Any();
         }
 
     }

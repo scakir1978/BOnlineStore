@@ -16,5 +16,8 @@ namespace BOnlineStore.Localization.Constants
         public const string FormulaCodeMaxLength = "FormulaCodeMaxLength";
         public const string FormulaCodeMustBeUnique = "FormulaCodeMustBeUnique";
         public const string FormulaIdNotFound = "FormulaIdNotFound";
+        public const string FormulaIdNotEmpty = "FormulaIdNotEmpty";
+        public const string ModelIdNotEmpty = "ModelIdNotEmpty";
+
     }
 }

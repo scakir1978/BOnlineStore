@@ -35,6 +35,16 @@ namespace BOnlineStore.Services.Production.Api.Services
         /// <param name="modelId">Formülün kopyalanacağı modelin idsi</param>        
         public async Task<bool> CopyFormula(string formulaId, string modelId)
         {
+            if (string.IsNullOrWhiteSpace(formulaId))
+            {
+                throw new Exception(_stringLocalizer[ProductionApiKeys.FormulaIdNotEmpty]);
+            }
+
+            if (string.IsNullOrWhiteSpace(modelId))
+            {
+                throw new Exception(_stringLocalizer[ProductionApiKeys.ModelIdNotEmpty]);
+            }
+
             var formula = await _repository.GetByIdAsync(formulaId);
 
             if (formula == null)

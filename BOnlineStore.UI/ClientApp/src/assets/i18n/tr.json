@@ -231,7 +231,7 @@
   "USAGEAMOUNTGREATERTHANZERO": "Kullanım miktarı sıfır(0) değerinden büyük olmalıdır.",
   "COPYFORMULA": "Formül Kopyala",
   "COPY": "Kopyala",
-  "ENTERCOPYFORMULAMODEL": "Formülün kopyalanacağı modeli seçiniz:",
+  "ENTERCOPYFORMULAMODEL": "{{FormulaName}} formülünü kopyalayacağınız modeli seçiniz:",
   "INFORMATION": "Bilgi",
   "COPYFORMULASUCCESS": "Formül başarı ile kopyalandı."
 }

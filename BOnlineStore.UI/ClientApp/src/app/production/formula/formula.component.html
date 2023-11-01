@@ -3,6 +3,7 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
+<!-- Formül listesi -->
 <div *ngIf="!formActive">
   <dx-data-grid
     id="gridContainer"
@@ -15,7 +16,9 @@
     [rowAlternationEnabled]="true"
     (onExporting)="onExporting($event)"
   >
-    <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+    <dxo-column-chooser [enabled]="true" [mode]="'select'">
+      <dxo-search [enabled]="true"></dxo-search>
+    </dxo-column-chooser>
     <dxo-filter-row [visible]="true"> </dxo-filter-row>
     <dxo-header-filter [visible]="true"> </dxo-header-filter>
     <dxo-editing
@@ -61,10 +64,6 @@
     </dxo-toolbar>
 
     <dxi-column dataField="id" [visible]="false"> </dxi-column>
-    <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
-    </dxi-column>
-    <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
-    </dxi-column>
     <dxi-column
       dataField="modelId"
       caption="{{ 'MODEL' | translate }}"
@@ -76,6 +75,10 @@
         valueExpr="id"
       >
       </dxo-lookup>
+    </dxi-column>
+    <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+    </dxi-column>
+    <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
     </dxi-column>
     <dxi-column
       dataField="rawMaterialId"
@@ -135,6 +138,7 @@
   </dx-data-grid>
 </div>
 
+<!-- Formul detayı -->
 <div *ngIf="formActive">
   <app-formula-form
     [formula]="formula"
@@ -144,6 +148,7 @@
   </app-formula-form>
 </div>
 
+<!-- Formül kopyalama -->
 <dx-popup
   [width]="'auto'"
   [height]="'auto'"
@@ -158,7 +163,9 @@
   <div *dxTemplate="let data of 'content'">
     <form (submit)="copyFormula($event)">
       <div class="text-left h7 pb-1">
-        {{ "ENTERCOPYFORMULAMODEL" | translate }}
+        {{
+          "ENTERCOPYFORMULAMODEL" | translate : { FormulaName: copyFormulaName }
+        }}
       </div>
       <div class="row pb-3">
         <dx-select-box

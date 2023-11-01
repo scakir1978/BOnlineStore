@@ -1,6 +1,6 @@
 import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
 import { FormulaService } from './formula.service';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormCrudTypeEnum } from 'app/base-classes/base-enums/form-crud-type.enum';
 import CustomStore from 'devextreme/data/custom_store';
@@ -28,6 +28,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
   public popupVisible = false;
   public copyModelId: string;
   public copyFormulaId: string;
+  public copyFormulaName: string;
   copyButtonOptions: any;
   closeButtonOptions: any;
 
@@ -122,6 +123,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
   showCopyFormulaPopup(e) {
     this.copyModelId = null;
     this.copyFormulaId = e.row.data.id;
+    this.copyFormulaName = e.row.data.name;
     this.popupVisible = true;
   }
 

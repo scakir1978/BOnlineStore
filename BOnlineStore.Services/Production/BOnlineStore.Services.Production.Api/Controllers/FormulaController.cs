@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BOnlineStore.Services.Production.Api.Dtos;
+using BOnlineStore.Services.Production.Api.Dtos.Formula;
 using BOnlineStore.Services.Production.Api.Entities;
 using BOnlineStore.Services.Production.Api.Services;
 using BOnlineStore.Shared.Controllers;
@@ -66,9 +67,9 @@ namespace BOnlineStore.Services.Production.Api.Controllers
         }
 
         [HttpPost("CopyFormula")]
-        public async Task<IActionResult> CopyFormula(string formulaId, string modelId)
+        public async Task<IActionResult> CopyFormula(FormulaCopyDto? input)
         {
-            var result = await _formulaService.CopyFormula(formulaId, modelId);
+            var result = await _formulaService.CopyFormula(input?.FormulaId ?? "", input?.ModelId ?? "");
             return CreateSuccessActionResultInstance(result);
         }
 
