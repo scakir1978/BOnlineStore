@@ -10,6 +10,7 @@ namespace BOnlineStore.Services.Production.Api.Injections
 
             services.AddScoped<IFormulaTypeRepository, FormulaTypeRepository>();
             services.AddScoped<IFormulaRepository, FormulaRepository>();
+            services.AddScoped<IWorkOrderRepository, WorkOrderRepository>();
 
             return services;
         }

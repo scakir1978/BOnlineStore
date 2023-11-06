@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using BOnlineStore.Generic.Service;
 using BOnlineStore.Localization;
-using BOnlineStore.Services.Definitions.Api.Dtos;
-using BOnlineStore.Services.Definitions.Api.Entities;
-using BOnlineStore.Services.Definitions.Api.Repositories;
+using $rootnamespace$.Dtos;
+using $rootnamespace$.Entities;
+using $rootnamespace$.Repositories;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 

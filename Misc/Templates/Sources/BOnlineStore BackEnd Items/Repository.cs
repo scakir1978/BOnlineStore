@@ -1,6 +1,6 @@
 ﻿using BOnlineStore.Localization;
 using BOnlineStore.MongoDb.GenericRepository;
-using BOnlineStore.Services.Definitions.Api.Entities;
+using $rootnamespace$.Entities;
 using Microsoft.Extensions.Localization;
 
 namespace $rootnamespace$.Repositories
@@ -9,6 +9,6 @@ namespace $rootnamespace$.Repositories
     {
         public $className$Repository(IContext context, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
             : base(context, httpContextAccessor, stringLocalizer)
-    { }
-}
+		{ }
+	}
 }

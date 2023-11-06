@@ -18,6 +18,11 @@ namespace BOnlineStore.Localization.Constants
         public const string FormulaIdNotFound = "FormulaIdNotFound";
         public const string FormulaIdNotEmpty = "FormulaIdNotEmpty";
         public const string ModelIdNotEmpty = "ModelIdNotEmpty";
+        public const string WorkOrderDescriptionNotEmpty = "WorkOrderDescriptionNotEmpty";
+        public const string WorkOrderDescriptionMaxLength = "WorkOrderDescriptionMaxLength";
+        public const string WorkOrderNoNotEmpty = "WorkOrderNoNotEmpty";
+        public const string WorkOrderNoMaxLength = "WorkOrderNoMaxLength";
+        public const string WorkOrderNoMustBeUnique = "WorkOrderNoMustBeUnique";
 
     }
 }

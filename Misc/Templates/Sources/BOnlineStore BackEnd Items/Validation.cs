@@ -1,7 +1,7 @@
 ﻿using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
-using BOnlineStore.Services.Definitions.Api.Entities;
-using BOnlineStore.Services.Definitions.Api.Repositories;
+using $rootnamespace$.Entities;
+using $rootnamespace$.Repositories;
 using BOnlineStore.Shared.Constansts;
 using FluentValidation;
 using Microsoft.Extensions.Localization;

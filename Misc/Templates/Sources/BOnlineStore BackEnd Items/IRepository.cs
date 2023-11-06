@@ -1,5 +1,5 @@
 ﻿using BOnlineStore.MongoDb.GenericRepository;
-using BOnlineStore.Services.Definitions.Api.Entities;
+using $rootnamespace$.Entities;
 
 namespace $rootnamespace$.Repositories
 {

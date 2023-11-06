@@ -1,6 +1,6 @@
 ﻿using BOnlineStore.Generic.Service;
-using BOnlineStore.Services.Definitions.Api.Dtos;
-using BOnlineStore.Services.Definitions.Api.Entities;
+using $rootnamespace$.Dtos;
+using $rootnamespace$.Entities;
 using System.Linq.Expressions;
 
 namespace $rootnamespace$.Services

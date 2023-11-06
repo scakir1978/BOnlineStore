@@ -11,6 +11,7 @@ namespace BOnlineStore.Services.Production.Api.Injections
 
             services.AddScoped<IValidator<FormulaType>, FormulaTypeValidator>();
             services.AddScoped<IValidator<Formula>, FormulaValidator>();
+            services.AddScoped<IValidator<WorkOrder>, WorkOrderValidator>();
 
             return services;
         }
