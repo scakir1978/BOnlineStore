@@ -5,13 +5,13 @@ export interface IFormulaDetail {
   /* Formül detay id */
   id: string | null;
 
-  /** "(",")" parantez açma, kapama, dört işlem "+,-,*,/" ve değişkenler "EN1, EN2, EN3, YUKSEKLIK, SONUCDEGISKENI" ile sayısal değer içeren (1,5,20, 150) ifadelerinden biri olabilir. */
+  /** "(",")" parantez açma, kapama, dört işlem "+,-,*,/" ve değişkenler "WIDTH1, WIDTH2, WIDTH3, HEIGHT, RESULTVARIABLE" ile sayısal değer içeren (1,5,20, 150) ifadelerinden biri olabilir. */
   variableType: string | null;
 
-  /** Eğer değişten tipi (VariableType) SABIT ise, Bu alana sayısal bir bilgi girilir. */
+  /** Eğer değişten tipi (VariableType) CONSTANT ise, Bu alana sayısal bir bilgi girilir. */
   variableValue: number | null;
 
-  /** Eğer değişten tipi (VariableType) SONUCDEGISKENI ise, formülde başka bir formül hesabının sonucu kullanılacak demektir. O yüzden formul id bilgisi bu alana kayıt edilir. */
+  /** Eğer değişten tipi (VariableType) RESULTVARIABLE ise, formülde başka bir formül hesabının sonucu kullanılacak demektir. O yüzden formul id bilgisi bu alana kayıt edilir. */
   formulId: string | null;
 }
 

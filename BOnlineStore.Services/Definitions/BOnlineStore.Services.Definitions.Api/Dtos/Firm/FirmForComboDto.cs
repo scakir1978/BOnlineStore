@@ -2,19 +2,19 @@
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
-    public class ModelForComboDto : EntityDto
+    public class FirmForComboDto : EntityDto
     {
         /// <summary>
-        /// Model Kodu
+        /// Firma Kodu
         /// </summary>
         public string Code { get; set; }
 
         /// <summary>
-        /// Model Açıklaması
+        /// Firma Adı
         /// </summary>
         public string Name { get; set; }
 
-        public ModelForComboDto(string code, string name)
+        public FirmForComboDto(string code, string name)
         {
             Code = code;
             Name = name;

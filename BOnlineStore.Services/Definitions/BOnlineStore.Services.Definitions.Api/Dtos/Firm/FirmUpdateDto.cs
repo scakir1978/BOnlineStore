@@ -17,162 +17,162 @@
         /// <summary>
         /// Firma Tipi Id
         /// </summary>
-        public string? FirmTypeId { get; private set; }
+        public string? FirmTypeId { get; set; }
 
         /// <summary>
         /// Ünvan
         /// </summary>
-        public string? Title { get; private set; }
+        public string? Title { get; set; }
 
         /// <summary>
         /// Yetkili kişi.
         /// </summary>
-        public string? CompetentPerson { get; private set; }
+        public string? CompetentPerson { get; set; }
 
         /// <summary>
         /// Müşteri temsilcisi.
         /// </summary>
-        public string? CustomerRepresentative { get; private set; }
+        public string? CustomerRepresentative { get; set; }
 
         /// <summary>
         /// Vergi numarası.
         /// </summary>
-        public string? TaxNumber { get; private set; }
+        public string? TaxNumber { get; set; }
 
         /// <summary>
         /// Vergi dairesi.
         /// </summary>
-        public string? TaxAdministration { get; private set; }
+        public string? TaxAdministration { get; set; }
 
         /// <summary>
         /// Ülke Id
         /// </summary>
-        public string? CountryId { get; private set; }
+        public string? CountryId { get; set; }
 
         /// <summary>
         /// Bölge Id
         /// </summary>
-        public string? RegionId { get; private set; }
+        public string? RegionId { get; set; }
 
         /// <summary>
         /// Şehir Id
         /// </summary>
-        public string? CityId { get; private set; }
+        public string? CityId { get; set; }
 
         /// <summary>
         /// İlçe Id
         /// </summary>
-        public string? CountyId { get; private set; }
+        public string? CountyId { get; set; }
 
         /// <summary>
         /// Mahalle Id
         /// </summary>
-        public string? DistrictId { get; private set; }
+        public string? DistrictId { get; set; }
 
         /// <summary>
         /// Adres
         /// </summary>
-        public string? Adress { get; private set; }
+        public string? Adress { get; set; }
 
         /// <summary>
         /// Posta Kodu
         /// </summary>
-        public string? PostalCode { get; private set; }
+        public string? PostalCode { get; set; }
 
         /// <summary>
         /// Cep Telefon Numarası-1
         /// </summary>
-        public string? CellPhoneNumber1 { get; private set; }
+        public string? CellPhoneNumber1 { get; set; }
 
         /// <summary>
         /// Cep Telefon Numarası-2
         /// </summary>
-        public string? CellPhoneNumber2 { get; private set; }
+        public string? CellPhoneNumber2 { get; set; }
 
         /// <summary>
         /// Telefon Numarası-1
         /// </summary>
-        public string? TelephoneNumber1 { get; private set; }
+        public string? TelephoneNumber1 { get; set; }
 
         /// <summary>
         /// Telefon Numarası-2
         /// </summary>
-        public string? TelephoneNumber2 { get; private set; }
+        public string? TelephoneNumber2 { get; set; }
 
         /// <summary>
         /// Telefon Numarası-3
         /// </summary>
-        public string? TelephoneNumber3 { get; private set; }
+        public string? TelephoneNumber3 { get; set; }
 
         /// <summary>
         /// Fax Numarası
         /// </summary>
-        public string? FaxNumber { get; private set; }
+        public string? FaxNumber { get; set; }
 
         /// <summary>
         /// E-Mail Adresi
         /// </summary>
-        public string? EMail { get; private set; }
+        public string? EMail { get; set; }
 
         /// <summary>
         /// Ödeme şekli
         /// </summary>
-        public string? PaymentMethod { get; private set; }
+        public string? PaymentMethod { get; set; }
 
         /// <summary>
         /// Cari Hareket Türü
         /// </summary>
-        public string? TransactionType { get; private set; }
+        public string? TransactionType { get; set; }
 
         /// <summary>
         /// Özel Kod
         /// </summary>
-        public string? SpecialCode { get; private set; }
+        public string? SpecialCode { get; set; }
 
         /// <summary>
         /// Fiyat Listesi Id
         /// </summary>
-        public string? PriceListId { get; private set; }
+        public string? PriceListId { get; set; }
 
         /// <summary>
         /// Risk Limiti
         /// </summary>
-        public decimal? RiskLimit { get; private set; }
+        public decimal? RiskLimit { get; set; }
 
         /// <summary>
         /// Peşin İskonto - 1
         /// </summary>
-        public decimal? AdvanceDiscount1 { get; private set; }
+        public decimal? AdvanceDiscount1 { get; set; }
 
         /// <summary>
         /// Peşin İskonto - 2
         /// </summary>
-        public decimal? AdvanceDiscount2 { get; private set; }
+        public decimal? AdvanceDiscount2 { get; set; }
 
         /// <summary>
         /// Vadeli İskonto
         /// </summary>
-        public decimal? ForwardDiscount { get; private set; }
+        public decimal? ForwardDiscount { get; set; }
 
         /// <summary>
         /// Valör
         /// </summary>
-        public int? Valor { get; private set; }
+        public int? Valor { get; set; }
 
         /// <summary>
         /// Tanımlanana KDV oranı fatura etkilesin mi?
         /// </summary>
-        public bool? VatRatioForInvoice { get; private set; }
+        public bool? VatRatioForInvoice { get; set; }
 
         /// <summary>
         /// KDV Oranı
         /// </summary>
-        public decimal? VatRatio { get; private set; }
+        public decimal? VatRatio { get; set; }
 
         /// <summary>
         /// Açıklamalar
         /// </summary>
-        public string? Explanations { get; private set; }
+        public string? Explanations { get; set; }
 
         public FirmUpdateDto(
             string? code, string? name, string? firmTypeId = null, string? title = null, string? competentPerson = null,

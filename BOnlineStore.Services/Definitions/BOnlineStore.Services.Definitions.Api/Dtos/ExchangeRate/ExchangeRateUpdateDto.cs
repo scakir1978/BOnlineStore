@@ -8,35 +8,35 @@
         /// <summary>
         /// Kur tarihi
         /// </summary>
-        public DateTime? ExcangeRateDate { get; private set; }
+        public DateTime? ExcangeRateDate { get; set; }
         /// <summary>
         /// Döviz kodu
         /// </summary>
-        public string? CurrencyId { get; private set; }
+        public string? CurrencyId { get; set; }
         /// <summary>
         /// Alış kuru
         /// </summary>
-        public decimal? BuyingRate { get; private set; }
+        public decimal? BuyingRate { get; set; }
         /// <summary>
         /// Satış kuru
         /// </summary>
-        public decimal? SalesRate { get; private set; }
+        public decimal? SalesRate { get; set; }
         /// <summary>
         /// Efektif alış kuru
         /// </summary>
-        public decimal? EffectiveBuyingRate { get; private set; }
+        public decimal? EffectiveBuyingRate { get; set; }
         /// <summary>
         /// Efektif satış kuru
         /// </summary>
-        public decimal? EffectiveSalesRate { get; private set; }
+        public decimal? EffectiveSalesRate { get; set; }
         /// <summary>
         /// Özel kur
         /// </summary>
-        public decimal? SpecialRate01 { get; private set; }
+        public decimal? SpecialRate01 { get; set; }
         /// <summary>
         /// Özel kur
         /// </summary>
-        public decimal? SpecialRate02 { get; private set; }
+        public decimal? SpecialRate02 { get; set; }
 
         public ExchangeRateUpdateDto(DateTime? excangeRateDate = null, string? currencyId = null, decimal? buyingRate = null, decimal? salesRate = null, decimal? effectiveBuyingRate = null, decimal? effectiveSalesRate = null, decimal? specialRate01 = null, decimal? specialRate02 = null)
         {

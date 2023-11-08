@@ -8,57 +8,57 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Model Kodu
         /// </summary>
-        public string Code { get; private set; }
+        public string Code { get; set; }
 
         /// <summary>
         /// Model Açıklaması
         /// </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Model Grup Id
         /// </summary>
-        public string ModelGroupId { get; private set; }
+        public string ModelGroupId { get; set; }
 
         /// <summary>
         /// Yan Panel Id
         /// </summary>        
-        public string? SidePanelId { get; private set; }
+        public string? SidePanelId { get; set; }
 
         /// <summary>
         /// Panel Id
         /// </summary>
-        public string? PanelId { get; private set; }
+        public string? PanelId { get; set; }
 
         /// <summary>
         /// Reçete Türü Id
         /// </summary>
-        public string? RecipeTypeId { get; private set; }
+        public string? RecipeTypeId { get; set; }
 
         /// <summary>
         /// Yüzde Fire Oranı 
         /// </summary>
-        public decimal? WastageRatio { get; private set; }
+        public decimal? WastageRatio { get; set; }
 
         /// <summary>
         /// Fire Tutarı
         /// </summary>
-        public decimal? WastageAmount { get; private set; }
+        public decimal? WastageAmount { get; set; }
 
         /// <summary>
         /// Yüzde İşçilik Oranı 
         /// </summary>
-        public decimal? WorkmanshipRatio { get; private set; }
+        public decimal? WorkmanshipRatio { get; set; }
 
         /// <summary>
         /// İşçilik Tutarı
         /// </summary>
-        public decimal? WorkmanshipAmount { get; private set; }
+        public decimal? WorkmanshipAmount { get; set; }
 
         /// <summary>
         /// Base64 formatında resim
         /// </summary>
-        public string? Picture { get; private set; }
+        public string? Picture { get; set; }
 
         public ModelCreateDto(
             string code, string name, string modelGroupId, string? sidePanelId = null, string? panelId = null,

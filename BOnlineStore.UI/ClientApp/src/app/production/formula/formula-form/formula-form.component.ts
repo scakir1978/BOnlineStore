@@ -83,7 +83,7 @@ export class FormulaFormComponent {
 
     if (e.parentType === 'dataRow' && e.dataField === 'formulId') {
       e.editorOptions.disabled = true;
-      if (e.row.data && e.row.data.variableType === 'SONUCDEGISKENI')
+      if (e.row.data && e.row.data.variableType === 'RESULTVARIABLE')
         e.editorOptions.disabled = false;
     }
   }

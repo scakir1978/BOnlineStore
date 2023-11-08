@@ -108,52 +108,52 @@ export class FormulaService extends BaseService {
   getFormulaVariableTypes(): FormulaVariableTypes[] {
     var varibaleTypes: FormulaVariableTypes[] = [
       {
-        code: FormulaVariableTypeEnums.EN1,
-        name: this._translate.instant(FormulaVariableTypeEnums.EN1),
+        code: FormulaVariableTypeEnums.WIDTH1,
+        name: this._translate.instant(FormulaVariableTypeEnums.WIDTH1),
       },
       {
-        code: FormulaVariableTypeEnums.EN2,
-        name: this._translate.instant(FormulaVariableTypeEnums.EN2),
+        code: FormulaVariableTypeEnums.WIDTH2,
+        name: this._translate.instant(FormulaVariableTypeEnums.WIDTH2),
       },
       {
-        code: FormulaVariableTypeEnums.EN3,
-        name: this._translate.instant(FormulaVariableTypeEnums.EN3),
+        code: FormulaVariableTypeEnums.WIDTH3,
+        name: this._translate.instant(FormulaVariableTypeEnums.WIDTH3),
       },
       {
-        code: FormulaVariableTypeEnums.YUKSEKLIK,
-        name: this._translate.instant(FormulaVariableTypeEnums.YUKSEKLIK),
+        code: FormulaVariableTypeEnums.HEIGHT,
+        name: this._translate.instant(FormulaVariableTypeEnums.HEIGHT),
       },
       {
-        code: FormulaVariableTypeEnums.SONUCDEGISKENI,
-        name: this._translate.instant(FormulaVariableTypeEnums.SONUCDEGISKENI),
+        code: FormulaVariableTypeEnums.RESULTVARIABLE,
+        name: this._translate.instant(FormulaVariableTypeEnums.RESULTVARIABLE),
       },
       {
-        code: FormulaVariableTypeEnums.SABIT,
-        name: this._translate.instant(FormulaVariableTypeEnums.SABIT),
+        code: FormulaVariableTypeEnums.CONSTANT,
+        name: this._translate.instant(FormulaVariableTypeEnums.CONSTANT),
       },
       {
-        code: FormulaVariableTypeEnums.PARANTEZAC,
-        name: FormulaVariableTypeEnums.PARANTEZAC,
+        code: FormulaVariableTypeEnums.OPENPARENTHESIS,
+        name: FormulaVariableTypeEnums.OPENPARENTHESIS,
       },
       {
-        code: FormulaVariableTypeEnums.PARANTEZKAPA,
-        name: FormulaVariableTypeEnums.PARANTEZKAPA,
+        code: FormulaVariableTypeEnums.CLOSEPARENTHESIS,
+        name: FormulaVariableTypeEnums.CLOSEPARENTHESIS,
       },
       {
-        code: FormulaVariableTypeEnums.ARTI,
-        name: FormulaVariableTypeEnums.ARTI,
+        code: FormulaVariableTypeEnums.PLUS,
+        name: FormulaVariableTypeEnums.PLUS,
       },
       {
-        code: FormulaVariableTypeEnums.EKSI,
-        name: FormulaVariableTypeEnums.EKSI,
+        code: FormulaVariableTypeEnums.MINUS,
+        name: FormulaVariableTypeEnums.MINUS,
       },
       {
-        code: FormulaVariableTypeEnums.CARPI,
-        name: FormulaVariableTypeEnums.CARPI,
+        code: FormulaVariableTypeEnums.MULTIPLY,
+        name: FormulaVariableTypeEnums.MULTIPLY,
       },
       {
-        code: FormulaVariableTypeEnums.BOLU,
-        name: FormulaVariableTypeEnums.BOLU,
+        code: FormulaVariableTypeEnums.DIVIDE,
+        name: FormulaVariableTypeEnums.DIVIDE,
       },
     ];
 

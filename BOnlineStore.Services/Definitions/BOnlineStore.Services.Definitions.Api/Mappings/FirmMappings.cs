@@ -9,6 +9,7 @@ namespace BOnlineStore.Services.Definitions.Api.Mappings
         public FirmMappings()
         {
             CreateMap<Firm, FirmDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
+            CreateMap<Firm, FirmForComboDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
             CreateMap<Firm, FirmCreateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation();
             CreateMap<Firm, FirmUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 

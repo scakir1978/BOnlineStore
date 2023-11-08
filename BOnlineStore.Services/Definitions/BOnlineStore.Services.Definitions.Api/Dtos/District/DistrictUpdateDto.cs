@@ -18,7 +18,7 @@
         /// <summary>
         /// İlçe id
         /// </summary>
-        public string? CountyId { get; private set; }
+        public string? CountyId { get; set; }
 
         public DistrictUpdateDto(string? code, string? name, string? countyId = null)
         {

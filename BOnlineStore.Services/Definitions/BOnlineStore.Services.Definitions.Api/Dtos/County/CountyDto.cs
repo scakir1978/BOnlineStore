@@ -21,7 +21,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Şehir Id
         /// </summary>        
-        public string? CityId { get; private set; }
+        public string? CityId { get; set; }
 
         public CountyDto(string id, string code, string name, string? cityId = null)
         {

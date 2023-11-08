@@ -11,22 +11,22 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Bölge Kodu
         /// </summary>
-        public string? RegionId { get; private set; }
+        public string? RegionId { get; set; }
 
         /// <summary>
         /// Cam Türü Kodu
         /// </summary>
-        public string? GlassId { get; private set; }
+        public string? GlassId { get; set; }
 
         /// <summary>
         /// Bayi fiyatı
         /// </summary>
-        public decimal? DealerPrice { get; private set; }
+        public decimal? DealerPrice { get; set; }
 
         /// <summary>
         /// Montör fiyatı
         /// </summary>
-        public decimal? AssemblerPrice { get; private set; }
+        public decimal? AssemblerPrice { get; set; }
 
         public AssemblyPriceUpdateDto(string? regionId = null, string? glassId = null,
             decimal? dealerPrice = null, decimal? assemblerPrice = null)

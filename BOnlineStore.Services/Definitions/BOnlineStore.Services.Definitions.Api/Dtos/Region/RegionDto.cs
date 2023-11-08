@@ -19,7 +19,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Ülke Id.
         /// </summary>
-        public string? CountryId { get; private set; }
+        public string? CountryId { get; set; }
 
         public RegionDto(string id, string code, string name, string? countryId = null)
         {

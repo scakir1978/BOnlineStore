@@ -202,12 +202,12 @@
   "FORMULA": "Formül Tanımları",
   "SAVERECORDERROR": "Değişiklikler kayıt edilemedi.",
   "OK": "Tamam",
-  "EN1": "En-1",
-  "EN2": "En-2",
-  "EN3": "En-3",
-  "YUKSEKLIK": "Yükseklik",
-  "SONUCDEGISKENI": "Sonuç Değişkeni",
-  "SABIT": "Sabit Değer",
+  "WIDTH1": "En-1",
+  "WIDTH2": "En-2",
+  "WIDTH3": "En-3",
+  "HEIGHT": "Yükseklik",
+  "RESULTVARIABLE": "Sonuç Değişkeni",
+  "CONSTANT": "Sabit Değer",
   "FORMULATYPE": "Formül Tipi",
   "USAGEAMOUNT": "Kullanım Miktarı",
   "FORMULATEXT": "Formül",
@@ -233,5 +233,6 @@
   "COPY": "Kopyala",
   "ENTERCOPYFORMULAMODEL": "{{FormulaName}} formülünü kopyalayacağınız modeli seçiniz:",
   "INFORMATION": "Bilgi",
-  "COPYFORMULASUCCESS": "Formül başarı ile kopyalandı."
+  "COPYFORMULASUCCESS": "Formül başarı ile kopyalandı.",
+  "WORKORDER": "İş Emri"
 }

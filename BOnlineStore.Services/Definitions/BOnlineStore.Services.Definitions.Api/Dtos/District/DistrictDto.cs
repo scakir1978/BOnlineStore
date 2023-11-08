@@ -22,7 +22,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// İlçe id
         /// </summary>
-        public string? CountyId { get; private set; }
+        public string? CountyId { get; set; }
 
         public DistrictDto(string id, string code, string name, string? countyId = null)
         {

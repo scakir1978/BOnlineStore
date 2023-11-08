@@ -17,7 +17,7 @@
         /// <summary>
         /// Ülke Id.
         /// </summary>
-        public string? CountryId { get; private set; }
+        public string? CountryId { get; set; }
 
         public RegionUpdateDto(string? code, string? name, string? countryId = null)
         {

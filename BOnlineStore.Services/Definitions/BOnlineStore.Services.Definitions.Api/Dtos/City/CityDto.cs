@@ -10,22 +10,22 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// <summary>
         /// Şehir/İl Kodu
         /// </summary>
-        public string? Code { get; private set; }
+        public string? Code { get; set; }
 
         /// <summary>
         /// Şehir/İl Adı
         /// </summary>
-        public string? Name { get; private set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Ülke Id
         /// </summary>        
-        public string? CountryId { get; private set; }
+        public string? CountryId { get; set; }
 
         /// <summary>
         /// Bölge Id
         /// </summary>
-        public string? RegionId { get; private set; }
+        public string? RegionId { get; set; }
 
         public CityDto(string id, string code, string name, string? regionId = null, string? countryId = null)
         {
