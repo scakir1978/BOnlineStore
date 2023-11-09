@@ -8,17 +8,17 @@ namespace BOnlineStore.Shared
 {
     public class FormulaVariableTypeConstants
     {
-        public const string EN1 = "EN1";
-        public const string EN2 = "EN2";
-        public const string EN3 = "EN3";
-        public const string YUKSEKLIK = "YUKSEKLIK";
-        public const string SABIT = "SABIT";
-        public const string SONUCDEGISKENI = "SONUCDEGISKENI";
-        public const string PARANTEZAC = "(";
-        public const string PARANTEZKAPA = ")";
-        public const string ARTI = "+";
-        public const string EKSI = "-";
-        public const string CARPI = "*";
-        public const string BOLU = "/";
+        public const string WIDTH1 = "WIDTH1";
+        public const string WIDTH2 = "WIDTH2";
+        public const string WIDTH3 = "WIDTH3";
+        public const string HEIGHT = "HEIGHT";
+        public const string CONSTANT = "CONSTANT";
+        public const string RESULTVARIABLE = "RESULTVARIABLE";
+        public const string OPENPARENTHESIS = "(";
+        public const string CLOSEPARENTHESIS = ")";
+        public const string PLUS = "+";
+        public const string MINUS = "-";
+        public const string MULTIPLY = "*";
+        public const string DIVIDE = "/";
     }
 }

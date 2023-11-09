@@ -18,7 +18,7 @@
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
   <dxo-header-filter [visible]="true"> </dxo-header-filter>
   <dxo-editing
-    mode="batch"
+    mode="popup"
     [allowAdding]="true"
     [allowDeleting]="true"
     [allowUpdating]="true"
@@ -115,7 +115,7 @@
   >
   </dxi-column>
   <dxi-column
-    dataField="Height"
+    dataField="height"
     dataType="number"
     caption="{{ 'HEIGHT' | translate }}"
     format=",##0.##"
@@ -140,5 +140,139 @@
   <dxi-column dataField="firmId" caption="{{ 'FIRM' | translate }}">
     <dxo-lookup [dataSource]="firmDataSource" displayExpr="name" valueExpr="id">
     </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="panelWidth"
+    dataType="number"
+    caption="{{ 'PANELWIDTH' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="panelHeight"
+    dataType="number"
+    caption="{{ 'PANELHEIGHT' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="sidePanelWidth"
+    dataType="number"
+    caption="{{ 'SIDEPANELWIDTH' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="sidePanelHeight"
+    dataType="number"
+    caption="{{ 'SIDEPANELHEIGHT' | translate }}"
+    format=",##0.##"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="towelBar"
+    caption="{{ 'TOWELBAR' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="swingDirection"
+    caption="{{ 'SWINGDIRECTION' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="swingDirectionList"
+      displayExpr="name"
+      valueExpr="code"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column dataField="status" caption="{{ 'STATUS' | translate }}">
+    <dxo-lookup
+      [dataSource]="workOrderStatusList"
+      displayExpr="name"
+      valueExpr="code"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="orderDate"
+    dataType="date"
+    caption="{{ 'ORDERDATE' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="productionDate"
+    dataType="date"
+    caption="{{ 'PRODUCTIONDATE' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="workshopReleaseDate"
+    dataType="date"
+    caption="{{ 'WORKSHOPRELEASEDATE' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="deliveryDate"
+    dataType="date"
+    caption="{{ 'DELIVERYDATE' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="templateId"
+    caption="{{ 'TEMPLATE' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="templateDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="shim"
+    caption="{{ 'SHIM' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="assemblyKit"
+    caption="{{ 'ASSEMBLYKIT' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="qualityControlInspector"
+    caption="{{ 'QUALITYCONTROLINSPECTOR' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="consignee"
+    caption="{{ 'CONSIGNEE' | translate }}"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column type="buttons">
+    <dxi-button name="edit"></dxi-button>
+    <dxi-button name="delete"></dxi-button>
+    <dxi-button
+      hint="{{ 'WORKORDERFORM' | translate }}"
+      icon="textdocument"
+    ></dxi-button>
+    <dxi-button
+      hint="{{ 'COSTFORM' | translate }}"
+      icon="smalliconslayout"
+    ></dxi-button>
   </dxi-column>
 </dx-data-grid>

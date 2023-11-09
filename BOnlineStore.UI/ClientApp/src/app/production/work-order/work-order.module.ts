@@ -13,7 +13,7 @@ const routes: Routes = [
     component: WorkOrderComponent,
     canActivate: [AuthGuard],
     resolve: {
-        WorkOrder: WorkOrderService,
+      WorkOrder: WorkOrderService,
     },
   },
 ];

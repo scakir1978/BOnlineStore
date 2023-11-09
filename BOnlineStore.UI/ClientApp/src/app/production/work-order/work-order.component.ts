@@ -2,6 +2,7 @@ import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definiti
 import { WorkOrderService } from './work-order.service';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ICodeName } from 'app/base-classes/base-interfaces/code-name-interface';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 
@@ -17,6 +18,8 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   public glassDataSource: CustomStore;
   public firmDataSource: CustomStore;
   public templateDataSource: CustomStore;
+  public swingDirectionList: ICodeName[];
+  public workOrderStatusList: ICodeName[];
 
   constructor(
     public override _translate: TranslateService,
@@ -34,5 +37,7 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
     this.glassDataSource = _workOrderService.getRawGlassDataSource();
     this.firmDataSource = _workOrderService.getRawFirmDataSource();
     this.templateDataSource = _workOrderService.getRawTemplateDataSource();
+    this.swingDirectionList = _workOrderService.getSwingDirectionList();
+    this.workOrderStatusList = _workOrderService.getWorkOrderStatusList();
   }
 }

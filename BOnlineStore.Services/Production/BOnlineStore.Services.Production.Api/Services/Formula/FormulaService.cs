@@ -80,32 +80,32 @@ namespace BOnlineStore.Services.Production.Api.Services
                 {
                     switch (formulaDetail.VariableType)
                     {
-                        case FormulaVariableTypeConstants.EN1:
-                        case FormulaVariableTypeConstants.EN2:
-                        case FormulaVariableTypeConstants.EN3:
-                        case FormulaVariableTypeConstants.YUKSEKLIK:
-                        case FormulaVariableTypeConstants.SONUCDEGISKENI:
+                        case FormulaVariableTypeConstants.WIDTH1:
+                        case FormulaVariableTypeConstants.WIDTH2:
+                        case FormulaVariableTypeConstants.WIDTH3:
+                        case FormulaVariableTypeConstants.HEIGHT:
+                        case FormulaVariableTypeConstants.RESULTVARIABLE:
                             formulaText = formulaText + " 100";
                             break;
-                        case FormulaVariableTypeConstants.SABIT:
+                        case FormulaVariableTypeConstants.CONSTANT:
                             formulaText = formulaText + " " + formulaDetail.VariableValue?.ToString() ?? "";
                             break;
-                        case FormulaVariableTypeConstants.PARANTEZAC:
+                        case FormulaVariableTypeConstants.OPENPARENTHESIS:
                             formulaText = formulaText + " (";
                             break;
-                        case FormulaVariableTypeConstants.PARANTEZKAPA:
+                        case FormulaVariableTypeConstants.CLOSEPARENTHESIS:
                             formulaText = formulaText + " )";
                             break;
-                        case FormulaVariableTypeConstants.ARTI:
+                        case FormulaVariableTypeConstants.PLUS:
                             formulaText = formulaText + " +";
                             break;
-                        case FormulaVariableTypeConstants.EKSI:
+                        case FormulaVariableTypeConstants.MINUS:
                             formulaText = formulaText + " -";
                             break;
-                        case FormulaVariableTypeConstants.CARPI:
+                        case FormulaVariableTypeConstants.MULTIPLY:
                             formulaText = formulaText + " *";
                             break;
-                        case FormulaVariableTypeConstants.BOLU:
+                        case FormulaVariableTypeConstants.DIVIDE:
                             formulaText = formulaText + " /";
                             break;
                     }

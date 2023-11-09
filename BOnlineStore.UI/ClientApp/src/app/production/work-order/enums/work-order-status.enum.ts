@@ -1,6 +1,10 @@
 export enum WorkOrderStatusEnum {
-  ASSEMBLY = 'ASSEMBLY',
-  CARGO = 'CARGO',
-  FACTORYFINISHED = 'FACTORYFINISHED',
-  DEALERDELIVERY = 'DEALERDELIVERY',
+  //Montaj
+  ASSEMBLY,
+  //Kargo
+  CARGO,
+  //Fabrika Teslim
+  FACTORYFINISHED,
+  //Bayi Teslim
+  DEALERDELIVERY,
 }

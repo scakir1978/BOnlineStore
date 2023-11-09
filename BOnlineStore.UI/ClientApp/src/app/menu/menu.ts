@@ -245,6 +245,12 @@ export const MENU: MenuItem[] = [
         link: '/production/formula',
         parentId: 20010,
       },
+      {
+        id: 20040,
+        label: 'WORKORDER',
+        link: '/production/work-order',
+        parentId: 20010,
+      },
     ],
   },
 ];

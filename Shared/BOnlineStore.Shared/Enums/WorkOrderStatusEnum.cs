@@ -10,9 +10,21 @@ namespace BOnlineStore.Shared.Enums
     {
         public enum WorkOrderStatus
         {
+            /// <summary>
+            /// Montaj
+            /// </summary>
             Assembly,
+            /// <summary>
+            /// Kargo
+            /// </summary>
             Cargo,
+            /// <summary>
+            /// Fabrika Teslim
+            /// </summary>
             FactoryFinished,
+            /// <summary>
+            /// Bayi Teslim
+            /// </summary>
             DealerDelivery,
         }
     }

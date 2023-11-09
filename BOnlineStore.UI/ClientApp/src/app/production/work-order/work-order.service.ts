@@ -1,3 +1,4 @@
+import { ICodeName } from './../../base-classes/base-interfaces/code-name-interface';
 import { ProductionControllerNamesEnum } from '../../base-classes/base-enums/production-controller-names.enum';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,6 +16,7 @@ import { DefinitionsControllerNamesEnum } from 'app/base-classes/base-enums/defi
 import { WorkOrderStatus } from './models/work-order-status';
 import { WorkOrderStatusEnum } from './enums/work-order-status.enum';
 import { TranslateService } from '@ngx-translate/core';
+import { SwingDirectionEnum } from './enums/swing-direction.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class WorkOrderService extends BaseService implements Resolve<any> {
   constructor(
     public override _http: HttpClient,
-    public _translate: TranslateService
+    private _translate: TranslateService
   ) {
     super(
       _http,
@@ -77,18 +79,46 @@ export class WorkOrderService extends BaseService implements Resolve<any> {
     );
   }
 
-  getFormulaVariableTypes(): WorkOrderStatus[] {
-    var workOrderStatus: WorkOrderStatus[] = [
+  getWorkOrderStatusList(): ICodeName[] {
+    console.log(this._translate.instant('ASSEMBLY'));
+    var workOrderStatusList: ICodeName[] = [
       {
         code: WorkOrderStatusEnum.ASSEMBLY,
-        name: this._translate.instant(WorkOrderStatusEnum.ASSEMBLY),
+        name: this._translate.instant('ASSEMBLY'),
       },
       {
         code: WorkOrderStatusEnum.CARGO,
-        name: this._translate.instant(WorkOrderStatusEnum.CARGO),
+        name: this._translate.instant('CARGO'),
+      },
+      {
+        code: WorkOrderStatusEnum.DEALERDELIVERY,
+        name: this._translate.instant('DEALERDELIVERY'),
+      },
+      {
+        code: WorkOrderStatusEnum.FACTORYFINISHED,
+        name: this._translate.instant('FACTORYFINISHED'),
       },
     ];
 
-    return workOrderStatus;
+    return workOrderStatusList;
+  }
+
+  getSwingDirectionList(): ICodeName[] {
+    var swingDirectionList: ICodeName[] = [
+      {
+        code: SwingDirectionEnum.LEFTHANDED,
+        name: this._translate.instant('LEFTHANDED'),
+      },
+      {
+        code: SwingDirectionEnum.NONE,
+        name: this._translate.instant('NONE'),
+      },
+      {
+        code: SwingDirectionEnum.RIGHTHANDED,
+        name: this._translate.instant('RIGHTHANDED'),
+      },
+    ];
+
+    return swingDirectionList;
   }
 }
