@@ -26,9 +26,141 @@
     [refreshMode]="'full'"
     [confirmDelete]="true"
   >
+    <dxo-form labelMode="floating">
+      <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+        <dxi-item
+          itemType="group"
+          caption="{{ 'WORKORDERINFORMATION' | translate }}"
+        >
+          <dxi-item itemType="group" [colCount]="2">
+            <dxi-item itemType="group">
+              <dxi-item dataField="workOrderNo"></dxi-item>
+              <dxi-item
+                dataField="description"
+                editorType="dxTextArea"
+                [editorOptions]="{ height: 60 }"
+              ></dxi-item>
+              <dxi-item dataField="modelId"></dxi-item>
+              <dxi-item
+                dataField="amount"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+              <dxi-item dataField="colorId"></dxi-item>
+              <dxi-item dataField="glassId"></dxi-item>
+              <dxi-item dataField="swingDirection"></dxi-item>
+              <dxi-item dataField="status"></dxi-item>
+            </dxi-item>
+            <dxi-item itemType="group">
+              <dxi-item
+                itemType="group"
+                caption="{{ 'DIMENSIONS' | translate }}"
+                [colCount]="2"
+              >
+                <dxi-item
+                  dataField="width1"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="width2"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="width3"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="height"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+              </dxi-item>
+              <dxi-item
+                itemType="group"
+                caption="{{ 'PANELINFORMATION' | translate }}"
+                [colCount]="2"
+              >
+                <dxi-item
+                  dataField="panelWidth"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="panelHeight"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="sidePanelWidth"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+                <dxi-item
+                  dataField="sidePanelHeight"
+                  editorType="dxNumberBox"
+                  [editorOptions]="{
+                    format: '#,##0.00'
+                  }"
+                ></dxi-item>
+              </dxi-item>
+              <dxi-item dataField="towelBar"></dxi-item>
+            </dxi-item>
+          </dxi-item>
+        </dxi-item>
+        <dxi-item itemType="group">
+          <dxi-item
+            itemType="group"
+            caption="{{ 'DATEINFORMATIONS' | translate }}"
+            [colCount]="2"
+          >
+            <dxi-item dataField="orderDate"></dxi-item>
+            <dxi-item dataField="productionDate"></dxi-item>
+            <dxi-item dataField="workshopReleaseDate"></dxi-item>
+            <dxi-item dataField="deliveryDate"></dxi-item>
+          </dxi-item>
+          <dxi-item
+            itemType="group"
+            caption="{{ 'CUSTOMERINFORMATION' | translate }}"
+          >
+            <dxi-item dataField="firmId"></dxi-item>
+          </dxi-item>
+          <dxi-item
+            itemType="group"
+            [colCount]="3"
+            caption="{{ 'OTHERINFORMATION' | translate }}"
+          >
+            <dxi-item dataField="templateId"></dxi-item>
+            <dxi-item dataField="shim"></dxi-item>
+            <dxi-item dataField="assemblyKit"></dxi-item>
+            <dxi-item dataField="qualityControlInspector"></dxi-item>
+            <dxi-item dataField="consignee" [colSpan]="2"></dxi-item>
+          </dxi-item>
+        </dxi-item>
+      </dxi-item>
+    </dxo-form>
   </dxo-editing>
 
   <dxo-paging [pageSize]="10"></dxo-paging>
+
   <dxo-pager
     [visible]="true"
     [displayMode]="'full'"
@@ -39,10 +171,13 @@
   </dxo-pager>
 
   <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+
   <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
+
   <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
 
   <dxo-group-panel [visible]="true"></dxo-group-panel>
+
   <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
 
   <dxo-toolbar>
@@ -60,6 +195,7 @@
     <dxi-item name="columnChooserButton"></dxi-item>
   </dxo-toolbar>
 
+  <!-- #region [Data grid columns] -->
   <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
   </dxi-column>
   <dxi-column dataField="workOrderNo" caption="{{ 'WORKORDERNO' | translate }}">
@@ -193,7 +329,7 @@
   </dxi-column>
   <dxi-column dataField="status" caption="{{ 'STATUS' | translate }}">
     <dxo-lookup
-      [dataSource]="workOrderStatusList"
+      [(dataSource)]="workOrderStatusList"
       displayExpr="name"
       valueExpr="code"
     >
@@ -275,4 +411,5 @@
       icon="smalliconslayout"
     ></dxi-button>
   </dxi-column>
+  <!-- #endregion -->
 </dx-data-grid>

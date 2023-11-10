@@ -23,7 +23,7 @@ import { locale, loadMessages } from 'devextreme/localization';
 import * as trDevextremeMessages from '../../../assets/i18n/devextreme/tr.json';
 import * as enDevextremeMessages from '../../../assets/i18n/devextreme/en.json';
 
-themes.current(window.localStorage.getItem('dx-theme') || 'normalDark');
+themes.current(window.localStorage.getItem('dx-theme') || 'dark');
 
 @Component({
   selector: 'app-topbar',
@@ -148,18 +148,18 @@ export class TopbarComponent implements OnInit {
     switch (mode) {
       case 'light':
         document.documentElement.setAttribute('data-layout-mode', 'light');
-        window.localStorage.setItem('dx-theme', 'normalLight');
-        themes.current('normalLight');
+        window.localStorage.setItem('dx-theme', 'light');
+        themes.current('light');
         break;
       case 'dark':
         document.documentElement.setAttribute('data-layout-mode', 'dark');
-        window.localStorage.setItem('dx-theme', 'normalDark');
-        themes.current('normalDark');
+        window.localStorage.setItem('dx-theme', 'dark');
+        themes.current('dark');
         break;
       default:
         document.documentElement.setAttribute('data-layout-mode', 'light');
-        window.localStorage.setItem('dx-theme', 'normalLight');
-        themes.current('normalLight');
+        window.localStorage.setItem('dx-theme', 'light');
+        themes.current('light');
         break;
     }
 

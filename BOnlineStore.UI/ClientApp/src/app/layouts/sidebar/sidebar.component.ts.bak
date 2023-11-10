@@ -6,7 +6,7 @@ import {
   ViewChild,
   ElementRef,
 } from "@angular/core";
-import { NavigationEnd, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 
 import { MENU } from "././../../menu/menu";
@@ -31,22 +31,13 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     // Menu Items
     this.menuItems = MENU;
-    this.router.events.subscribe((event) => {
-      if (document.documentElement.getAttribute("data-layout") != "twocolumn") {
-        if (event instanceof NavigationEnd) {
-          this.initActiveMenu();
-        }
-      }
-    });
   }
 
   /***
    * Activate droup down set
    */
   ngAfterViewInit() {
-    setTimeout(() => {
-      this.initActiveMenu();
-    }, 0);
+    this.initActiveMenu();
   }
 
   removeActivation(items: any) {
@@ -72,52 +63,42 @@ export class SidebarComponent implements OnInit {
   toggleSubItem(event: any) {
     let isCurrentMenuId = event.target.closest("a.nav-link");
     let isMenu = isCurrentMenuId.nextElementSibling as any;
-    if (isMenu.classList.contains("show")) {
-      isMenu.classList.remove("show");
-      isCurrentMenuId.setAttribute("aria-expanded", "false");
-    } else {
-      let dropDowns = Array.from(document.querySelectorAll(".sub-menu"));
-      dropDowns.forEach((node: any) => {
-        node.classList.remove("show");
-      });
+    let dropDowns = Array.from(document.querySelectorAll(".sub-menu"));
+    dropDowns.forEach((node: any) => {
+      node.classList.remove("show");
+    });
 
-      let subDropDowns = Array.from(
-        document.querySelectorAll(".menu-dropdown .nav-link")
-      );
-      subDropDowns.forEach((submenu: any) => {
-        submenu.setAttribute("aria-expanded", "false");
-      });
+    let subDropDowns = Array.from(
+      document.querySelectorAll(".menu-dropdown .nav-link")
+    );
+    subDropDowns.forEach((submenu: any) => {
+      submenu.setAttribute("aria-expanded", "false");
+    });
 
-      if (event.target && event.target.nextElementSibling) {
-        isCurrentMenuId.setAttribute("aria-expanded", "true");
-        event.target.nextElementSibling.classList.toggle("show");
-      }
+    if (event.target && event.target.nextElementSibling) {
+      isCurrentMenuId.setAttribute("aria-expanded", "true");
+      event.target.nextElementSibling.classList.toggle("show");
     }
   }
 
   toggleExtraSubItem(event: any) {
     let isCurrentMenuId = event.target.closest("a.nav-link");
     let isMenu = isCurrentMenuId.nextElementSibling as any;
-    if (isMenu.classList.contains("show")) {
-      isMenu.classList.remove("show");
-      isCurrentMenuId.setAttribute("aria-expanded", "false");
-    } else {
-      let dropDowns = Array.from(document.querySelectorAll(".extra-sub-menu"));
-      dropDowns.forEach((node: any) => {
-        node.classList.remove("show");
-      });
+    let dropDowns = Array.from(document.querySelectorAll(".extra-sub-menu"));
+    dropDowns.forEach((node: any) => {
+      node.classList.remove("show");
+    });
 
-      let subDropDowns = Array.from(
-        document.querySelectorAll(".menu-dropdown .nav-link")
-      );
-      subDropDowns.forEach((submenu: any) => {
-        submenu.setAttribute("aria-expanded", "false");
-      });
+    let subDropDowns = Array.from(
+      document.querySelectorAll(".menu-dropdown .nav-link")
+    );
+    subDropDowns.forEach((submenu: any) => {
+      submenu.setAttribute("aria-expanded", "false");
+    });
 
-      if (event.target && event.target.nextElementSibling) {
-        isCurrentMenuId.setAttribute("aria-expanded", "true");
-        event.target.nextElementSibling.classList.toggle("show");
-      }
+    if (event.target && event.target.nextElementSibling) {
+      isCurrentMenuId.setAttribute("aria-expanded", "true");
+      event.target.nextElementSibling.classList.toggle("show");
     }
   }
 

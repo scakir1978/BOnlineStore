@@ -229,5 +229,12 @@
   "FACTORYFINISHED": "Factory Finished",
   "DEALERDELIVERY": "Dealer Delivery",
   "RIGHTHANDED": "Right Handed",
-  "LEFTHANDED": "Left Handed"
+  "LEFTHANDED": "Left Handed",
+  "DIMENSIONS": "Dimensions",
+  "PANELINFORMATION": "Panel Information",
+  "DATEINFORMATIONS": "Date Information",
+  "CUSTOMERINFORMATION": "Customer Information",
+  "OTHERINFORMATION": "Other Information",
+  "WORKORDERFORM": "Work Order Form",
+  "COSTFORM": "Cost Form"
 }

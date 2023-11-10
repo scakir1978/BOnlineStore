@@ -200,16 +200,16 @@ export class RightsidebarComponent implements OnInit {
 
     switch (mode) {
       case 'light':
-        window.localStorage.setItem('dx-theme', 'normalLight');
-        themes.current('normalLight');
+        window.localStorage.setItem('dx-theme', 'light');
+        themes.current('light');
         break;
       case 'dark':
-        window.localStorage.setItem('dx-theme', 'normalDark');
-        themes.current('normalDark');
+        window.localStorage.setItem('dx-theme', 'dark');
+        themes.current('dark');
         break;
       default:
-        window.localStorage.setItem('dx-theme', 'normalLight');
-        themes.current('normalLight');
+        window.localStorage.setItem('dx-theme', 'light');
+        themes.current('light');
         break;
     }
   }

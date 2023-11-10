@@ -1,10 +1,12 @@
 import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
 import { WorkOrderService } from './work-order.service';
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { ICodeName } from 'app/base-classes/base-interfaces/code-name-interface';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
+import { WorkOrderStatusEnum } from './enums/work-order-status.enum';
+import { SwingDirectionEnum } from './enums/swing-direction.enum';
 
 @Component({
   selector: 'work-order',
@@ -37,7 +39,56 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
     this.glassDataSource = _workOrderService.getRawGlassDataSource();
     this.firmDataSource = _workOrderService.getRawFirmDataSource();
     this.templateDataSource = _workOrderService.getRawTemplateDataSource();
-    this.swingDirectionList = _workOrderService.getSwingDirectionList();
-    this.workOrderStatusList = _workOrderService.getWorkOrderStatusList();
+    this.getDataSourceArrays();
+  }
+
+  getDataSourceArrays() {
+    this._translate.onLangChange.subscribe((value: LangChangeEvent) => {
+      this._translate
+        .get([
+          'ASSEMBLY',
+          'CARGO',
+          'DEALERDELIVERY',
+          'FACTORYFINISHED',
+          'LEFTHANDED',
+          'NONE',
+          'RIGHTHANDED',
+        ])
+        .subscribe((translations) => {
+          this.workOrderStatusList = [
+            {
+              code: WorkOrderStatusEnum.ASSEMBLY,
+              name: translations['ASSEMBLY'],
+            },
+            {
+              code: WorkOrderStatusEnum.CARGO,
+              name: translations['CARGO'],
+            },
+            {
+              code: WorkOrderStatusEnum.DEALERDELIVERY,
+              name: translations['DEALERDELIVERY'],
+            },
+            {
+              code: WorkOrderStatusEnum.FACTORYFINISHED,
+              name: translations['FACTORYFINISHED'],
+            },
+          ];
+
+          this.swingDirectionList = [
+            {
+              code: SwingDirectionEnum.LEFTHANDED,
+              name: translations['LEFTHANDED'],
+            },
+            {
+              code: SwingDirectionEnum.NONE,
+              name: translations['NONE'],
+            },
+            {
+              code: SwingDirectionEnum.RIGHTHANDED,
+              name: translations['RIGHTHANDED'],
+            },
+          ];
+        });
+    });
   }
 }

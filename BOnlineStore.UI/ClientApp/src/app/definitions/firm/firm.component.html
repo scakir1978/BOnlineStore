@@ -192,6 +192,7 @@
     <dxi-item name="columnChooserButton"></dxi-item>
   </dxo-toolbar>
 
+  <!-- #region [Data grid columns] -->
   <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
   </dxi-column>
   <dxi-column dataField="firmTypeId" caption="{{ 'FIRMTYPE' | translate }}">
@@ -514,17 +515,6 @@
   >
   </dxi-column>
   <dxi-column
-    dataField="transactionType"
-    caption="{{ 'TRANSACTIONTYPE' | translate }}"
-    [visible]="false"
-  >
-    <dxi-validation-rule
-      type="stringLength"
-      [max]="50"
-      message="{{ 'TRANSACTIONTYPEMAXLENGTH' | translate }}"
-    ></dxi-validation-rule>
-  </dxi-column>
-  <dxi-column
     dataField="explanations"
     caption="{{ 'EXPLANATIONS' | translate }}"
     [visible]="false"
@@ -535,4 +525,5 @@
       message="{{ 'EXPLANATIONSMAXLENGTH' | translate }}"
     ></dxi-validation-rule>
   </dxi-column>
+  <!-- #endregion -->
 </dx-data-grid>

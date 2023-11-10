@@ -90,119 +90,115 @@
                   class="nav nav-sm flex-column"
                   aria-expanded="false"
                 >
-                  <ng-container *ngFor="let subitem of item.subItems">
-                    <li class="menu-title" *ngIf="subitem.isTitle">
-                      <span data-key="t-menu">{{
-                        subitem.label | translate
-                      }}</span>
-                    </li>
-
-                    <li *ngIf="!subitem.isTitle" class="nav-item">
-                      <a
-                        [routerLink]="subitem.link"
-                        *ngIf="!hasItems(subitem)"
-                        class="nav-link"
-                        [attr.data-parent]="subitem.parentId"
-                        (click)="updateActive($event)"
+                  <li *ngFor="let subitem of item.subItems" class="nav-item">
+                    <a
+                      [routerLink]="subitem.link"
+                      *ngIf="!hasItems(subitem)"
+                      class="nav-link"
+                      [attr.data-parent]="subitem.parentId"
+                      (click)="updateActive($event)"
+                    >
+                      {{ subitem.label | translate }}
+                      <span
+                        class="badge badge-pill {{ subitem.badge.variant }}"
+                        *ngIf="subitem.badge"
+                        >{{ subitem.badge.text | translate }}</span
                       >
-                        {{ subitem.label | translate }}
-                        <span
-                          class="badge badge-pill {{ subitem.badge.variant }}"
-                          *ngIf="subitem.badge"
-                          >{{ subitem.badge.text | translate }}</span
-                        >
-                      </a>
+                    </a>
+                    <a
+                      *ngIf="hasItems(subitem)"
+                      class="nav-link"
+                      href="javascript:void(0);"
+                      [attr.data-parent]="subitem.parentId"
+                      data-bs-toggle="collapse"
+                      aria-expanded="false"
+                      (click)="toggleSubItem($event)"
+                    >
+                      {{ subitem.label | translate }}
+                      <span
+                        class="badge badge-pill {{ subitem.badge.variant }}"
+                        *ngIf="subitem.badge"
+                        >{{ subitem.badge.text | translate }}</span
+                      >
+                    </a>
 
-                      <a
+                    <div
+                      class="collapse menu-dropdown sub-menu"
+                      *ngIf="hasItems(subitem)"
+                    >
+                      <ul
                         *ngIf="hasItems(subitem)"
-                        class="nav-link"
-                        href="javascript:void(0);"
-                        [attr.data-parent]="subitem.parentId"
-                        data-bs-toggle="collapse"
+                        class="nav nav-sm flex-column"
                         aria-expanded="false"
-                        (click)="toggleSubItem($event)"
                       >
-                        {{ subitem.label | translate }}
-                        <span
-                          class="badge badge-pill {{ subitem.badge.variant }}"
-                          *ngIf="subitem.badge"
-                          >{{ subitem.badge.text | translate }}</span
+                        <li
+                          *ngFor="let subSubitem of subitem.subItems"
+                          class="nav-item"
                         >
-                      </a>
-
-                      <div
-                        class="collapse menu-dropdown sub-menu"
-                        *ngIf="hasItems(subitem)"
-                      >
-                        <ul
-                          *ngIf="hasItems(subitem)"
-                          class="nav nav-sm flex-column"
-                          aria-expanded="false"
-                        >
-                          <li
-                            *ngFor="let subSubitem of subitem.subItems"
-                            class="nav-item"
+                          <a
+                            [routerLink]="subSubitem.link"
+                            *ngIf="!hasItems(subSubitem)"
+                            class="nav-link"
+                            [attr.data-parent]="subSubitem.parentId"
+                            (click)="updateActive($event)"
                           >
-                            <a
-                              [routerLink]="subSubitem.link"
-                              *ngIf="!hasItems(subSubitem)"
-                              class="nav-link"
-                              [attr.data-parent]="subSubitem.parentId"
-                              (click)="updateActive($event)"
+                            {{ subSubitem.label | translate }}
+                            <span
+                              class="badge badge-pill {{
+                                subSubitem.badge.variant
+                              }}"
+                              *ngIf="subSubitem.badge"
+                              >{{ subSubitem.badge.text | translate }}</span
                             >
-                              {{ subSubitem.label | translate }}
-                            </a>
+                          </a>
 
-                            <a
+                          <a
+                            *ngIf="hasItems(subSubitem)"
+                            class="nav-link"
+                            href="javascript:void(0);"
+                            [attr.data-parent]="subSubitem.parentId"
+                            data-bs-toggle="collapse"
+                            aria-expanded="false"
+                            (click)="toggleExtraSubItem($event)"
+                          >
+                            {{ subSubitem.label | translate }}
+                            <span
+                              class="badge badge-pill {{
+                                subSubitem.badge.variant
+                              }}"
+                              *ngIf="subSubitem.badge"
+                              >{{ subSubitem.badge.text | translate }}</span
+                            >
+                          </a>
+
+                          <div
+                            class="collapse menu-dropdown extra-sub-menu"
+                            *ngIf="hasItems(subSubitem)"
+                          >
+                            <ul
                               *ngIf="hasItems(subSubitem)"
-                              class="nav-link"
-                              href="javascript:void(0);"
-                              [attr.data-parent]="subSubitem.parentId"
-                              data-bs-toggle="collapse"
+                              class="nav nav-sm flex-column"
                               aria-expanded="false"
-                              (click)="toggleExtraSubItem($event)"
                             >
-                              {{ subSubitem.label | translate }}
-                              <span
-                                class="badge badge-pill {{
-                                  subSubitem.badge.variant
-                                }}"
-                                *ngIf="subSubitem.badge"
-                                >{{ subSubitem.badge.text | translate }}</span
+                              <li
+                                *ngFor="let subSubitem1 of subSubitem.subItems"
+                                class="nav-item"
                               >
-                            </a>
-
-                            <div
-                              class="collapse menu-dropdown extra-sub-menu"
-                              *ngIf="hasItems(subSubitem)"
-                            >
-                              <ul
-                                *ngIf="hasItems(subSubitem)"
-                                class="nav nav-sm flex-column"
-                                aria-expanded="false"
-                              >
-                                <li
-                                  *ngFor="
-                                    let subSubitem1 of subSubitem.subItems
-                                  "
-                                  class="nav-item"
+                                <a
+                                  [attr.data-parent]="subSubitem1.parentId"
+                                  [routerLink]="subSubitem1.link"
+                                  class="nav-link"
+                                  (click)="updateActive($event)"
                                 >
-                                  <a
-                                    [attr.data-parent]="subSubitem1.parentId"
-                                    [routerLink]="subSubitem1.link"
-                                    class="nav-link"
-                                    (click)="updateActive($event)"
-                                  >
-                                    {{ subSubitem1.label | translate }}
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </li>
-                  </ng-container>
+                                  {{ subSubitem1.label | translate }}
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
                 </ul>
               </div>
             </li>

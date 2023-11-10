@@ -257,5 +257,13 @@
   "FACTORYFINISHED": "Fabrika Teslim",
   "DEALERDELIVERY": "Bayi Teslim",
   "RIGHTHANDED": "Sağdan Açılır",
-  "LEFTHANDED": "Soldan Açılır"
+  "LEFTHANDED": "Soldan Açılır",
+  "WORKORDERINFORMATION": "İş Emri Bilgileri",
+  "DIMENSIONS": "Boyutlar",
+  "PANELINFORMATION": "Panel Bilgileri",
+  "DATEINFORMATIONS": "Tarih Bilgileri",
+  "CUSTOMERINFORMATION": "Müşteri Bilgileri",
+  "OTHERINFORMATION": "Diğer Bilgiler",
+  "WORKORDERFORM": "İş Emri Üretim Formu",
+  "COSTFORM": "Maliyet Formu"
 }
