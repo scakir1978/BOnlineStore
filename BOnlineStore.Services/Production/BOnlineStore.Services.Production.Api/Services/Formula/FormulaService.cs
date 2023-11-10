@@ -122,5 +122,10 @@ namespace BOnlineStore.Services.Production.Api.Services
                 return false;
             }
         }
+
+        public async Task<bool> ExecuteFormula(List<FormulaDetail> formulaDetail)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
