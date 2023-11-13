@@ -123,9 +123,80 @@ namespace BOnlineStore.Services.Production.Api.Services
             }
         }
 
-        public async Task<bool> ExecuteFormula(List<FormulaDetail> formulaDetail)
+        /// <summary>
+        /// Formül tanımına göre, formül değerini hesaplar.
+        /// </summary>
+        /// <param name="formulaDetails">Formül tanımının bulunduğu detaylar</param>
+        /// <param name="width1">Formül hesaplamada kullanılacak En-1 bilgisi</param>
+        /// <param name="width2">Formül hesaplamada kullanılacak En-2 bilgisi</param>
+        /// <param name="width3">Formül hesaplamada kullanılacak En-3 bilgisi</param>
+        /// <param name="height">Formül hesaplamada kullanılacak Yükseklik bilgisi</param>
+        /// <returns></returns>
+        public async Task<decimal> ExecuteFormula(List<FormulaDetail>? formulaDetails, decimal? width1, decimal? width2, decimal? width3, decimal? height)
         {
-            throw new NotImplementedException();
+            string formulaText = string.Empty;
+
+            if (formulaDetails == null)
+            {
+                throw new Exception($"Formül Hatası: Formül detaylarına ulaşılamadı.");
+            }
+
+            try
+            {
+                foreach (FormulaDetail formulaDetail in formulaDetails)
+                {
+                    switch (formulaDetail.VariableType)
+                    {
+                        case FormulaVariableTypeConstants.WIDTH1:
+                            formulaText = formulaText + $" {width1}";
+                            break;
+                        case FormulaVariableTypeConstants.WIDTH2:
+                            formulaText = formulaText + $" {width2}";
+                            break;
+                        case FormulaVariableTypeConstants.WIDTH3:
+                            formulaText = formulaText + $" {width3}";
+                            break;
+                        case FormulaVariableTypeConstants.HEIGHT:
+                            formulaText = formulaText + $" {height}";
+                            break;
+                        case FormulaVariableTypeConstants.RESULTVARIABLE:
+                            var formula = await _repository.GetByIdAsync(formulaDetail.FormulId ?? "");
+                            formulaText = formulaText + $" {ExecuteFormula(formula.FormulaDetails, width1, width2, width3, height)}";
+                            break;
+                        case FormulaVariableTypeConstants.CONSTANT:
+                            formulaText = formulaText + $" {formulaDetail.VariableValue?.ToString() ?? ""}";
+                            break;
+                        case FormulaVariableTypeConstants.OPENPARENTHESIS:
+                            formulaText = formulaText + " (";
+                            break;
+                        case FormulaVariableTypeConstants.CLOSEPARENTHESIS:
+                            formulaText = formulaText + " )";
+                            break;
+                        case FormulaVariableTypeConstants.PLUS:
+                            formulaText = formulaText + " +";
+                            break;
+                        case FormulaVariableTypeConstants.MINUS:
+                            formulaText = formulaText + " -";
+                            break;
+                        case FormulaVariableTypeConstants.MULTIPLY:
+                            formulaText = formulaText + " *";
+                            break;
+                        case FormulaVariableTypeConstants.DIVIDE:
+                            formulaText = formulaText + " /";
+                            break;
+                    }
+                }
+
+                NCalc.Expression e = new NCalc.Expression(formulaText.Trim());
+
+                var formulaValue = (decimal)e.Evaluate();
+
+                return formulaValue;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Formül Hatası: {formulaText}");
+            }
         }
     }
 }

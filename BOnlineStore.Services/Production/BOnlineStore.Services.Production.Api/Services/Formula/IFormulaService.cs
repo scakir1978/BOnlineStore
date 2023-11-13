@@ -25,6 +25,15 @@ namespace BOnlineStore.Services.Production.Api.Services
         /// <param name="modelId">Formülün kopyalanacağı modelin idsi</param>        
         Task<bool> CopyFormula(string formulaId, string modelId);
 
-        Task<bool> ExecuteFormula(List<FormulaDetail> formulaDetail);
+        /// <summary>
+        /// Formül tanımına göre, formül değerini hesaplar.
+        /// </summary>
+        /// <param name="formulaDetails">Formül tanımının bulunduğu detaylar</param>
+        /// <param name="width1">Formül hesaplamada kullanılacak En-1 bilgisi</param>
+        /// <param name="width2">Formül hesaplamada kullanılacak En-2 bilgisi</param>
+        /// <param name="width3">Formül hesaplamada kullanılacak En-3 bilgisi</param>
+        /// <param name="height">Formül hesaplamada kullanılacak Yükseklik bilgisi</param>
+        /// <returns></returns>
+        Task<decimal> ExecuteFormula(List<FormulaDetail>? formulaDetails, decimal? width1, decimal? width2, decimal? width3, decimal? height);
     }
 }
