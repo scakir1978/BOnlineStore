@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Formula } from '../models/formula-form-model';
 import CustomStore from 'devextreme/data/custom_store';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,7 +19,7 @@ import { forEach } from 'lodash';
   templateUrl: './formula-form.component.html',
   styleUrls: ['./formula-form.component.scss'],
 })
-export class FormulaFormComponent {
+export class FormulaFormComponent implements OnInit {
   @Input() formula: Formula;
   @Output() closeForm = new EventEmitter<any>();
   @Output() cancelForm = new EventEmitter<any>();
@@ -23,9 +30,16 @@ export class FormulaFormComponent {
   public formulaDataSource: any;
   public formulaVariableTypes: FormulaVariableTypes[];
 
+  isModelGridBoxOpened: boolean;
+  modelGridValues: string[] = [];
+
+  isRawMaterialGridBoxOpened: boolean;
+  rawMaterialGridValues: string[] = [];
+
   constructor(
     public _translate: TranslateService,
-    private _formulaService: FormulaService
+    private _formulaService: FormulaService,
+    private ref: ChangeDetectorRef
   ) {
     this.modelDataSource = _formulaService.getRawModelDataSource();
     this.rawMaterialDataSource = _formulaService.getRawMaterialDataSource();
@@ -39,7 +53,13 @@ export class FormulaFormComponent {
     this.executeFormula = this.executeFormula.bind(this);
   }
 
+  ngOnInit(): void {
+    this.modelGridValues.push(this.formula.modelId);
+    this.rawMaterialGridValues.push(this.formula.rawMaterialId);
+  }
+
   onSubmit(e) {
+    this.formula.modelId = this.modelGridValues[0];
     this.closeForm.emit(this.formula);
   }
 
@@ -111,5 +131,19 @@ export class FormulaFormComponent {
   usageAmountGreaterThanZero(e) {
     var usageAmount = parseFloat(e.value.toString());
     return usageAmount > 0;
+  }
+
+  onModelGridOptionChanged(e) {
+    if (e.name === 'value') {
+      this.isModelGridBoxOpened = false;
+      this.ref.detectChanges();
+    }
+  }
+
+  onRawMaterialGridOptionChanged(e) {
+    if (e.name === 'value') {
+      this.isRawMaterialGridBoxOpened = false;
+      this.ref.detectChanges();
+    }
   }
 }

@@ -1,6 +1,6 @@
 <form (submit)="onSubmit($event)">
   <div class="h3 pb-1">{{ "GENERALINFORMATION" | translate }}</div>
-  <div class="row pb-4">
+  <div class="row pb-2">
     <div class="col pb-2">
       <dx-text-box
         [(value)]="formula.code"
@@ -33,29 +33,74 @@
         </dx-validator>
       </dx-text-box>
     </div>
-    <div class="col pb-2">
-      <dx-select-box
+    <div class="col-4 pb-2">
+      <dx-drop-down-box
         label="{{ 'MODEL' | translate }}"
-        [(value)]="formula.modelId"
-        [inputAttr]="{ 'aria-label': 'Owner' }"
-        [stylingMode]="'outlined'"
-        [labelMode]="'floating'"
+        [(value)]="modelGridValues"
+        [(opened)]="isModelGridBoxOpened"
         valueExpr="id"
+        [deferRendering]="false"
         displayExpr="name"
         placeholder="{{ 'ENTERMODEL' | translate }}"
         [showClearButton]="true"
         [dataSource]="modelDataSource"
+        (onOptionChanged)="onModelGridOptionChanged($event)"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
       >
-        <dx-validator>
-          <dxi-validation-rule
-            type="required"
-            message="{{ 'MODELNOTEMPTY' | translate }}"
-          ></dxi-validation-rule>
-        </dx-validator>
-      </dx-select-box>
+        <div *dxTemplate="let data of 'content'">
+          <dx-data-grid
+            [dataSource]="modelDataSource"
+            [hoverStateEnabled]="true"
+            [(selectedRowKeys)]="modelGridValues"
+            height="100%"
+          >
+            <dxo-selection mode="single"></dxo-selection>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-scrolling mode="virtual"></dxo-scrolling>
+            <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+            <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+            </dxi-column>
+            <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+            </dxi-column>
+          </dx-data-grid>
+        </div>
+      </dx-drop-down-box>
     </div>
-    <div class="col pb-2">
-      <dx-select-box
+    <div class="col-4 pb-2">
+      <dx-drop-down-box
+        label="{{ 'RAWMATERIAL' | translate }}"
+        [(value)]="rawMaterialGridValues"
+        [(opened)]="isRawMaterialGridBoxOpened"
+        valueExpr="id"
+        [deferRendering]="false"
+        displayExpr="name"
+        placeholder="{{ 'ENTERRAWMATERIAL' | translate }}"
+        [showClearButton]="true"
+        [dataSource]="rawMaterialDataSource"
+        (onOptionChanged)="onRawMaterialGridOptionChanged($event)"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+      >
+        <div *dxTemplate="let data of 'content'">
+          <dx-data-grid
+            [dataSource]="rawMaterialDataSource"
+            [hoverStateEnabled]="true"
+            [(selectedRowKeys)]="rawMaterialGridValues"
+            height="100%"
+          >
+            <dxo-selection mode="single"></dxo-selection>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-paging [pageSize]="10"></dxo-paging>
+            <dxo-scrolling mode="virtual"></dxo-scrolling>
+            <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+            </dxi-column>
+            <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+            </dxi-column>
+          </dx-data-grid>
+        </div>
+      </dx-drop-down-box>
+      <!-- <dx-select-box
         label="{{ 'RAWMATERIAL' | translate }}"
         [(value)]="formula.rawMaterialId"
         [inputAttr]="{ 'aria-label': 'Owner' }"
@@ -73,8 +118,10 @@
             message="{{ 'RAWMATERIALNOTEMPTY' | translate }}"
           ></dxi-validation-rule>
         </dx-validator>
-      </dx-select-box>
+      </dx-select-box> -->
     </div>
+  </div>
+  <div class="row pb-2">
     <div class="col pb-2">
       <dx-number-box
         [(value)]="formula.usageAmount"
@@ -98,9 +145,7 @@
         </dx-validator>
       </dx-number-box>
     </div>
-  </div>
-  <div class="row pb-4">
-    <div class="col pb-2">
+    <div class="col-5 pb-2">
       <dx-select-box
         label="{{ 'FORMULATYPE' | translate }}"
         [(value)]="formula.formulaTypeId"
@@ -121,7 +166,7 @@
         </dx-validator>
       </dx-select-box>
     </div>
-    <div class="col pb-2">
+    <div class="col-5 pb-2">
       <dx-text-box
         [(value)]="formula.formulaText"
         label="{{ 'FORMULATEXT' | translate }}"

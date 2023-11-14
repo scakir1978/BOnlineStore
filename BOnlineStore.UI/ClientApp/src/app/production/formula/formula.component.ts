@@ -28,7 +28,9 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
   public popupVisible = false;
   public copyModelId: string;
   public copyFormulaId: string;
+  public copyFormulaCode: string;
   public copyFormulaName: string;
+
   copyButtonOptions: any;
   closeButtonOptions: any;
 
@@ -106,6 +108,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
     try {
       await this._formulaService.copyFormula(
         this.copyFormulaId,
+        this.copyFormulaCode,
         this.copyModelId
       );
       this.showSuccessMessage(this._translate.instant('COPYFORMULASUCCESS'));
@@ -123,6 +126,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
   showCopyFormulaPopup(e) {
     this.copyModelId = null;
     this.copyFormulaId = e.row.data.id;
+    this.copyFormulaCode = e.row.data.code;
     this.copyFormulaName = e.row.data.name;
     this.popupVisible = true;
   }

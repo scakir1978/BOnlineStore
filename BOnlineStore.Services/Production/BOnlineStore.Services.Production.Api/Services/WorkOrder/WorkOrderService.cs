@@ -57,6 +57,7 @@ namespace BOnlineStore.Services.Production.Api.Services
                 workOrderProductionItem.Amount = formula.UsageAmount;
                 workOrderProductionItem.ProductionMeasure = await CalculateFormula(formula.FormulaDetails, workOrder.Width1, workOrder.Width2, workOrder.Width3, workOrder.Height);
 
+                workOrderProductionList.Add(workOrderProductionItem);
             }
 
             return workOrderProductionList;

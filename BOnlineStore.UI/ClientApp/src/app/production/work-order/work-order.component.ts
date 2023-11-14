@@ -1,3 +1,4 @@
+import { ColorGroupComponent } from './../../definitions/color-group/color-group.component';
 import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
 import { WorkOrderService } from './work-order.service';
 import { Component } from '@angular/core';
@@ -23,6 +24,8 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   public swingDirectionList: ICodeName[];
   public workOrderStatusList: ICodeName[];
 
+  dropDownOptions: object;
+
   constructor(
     public override _translate: TranslateService,
     private _workOrderService: WorkOrderService
@@ -39,56 +42,72 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
     this.glassDataSource = _workOrderService.getRawGlassDataSource();
     this.firmDataSource = _workOrderService.getRawFirmDataSource();
     this.templateDataSource = _workOrderService.getRawTemplateDataSource();
-    this.getDataSourceArrays();
+
+    this.translateAndGetArrays();
+    this._translate.onLangChange.subscribe((value: LangChangeEvent) => {
+      this.translateAndGetArrays();
+    });
+
+    this.showWorkOrderForm = this.showWorkOrderForm.bind(this);
+    this.dropDownOptions = { width: 500 };
   }
 
-  getDataSourceArrays() {
-    this._translate.onLangChange.subscribe((value: LangChangeEvent) => {
-      this._translate
-        .get([
-          'ASSEMBLY',
-          'CARGO',
-          'DEALERDELIVERY',
-          'FACTORYFINISHED',
-          'LEFTHANDED',
-          'NONE',
-          'RIGHTHANDED',
-        ])
-        .subscribe((translations) => {
-          this.workOrderStatusList = [
-            {
-              code: WorkOrderStatusEnum.ASSEMBLY,
-              name: translations['ASSEMBLY'],
-            },
-            {
-              code: WorkOrderStatusEnum.CARGO,
-              name: translations['CARGO'],
-            },
-            {
-              code: WorkOrderStatusEnum.DEALERDELIVERY,
-              name: translations['DEALERDELIVERY'],
-            },
-            {
-              code: WorkOrderStatusEnum.FACTORYFINISHED,
-              name: translations['FACTORYFINISHED'],
-            },
-          ];
+  translateAndGetArrays() {
+    this._translate
+      .get([
+        'ASSEMBLY',
+        'CARGO',
+        'DEALERDELIVERY',
+        'FACTORYFINISHED',
+        'LEFTHANDED',
+        'NONE',
+        'RIGHTHANDED',
+      ])
+      .subscribe((translations) => {
+        this.workOrderStatusList = [
+          {
+            code: WorkOrderStatusEnum.ASSEMBLY,
+            name: translations['ASSEMBLY'],
+          },
+          {
+            code: WorkOrderStatusEnum.CARGO,
+            name: translations['CARGO'],
+          },
+          {
+            code: WorkOrderStatusEnum.DEALERDELIVERY,
+            name: translations['DEALERDELIVERY'],
+          },
+          {
+            code: WorkOrderStatusEnum.FACTORYFINISHED,
+            name: translations['FACTORYFINISHED'],
+          },
+        ];
 
-          this.swingDirectionList = [
-            {
-              code: SwingDirectionEnum.LEFTHANDED,
-              name: translations['LEFTHANDED'],
-            },
-            {
-              code: SwingDirectionEnum.NONE,
-              name: translations['NONE'],
-            },
-            {
-              code: SwingDirectionEnum.RIGHTHANDED,
-              name: translations['RIGHTHANDED'],
-            },
-          ];
-        });
-    });
+        this.swingDirectionList = [
+          {
+            code: SwingDirectionEnum.LEFTHANDED,
+            name: translations['LEFTHANDED'],
+          },
+          {
+            code: SwingDirectionEnum.NONE,
+            name: translations['NONE'],
+          },
+          {
+            code: SwingDirectionEnum.RIGHTHANDED,
+            name: translations['RIGHTHANDED'],
+          },
+        ];
+      });
+  }
+
+  async showWorkOrderForm(e) {
+    this._workOrderService.calculateProductionList(e.row.data.id);
+  }
+
+  onModelGridSelectionChanged(selectedRowKeys, cellInfo, dropDownBoxComponent) {
+    cellInfo.setValue(selectedRowKeys[0]);
+    if (selectedRowKeys.length > 0) {
+      dropDownBoxComponent.close();
+    }
   }
 }

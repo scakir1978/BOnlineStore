@@ -32,105 +32,105 @@
           itemType="group"
           caption="{{ 'WORKORDERINFORMATION' | translate }}"
         >
-          <dxi-item itemType="group" [colCount]="2">
-            <dxi-item itemType="group">
-              <dxi-item dataField="workOrderNo"></dxi-item>
-              <dxi-item
-                dataField="description"
-                editorType="dxTextArea"
-                [editorOptions]="{ height: 60 }"
-              ></dxi-item>
-              <dxi-item dataField="modelId"></dxi-item>
-              <dxi-item
-                dataField="amount"
-                editorType="dxNumberBox"
-                [editorOptions]="{
-                  format: '#,##0.00'
-                }"
-              ></dxi-item>
-              <dxi-item dataField="colorId"></dxi-item>
-              <dxi-item dataField="glassId"></dxi-item>
-              <dxi-item dataField="swingDirection"></dxi-item>
-              <dxi-item dataField="status"></dxi-item>
-            </dxi-item>
-            <dxi-item itemType="group">
-              <dxi-item
-                itemType="group"
-                caption="{{ 'DIMENSIONS' | translate }}"
-                [colCount]="2"
-              >
-                <dxi-item
-                  dataField="width1"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="width2"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="width3"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="height"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-              </dxi-item>
-              <dxi-item
-                itemType="group"
-                caption="{{ 'PANELINFORMATION' | translate }}"
-                [colCount]="2"
-              >
-                <dxi-item
-                  dataField="panelWidth"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="panelHeight"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="sidePanelWidth"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-                <dxi-item
-                  dataField="sidePanelHeight"
-                  editorType="dxNumberBox"
-                  [editorOptions]="{
-                    format: '#,##0.00'
-                  }"
-                ></dxi-item>
-              </dxi-item>
-              <dxi-item dataField="towelBar"></dxi-item>
-            </dxi-item>
+          <dxi-item itemType="group" [colCount]="4">
+            <dxi-item dataField="workOrderNo"></dxi-item>
+            <dxi-item dataField="modelId" [colSpan]="3"></dxi-item>
+          </dxi-item>
+
+          <dxi-item itemType="group" [colCount]="4">
+            <dxi-item
+              dataField="amount"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
+            <dxi-item dataField="colorId"></dxi-item>
+            <dxi-item dataField="glassId"></dxi-item>
+            <dxi-item dataField="swingDirection"></dxi-item>
+            <dxi-item
+              dataField="description"
+              editorType="dxTextArea"
+              [editorOptions]="{ height: 60 }"
+              [colSpan]="2"
+            ></dxi-item>
+            <dxi-item dataField="towelBar"></dxi-item>
+            <dxi-item dataField="status"></dxi-item>
+          </dxi-item>
+          <dxi-item
+            itemType="group"
+            caption="{{ 'DIMENSIONS' | translate }}"
+            [colCount]="4"
+          >
+            <dxi-item
+              dataField="width1"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
+            <dxi-item
+              dataField="width2"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
+            <dxi-item
+              dataField="width3"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
+            <dxi-item
+              dataField="height"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
+          </dxi-item>
+          <dxi-item
+            itemType="group"
+            caption="{{ 'PANELINFORMATION' | translate }}"
+            [colCount]="4"
+          >
+            <dxi-item
+              dataField="panelWidth"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
+            <dxi-item
+              dataField="panelHeight"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
+            <dxi-item
+              dataField="sidePanelWidth"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
+            <dxi-item
+              dataField="sidePanelHeight"
+              editorType="dxNumberBox"
+              [editorOptions]="{
+                format: '#,##0.00'
+              }"
+            ></dxi-item>
           </dxi-item>
         </dxi-item>
         <dxi-item itemType="group">
           <dxi-item
             itemType="group"
             caption="{{ 'DATEINFORMATIONS' | translate }}"
-            [colCount]="2"
+            [colCount]="4"
           >
             <dxi-item dataField="orderDate"></dxi-item>
             <dxi-item dataField="productionDate"></dxi-item>
@@ -214,7 +214,11 @@
       message="{{ 'NAMEMAXLENGTH' | translate }}"
     ></dxi-validation-rule>
   </dxi-column>
-  <dxi-column dataField="modelId" caption="{{ 'MODEL' | translate }}">
+  <dxi-column
+    dataField="modelId"
+    caption="{{ 'MODEL' | translate }}"
+    editCellTemplate="modelDropDownBoxEditor"
+  >
     <dxo-lookup
       [dataSource]="modelDataSource"
       displayExpr="name"
@@ -405,11 +409,57 @@
     <dxi-button
       hint="{{ 'WORKORDERFORM' | translate }}"
       icon="textdocument"
+      [onClick]="showWorkOrderForm"
     ></dxi-button>
     <dxi-button
       hint="{{ 'COSTFORM' | translate }}"
       icon="smalliconslayout"
     ></dxi-button>
   </dxi-column>
+  <!-- #endregion -->
+
+  <!-- #region [Model dropdownbox] -->
+  <div *dxTemplate="let cellInfo of 'modelDropDownBoxEditor'">
+    <dx-drop-down-box
+      label="{{ 'MODEL' | translate }}"
+      [(value)]="cellInfo.value"
+      valueExpr="id"
+      displayExpr="name"
+      placeholder="{{ 'ENTERMODEL' | translate }}"
+      [showClearButton]="true"
+      [dataSource]="modelDataSource"
+      [stylingMode]="'outlined'"
+      [labelMode]="'floating'"
+      contentTemplate="contentTemplate"
+    >
+      <div *dxTemplate="let e of 'contentTemplate'">
+        <dx-data-grid
+          [dataSource]="modelDataSource"
+          [hoverStateEnabled]="true"
+          [selectedRowKeys]="[cellInfo.value]"
+          [focusedRowEnabled]="true"
+          [focusedRowKey]="cellInfo.value"
+          [hoverStateEnabled]="true"
+          (onSelectionChanged)="
+            onModelGridSelectionChanged(
+              $event.selectedRowKeys,
+              cellInfo,
+              e.component
+            )
+          "
+          height="100%"
+        >
+          <dxo-selection mode="single"></dxo-selection>
+          <dxo-filter-row [visible]="true"></dxo-filter-row>
+          <dxo-scrolling mode="virtual"></dxo-scrolling>
+          <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+          <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+          </dxi-column>
+          <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+          </dxi-column>
+        </dx-data-grid>
+      </div>
+    </dx-drop-down-box>
+  </div>
   <!-- #endregion -->
 </dx-data-grid>

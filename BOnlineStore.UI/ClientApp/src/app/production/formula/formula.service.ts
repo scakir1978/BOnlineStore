@@ -174,9 +174,14 @@ export class FormulaService extends BaseService {
     return this.httpPostRequest('ExecuteFormulaTest', formulaDetails);
   }
 
-  copyFormula(formulaId: string, modelId: string): Promise<Object> {
+  copyFormula(
+    formulaId: string,
+    formulaCode: string,
+    modelId: string
+  ): Promise<Object> {
     return this.httpPostRequest('CopyFormula', {
       formulaId: formulaId,
+      formulaCode: formulaCode,
       modelId: modelId,
     });
   }

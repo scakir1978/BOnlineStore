@@ -11,12 +11,12 @@ namespace BOnlineStore.Services.Production.Api.Controllers
     [ApiController]
     public class WorkOrderController : ControllerShared
     {
-        private protected IWorkOrderService _WorkOrderService;
+        private protected IWorkOrderService _workOrderService;
         private protected IMapper _mapper;
 
-        public WorkOrderController(IWorkOrderService WorkOrderService, IMapper mapper)
+        public WorkOrderController(IWorkOrderService workOrderService, IMapper mapper)
         {
-            _WorkOrderService = WorkOrderService;
+            _workOrderService = workOrderService;
             _mapper = mapper;
         }
 
@@ -24,37 +24,43 @@ namespace BOnlineStore.Services.Production.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<WorkOrderDto>>(_WorkOrderService.Load()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<WorkOrderDto>>(_workOrderService.Load()), loadOptions));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _WorkOrderService.GetAsync());
+            return CreateSuccessActionResultInstance(await _workOrderService.GetAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _WorkOrderService.GetByIdAsync(id));
+            return CreateSuccessActionResultInstance(await _workOrderService.GetByIdAsync(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync(WorkOrderCreateDto input)
         {
-            return CreateSuccessActionResultInstance(await _WorkOrderService.AddAsync(input));
+            return CreateSuccessActionResultInstance(await _workOrderService.AddAsync(input));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, WorkOrderUpdateDto input)
         {
-            return CreateSuccessActionResultInstance(await _WorkOrderService.UpdateAsync(id, input));
+            return CreateSuccessActionResultInstance(await _workOrderService.UpdateAsync(id, input));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            return CreateSuccessActionResultInstance(await _WorkOrderService.DeleteAsync(id));
+            return CreateSuccessActionResultInstance(await _workOrderService.DeleteAsync(id));
+        }
+
+        [HttpGet("CalculateProductionList")]
+        public async Task<IActionResult> CalculateProductionList(string workOrderId)
+        {
+            return CreateSuccessActionResultInstance(await _workOrderService.CalculateProductionList(workOrderId));
         }
 
     }

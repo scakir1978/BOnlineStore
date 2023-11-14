@@ -187,6 +187,20 @@
             ></dxi-validation-rule>
           </dx-validator>
         </dx-select-box>
+        <dx-text-box
+          [(value)]="copyFormulaCode"
+          label="{{ 'NEWFORMULACODE' | translate }}"
+          placeholder="{{ 'ENTERFORMULACODE' | translate }}"
+          [stylingMode]="'outlined'"
+          [labelMode]="'floating'"
+        >
+          <dx-validator>
+            <dxi-validation-rule
+              type="required"
+              message="{{ 'FORMULACODENOTEMPTY' | translate }}"
+            ></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
       </div>
       <div class="row align-items-end">
         <div class="text-end">

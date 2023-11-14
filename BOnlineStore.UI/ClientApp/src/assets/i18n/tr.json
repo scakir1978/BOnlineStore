@@ -265,5 +265,6 @@
   "CUSTOMERINFORMATION": "Müşteri Bilgileri",
   "OTHERINFORMATION": "Diğer Bilgiler",
   "WORKORDERFORM": "İş Emri Üretim Formu",
-  "COSTFORM": "Maliyet Formu"
+  "COSTFORM": "Maliyet Formu",
+  "NEWFORMULACODE": "Yeni Formül Kodu"
 }

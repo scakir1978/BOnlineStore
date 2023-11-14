@@ -236,5 +236,6 @@
   "CUSTOMERINFORMATION": "Customer Information",
   "OTHERINFORMATION": "Other Information",
   "WORKORDERFORM": "Work Order Form",
-  "COSTFORM": "Cost Form"
+  "COSTFORM": "Cost Form",
+  "NEWFORMULACODE": "New Formula Code"
 }

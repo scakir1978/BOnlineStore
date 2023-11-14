@@ -8,6 +8,7 @@ using BOnlineStore.Services.Production.Api.Repositories;
 using BOnlineStore.Shared;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
+using System.Globalization;
 
 namespace BOnlineStore.Services.Production.Api.Services
 {
@@ -33,11 +34,16 @@ namespace BOnlineStore.Services.Production.Api.Services
         /// </summary>
         /// <param name="formulaId">Kopyalanacak formülün idsi</param>
         /// <param name="modelId">Formülün kopyalanacağı modelin idsi</param>        
-        public async Task<bool> CopyFormula(string formulaId, string modelId)
+        public async Task<bool> CopyFormula(string formulaId, string formulaCode, string modelId)
         {
             if (string.IsNullOrWhiteSpace(formulaId))
             {
                 throw new Exception(_stringLocalizer[ProductionApiKeys.FormulaIdNotEmpty]);
+            }
+
+            if (string.IsNullOrWhiteSpace(formulaCode))
+            {
+                throw new Exception(_stringLocalizer[ProductionApiKeys.FormulaCodeNotEmpty]);
             }
 
             if (string.IsNullOrWhiteSpace(modelId))
@@ -53,8 +59,10 @@ namespace BOnlineStore.Services.Production.Api.Services
             }
 
             var formulaCreateDto = _mapper.Map<FormulaCreateDto>(formula);
-            formulaCreateDto.ModelId = modelId;
             formulaCreateDto.Id = formula.GetNewId();
+            formulaCreateDto.Code = formulaCode;
+            formulaCreateDto.ModelId = modelId;
+
             await AddAsync(formulaCreateDto);
 
             return true;
@@ -88,7 +96,7 @@ namespace BOnlineStore.Services.Production.Api.Services
                             formulaText = formulaText + " 100";
                             break;
                         case FormulaVariableTypeConstants.CONSTANT:
-                            formulaText = formulaText + " " + formulaDetail.VariableValue?.ToString() ?? "";
+                            formulaText = formulaText + $" {formulaDetail.VariableValue?.ToString().Replace(",", ".") ?? ""}";
                             break;
                         case FormulaVariableTypeConstants.OPENPARENTHESIS:
                             formulaText = formulaText + " (";
@@ -161,10 +169,10 @@ namespace BOnlineStore.Services.Production.Api.Services
                             break;
                         case FormulaVariableTypeConstants.RESULTVARIABLE:
                             var formula = await _repository.GetByIdAsync(formulaDetail.FormulId ?? "");
-                            formulaText = formulaText + $" {ExecuteFormula(formula.FormulaDetails, width1, width2, width3, height)}";
+                            formulaText = formulaText + $" {await ExecuteFormula(formula.FormulaDetails, width1, width2, width3, height)}";
                             break;
                         case FormulaVariableTypeConstants.CONSTANT:
-                            formulaText = formulaText + $" {formulaDetail.VariableValue?.ToString() ?? ""}";
+                            formulaText = formulaText + $" {formulaDetail.VariableValue?.ToString().Replace(",", ".") ?? ""}";
                             break;
                         case FormulaVariableTypeConstants.OPENPARENTHESIS:
                             formulaText = formulaText + " (";
@@ -189,7 +197,7 @@ namespace BOnlineStore.Services.Production.Api.Services
 
                 NCalc.Expression e = new NCalc.Expression(formulaText.Trim());
 
-                var formulaValue = (decimal)e.Evaluate();
+                var formulaValue = Convert.ToDecimal(e.Evaluate());
 
                 return formulaValue;
             }

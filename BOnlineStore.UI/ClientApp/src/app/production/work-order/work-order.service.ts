@@ -1,5 +1,5 @@
 import { ProductionControllerNamesEnum } from '../../base-classes/base-enums/production-controller-names.enum';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -68,6 +68,13 @@ export class WorkOrderService extends BaseService implements Resolve<any> {
     return super.getBaseRawCustomStore(
       environment.definitionsUrl,
       DefinitionsControllerNamesEnum.TEMPLATE
+    );
+  }
+
+  calculateProductionList(workOrderId: string): Promise<Object> {
+    return this.httpGetRequest(
+      'CalculateProductionList',
+      new HttpParams().append('workOrderId', workOrderId)
     );
   }
 }

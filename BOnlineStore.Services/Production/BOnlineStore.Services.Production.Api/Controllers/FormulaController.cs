@@ -69,7 +69,7 @@ namespace BOnlineStore.Services.Production.Api.Controllers
         [HttpPost("CopyFormula")]
         public async Task<IActionResult> CopyFormula(FormulaCopyDto? input)
         {
-            var result = await _formulaService.CopyFormula(input?.FormulaId ?? "", input?.ModelId ?? "");
+            var result = await _formulaService.CopyFormula(input?.FormulaId ?? "", input?.FormulaCode ?? "", input?.ModelId ?? "");
             return CreateSuccessActionResultInstance(result);
         }
 

@@ -1,5 +1,5 @@
 import { DatasourceFunctionsEnum } from './../base-enums/datasource-functions.enum';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import DataSource from 'devextreme/data/data_source';
 import { Observable, lastValueFrom } from 'rxjs';
@@ -146,6 +146,20 @@ export abstract class BaseService {
     var request = this._http.post(
       serviceUrl + controllerName + '/' + functionName,
       data
+    );
+
+    return lastValueFrom(request).then((response: any) => response.result);
+  }
+
+  httpGetRequest(
+    functionName: string,
+    queryParams: HttpParams,
+    controllerName: string = this._controllerName,
+    serviceUrl: string = this._serviceUrl
+  ): Promise<Object> {
+    var request = this._http.get(
+      serviceUrl + controllerName + '/' + functionName,
+      { params: queryParams }
     );
 
     return lastValueFrom(request).then((response: any) => response.result);
