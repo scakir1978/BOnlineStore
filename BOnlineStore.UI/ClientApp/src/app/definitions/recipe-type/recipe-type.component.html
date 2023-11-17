@@ -31,12 +31,13 @@
       <!-- Reçete kod ve ad bilgileri -->
       <dxi-item
         itemType="group"
-        [colCount]="2"
+        [colCount]="3"
         [colSpan]="2"
         caption="{{ 'RECIPETYPEINFO' | translate }}"
       >
         <dxi-item dataField="code"></dxi-item>
         <dxi-item dataField="name"></dxi-item>
+        <dxi-item dataField="formName"></dxi-item>
       </dxi-item>
       <dxi-item itemType="tabbed" [colSpan]="2">
         <dxo-tab-panel-options [deferRendering]="false">
@@ -99,6 +100,11 @@
     <dxi-validation-rule type="required"></dxi-validation-rule>
   </dxi-column>
   <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column dataField="formName" caption="{{ 'FORMNAME' | translate }}">
+    <dxo-lookup [dataSource]="formNameList" displayExpr="name" valueExpr="code">
+    </dxo-lookup>
     <dxi-validation-rule type="required"></dxi-validation-rule>
   </dxi-column>
   <dxi-column

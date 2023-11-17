@@ -1,4 +1,5 @@
-﻿using BOnlineStore.Shared.Entities;
+﻿using BOnlineStore.Shared;
+using BOnlineStore.Shared.Entities;
 using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Entities
@@ -10,6 +11,12 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
     {
         public string Code { get; private set; }
         public string Name { get; private set; }
+
+        /// <summary>
+        /// Reçete türünün hangi form çıktısı ile çalıştığını belirtir.
+        /// </summary>
+        public FormNameEnum.FormName? FormName { get; private set; }
+
         /// <summary>
         /// Değer true ise bu imalat reçetesinde panel var demektir.
         /// </summary>
@@ -47,13 +54,14 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         }
 
         public RecipeType(
-            Guid tenantId, string id, string code, string name, bool? thisRecipeHasPanel = null,
+            Guid tenantId, string id, string code, string name, FormNameEnum.FormName? formName = null, bool? thisRecipeHasPanel = null,
             List<RawMaterialId>? rawMaterialIds = null, List<RawMaterialId>? panelRawMaterialIds = null,
             List<RawMaterialId>? glassLengthRawMaterialIds = null, List<RawMaterialId>? glassWidthRawMaterialIds = null,
             List<RawMaterialId>? panelGlassLengthRawMaterialIds = null, List<RawMaterialId>? panelGlassWidthRawMaterialIds = null) : base(tenantId, id)
         {
             Code = code;
             Name = name;
+            FormName = formName;
             ThisRecipeHasPanel = thisRecipeHasPanel;
             RawMaterialIds = rawMaterialIds;
             PanelRawMaterialIds = panelRawMaterialIds;
@@ -61,11 +69,13 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             GlassWidthRawMaterialIds = glassWidthRawMaterialIds;
             PanelGlassLengthRawMaterialIds = panelGlassLengthRawMaterialIds;
             PanelGlassWidthRawMaterialIds = panelGlassWidthRawMaterialIds;
+
         }
 
         public void UpdateRecipeType(
             string code,
             string name,
+            FormNameEnum.FormName? formName = null,
             bool? thisRecipeHasPanel = null,
             List<RawMaterialId>? rawMaterialIds = null,
             List<RawMaterialId>? panelRawMaterialIds = null,
@@ -76,6 +86,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         {
             Code = code;
             Name = name;
+            FormName = formName;
             ThisRecipeHasPanel = thisRecipeHasPanel;
             RawMaterialIds = rawMaterialIds;
             PanelRawMaterialIds = panelRawMaterialIds;

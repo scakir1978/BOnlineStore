@@ -114,6 +114,14 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:      
       - "443:443"
-      - "80:80"
-      
-      
+      - "80:80"         
+
+  bff.bonlinestore.com:
+    container_name: bff.bonlinestore.com
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80      
+      - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
+      - "IdentityServerUrl=https://identity.bonlinestore.com"
+      - "SeqServerUrl=http://seq:5341"
+      - "BFFRunningMode=docker"     

@@ -8,6 +8,7 @@
         #region Api Resources Constants
 
         public const string ApiResourcesDefinitions = "definitions";
+        public const string ApiResourcesBFF = "bff";
         public const string ApiResourcesProduction = "production";
         public const string ApiResourcesOrder = "order";
         public const string ApiResourcesGateway = "gateway";
@@ -20,6 +21,7 @@
         public const string ApiScopesProductionFullPermission = "production_full_permission";
         public const string ApiScopesOrderFullPermission = "order_full_permission";
         public const string ApiScopesGatewayFullPermission = "gateway_full_permission";
+        public const string ApiScopesBFFFullPermission = "bff_full_permission";
         public const string ApiScopesDefinitionsTenantId = "tenantId";
         public const string ApiScopesDefinitionsLocale = "locale";
 

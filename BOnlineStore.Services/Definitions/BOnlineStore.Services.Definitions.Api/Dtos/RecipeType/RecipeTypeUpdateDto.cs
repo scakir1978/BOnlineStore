@@ -1,9 +1,16 @@
-﻿namespace BOnlineStore.Services.Definitions.Api.Dtos
+﻿using BOnlineStore.Shared;
+
+namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     public class RecipeTypeUpdateDto
     {
         public string? Code { get; set; }
         public string? Name { get; set; }
+
+        /// <summary>
+        /// Reçete türünün hangi form çıktısı ile çalıştığını belirtir.
+        /// </summary>
+        public FormNameEnum.FormName? FormName { get; set; }
         /// <summary>
         /// Değer true ise bu imalat reçetesinde panel var demektir.
         /// </summary>
@@ -34,13 +41,14 @@
         public List<RawMaterialIdDto>? PanelGlassWidthRawMaterialIds { get; set; }
 
         public RecipeTypeUpdateDto(
-            string? code, string? name, bool? thisRecipeHasPanel = null, List<RawMaterialIdDto>? rawMaterialIds = null,
+            string? code, string? name, FormNameEnum.FormName? formName = null, bool? thisRecipeHasPanel = null, List<RawMaterialIdDto>? rawMaterialIds = null,
             List<RawMaterialIdDto>? panelRawMaterialIds = null, List<RawMaterialIdDto>? glassLengthRawMaterialIds = null,
             List<RawMaterialIdDto>? glassWidthRawMaterialIds = null, List<RawMaterialIdDto>? panelGlassLengthRawMaterialIds = null,
             List<RawMaterialIdDto>? panelGlassWidthRawMaterialIds = null)
         {
             Code = code;
             Name = name;
+            FormName = formName;
             ThisRecipeHasPanel = thisRecipeHasPanel;
             RawMaterialIds = rawMaterialIds;
             PanelRawMaterialIds = panelRawMaterialIds;
@@ -48,6 +56,7 @@
             GlassWidthRawMaterialIds = glassWidthRawMaterialIds;
             PanelGlassLengthRawMaterialIds = panelGlassLengthRawMaterialIds;
             PanelGlassWidthRawMaterialIds = panelGlassWidthRawMaterialIds;
+
         }
     }
 }

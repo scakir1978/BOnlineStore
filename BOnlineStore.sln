@@ -146,6 +146,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{6094
 		Misc\Templates\Sources\BOnlineStore.Services.Template.Api.zip = Misc\Templates\Sources\BOnlineStore.Services.Template.Api.zip
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BFF", "BFF", "{FF4C7310-1ABF-4C1E-810B-416EFB3E38C7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.BFF", "BOnlineStore.Services\BFF\BOnlineStore.BFF\BOnlineStore.BFF.csproj", "{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -196,6 +200,10 @@ Global
 		{CCAB24B9-6E98-4E08-BDAE-1A55D2EAEB3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCAB24B9-6E98-4E08-BDAE-1A55D2EAEB3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCAB24B9-6E98-4E08-BDAE-1A55D2EAEB3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -227,6 +235,8 @@ Global
 		{8579F60D-7110-400C-9BC5-CAE6D434BD89} = {EFE41373-F21F-490D-A15D-9D4C860E350F}
 		{B5D8814B-E685-48D6-95EE-93A01284F058} = {8579F60D-7110-400C-9BC5-CAE6D434BD89}
 		{6094E44F-868E-4E68-AE31-78E567337C64} = {8579F60D-7110-400C-9BC5-CAE6D434BD89}
+		{FF4C7310-1ABF-4C1E-810B-416EFB3E38C7} = {49D3AC90-63E2-45A5-ADB3-74652029FED4}
+		{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214} = {FF4C7310-1ABF-4C1E-810B-416EFB3E38C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A12FA703-13AF-486D-90AA-45AC95F5C81E}

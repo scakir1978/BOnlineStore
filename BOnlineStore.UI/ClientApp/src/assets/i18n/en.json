@@ -237,5 +237,10 @@
   "OTHERINFORMATION": "Other Information",
   "WORKORDERFORM": "Work Order Form",
   "COSTFORM": "Cost Form",
-  "NEWFORMULACODE": "New Formula Code"
+  "NEWFORMULACODE": "New Formula Code",
+  "DEFAULTFORM": "Default Form",
+  "FORMNO1": "First Form",
+  "FORMNO2": "Second Form",
+  "FORMNO3": "Third Form",
+  "FORMNO4": "Fourth Form"
 }

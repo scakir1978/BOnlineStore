@@ -266,5 +266,11 @@
   "OTHERINFORMATION": "Diğer Bilgiler",
   "WORKORDERFORM": "İş Emri Üretim Formu",
   "COSTFORM": "Maliyet Formu",
-  "NEWFORMULACODE": "Yeni Formül Kodu"
+  "NEWFORMULACODE": "Yeni Formül Kodu",
+  "FORMNAME": "Form Adı",
+  "DEFAULTFORM": "Varsayılan Form",
+  "FORMNO1": "Birinci Form",
+  "FORMNO2": "İkinci Form",
+  "FORMNO3": "Üçüncü Form",
+  "FORMNO4": "Dördüncü Form"
 }

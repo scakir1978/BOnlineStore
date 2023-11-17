@@ -16,6 +16,7 @@ public static class Config
         new ApiResource(IdentityServerConstants.ApiResourcesDefinitions){ Scopes={ IdentityServerConstants.ApiScopesDefinitionsFullPermission}},
         new ApiResource(IdentityServerConstants.ApiResourcesProduction){ Scopes={ IdentityServerConstants.ApiScopesProductionFullPermission}},
         new ApiResource(IdentityServerConstants.ApiResourcesOrder){ Scopes={ IdentityServerConstants.ApiScopesOrderFullPermission}},
+        new ApiResource(IdentityServerConstants.ApiResourcesBFF){ Scopes={ IdentityServerConstants.ApiScopesBFFFullPermission}},
         new ApiResource(IdentityServerConstants.ApiResourcesGateway){ Scopes={ IdentityServerConstants.ApiScopesGatewayFullPermission}},
         new ApiResource(Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName)
     };
@@ -35,6 +36,7 @@ public static class Config
             new ApiScope(IdentityServerConstants.ApiScopesProductionFullPermission),
             new ApiScope(IdentityServerConstants.ApiScopesOrderFullPermission),
             new ApiScope(IdentityServerConstants.ApiScopesGatewayFullPermission),
+            new ApiScope(IdentityServerConstants.ApiScopesBFFFullPermission),
             new ApiScope(Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName),
         };
 
@@ -53,11 +55,11 @@ public static class Config
                 FrontChannelLogoutUri = _identityConfigSettings.FrontChannelLogoutUri,
                 AllowedScopes =
                 {
-                    //BOnlineStoreIdentityServerConstants.ApiScopesDefinitionsTenantId, 
                     IdentityServerConstants.ApiScopesDefinitionsFullPermission,
                     IdentityServerConstants.ApiScopesProductionFullPermission,
                     IdentityServerConstants.ApiScopesOrderFullPermission,
                     IdentityServerConstants.ApiScopesGatewayFullPermission,
+                    IdentityServerConstants.ApiScopesBFFFullPermission,
                     Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName,
                     Duende.IdentityServer.IdentityServerConstants.StandardScopes.OpenId,
                     Duende.IdentityServer.IdentityServerConstants.StandardScopes.Profile,

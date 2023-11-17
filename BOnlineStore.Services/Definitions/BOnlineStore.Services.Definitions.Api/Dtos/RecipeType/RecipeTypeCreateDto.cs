@@ -1,4 +1,5 @@
-﻿using BOnlineStore.Shared.Entity;
+﻿using BOnlineStore.Shared;
+using BOnlineStore.Shared.Entity;
 using MongoDB.Bson;
 
 namespace BOnlineStore.Services.Definitions.Api.Dtos
@@ -7,6 +8,12 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
     {
         public string Code { get; set; }
         public string Name { get; set; }
+
+        /// <summary>
+        /// Reçete türünün hangi form çıktısı ile çalıştığını belirtir.
+        /// </summary>
+        public FormNameEnum.FormName? FormName { get; set; }
+
         /// <summary>
         /// Değer true ise bu imalat reçetesinde panel var demektir.
         /// </summary>
@@ -37,7 +44,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         public List<RawMaterialIdDto>? PanelGlassWidthRawMaterialIds { get; set; }
 
         public RecipeTypeCreateDto(
-            string code, string name, bool? thisRecipeHasPanel = null, List<RawMaterialIdDto>? rawMaterialIds = null,
+            string code, string name, FormNameEnum.FormName? formName = null, bool? thisRecipeHasPanel = null, List<RawMaterialIdDto>? rawMaterialIds = null,
             List<RawMaterialIdDto>? panelRawMaterialIds = null, List<RawMaterialIdDto>? glassLengthRawMaterialIds = null,
             List<RawMaterialIdDto>? glassWidthRawMaterialIds = null, List<RawMaterialIdDto>? panelGlassLengthRawMaterialIds = null,
             List<RawMaterialIdDto>? panelGlassWidthRawMaterialIds = null)
@@ -45,6 +52,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
             Id = ObjectId.GenerateNewId().ToString();
             Code = code;
             Name = name;
+            FormName = formName;
             ThisRecipeHasPanel = thisRecipeHasPanel;
             RawMaterialIds = rawMaterialIds;
             PanelRawMaterialIds = panelRawMaterialIds;

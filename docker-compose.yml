@@ -45,9 +45,16 @@ services:
       context: ./BOnlineStore.UI/ClientApp
       dockerfile: Dockerfile
 
+  bff.bonlinestore.com:
+    image: scakir1978/bff.bonlinestore.com
+    build:
+      context: .
+      dockerfile: BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile
+
 volumes:
   mongo_data:
   identity_data:
   rabbitmq_data:
   seq_data:
+
 

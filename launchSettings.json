@@ -16,7 +16,8 @@
         "identitydb": "StartWithoutDebugging",
         "mongodb": "StartWithoutDebugging",
         "rabbitmq": "StartWithoutDebugging",
-        "seq": "StartWithoutDebugging"
+        "seq": "StartWithoutDebugging",
+        "bonlinestore.bff": "StartDebugging"
       }
     }
   }

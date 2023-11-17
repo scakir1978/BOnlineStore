@@ -1,4 +1,5 @@
-﻿using BOnlineStore.Shared.Entity;
+﻿using BOnlineStore.Shared;
+using BOnlineStore.Shared.Entity;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -8,6 +9,11 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
     {
         public string Code { get; set; }
         public string Name { get; set; }
+
+        /// <summary>
+        /// Reçete türünün hangi form çıktısı ile çalıştığını belirtir.
+        /// </summary>
+        public FormNameEnum.FormName? FormName { get; set; }
 
         /// <summary>
         /// Değer true ise bu imalat reçetesinde panel var demektir.
@@ -42,6 +48,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
             string id,
             string code,
             string name,
+            FormNameEnum.FormName? formName = null,
             bool? thisRecipeHasPanel = null,
             List<RawMaterialIdDto>? rawMaterialIds = null,
             List<RawMaterialIdDto>? panelRawMaterialIds = null,
@@ -53,6 +60,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
             Id = id;
             Code = code;
             Name = name;
+            FormName = formName;
             ThisRecipeHasPanel = thisRecipeHasPanel;
             RawMaterialIds = rawMaterialIds;
             PanelRawMaterialIds = panelRawMaterialIds;
@@ -60,6 +68,7 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
             GlassWidthRawMaterialIds = glassWidthRawMaterialIds;
             PanelGlassLengthRawMaterialIds = panelGlassLengthRawMaterialIds;
             PanelGlassWidthRawMaterialIds = panelGlassWidthRawMaterialIds;
+
         }
     }
 }

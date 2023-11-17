@@ -9,5 +9,6 @@
         public const string DefinitionsRunningMode = "DefinitionsRunningMode";
         public const string OrderRunningMode = "OrderRunningMode";
         public const string ProductionRunningMode = "ProductionRunningMode";
+        public const string BFFRunningMode = "BFFRunningMode";
     }
 }
