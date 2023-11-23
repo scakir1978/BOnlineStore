@@ -1,4 +1,4 @@
-using BOnlineStore.BFF.Injections;
+using BOnlineStore.BFF.Api.Injections;
 using BOnlineStore.Shared;
 using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Exceptions;
@@ -111,7 +111,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddMappingInjections();
-builder.Services.AddMongoDbConfigurationAndInjections(builder.Configuration);
 builder.Services.AddValidatorInjections();
 builder.Services.AddRepositoryInjections();
 builder.Services.AddServiceInjections();

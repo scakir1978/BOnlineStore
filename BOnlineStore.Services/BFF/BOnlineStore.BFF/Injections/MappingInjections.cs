@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using System.Reflection;
 
-namespace BOnlineStore.BFF.Injections
+namespace BOnlineStore.BFF.Api.Injections
 {
     public static partial class Injections
     {

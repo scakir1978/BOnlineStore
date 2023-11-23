@@ -2,7 +2,6 @@
 using BOnlineStore.Generic.Service;
 using BOnlineStore.Localization;
 using BOnlineStore.Services.Production.Api.Dtos;
-using BOnlineStore.Services.Production.Api.Dtos.WorkOrder;
 using BOnlineStore.Services.Production.Api.Entities;
 using BOnlineStore.Services.Production.Api.Repositories;
 using FluentValidation;
@@ -53,7 +52,6 @@ namespace BOnlineStore.Services.Production.Api.Services
                 workOrderProductionItem.FormulId = formula.Id;
                 workOrderProductionItem.FormulName = formula.Name;
                 workOrderProductionItem.RawMaterialId = formula.RawMaterialId;
-                workOrderProductionItem.RawMaterialName = ""; //Definitions servisinde alınması gerekiyor.
                 workOrderProductionItem.Amount = formula.UsageAmount;
                 workOrderProductionItem.ProductionMeasure = await CalculateFormula(formula.FormulaDetails, workOrder.Width1, workOrder.Width2, workOrder.Width3, workOrder.Height);
 

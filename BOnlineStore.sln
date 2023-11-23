@@ -148,7 +148,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sources", "Sources", "{6094
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BFF", "BFF", "{FF4C7310-1ABF-4C1E-810B-416EFB3E38C7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.BFF", "BOnlineStore.Services\BFF\BOnlineStore.BFF\BOnlineStore.BFF.csproj", "{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BOnlineStore.BFF.Api", "BOnlineStore.Services\BFF\BOnlineStore.BFF\BOnlineStore.BFF.Api.csproj", "{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
