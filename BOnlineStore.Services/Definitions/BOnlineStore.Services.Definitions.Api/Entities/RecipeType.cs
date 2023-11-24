@@ -30,21 +30,13 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         /// </summary>
         public List<RawMaterialId>? PanelRawMaterialIds { get; private set; }
         /// <summary>
-        /// Cam boylarında kullanılacak hammadde listesi
+        /// Cam üretiminde kullanılacak hammadde listesi
         /// </summary>
-        public List<RawMaterialId>? GlassLengthRawMaterialIds { get; private set; }
+        public List<GlassRawMaterialId>? GlassRawMaterialIds { get; private set; }
         /// <summary>
-        /// Cam eninde kullanılacak hammadde listesi
+        /// Reçetede panel varsa, panelin cam üretiminde kullanılacak hammadde listesi
         /// </summary>
-        public List<RawMaterialId>? GlassWidthRawMaterialIds { get; private set; }
-        /// <summary>
-        /// Reçetede panel varsa, panelin cam boyunda kullanılacak hammadde listesi
-        /// </summary>
-        public List<RawMaterialId>? PanelGlassLengthRawMaterialIds { get; private set; }
-        /// <summary>
-        /// Reçetede panel varsa, panelin cam eninde kullanılacak hammadde listesi
-        /// </summary>
-        public List<RawMaterialId>? PanelGlassWidthRawMaterialIds { get; private set; }
+        public List<GlassRawMaterialId>? PanelGlassRawMaterialIds { get; private set; }
 
 
         public RecipeType() : base()
@@ -56,8 +48,7 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
         public RecipeType(
             Guid tenantId, string id, string code, string name, FormNameEnum.FormName? formName = null, bool? thisRecipeHasPanel = null,
             List<RawMaterialId>? rawMaterialIds = null, List<RawMaterialId>? panelRawMaterialIds = null,
-            List<RawMaterialId>? glassLengthRawMaterialIds = null, List<RawMaterialId>? glassWidthRawMaterialIds = null,
-            List<RawMaterialId>? panelGlassLengthRawMaterialIds = null, List<RawMaterialId>? panelGlassWidthRawMaterialIds = null) : base(tenantId, id)
+            List<GlassRawMaterialId>? glassRawMaterialIds = null, List<GlassRawMaterialId>? panelGlassRawMaterialIds = null) : base(tenantId, id)
         {
             Code = code;
             Name = name;
@@ -65,10 +56,8 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             ThisRecipeHasPanel = thisRecipeHasPanel;
             RawMaterialIds = rawMaterialIds;
             PanelRawMaterialIds = panelRawMaterialIds;
-            GlassLengthRawMaterialIds = glassLengthRawMaterialIds;
-            GlassWidthRawMaterialIds = glassWidthRawMaterialIds;
-            PanelGlassLengthRawMaterialIds = panelGlassLengthRawMaterialIds;
-            PanelGlassWidthRawMaterialIds = panelGlassWidthRawMaterialIds;
+            GlassRawMaterialIds = glassRawMaterialIds;
+            PanelGlassRawMaterialIds = panelGlassRawMaterialIds;
 
         }
 
@@ -79,9 +68,8 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             bool? thisRecipeHasPanel = null,
             List<RawMaterialId>? rawMaterialIds = null,
             List<RawMaterialId>? panelRawMaterialIds = null,
-            List<RawMaterialId>? glassLengthRawMaterialIds = null,
-            List<RawMaterialId>? glassWidthRawMaterialIds = null,
-            List<RawMaterialId>? panelGlassLengthRawMaterialIds = null,
+            List<GlassRawMaterialId>? glassRawMaterialIds = null,
+            List<GlassRawMaterialId>? panelGlassRawMaterialIds = null,
             List<RawMaterialId>? panelGlassWidthRawMaterialIds = null)
         {
             Code = code;
@@ -90,15 +78,32 @@ namespace BOnlineStore.Services.Definitions.Api.Entities
             ThisRecipeHasPanel = thisRecipeHasPanel;
             RawMaterialIds = rawMaterialIds;
             PanelRawMaterialIds = panelRawMaterialIds;
-            GlassLengthRawMaterialIds = glassLengthRawMaterialIds;
-            GlassWidthRawMaterialIds = glassWidthRawMaterialIds;
-            PanelGlassLengthRawMaterialIds = panelGlassLengthRawMaterialIds;
-            PanelGlassWidthRawMaterialIds = panelGlassWidthRawMaterialIds;
+            GlassRawMaterialIds = glassRawMaterialIds;
+            PanelGlassRawMaterialIds = panelGlassRawMaterialIds;
         }
     }
 
+    /// <summary>
+    /// Kullanılan hammaddenin id bilgisi
+    /// </summary>
     public class RawMaterialId
     {
         public string? Id { get; set; }
+    }
+
+    /// <summary>
+    /// Modelin cam üretiminde kullanılan en ve boy hammadde bilgileri
+    /// </summary>
+    public class GlassRawMaterialId
+    {
+        /// <summary>
+        /// Camın en bilgisi için kullanılan hammadder idsi
+        /// </summary>
+        public string? WidthMaterialId { get; set; }
+
+        /// <summary>
+        /// Camın boy bilgisi için kullanılan hammadder idsi
+        /// </summary>
+        public string? LengthMaterialId { get; set; }
     }
 }

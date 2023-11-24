@@ -40,10 +40,8 @@ export class RecipeTypeComponent extends BaseDefinitionsOnGridComponent {
   onInitNewRow(e: any) {
     e.data.rawMaterialIds = [];
     e.data.panelRawMaterialIds = [];
-    e.data.glassLengthRawMaterialIds = [];
-    e.data.glassWidthRawMaterialIds = [];
-    e.data.panelGlassLengthRawMaterialIds = [];
-    e.data.panelGlassWidthRawMaterialIds = [];
+    e.data.glassRawMaterialIds = [];
+    e.data.panelGlassRawMaterialIds = [];
   }
 
   onSaved(e: any, data: any) {

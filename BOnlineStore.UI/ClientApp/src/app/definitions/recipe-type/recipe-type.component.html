@@ -51,12 +51,10 @@
         </dxi-tab>
         <dxi-tab
           title="{{ 'GLASSPATTENRRAWMATERIALLIST' | translate }}"
-          [colCount]="4"
+          [colCount]="2"
         >
-          <dxi-item dataField="glassLengthRawMaterialIds"></dxi-item>
-          <dxi-item dataField="glassWidthRawMaterialIds"></dxi-item>
-          <dxi-item dataField="panelGlassLengthRawMaterialIds"></dxi-item>
-          <dxi-item dataField="panelGlassWidthRawMaterialIds"></dxi-item>
+          <dxi-item dataField="glassRawMaterialIds"></dxi-item>
+          <dxi-item dataField="panelGlassRawMaterialIds"></dxi-item>
         </dxi-tab>
       </dxi-item>
     </dxo-form>
@@ -125,40 +123,23 @@
   </dxi-column>
   <!-- Kabin Cam Boyu -->
   <dxi-column
-    dataField="glassLengthRawMaterialIds"
-    caption="{{ 'GLASSLENGTHRAWMATERIAL' | translate }}"
+    dataField="glassRawMaterialIds"
+    caption="{{ 'GLASSRAWMATERIAL' | translate }}"
     [visible]="false"
     [showInColumnChooser]="false"
-    editCellTemplate="glassLengthRawMaterialIdsTemplate"
-  >
-  </dxi-column>
-  <!-- Kabin Cam Eni -->
-  <dxi-column
-    dataField="glassWidthRawMaterialIds"
-    caption="{{ 'GLASSWIDTHRAWMATERIAL' | translate }}"
-    [visible]="false"
-    [showInColumnChooser]="false"
-    editCellTemplate="glassWidthRawMaterialIdsTemplate"
+    editCellTemplate="glassRawMaterialIdsTemplate"
   >
   </dxi-column>
   <!-- Panel Cam Boyu -->
   <dxi-column
-    dataField="panelGlassLengthRawMaterialIds"
-    caption="{{ 'PANELGLASSLENGTHRAWMATERIAL' | translate }}"
+    dataField="panelGlassRawMaterialIds"
+    caption="{{ 'PANELGLASSRAWMATERIAL' | translate }}"
     [visible]="false"
     [showInColumnChooser]="false"
-    editCellTemplate="panelGlassLengthRawMaterialIdsTemplate"
+    editCellTemplate="panelGlassRawMaterialIdsTemplate"
   >
   </dxi-column>
-  <!-- Panel Cam Eni -->
-  <dxi-column
-    dataField="panelGlassWidthRawMaterialIds"
-    caption="{{ 'PANELGLASSWIDTHRAWMATERIAL' | translate }}"
-    [visible]="false"
-    [showInColumnChooser]="false"
-    editCellTemplate="panelGlassWidthRawMaterialIdsTemplate"
-  >
-  </dxi-column>
+
   <div *dxTemplate="let data of 'rawMaterialIdsTemplate'">
     <dx-data-grid
       [dataSource]="data.value"
@@ -225,19 +206,19 @@
       ></dxo-editing>
     </dx-data-grid>
   </div>
-  <div *dxTemplate="let glassLengthData of 'glassLengthRawMaterialIdsTemplate'">
+  <div *dxTemplate="let glassData of 'glassRawMaterialIdsTemplate'">
     <dx-data-grid
-      [dataSource]="glassLengthData.value"
-      keyExpr="id"
+      [dataSource]="glassData.value"
+      keyExpr="lengthMaterialId"
       [showBorders]="true"
       [repaintChangesOnly]="true"
       [showColumnLines]="true"
       [showRowLines]="true"
       [rowAlternationEnabled]="true"
-      (onSaved)="onSaved($event, glassLengthData)"
+      (onSaved)="onSaved($event, glassData)"
     >
       <dxi-column
-        dataField="id"
+        dataField="lengthMaterialId"
         caption="{{ 'GLASSLENGTHRAWMATERIAL' | translate }}"
       >
         <dxo-lookup
@@ -247,29 +228,8 @@
         >
         </dxo-lookup>
       </dxi-column>
-      <dxo-editing
-        mode="row"
-        [allowUpdating]="false"
-        [allowAdding]="true"
-        [allowDeleting]="true"
-        [confirmDelete]="true"
-        [useIcons]="true"
-      ></dxo-editing>
-    </dx-data-grid>
-  </div>
-  <div *dxTemplate="let glassWidthData of 'glassWidthRawMaterialIdsTemplate'">
-    <dx-data-grid
-      [dataSource]="glassWidthData.value"
-      keyExpr="id"
-      [showBorders]="true"
-      [repaintChangesOnly]="true"
-      [showColumnLines]="true"
-      [showRowLines]="true"
-      [rowAlternationEnabled]="true"
-      (onSaved)="onSaved($event, glassWidthData)"
-    >
       <dxi-column
-        dataField="id"
+        dataField="widthMaterialId"
         caption="{{ 'GLASSWIDTHRAWMATERIAL' | translate }}"
       >
         <dxo-lookup
@@ -289,23 +249,19 @@
       ></dxo-editing>
     </dx-data-grid>
   </div>
-  <div
-    *dxTemplate="
-      let panelGlassLengthData of 'panelGlassLengthRawMaterialIdsTemplate'
-    "
-  >
+  <div *dxTemplate="let panelGlassData of 'panelGlassRawMaterialIdsTemplate'">
     <dx-data-grid
-      [dataSource]="panelGlassLengthData.value"
-      keyExpr="id"
+      [dataSource]="panelGlassData.value"
+      keyExpr="lengthMaterialId"
       [showBorders]="true"
       [repaintChangesOnly]="true"
       [showColumnLines]="true"
       [showRowLines]="true"
       [rowAlternationEnabled]="true"
-      (onSaved)="onSaved($event, panelGlassLengthData)"
+      (onSaved)="onSaved($event, panelGlassData)"
     >
       <dxi-column
-        dataField="id"
+        dataField="lengthMaterialId"
         caption="{{ 'PANELGLASSLENGTHRAWMATERIAL' | translate }}"
       >
         <dxo-lookup
@@ -315,33 +271,8 @@
         >
         </dxo-lookup>
       </dxi-column>
-      <dxo-editing
-        mode="row"
-        [allowUpdating]="false"
-        [allowAdding]="true"
-        [allowDeleting]="true"
-        [confirmDelete]="true"
-        [useIcons]="true"
-      ></dxo-editing>
-    </dx-data-grid>
-  </div>
-  <div
-    *dxTemplate="
-      let panelGlassWidthData of 'panelGlassWidthRawMaterialIdsTemplate'
-    "
-  >
-    <dx-data-grid
-      [dataSource]="panelGlassWidthData.value"
-      keyExpr="id"
-      [showBorders]="true"
-      [repaintChangesOnly]="true"
-      [showColumnLines]="true"
-      [showRowLines]="true"
-      [rowAlternationEnabled]="true"
-      (onSaved)="onSaved($event, panelGlassWidthData)"
-    >
       <dxi-column
-        dataField="id"
+        dataField="widthMaterialId"
         caption="{{ 'PANELGLASSWIDTHRAWMATERIAL' | translate }}"
       >
         <dxo-lookup

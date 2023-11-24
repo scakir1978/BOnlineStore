@@ -28,6 +28,11 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         public string? ModelId { get; set; }
 
         /// <summary>
+        /// Modele detay bilgileri.
+        /// </summary>
+        public ModelDto? Model { get; set; }
+
+        /// <summary>
         /// Üretim adedi
         /// </summary>
         public decimal? Amount { get; set; }
@@ -79,10 +84,20 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         public string? GlassId { get; set; }
 
         /// <summary>
+        /// Cam türü detay bilgileri
+        /// </summary>
+        public GlassDto? Glass { get; set; }
+
+        /// <summary>
         /// Renk idsi
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
         public string? ColorId { get; set; }
+
+        /// <summary>
+        /// Renk detay bilgileri
+        /// </summary>
+        public ColorDto? Color { get; set; }
 
         /// <summary>
         /// Havluluk bilgisi
@@ -126,6 +141,11 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         public string? FirmId { get; set; }
 
         /// <summary>
+        /// Firma detay bilgileri
+        /// </summary>
+        public FirmDto? Firm { get; set; }
+
+        /// <summary>
         /// Sevk adresi idsi
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
@@ -136,6 +156,11 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
         public string? TemplateId { get; set; }
+
+        /// <summary>
+        /// Şablon detay bilgileri
+        /// </summary>
+        public TemplateDto? Template { get; set; }
 
         /// <summary>
         /// Takoz bilgisi
@@ -158,19 +183,24 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         public string? Consignee { get; set; }
 
         public WorkOrderDto(string id, string? workOrderNo = null, string? description = null, string? modelId = null,
-            decimal? amount = null, decimal? width1 = null, decimal? width2 = null, decimal? width3 = null,
-            decimal? height = null, decimal? panelWidth = null, decimal? panelHeight = null,
-            decimal? sidePanelWidth = null, decimal? sidePanelHeight = null, string? glassId = null,
-            string? colorId = null, string? towelBar = null, SwingDirectionEnum.SwingDirection? swingDirection = null,
-            WorkOrderStatusEnum.WorkOrderStatus? status = null, DateTime? orderDate = null,
-            DateTime? productionDate = null, DateTime? workshopReleaseDate = null, DateTime? deliveryDate = null,
-            string? firmId = null, string? deliveryAddressId = null, string? templateId = null, string? shim = null,
-            string? assemblyKit = null, string? qualityControlInspector = null, string? consignee = null)
+                            ModelDto? model = null, decimal? amount = null, decimal? width1 = null,
+                            decimal? width2 = null, decimal? width3 = null, decimal? height = null,
+                            decimal? panelWidth = null, decimal? panelHeight = null, decimal? sidePanelWidth = null,
+                            decimal? sidePanelHeight = null, string? glassId = null, GlassDto? glass = null,
+                            string? colorId = null, ColorDto? color = null, string? towelBar = null,
+                            SwingDirectionEnum.SwingDirection? swingDirection = null,
+                            WorkOrderStatusEnum.WorkOrderStatus? status = null, DateTime? orderDate = null,
+                            DateTime? productionDate = null, DateTime? workshopReleaseDate = null,
+                            DateTime? deliveryDate = null, string? firmId = null, FirmDto? firm = null,
+                            string? deliveryAddressId = null, string? templateId = null, TemplateDto? template = null,
+                            string? shim = null, string? assemblyKit = null, string? qualityControlInspector = null,
+                            string? consignee = null)
         {
             Id = id;
             WorkOrderNo = workOrderNo;
             Description = description;
             ModelId = modelId;
+            Model = model;
             Amount = amount;
             Width1 = width1;
             Width2 = width2;
@@ -181,7 +211,9 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
             SidePanelWidth = sidePanelWidth;
             SidePanelHeight = sidePanelHeight;
             GlassId = glassId;
+            Glass = glass;
             ColorId = colorId;
+            Color = color;
             TowelBar = towelBar;
             SwingDirection = swingDirection;
             Status = status;
@@ -190,8 +222,10 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
             WorkshopReleaseDate = workshopReleaseDate;
             DeliveryDate = deliveryDate;
             FirmId = firmId;
+            Firm = firm;
             DeliveryAddressId = deliveryAddressId;
             TemplateId = templateId;
+            Template = template;
             Shim = shim;
             AssemblyKit = assemblyKit;
             QualityControlInspector = qualityControlInspector;

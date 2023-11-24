@@ -3,7 +3,7 @@ using BOnlineStore.Shared.Entity;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace BOnlineStore.Services.Definitions.Api.Dtos
+namespace BOnlineStore.Services.BFF.Api.Dtos
 {
     public class RecipeTypeDto : EntityDto
     {
@@ -28,13 +28,21 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
         /// </summary>
         public List<RawMaterialIdDto>? PanelRawMaterialIds { get; set; }
         /// <summary>
-        /// Cam üretiminde  kullanılacak hammadde listesi
+        /// Cam boylarında kullanılacak hammadde listesi
         /// </summary>
-        public List<GlassRawMaterialIdDto>? GlassRawMaterialIds { get; set; }
+        public List<RawMaterialIdDto>? GlassLengthRawMaterialIds { get; set; }
         /// <summary>
-        /// Reçetede panel varsa, panelin cam üretiminde kullanılacak hammadde listesi
+        /// Cam eninde kullanılacak hammadde listesi
         /// </summary>
-        public List<GlassRawMaterialIdDto>? PanelGlassRawMaterialIds { get; set; }
+        public List<RawMaterialIdDto>? GlassWidthRawMaterialIds { get; set; }
+        /// <summary>
+        /// Reçetede panel varsa, panelin cam boyunda kullanılacak hammadde listesi
+        /// </summary>
+        public List<RawMaterialIdDto>? PanelGlassLengthRawMaterialIds { get; set; }
+        /// <summary>
+        /// Reçetede panel varsa, panelin cam eninde kullanılacak hammadde listesi
+        /// </summary>
+        public List<RawMaterialIdDto>? PanelGlassWidthRawMaterialIds { get; set; }
 
         public RecipeTypeDto(
             string id,
@@ -44,9 +52,10 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
             bool? thisRecipeHasPanel = null,
             List<RawMaterialIdDto>? rawMaterialIds = null,
             List<RawMaterialIdDto>? panelRawMaterialIds = null,
-            List<GlassRawMaterialIdDto>? glassRawMaterialIds = null,
-            List<GlassRawMaterialIdDto>? panelGlassRawMaterialIds = null
-            )
+            List<RawMaterialIdDto>? glassLengthRawMaterialIds = null,
+            List<RawMaterialIdDto>? glassWidthRawMaterialIds = null,
+            List<RawMaterialIdDto>? panelGlassLengthRawMaterialIds = null,
+            List<RawMaterialIdDto>? panelGlassWidthRawMaterialIds = null)
         {
             Id = id;
             Code = code;
@@ -55,8 +64,10 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
             ThisRecipeHasPanel = thisRecipeHasPanel;
             RawMaterialIds = rawMaterialIds;
             PanelRawMaterialIds = panelRawMaterialIds;
-            GlassRawMaterialIds = glassRawMaterialIds;
-            PanelGlassRawMaterialIds = panelGlassRawMaterialIds;
+            GlassLengthRawMaterialIds = glassLengthRawMaterialIds;
+            GlassWidthRawMaterialIds = glassWidthRawMaterialIds;
+            PanelGlassLengthRawMaterialIds = panelGlassLengthRawMaterialIds;
+            PanelGlassWidthRawMaterialIds = panelGlassWidthRawMaterialIds;
 
         }
     }
