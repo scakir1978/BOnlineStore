@@ -15,14 +15,14 @@ namespace BOnlineStore.Services.Production.Api.Services
         private readonly IFormulaRepository _formulaRepository;
         private readonly IFormulaService _formulaService;
 
-
         public WorkOrderService(
             IWorkOrderRepository repository,
             IMapper mapper,
             IStringLocalizer<Language> stringLocalizer,
             IValidator<WorkOrder> validator,
             IFormulaRepository formulaRepository,
-            IFormulaService formulaService) : base(repository, mapper, stringLocalizer, validator)
+            IFormulaService formulaService
+            ) : base(repository, mapper, stringLocalizer, validator)
         {
             _formulaRepository = formulaRepository;
             _formulaService = formulaService;
@@ -33,7 +33,7 @@ namespace BOnlineStore.Services.Production.Api.Services
         /// </summary>
         /// <param name="workOrderId">Malzeme listesi hesaplanacak iş emri id</param>
         /// <returns></returns>
-        public async Task<List<WorkOrderProductionListDto>> CalculateProductionList(string workOrderId)
+        public async Task<WorkOrderFormDto> CalculateProductionList(string workOrderId)
         {
             var workOrderProductionList = new List<WorkOrderProductionListDto>();
 
@@ -58,7 +58,7 @@ namespace BOnlineStore.Services.Production.Api.Services
                 workOrderProductionList.Add(workOrderProductionItem);
             }
 
-            return workOrderProductionList;
+            return new WorkOrderFormDto(workOrder, workOrderProductionList);
 
         }
 

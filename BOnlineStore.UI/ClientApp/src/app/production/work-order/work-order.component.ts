@@ -101,7 +101,7 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   }
 
   async showWorkOrderForm(e) {
-    this._workOrderService.calculateProductionList(e.row.data.id);
+    this._workOrderService.calculateProductionListBff(e.row.data.id);
   }
 
   onModelGridSelectionChanged(selectedRowKeys, cellInfo, dropDownBoxComponent) {

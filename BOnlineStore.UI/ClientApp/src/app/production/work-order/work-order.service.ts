@@ -12,6 +12,7 @@ import { BaseService } from '../../base-classes/base-services/base-service';
 import { Observable } from 'rxjs';
 import CustomStore from 'devextreme/data/custom_store';
 import { DefinitionsControllerNamesEnum } from 'app/base-classes/base-enums/definitions-controller-names.enum';
+import { BffControllerNamesEnum } from 'app/base-classes/base-enums/bff-controller-names.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -75,6 +76,15 @@ export class WorkOrderService extends BaseService implements Resolve<any> {
     return this.httpGetRequest(
       'CalculateProductionList',
       new HttpParams().append('workOrderId', workOrderId)
+    );
+  }
+
+  calculateProductionListBff(workOrderId: string): Promise<Object> {
+    return this.httpGetRequest(
+      'CalculateProductionList',
+      new HttpParams().append('workOrderId', workOrderId),
+      BffControllerNamesEnum.ONLINESTORE,
+      environment.bffUrl
     );
   }
 }

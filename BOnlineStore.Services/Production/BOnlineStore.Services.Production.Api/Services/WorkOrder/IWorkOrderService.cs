@@ -12,7 +12,7 @@ namespace BOnlineStore.Services.Production.Api.Services
         /// </summary>
         /// <param name="workOrderId">Malzeme listesi hesaplanacak iş emri id</param>
         /// <returns></returns>
-        Task<List<WorkOrderProductionListDto>> CalculateProductionList(string workOrderId);
+        Task<WorkOrderFormDto> CalculateProductionList(string workOrderId);
 
         /// <summary>
         /// Modele ait bir formulü hesaplayıp sonucunu geri döndürür.
