@@ -1,5 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using BOnlineStore.Shared.Dtos;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BOnlineStore.Shared.Extensions
 {
@@ -14,10 +17,18 @@ namespace BOnlineStore.Shared.Extensions
             return httpClient.PostAsync(url, content);
         }
 
-        public static async Task<T> ReadAsJsonAsync<T>(this HttpContent content)
+        public static async Task<Response<T>> ReadAsJsonAsync<T>(this HttpContent content)
         {
             var dataAsString = await content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<T>(dataAsString);
+
+            JObject jsonObject = JObject.Parse(dataAsString);
+
+            T? result = JsonConvert.DeserializeObject<T>(jsonObject["result"]?.ToString() ?? "");
+
+            var response = Response<T>.Success(result, System.Net.HttpStatusCode.OK);
+
+            return response;
+
         }
     }
 }

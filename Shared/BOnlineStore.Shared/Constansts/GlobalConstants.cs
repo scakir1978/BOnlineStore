@@ -10,6 +10,8 @@
         public const string swaggerBearerFormat = "JWT";
         public const string swaggerAuthorization = "Authorization";
         public const string CodeUniqueControlRule = "CodeUniqueControlRule";
+        public const string Bearer = "Bearer";
+        public const string AccessToken = "access_token";
 
     }
 }

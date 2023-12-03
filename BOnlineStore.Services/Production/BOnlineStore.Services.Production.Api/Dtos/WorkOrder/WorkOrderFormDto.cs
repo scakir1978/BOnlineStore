@@ -16,7 +16,10 @@
         public List<WorkOrderProductionListDto>? WorkOrderProductionList { get; set; }
 
         public WorkOrderFormDto()
-        { }
+        {
+            WorkOrder = new WorkOrderDto("");
+            WorkOrderProductionList = new List<WorkOrderProductionListDto>();
+        }
 
         public WorkOrderFormDto(WorkOrderDto? workOrder, List<WorkOrderProductionListDto>? workOrderProductionList)
         {

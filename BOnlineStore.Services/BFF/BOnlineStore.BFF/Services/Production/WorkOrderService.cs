@@ -1,4 +1,5 @@
 ﻿using BOnlineStore.BFF.Api.Dtos.Production.WorkOrder;
+using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using System.Net.Http.Headers;
@@ -19,18 +20,21 @@ namespace BOnlineStore.BFF.Api.Services.Production
         public async Task<WorkOrderFormDto> CalculateProductionList(string workOrderId)
         {
             //Buraya isteğin üzerinde gelen token bilgisine ulaşılır.
-            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(GlobalConstants.AccessToken);
 
             //Token diğer servise yapılacak istek için headersa eklenir.
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(GlobalConstants.Bearer, accessToken);
 
             //Çağrı yapılır.
-            var response = await _client.GetAsync($"/api/CalculateProductionList?workOrderId={workOrderId}");
+            var response = await _client.GetAsync(
+                            $"/api/{ProductionApiControllerConstants.WorkOrder}/" +
+                            $"{ProductionApiControllerFuctionsConstants.CalculateProductionList}?" +
+                            $"{ProductionApiControllerFuctionsParemetersConstants.WorkOrderId}={workOrderId}");
 
             //Geri dönen bilgi dto nesnesine dönüştürülür.
-            var workOrderFormDto = await response.Content.ReadAsJsonAsync<WorkOrderFormDto>();
+            var workOrderFormResponse = await response.Content.ReadAsJsonAsync<WorkOrderFormDto>();
 
-            return workOrderFormDto;
+            return workOrderFormResponse.Result;
         }
     }
 }

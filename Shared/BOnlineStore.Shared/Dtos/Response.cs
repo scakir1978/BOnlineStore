@@ -15,7 +15,7 @@ namespace BOnlineStore.Shared.Dtos
         public List<Error>? Errors { get; private set; }
 
         //Static factory methods
-        public static Response<T> Success(T data, HttpStatusCode statusCode)
+        public static Response<T> Success(T? data, HttpStatusCode statusCode)
         {
             return new Response<T> { Result = data, StatusCode = statusCode, IsSucceed = true };
         }

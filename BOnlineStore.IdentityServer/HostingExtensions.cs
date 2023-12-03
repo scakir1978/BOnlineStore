@@ -30,8 +30,6 @@ internal static class HostingExtensions
 
         builder.Services.AddRazorPages();
 
-
-
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -39,7 +37,6 @@ internal static class HostingExtensions
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
         var assemblyName = typeof(Program).GetTypeInfo().Assembly.GetName().Name;
-
 
         var builderIdentity = builder.Services
             .AddIdentityServer(options =>
@@ -142,8 +139,6 @@ internal static class HostingExtensions
         app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         app.UseIdentityServer();
         app.UseAuthorization();
-
-
 
         app.MapRazorPages()
             .RequireAuthorization();

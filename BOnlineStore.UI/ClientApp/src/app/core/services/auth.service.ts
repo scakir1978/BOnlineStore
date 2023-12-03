@@ -1,39 +1,39 @@
-import { environment } from "./../../../environments/environment";
-import { Injectable } from "@angular/core";
-import { getFirebaseBackend } from "../../authUtils";
-import { User } from "../models/auth.models";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { map } from "rxjs/operators";
-import { BehaviorSubject, Observable } from "rxjs";
-import { GlobalComponent } from "../../global-component";
+import { environment } from './../../../environments/environment';
+import { Injectable } from '@angular/core';
+import { getFirebaseBackend } from '../../authUtils';
+import { User } from '../models/auth.models';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { GlobalComponent } from '../../global-component';
 
-import * as oidc from "oidc-client-ts";
+import * as oidc from 'oidc-client-ts';
+import { AuthenticationScopesEnum } from 'app/base-classes/base-enums/authentication-scopes.enum';
 
 const AUTH_API = GlobalComponent.AUTH_API;
 
 const httpOptions = {
-  headers: new HttpHeaders({ "Content-Type": "application/json" }),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 
 /**
  * Auth-service Component
  */
 export class AuthenticationService {
-  returnUrl: string = "/";
+  returnUrl: string = '/';
 
   config: oidc.UserManagerSettings = {
-    client_id: "AngularClient",
+    client_id: 'AngularClient',
     authority: `${environment.identityUrl}`,
     redirect_uri: `${environment.uiUrl}/identity/callback`,
     silent_redirect_uri: `${environment.uiUrl}/identity/silent`,
     post_logout_redirect_uri: `${environment.uiUrl}/identity/callout`,
-    response_type: "code",
-    scope:
-      "openid profile definitions_full_permission production_full_permission gateway_full_permission IdentityServerApi offline_access",
+    response_type: 'code',
+    scope: `${AuthenticationScopesEnum.OPENID} ${AuthenticationScopesEnum.PROFILE} ${AuthenticationScopesEnum.DEFINITIONS_FULL_PERMISSION} ${AuthenticationScopesEnum.PRODUCTION_FULL_PERMISSION} ${AuthenticationScopesEnum.GATEWAY_FULL_PERMISSION} ${AuthenticationScopesEnum.BFF_FULL_PERMISSION} ${AuthenticationScopesEnum.IDENTITYSERVERAPI} ${AuthenticationScopesEnum.OFFLINE_ACCESS}`,
     automaticSilentRenew: true,
-    response_mode: "query",
+    response_mode: 'query',
   };
 
   private identityUser: oidc.User | null | undefined = null;
@@ -48,7 +48,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
     this.userManager = new oidc.UserManager(this.config);
     this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem("currentUser")!)
+      JSON.parse(localStorage.getItem('currentUser')!)
     );
     //this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -66,7 +66,7 @@ export class AuthenticationService {
 
     // Register Api
     return this.http.post(
-      AUTH_API + "signup",
+      AUTH_API + 'signup',
       {
         email,
         first_name,
@@ -88,7 +88,7 @@ export class AuthenticationService {
     // });
 
     return this.http.post(
-      AUTH_API + "signin",
+      AUTH_API + 'signin',
       {
         email,
         password,
@@ -111,8 +111,8 @@ export class AuthenticationService {
   logout() {
     // logout the user
     // return getFirebaseBackend()!.logout();
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("token");
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     this.currentUserSubject.next(null!);
   }
 
@@ -136,13 +136,13 @@ export class AuthenticationService {
     });
   }
 
-  loginIndetity(returnUrl: string = "/"): void {
+  loginIndetity(returnUrl: string = '/'): void {
     this.returnUrl = returnUrl;
     this.userManager.signinRedirect();
   }
 
   logoutIndetity(): void {
-    localStorage.removeItem("currentUser");
+    localStorage.removeItem('currentUser');
     // notify
     this.currentUserSubject.next(null!);
 
@@ -167,9 +167,9 @@ export class AuthenticationService {
     user.lastName = identityUser.profile.family_name;
     //user.role = Role.Admin;
     user.token = identityUser.access_token;
-    user.language = identityUser.profile.locale ?? "tr-TR";
+    user.language = identityUser.profile.locale ?? 'tr-TR';
 
-    localStorage.setItem("currentUser", JSON.stringify(user));
+    localStorage.setItem('currentUser', JSON.stringify(user));
 
     this.currentUserSubject.next(user);
   }
