@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.6.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="7.0.9" />
-    <PackageReference Include="MongoDB.Driver" Version="2.20.0" />
-    <PackageReference Include="Serilog" Version="3.0.1" />
-	<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	  
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="11.8.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.22.0" />
+		<PackageReference Include="Serilog" Version="3.1.1" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 
-  <ItemGroup>
-    <ProjectReference Include="..\BOnlineStore.Localization\BOnlineStore.Localization.csproj" />
-  </ItemGroup>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\BOnlineStore.Localization\BOnlineStore.Localization.csproj" />
+	</ItemGroup>
 
 </Project>

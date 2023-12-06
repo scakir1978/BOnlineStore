@@ -1,6 +1,6 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
 WORKDIR /
 ADD Shared/Certificates/bonlinestore.crt /usr/local/share/ca-certificates/bonlinestore.crt
@@ -12,7 +12,7 @@ ADD Shared/Certificates/bonlinestore.pfx bonlinestore.pfx
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["BOnlineStore.Services/Order/BOnlineStore.Services.Order.Api/BOnlineStore.Services.Order.Api.csproj", "BOnlineStore.Services/Order/BOnlineStore.Services.Order.Api/"]
 COPY ["Shared/BOnlineStore.Generic.Service/BOnlineStore.Generic.Service.csproj", "Shared/BOnlineStore.Generic.Service/"]

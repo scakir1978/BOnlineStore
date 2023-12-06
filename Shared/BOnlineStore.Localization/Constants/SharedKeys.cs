@@ -16,5 +16,8 @@ namespace BOnlineStore.Localization.Constants
         public const string SwaggerSecurityDescription = "SwaggerSecurityDescription";
         public const string RecordNotFound = "RecordNotFound";
         public const string RecordNotFoundPredicate = "RecordNotFoundPredicate";
+        public const string UrlPrefixCannotBeNull = "UrlPrefixCannotBeNull";
+        public const string ControllerNameCannotBeNull = "ControllerNameCannotBeNull";
+        public const string FunctionNameCannotBeNull = "FunctionNameCannotBeNull";
     }
 }
