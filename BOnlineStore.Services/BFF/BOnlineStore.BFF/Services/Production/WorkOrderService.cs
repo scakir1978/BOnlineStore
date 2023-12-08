@@ -1,4 +1,5 @@
-﻿using BOnlineStore.Localization;
+﻿using BOnlineStore.BFF.Api.Services.Definitions;
+using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
 using BOnlineStore.Services.BFF.Api.Dtos;
 using BOnlineStore.Shared.Constansts;
@@ -14,12 +15,14 @@ namespace BOnlineStore.BFF.Api.Services.Production
         private readonly HttpClient _client;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IStringLocalizer<Language> _stringLocalizer;
+        private readonly IDefinitionsService _definitionsService;
 
-        public WorkOrderService(HttpClient client, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer)
+        public WorkOrderService(HttpClient client, IHttpContextAccessor httpContextAccessor, IStringLocalizer<Language> stringLocalizer, IDefinitionsService definitionsService)
         {
             _client = client;
             _httpContextAccessor = httpContextAccessor;
             _stringLocalizer = stringLocalizer;
+            _definitionsService = definitionsService;
         }
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace BOnlineStore.BFF.Api.Services.Production
             //Geri dönen bilgi dto nesnesine dönüştürülür.
             var workOrderFormResponse = await response.Content.ReadAsJsonAsync<WorkOrderFormDto>();
 
-            FillWorkOrderDefinitionsDataToDto(workOrderFormResponse.Result);
+            await FillWorkOrderDefinitionsDataToDto(workOrderFormResponse.Result);
 
             return workOrderFormResponse.Result;
         }
@@ -57,20 +60,20 @@ namespace BOnlineStore.BFF.Api.Services.Production
         {
             if (workOrderForm == null) { throw new ArgumentNullException(nameof(workOrderForm), _stringLocalizer[SharedKeys.WorkOrderFormCannotBeNull]); }
 
-            var definitionsRequestList = new List<DefinitionsRequestDto>
-            {
-                new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.FirmId, EntityName = "Firm" },
-                new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ColorId, EntityName = "Color" },
-                new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ModelId, EntityName = "Model" },
-                new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.GlassId, EntityName = "Glass" },
-                new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.TemplateId, EntityName = "Template" }
-            };
+            var definitionsRequestList = new List<DefinitionsRequestDto>();
 
-            var response = await _client.PostParameterizedAsync(DefinitionsApiControllerConstants.DefinitionsRequest, null,
-                                                         definitionsRequestList, _httpContextAccessor, _stringLocalizer);
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.FirmId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.FirmId, EntityName = "Firm" });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ColorId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ColorId, EntityName = "Color" });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ModelId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ModelId, EntityName = "Model" });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.GlassId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.GlassId, EntityName = "Glass" });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.TemplateId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.TemplateId, EntityName = "Template" });
 
-            //Geri dönen bilgi dto nesnesine dönüştürülür.
-            var definitionResponseList = await response.Content.ReadAsJsonAsync<List<DefinitionResponseDto>>();
+            var response = await _definitionsService.GetByIdAsync(definitionsRequestList);
 
         }
     }

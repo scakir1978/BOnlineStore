@@ -1,4 +1,5 @@
-﻿using BOnlineStore.BFF.Api.Services.Production;
+﻿using BOnlineStore.BFF.Api.Services.Definitions;
+using BOnlineStore.BFF.Api.Services.Production;
 
 namespace BOnlineStore.BFF.Api.Injections
 {
@@ -8,6 +9,10 @@ namespace BOnlineStore.BFF.Api.Injections
         {
             services.AddHttpClient<IWorkOrderService, WorkOrderService>(
                 config => config.BaseAddress = new Uri(configuration["ProductionApiUrl"])
+            );
+
+            services.AddHttpClient<IDefinitionsService, DefinitionsService>(
+                config => config.BaseAddress = new Uri(configuration["DefinitionsApiUrl"])
             );
 
             return services;
