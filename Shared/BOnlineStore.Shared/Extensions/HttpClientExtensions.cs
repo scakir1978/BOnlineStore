@@ -7,9 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.NetworkInformation;
-using System.Text;
 
 namespace BOnlineStore.Shared.Extensions
 {
@@ -29,21 +28,13 @@ namespace BOnlineStore.Shared.Extensions
         /// O yüzden sonuna "/api" gibi url prefix değeri gelmelidir.</param>
         /// <returns></returns>
         public static async Task<HttpResponseMessage> GetParameterizedAsync(
-            this HttpClient _client, string controllerName, string functionName,
+            this HttpClient _client, string controllerName, string? functionName,
             List<QueryParameters> parameters,
             IHttpContextAccessor _httpContextAccessor,
             IStringLocalizer<Language> _stringLocalizer,
             string urlPrefix = GlobalConstants.apiPrefix)
         {
-            //Urlde kullanılacak parametrelerin boş olmaması gerekir.
-            if (string.IsNullOrWhiteSpace(urlPrefix))
-                throw new ArgumentNullException(_stringLocalizer[SharedKeys.UrlPrefixCannotBeNull]);
-            if (string.IsNullOrWhiteSpace(functionName))
-                throw new ArgumentNullException(_stringLocalizer[SharedKeys.FunctionNameCannotBeNull]);
-            if (string.IsNullOrWhiteSpace(controllerName))
-                throw new ArgumentNullException(_stringLocalizer[SharedKeys.ControllerNameCannotBeNull]);
-
-            string url = $"{urlPrefix}/{controllerName}/{functionName}";
+            string url = GenerateUrl(urlPrefix, controllerName, functionName, _stringLocalizer);
 
             //Access token bilgisine ulaşılır.
             var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(GlobalConstants.AccessToken);
@@ -64,13 +55,44 @@ namespace BOnlineStore.Shared.Extensions
             return await _client.GetAsync($"{url}?{queryString}");
         }
 
-        public static async Task<HttpResponseMessage> PostAsJsonAsync<T>(
-            this HttpClient httpClient, string url, T data)
+        /// <summary>
+        /// Başka servislere post istekleri yapmak için kullanılır.
+        /// </summary>
+        /// <param name="_client">HttpClient nesnesinde extension olarak gözükmesi için kullanılır.</param>
+        /// <param name="controllerName">İstek atılacak controller ismi</param>
+        /// <param name="functionName">İstek atılacak controller üzerinde çağrılacak fonksiyonun adı</param>
+        /// <param name="parameters">Get fonksiyonun çağrısında kullanılacak parametreler</param>
+        /// <param name="_httpContextAccessor">Token bilgisine ulaşmak için kullanılacak IHttpContextAccessor nesnesi</param>
+        /// <param name="_stringLocalizer">Hata mesajlarının key karşılıklarını bulan IStringLocalizer<Language> nesnesi</param>
+        /// <param name="urlPrefix">Controller ile fonksiyon adlarının önüne gelecek url prefix değeri. Bir değer atanmaz ise varsayılan olarak "/api" olur.
+        /// Url prefix değeri "/" ile başlamalıdır. Base uri "https://production.bonlinestore.com" ifadesi şeklindedir. 
+        /// O yüzden sonuna "/api" gibi url prefix değeri gelmelidir.</param>
+        /// <returns></returns>
+        public static async Task<HttpResponseMessage> PostParameterizedAsync<T>(
+            this HttpClient _client, string controllerName, string? functionName,
+            T data,
+            IHttpContextAccessor _httpContextAccessor,
+            IStringLocalizer<Language> _stringLocalizer,
+            string urlPrefix = GlobalConstants.apiPrefix)
         {
+            string url = GenerateUrl(urlPrefix, controllerName, functionName, _stringLocalizer);
+
+            //Access token bilgisine ulaşılır.
+            var accessToken = await _httpContextAccessor.HttpContext.GetTokenAsync(GlobalConstants.AccessToken);
+
+            //Token diğer servise yapılacak istek için headersa eklenir.
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(GlobalConstants.Bearer, accessToken);
+
+            //Gelen T tipindeki data, json stringe çervrilir.
             var dataAsString = JsonConvert.SerializeObject(data);
+
+            //Content oluşturulur.
             var content = new StringContent(dataAsString);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            return await httpClient.PostAsync(url, content);
+
+            //çağrı yapılır.
+            return await _client.PostAsync(url, content);
+
         }
 
         /// <summary>
@@ -98,7 +120,7 @@ namespace BOnlineStore.Shared.Extensions
         /// </summary>
         /// <param name="queryParameters"></param>
         /// <returns></returns>
-        public static string QueryParametersToQueryString(List<QueryParameters> queryParameters)
+        private static string QueryParametersToQueryString(List<QueryParameters> queryParameters)
         {
             var queryString = "";
 
@@ -114,6 +136,29 @@ namespace BOnlineStore.Shared.Extensions
             }
 
             return queryString;
+        }
+
+        /// <summary>
+        /// İstek atılacak urlyi oluşturur.
+        /// </summary>
+        /// <param name="urlPrefix">Controller ile fonksiyon adlarının önüne gelecek url prefix değeri. Bir değer atanmaz ise va
+        /// <param name="controllerName">İstek atılacak controller ismi</param>
+        /// <param name="functionName">İstek atılacak controller üzerinde çağrılacak fonksiyonun adı</param>
+        /// <param name="_stringLocalizer">Hata mesajlarının key karşılıklarını bulan IStringLocalizer<Language> nesnesi</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private static string GenerateUrl(string urlPrefix, string controllerName, string? functionName, IStringLocalizer<Language> _stringLocalizer)
+        {
+            //Urlde kullanılacak parametrelerin boş olmaması gerekir.
+            if (string.IsNullOrWhiteSpace(urlPrefix))
+                throw new ArgumentNullException(nameof(urlPrefix), _stringLocalizer[SharedKeys.UrlPrefixCannotBeNull]);
+            if (string.IsNullOrWhiteSpace(controllerName))
+                throw new ArgumentNullException(nameof(controllerName), _stringLocalizer[SharedKeys.ControllerNameCannotBeNull]);
+
+            string url = $"{urlPrefix}/{controllerName}/{functionName}";
+            if (string.IsNullOrWhiteSpace(functionName)) url = $"{urlPrefix}/{controllerName}";
+
+            return url;
         }
     }
 

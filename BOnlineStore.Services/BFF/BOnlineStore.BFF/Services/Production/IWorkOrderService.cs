@@ -1,4 +1,4 @@
-﻿using BOnlineStore.BFF.Api.Dtos.Production.WorkOrder;
+﻿using BOnlineStore.Services.BFF.Api.Dtos;
 
 namespace BOnlineStore.BFF.Api.Services.Production
 {

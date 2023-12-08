@@ -28,7 +28,8 @@ namespace BOnlineStore.MongoDb.GenericRepository
 
         public virtual IQueryable<TEntity> Load(Expression<Func<TEntity, bool>>? predicate = null)
         {
-            var query = _entity.AsQueryable().Where(x => x.TenantId == GetTenantId());
+            var tenantId = GetTenantId();
+            var query = _entity.AsQueryable().Where(x => x.TenantId == tenantId);
 
             return predicate == null
                 ? query

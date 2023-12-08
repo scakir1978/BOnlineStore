@@ -1,5 +1,6 @@
 ﻿using BOnlineStore.Services.Definitions.Api.Repositories;
 using BOnlineStore.Services.Definitions.Api.Services;
+using BOnlineStore.Services.Definitions.Api.Services.Shared;
 
 namespace BOnlineStore.Services.Definitions.Api.Injections
 {
@@ -35,6 +36,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<IDistrictService, DistrictService>();
             services.AddScoped<IPriceListService, PriceListService>();
+            services.AddScoped<IDefinitionsRequestService, DefinitionsRequestService>();
 
             return services;
         }

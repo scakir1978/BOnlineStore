@@ -1,6 +1,6 @@
 ﻿using BOnlineStore.Services.BFF.Api.Dtos;
 
-namespace BOnlineStore.BFF.Api.Dtos.Production.WorkOrder
+namespace BOnlineStore.Services.BFF.Api.Dtos
 {
     public class WorkOrderFormDto
     {

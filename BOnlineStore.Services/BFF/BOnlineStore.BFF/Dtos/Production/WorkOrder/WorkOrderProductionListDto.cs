@@ -32,7 +32,7 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         /// <summary>
         /// Formülde kullanılan malzemenin adı
         /// </summary>
-        public string? RawMaterialName { get; set; }
+        public RawMaterialDto? RawMaterial { get; set; }
         /// <summary>
         /// Üretim Adedi
         /// </summary>

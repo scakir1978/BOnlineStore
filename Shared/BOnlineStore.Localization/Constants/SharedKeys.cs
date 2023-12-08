@@ -19,5 +19,10 @@ namespace BOnlineStore.Localization.Constants
         public const string UrlPrefixCannotBeNull = "UrlPrefixCannotBeNull";
         public const string ControllerNameCannotBeNull = "ControllerNameCannotBeNull";
         public const string FunctionNameCannotBeNull = "FunctionNameCannotBeNull";
+        public const string DefinitionsRequestDtoCannotBeNull = "DefinitionsRequestDtoCannotBeNull";
+        public const string DefinitionsEntityNameCannotBeNull = "DefinitionsEntityNameCannotBeNull";
+        public const string DefinitionsEntityIdCannotBeNull = "DefinitionsEntityIdCannotBeNull";
+        public const string WorkOrderFormCannotBeNull = "WorkOrderFormCannotBeNull";
+
     }
 }
