@@ -6,6 +6,7 @@ using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Extensions;
 using Microsoft.AspNetCore.Server.HttpSys;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using System.Reflection;
 
 namespace BOnlineStore.BFF.Api.Services.Production
@@ -51,30 +52,78 @@ namespace BOnlineStore.BFF.Api.Services.Production
             //Geri dönen bilgi dto nesnesine dönüştürülür.
             var workOrderFormResponse = await response.Content.ReadAsJsonAsync<WorkOrderFormDto>();
 
-            await FillWorkOrderDefinitionsDataToDto(workOrderFormResponse.Result);
+            //İş emri datası null gelirse exception fırlatılır.
+            if (workOrderFormResponse.Result == null)
+                throw new ArgumentNullException(nameof(workOrderFormResponse.Result), _stringLocalizer[SharedKeys.WorkOrderFormCannotBeNull]);
+
+            //İş emrindeki tanımlama dataları, DefinitionsService üzeriden çekilir.
+            List<DefinitionsResponseDto> responseDefinitionsEntities = await GetByIdFromDefinitionsServiceAsync(workOrderFormResponse.Result);
+
+            //Çekilen veriler, iş emri formundaki dtolara atanır.
+            FillWorkOrderDefinitionsDataToDto(workOrderFormResponse.Result, responseDefinitionsEntities);
 
             return workOrderFormResponse.Result;
         }
 
-        private async Task FillWorkOrderDefinitionsDataToDto(WorkOrderFormDto? workOrderForm)
+        /// <summary>
+        /// Tanımlama bilgileri, iş emrindeki dtolara taşınır.
+        /// </summary>
+        /// <param name="workOrderForm">Dto bilgilerinin atanacağı iş emri formu</param>
+        /// <param name="responseDefinitionsEntities">Definitions servisinden dönen tanımlama dto nesnesi</param>
+        private void FillWorkOrderDefinitionsDataToDto(WorkOrderFormDto workOrderForm, List<DefinitionsResponseDto> responseDefinitionsEntities)
         {
-            if (workOrderForm == null) { throw new ArgumentNullException(nameof(workOrderForm), _stringLocalizer[SharedKeys.WorkOrderFormCannotBeNull]); }
+            foreach (var entityItem in responseDefinitionsEntities)
+            {
+                switch (entityItem.EntityName)
+                {
+                    case DefinitionsApiEntityNameConstants.Firm:
+                        if (entityItem.Entity != null)
+                            workOrderForm.WorkOrder.Firm = JsonConvert.DeserializeObject<FirmDto>(entityItem.Entity.ToString());
+                        break;
+                    case DefinitionsApiEntityNameConstants.Color:
+                        if (entityItem.Entity != null)
+                            workOrderForm.WorkOrder.Color = JsonConvert.DeserializeObject<ColorDto>(entityItem.Entity.ToString());
+                        break;
+                    case DefinitionsApiEntityNameConstants.Model:
+                        if (entityItem.Entity != null)
+                            workOrderForm.WorkOrder.Model = JsonConvert.DeserializeObject<ModelDto>(entityItem.Entity.ToString());
+                        break;
+                    case DefinitionsApiEntityNameConstants.Glass:
+                        if (entityItem.Entity != null)
+                            workOrderForm.WorkOrder.Glass = JsonConvert.DeserializeObject<GlassDto>(entityItem.Entity.ToString());
+                        break;
+                    case DefinitionsApiEntityNameConstants.Template:
+                        if (entityItem.Entity != null)
+                            workOrderForm.WorkOrder.Template = JsonConvert.DeserializeObject<TemplateDto>(entityItem.Entity.ToString());
+                        break;
+                }
+            }
 
+        }
+
+        /// <summary>
+        /// Definitions service üzerinden istenen iş emri formundaki tanımlama bilgilerini dto olarak döner
+        /// </summary>
+        /// <param name="workOrderForm">Tanımlama bilgilerinin istendiği iş emri formu</param>
+        /// <returns></returns>
+        private async Task<List<DefinitionsResponseDto>> GetByIdFromDefinitionsServiceAsync(WorkOrderFormDto? workOrderForm)
+        {
             var definitionsRequestList = new List<DefinitionsRequestDto>();
 
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.FirmId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.FirmId, EntityName = "Firm" });
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.FirmId, EntityName = DefinitionsApiEntityNameConstants.Firm });
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ColorId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ColorId, EntityName = "Color" });
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ColorId, EntityName = DefinitionsApiEntityNameConstants.Color });
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ModelId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ModelId, EntityName = "Model" });
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ModelId, EntityName = DefinitionsApiEntityNameConstants.Model });
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.GlassId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.GlassId, EntityName = "Glass" });
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.GlassId, EntityName = DefinitionsApiEntityNameConstants.Glass });
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.TemplateId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.TemplateId, EntityName = "Template" });
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.TemplateId, EntityName = DefinitionsApiEntityNameConstants.Template });
 
             var response = await _definitionsService.GetByIdAsync(definitionsRequestList);
-
+            return response;
         }
+
     }
 }
