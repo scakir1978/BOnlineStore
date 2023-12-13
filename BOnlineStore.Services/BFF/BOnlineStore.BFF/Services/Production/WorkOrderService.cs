@@ -33,9 +33,6 @@ namespace BOnlineStore.BFF.Api.Services.Production
         /// <returns></returns>
         public async Task<WorkOrderFormDto> CalculateProductionList(string workOrderId)
         {
-            Assembly executingAssembly = Assembly.GetExecutingAssembly();
-            Type? type = executingAssembly.DefinedTypes.Where(x => x.Name == "WorkOrderFormDto").FirstOrDefault();
-
             var parameters = new List<QueryParameters>();
             parameters.Add(new QueryParameters
             {
