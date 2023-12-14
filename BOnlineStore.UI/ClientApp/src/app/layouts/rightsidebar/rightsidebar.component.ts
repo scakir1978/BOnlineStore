@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { EventService } from '../../core/services/event.service';
 import {
@@ -48,7 +49,7 @@ export class RightsidebarComponent implements OnInit {
   grd: any;
 
   @Output() settingsButtonClicked = new EventEmitter();
-
+  @ViewChild('filtetcontent') filtetcontent!: TemplateRef<any>;
   constructor(
     private eventService: EventService,
     private offcanvasService: NgbOffcanvas,
@@ -56,6 +57,11 @@ export class RightsidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    setTimeout(() => {
+      if (this.offcanvasService.hasOpenOffcanvas() == false) {
+        this.openEnd(this.filtetcontent);
+      }
+    }, 1000);
     var layoutSettings = this.layoutService.getLayoutSettings();
 
     this.layout = layoutSettings.layoutType;
@@ -85,7 +91,13 @@ export class RightsidebarComponent implements OnInit {
   changeLayout(layout: string) {
     this.attribute = layout;
     this.layout = layout;
-    this.eventService.broadcast('changeLayout', layout);
+
+    if (layout == 'semibox') {
+      this.eventService.broadcast('changeLayout', 'vertical');
+    } else {
+      this.eventService.broadcast('changeLayout', layout);
+    }
+
     document.documentElement.setAttribute('data-layout', layout);
 
     this.layoutService.setLayoutSettings(
@@ -101,6 +113,10 @@ export class RightsidebarComponent implements OnInit {
       this.sidebarVisibility,
       this.bodyImage
     );
+
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize'));
+    }, 1000);
   }
 
   setLayout(layout: string) {

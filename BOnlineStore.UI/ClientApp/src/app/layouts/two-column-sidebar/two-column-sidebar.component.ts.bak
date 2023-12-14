@@ -34,11 +34,6 @@ export class TwoColumnSidebarComponent implements OnInit {
   ngOnInit(): void {
     // Menu Items
     this.menuItems = MENU;
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.initActiveMenu();
-      }
-    });
   }
 
   /***
@@ -53,54 +48,44 @@ export class TwoColumnSidebarComponent implements OnInit {
   toggleSubItem(event: any) {
     let isCurrentMenuId = event.target.closest("a.nav-link");
     let isMenu = isCurrentMenuId.nextElementSibling as any;
-    if (isMenu.classList.contains("show")) {
-      isMenu.classList.remove("show");
-      isCurrentMenuId.setAttribute("aria-expanded", "false");
-    } else {
-      let dropDowns = Array.from(
-        document.querySelectorAll(".menu-dropdown .show")
-      );
-      dropDowns.forEach((node: any) => {
-        node.classList.remove("show");
-      });
+    let dropDowns = Array.from(
+      document.querySelectorAll(".menu-dropdown .show")
+    );
+    dropDowns.forEach((node: any) => {
+      node.classList.remove("show");
+    });
 
-      let subDropDowns = Array.from(
-        document.querySelectorAll(".menu-dropdown .nav-link")
-      );
-      subDropDowns.forEach((submenu: any) => {
-        submenu.setAttribute("aria-expanded", "false");
-      });
+    let subDropDowns = Array.from(
+      document.querySelectorAll(".menu-dropdown .nav-link")
+    );
+    subDropDowns.forEach((submenu: any) => {
+      submenu.setAttribute("aria-expanded", "false");
+    });
 
-      if (event.target && event.target.nextElementSibling) {
-        isCurrentMenuId.setAttribute("aria-expanded", "true");
-        event.target.nextElementSibling.classList.toggle("show");
-      }
+    if (event.target && event.target.nextElementSibling) {
+      isCurrentMenuId.setAttribute("aria-expanded", "true");
+      event.target.nextElementSibling.classList.toggle("show");
     }
   }
 
   toggleExtraSubItem(event: any) {
     let isCurrentMenuId = event.target.closest("a.nav-link");
     let isMenu = isCurrentMenuId.nextElementSibling as any;
-    if (isMenu.classList.contains("show")) {
-      isMenu.classList.remove("show");
-      isCurrentMenuId.setAttribute("aria-expanded", "false");
-    } else {
-      let dropDowns = Array.from(document.querySelectorAll(".extra-sub-menu"));
-      dropDowns.forEach((node: any) => {
-        node.classList.remove("show");
-      });
+    let dropDowns = Array.from(document.querySelectorAll(".extra-sub-menu"));
+    dropDowns.forEach((node: any) => {
+      node.classList.remove("show");
+    });
 
-      let subDropDowns = Array.from(
-        document.querySelectorAll(".menu-dropdown .nav-link")
-      );
-      subDropDowns.forEach((submenu: any) => {
-        submenu.setAttribute("aria-expanded", "false");
-      });
+    let subDropDowns = Array.from(
+      document.querySelectorAll(".menu-dropdown .nav-link")
+    );
+    subDropDowns.forEach((submenu: any) => {
+      submenu.setAttribute("aria-expanded", "false");
+    });
 
-      if (event.target && event.target.nextElementSibling) {
-        isCurrentMenuId.setAttribute("aria-expanded", "true");
-        event.target.nextElementSibling.classList.toggle("show");
-      }
+    if (event.target && event.target.nextElementSibling) {
+      isCurrentMenuId.setAttribute("aria-expanded", "true");
+      event.target.nextElementSibling.classList.toggle("show");
     }
   }
 
@@ -174,9 +159,6 @@ export class TwoColumnSidebarComponent implements OnInit {
         if (item.nextElementSibling) {
           item.nextElementSibling.classList.remove("show");
         }
-        if (item.parentElement) {
-          item.parentElement.closest(".collapse")?.classList.remove("show");
-        }
         item.setAttribute("aria-expanded", false);
       }
       item.classList.remove("active");
@@ -232,9 +214,6 @@ export class TwoColumnSidebarComponent implements OnInit {
       document.querySelectorAll(".twocolumn-iconview li a")
     );
     let matchingMainMenuItem = mainItems.find((x: any) => {
-      if (x.classList.contains("active")) {
-        x.classList.remove("active");
-      }
       return x.pathname === pathName;
     });
     if (matchingMainMenuItem) {
@@ -270,13 +249,5 @@ export class TwoColumnSidebarComponent implements OnInit {
    */
   hasItems(item: MenuItem) {
     return item.subItems !== undefined ? item.subItems.length > 0 : false;
-  }
-
-  /**
-   * SidebarHide modal
-   * @param content modal content
-   */
-  SidebarHide() {
-    document.body.classList.remove("vertical-sidebar-enable");
   }
 }

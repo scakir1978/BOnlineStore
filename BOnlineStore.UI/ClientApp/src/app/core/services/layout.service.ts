@@ -73,6 +73,14 @@ export class LayoutService {
   ) {
     document.documentElement.setAttribute('data-layout', layoutType);
 
+    if (layoutType === 'twocolumn') {
+      if (document.documentElement.clientWidth <= 767) {
+        document.documentElement.setAttribute('data-layout', 'vertical');
+      } else {
+        document.documentElement.setAttribute('data-layout', 'twocolumn');
+      }
+    }
+
     document.documentElement.setAttribute(
       'data-topbar',
       layoutSettings.topBar!

@@ -22,7 +22,7 @@ export class HorizontalComponent implements OnInit {
       this.layoutService.getLayoutSettings()
     );
 
-    this.changeLoader(this.layoutService.getLayoutSettings().dataPreLoader);
+    //this.changeLoader(this.layoutService.getLayoutSettings().dataPreLoader);
 
     /*document.documentElement.setAttribute("data-layout", "horizontal");
     document.documentElement.setAttribute("data-topbar", "light");
@@ -56,7 +56,7 @@ export class HorizontalComponent implements OnInit {
     }
   }
 
-  changeLoader(loader: string) {
+  /*changeLoader(loader: string) {
     document.documentElement.setAttribute('data-preloader', loader);
     var preloader = document.getElementById('preloader');
     if (preloader) {
@@ -67,5 +67,5 @@ export class HorizontalComponent implements OnInit {
           'hidden';
       }, 1000);
     }
-  }
+  }*/
 }
