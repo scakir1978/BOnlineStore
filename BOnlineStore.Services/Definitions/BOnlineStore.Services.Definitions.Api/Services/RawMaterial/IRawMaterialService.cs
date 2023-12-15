@@ -7,5 +7,6 @@ namespace BOnlineStore.Services.Definitions.Api.Services
 {
     public interface IRawMaterialService : IService<RawMaterial, RawMaterialDto, RawMaterialCreateDto, RawMaterialUpdateDto>
     {
+        List<RawMaterialDto> LoadFromList(List<string> rawMaterialIds);
     }
 }

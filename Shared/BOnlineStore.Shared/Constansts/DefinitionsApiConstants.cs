@@ -21,6 +21,7 @@ namespace BOnlineStore.Shared.Constansts
     public class DefinitionsApiControllerFuctionsConstants
     {
         public const string CalculateProductionList = "CalculateProductionList";
+        public const string LoadFromList = "LoadFromList";
     }
 
     public class DefinitionsApiControllerFuctionsParemetersConstants

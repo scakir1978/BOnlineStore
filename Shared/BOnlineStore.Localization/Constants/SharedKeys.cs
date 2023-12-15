@@ -23,6 +23,8 @@ namespace BOnlineStore.Localization.Constants
         public const string DefinitionsEntityNameCannotBeNull = "DefinitionsEntityNameCannotBeNull";
         public const string DefinitionsEntityIdCannotBeNull = "DefinitionsEntityIdCannotBeNull";
         public const string WorkOrderFormCannotBeNull = "WorkOrderFormCannotBeNull";
+        public const string WorkOrderModelRecipeTypeCannotBeNull = "WorkOrderModelRecipeTypeCannotBeNull";
+        public const string WorkOrderProductionListCannotBeNull = "WorkOrderProductionListCannotBeNull";
 
     }
 }

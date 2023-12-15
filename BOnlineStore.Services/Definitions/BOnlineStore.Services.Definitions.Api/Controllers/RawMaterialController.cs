@@ -34,6 +34,12 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
             return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<RawMaterialForComboDto>(_rawMaterialService.Load()), loadOptions));
         }
 
+        [HttpPost("LoadFromList")]
+        public IActionResult LoadFromList(List<string> rawMaterialIds)
+        {
+            return CreateSuccessActionResultInstance(_rawMaterialService.LoadFromList(rawMaterialIds));
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {

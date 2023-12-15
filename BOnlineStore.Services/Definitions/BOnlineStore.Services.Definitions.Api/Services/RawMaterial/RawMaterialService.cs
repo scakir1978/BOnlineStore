@@ -11,12 +11,20 @@ namespace BOnlineStore.Services.Definitions.Api.Services
 {
     public class RawMaterialService : Service<RawMaterial, RawMaterialDto, RawMaterialCreateDto, RawMaterialUpdateDto>, IRawMaterialService
     {
+        private readonly IMapper _mapper;
+
         public RawMaterialService(
             IRawMaterialRepository repository,
             IMapper mapper,
             IStringLocalizer<Language> stringLocalizer,
             IValidator<RawMaterial> validator) : base(repository, mapper, stringLocalizer, validator)
-        { }
+        {
+            _mapper = mapper; ;
+        }
 
+        public List<RawMaterialDto> LoadFromList(List<string> rawMaterialIds)
+        {
+            return _mapper.Map<List<RawMaterialDto>>(Load(x => rawMaterialIds.Contains(x.Id)).ToList());
+        }
     }
 }

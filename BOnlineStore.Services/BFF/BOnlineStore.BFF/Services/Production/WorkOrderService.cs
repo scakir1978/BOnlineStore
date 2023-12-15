@@ -53,13 +53,44 @@ namespace BOnlineStore.BFF.Api.Services.Production
             if (workOrderFormResponse.Result == null)
                 throw new ArgumentNullException(nameof(workOrderFormResponse.Result), _stringLocalizer[SharedKeys.WorkOrderFormCannotBeNull]);
 
+            var workOrderForm = workOrderFormResponse.Result;
+
             //İş emrindeki tanımlama dataları, DefinitionsService üzeriden çekilir.
-            List<DefinitionsResponseDto> responseDefinitionsEntities = await GetByIdFromDefinitionsServiceAsync(workOrderFormResponse.Result);
+            List<DefinitionsResponseDto> responseDefinitionsEntities = await GetByIdFromDefinitionsServiceAsync(workOrderForm);
 
             //Çekilen veriler, iş emri formundaki dtolara atanır.
-            FillWorkOrderDefinitionsDataToDto(workOrderFormResponse.Result, responseDefinitionsEntities);
+            FillWorkOrderDefinitionsDataToDto(workOrderForm, responseDefinitionsEntities);
 
-            return workOrderFormResponse.Result;
+            //Reçete türü bilgilerine ulaşılır.
+            await FillRecipeTypeToDto(workOrderForm);
+
+            await FillRawMaterialsToDto(workOrderForm);
+
+            return workOrderForm;
+        }
+
+        /// <summary>
+        /// Definitions service üzerinden istenen iş emri formundaki tanımlama bilgilerini dto olarak döner
+        /// </summary>
+        /// <param name="workOrderForm">Tanımlama bilgilerinin istendiği iş emri formu</param>
+        /// <returns></returns>
+        private async Task<List<DefinitionsResponseDto>> GetByIdFromDefinitionsServiceAsync(WorkOrderFormDto? workOrderForm)
+        {
+            var definitionsRequestList = new List<DefinitionsRequestDto>();
+
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.FirmId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.FirmId, EntityName = DefinitionsApiEntityNameConstants.Firm });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ColorId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ColorId, EntityName = DefinitionsApiEntityNameConstants.Color });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ModelId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ModelId, EntityName = DefinitionsApiEntityNameConstants.Model });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.GlassId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.GlassId, EntityName = DefinitionsApiEntityNameConstants.Glass });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.TemplateId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.TemplateId, EntityName = DefinitionsApiEntityNameConstants.Template });
+
+            var response = await _definitionsService.GetByIdAsync(definitionsRequestList);
+            return response;
         }
 
         /// <summary>
@@ -99,28 +130,49 @@ namespace BOnlineStore.BFF.Api.Services.Production
         }
 
         /// <summary>
-        /// Definitions service üzerinden istenen iş emri formundaki tanımlama bilgilerini dto olarak döner
+        /// Reçece türü bilgisine definitions service üzerinden ulaşılır.
         /// </summary>
-        /// <param name="workOrderForm">Tanımlama bilgilerinin istendiği iş emri formu</param>
-        /// <returns></returns>
-        private async Task<List<DefinitionsResponseDto>> GetByIdFromDefinitionsServiceAsync(WorkOrderFormDto? workOrderForm)
+        /// <param name="workOrderForm">Reçete türü bilgilerinin atanacağı iş emri formu</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        private async Task FillRecipeTypeToDto(WorkOrderFormDto workOrderForm)
         {
-            var definitionsRequestList = new List<DefinitionsRequestDto>();
+            if (string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.Model.RecipeTypeId))
+                throw new ArgumentNullException(nameof(workOrderForm.WorkOrder.Model.RecipeTypeId), _stringLocalizer[SharedKeys.WorkOrderModelRecipeTypeCannotBeNull]);
 
-            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.FirmId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.FirmId, EntityName = DefinitionsApiEntityNameConstants.Firm });
-            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ColorId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ColorId, EntityName = DefinitionsApiEntityNameConstants.Color });
-            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ModelId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ModelId, EntityName = DefinitionsApiEntityNameConstants.Model });
-            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.GlassId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.GlassId, EntityName = DefinitionsApiEntityNameConstants.Glass });
-            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.TemplateId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.TemplateId, EntityName = DefinitionsApiEntityNameConstants.Template });
+            var definitionsRequest = new List<DefinitionsRequestDto>()
+            {
+                new DefinitionsRequestDto {
+                    EntityId = workOrderForm.WorkOrder.Model.RecipeTypeId,
+                    EntityName = DefinitionsApiEntityNameConstants.RecipeType
+                }
+            };
 
-            var response = await _definitionsService.GetByIdAsync(definitionsRequestList);
-            return response;
+            var response = await _definitionsService.GetByIdAsync(definitionsRequest);
+
+            workOrderForm.RecipeType = JsonConvert.DeserializeObject<RecipeTypeDto>(response.FirstOrDefault().Entity.ToString());
+
         }
 
+        /// <summary>
+        /// Üretilecek hammeddelerin detay bilgilerine Definitions Service üzerinden ulaşılır.
+        /// </summary>
+        /// <param name="workOrderForm">Reçete türü bilgilerinin atanacağı iş emri formu</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        private async Task FillRawMaterialsToDto(WorkOrderFormDto workOrderForm)
+        {
+            if (workOrderForm.WorkOrderProductionList == null)
+                throw new ArgumentNullException(nameof(workOrderForm.WorkOrderProductionList), _stringLocalizer[SharedKeys.WorkOrderProductionListCannotBeNull]);
+
+            var rawMaterialIds = workOrderForm.WorkOrderProductionList.Select(x => x.RawMaterialId).ToList();
+
+            var rawMaterialDtoList = await _definitionsService.RawMaterialLoadFromList(rawMaterialIds);
+
+            foreach (var rawMaterialDto in rawMaterialDtoList)
+            {
+                var productionMaterial = workOrderForm.WorkOrderProductionList.Where(x => x.RawMaterialId == rawMaterialDto.Id).FirstOrDefault();
+                productionMaterial.RawMaterial = rawMaterialDto;
+            }
+
+        }
     }
 }

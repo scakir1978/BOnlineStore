@@ -30,5 +30,16 @@ namespace BOnlineStore.BFF.Api.Services.Definitions
             return definitionResponseResult.Result;
 
         }
+
+        public async Task<List<RawMaterialDto>> RawMaterialLoadFromList(List<string> rawMaterialIds)
+        {
+            var response = await _client.PostParameterizedAsync(DefinitionsApiControllerConstants.RecipeType, DefinitionsApiControllerFuctionsConstants.LoadFromList,
+                                                         rawMaterialIds, _httpContextAccessor, _stringLocalizer);
+
+            //Geri dönen bilgi dto nesnesine dönüştürülür.
+            var definitionResponseResult = await response.Content.ReadAsJsonAsync<List<RawMaterialDto>>();
+
+            return definitionResponseResult.Result;
+        }
     }
 }
