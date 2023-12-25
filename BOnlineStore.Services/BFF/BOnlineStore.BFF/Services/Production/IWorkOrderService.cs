@@ -1,4 +1,5 @@
-﻿using BOnlineStore.Services.BFF.Api.Dtos;
+﻿using BOnlineStore.BFF.Api.Dtos;
+using BOnlineStore.Services.BFF.Api.Dtos;
 
 namespace BOnlineStore.BFF.Api.Services.Production
 {
@@ -9,6 +10,6 @@ namespace BOnlineStore.BFF.Api.Services.Production
         /// </summary>
         /// <param name="workOrderId">Malzeme listesi hesaplanacak iş emri id</param>
         /// <returns></returns>
-        Task<WorkOrderFormDto> CalculateProductionList(string workOrderId);
+        Task<WorkOrderFormFrontEndDto> CalculateProductionList(string workOrderId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using BOnlineStore.BFF.Api.Services.Definitions;
+﻿using BOnlineStore.BFF.Api.Dtos;
+using BOnlineStore.BFF.Api.Services.Definitions;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
 using BOnlineStore.Services.BFF.Api.Dtos;
@@ -31,7 +32,7 @@ namespace BOnlineStore.BFF.Api.Services.Production
         /// </summary>
         /// <param name="workOrderId">Malzeme listesi hesaplanacak iş emri id</param>
         /// <returns></returns>
-        public async Task<WorkOrderFormDto> CalculateProductionList(string workOrderId)
+        public async Task<WorkOrderFormFrontEndDto> CalculateProductionList(string workOrderId)
         {
             var parameters = new List<QueryParameters>();
             parameters.Add(new QueryParameters
@@ -64,9 +65,11 @@ namespace BOnlineStore.BFF.Api.Services.Production
             //Reçete türü bilgilerine ulaşılır.
             await FillRecipeTypeToDto(workOrderForm);
 
+            //Reçetenin hammadde bilgilerine ulaşılır.
             await FillRawMaterialsToDto(workOrderForm);
 
-            return workOrderForm;
+            //Yapılan hesaplamalar front ende kullanılmak üzere reçeteye göre hazırlanır.
+            return PrepareFormToFrontEnd(workOrderForm);
         }
 
         /// <summary>
@@ -173,6 +176,87 @@ namespace BOnlineStore.BFF.Api.Services.Production
                 productionMaterial.RawMaterial = rawMaterialDto;
             }
 
+        }
+
+        /// <summary>
+        /// Hesaplanan ve hazırlanan iş emri front end tarafında kullanılacak şekile getirilir.
+        /// </summary>
+        /// <param name="workOrderForm">Front end tarafında kullanıma hazırlanacak olan iş emri dtosu</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        private WorkOrderFormFrontEndDto PrepareFormToFrontEnd(WorkOrderFormDto workOrderForm)
+        {
+            if (workOrderForm.WorkOrderProductionList == null)
+                throw new ArgumentNullException(nameof(workOrderForm.WorkOrderProductionList), _stringLocalizer[SharedKeys.WorkOrderProductionListCannotBeNull]);
+
+            var workOrderFormFrontEnd = new WorkOrderFormFrontEndDto();
+            workOrderFormFrontEnd.RawMaterials = new List<WorkOrderProductionListDto>();
+            workOrderFormFrontEnd.PanelRawMaterials = new List<WorkOrderProductionListDto>();
+            workOrderFormFrontEnd.GlassRawMaterials = new List<GlassRawMaterialDto>();
+            workOrderFormFrontEnd.PanelGlassRawMaterials = new List<GlassRawMaterialDto>();
+
+            //İş emri master bilgileri taşıyorum.
+            workOrderFormFrontEnd.WorkOrder = workOrderForm.WorkOrder;
+
+            //Üretimde kullanılacak hammaddeleri reçeteye göre sıralı olarak listeye ekliyorum.
+            foreach (var recipeRawMaterial in workOrderForm.RecipeType.RawMaterialIds)
+            {
+                var rawMaterial = workOrderForm.WorkOrderProductionList
+                                    .FirstOrDefault(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim());
+
+                if (rawMaterial != null)
+                {
+                    workOrderFormFrontEnd.RawMaterials.Add(rawMaterial);
+                }
+            }
+
+            //Üretimde kullanılacak panel hammaddeleri reçeteye göre sıralı olarak listeye ekliyorum.
+            foreach (var recipeRawMaterial in workOrderForm.RecipeType.PanelRawMaterialIds)
+            {
+                var rawMaterial = workOrderForm.WorkOrderProductionList
+                                    .FirstOrDefault(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim());
+
+                if (rawMaterial != null)
+                {
+                    workOrderFormFrontEnd.PanelRawMaterials.Add(rawMaterial);
+                }
+            }
+
+            //Üretimde kullanılacak cam hammadeleri reçeteye göre sıralı olarak listeye ekliyorum
+            foreach (var recipeRawMaterial in workOrderForm.RecipeType.GlassRawMaterialIds)
+            {
+                var glassRawMaterial = new GlassRawMaterialDto();
+
+                glassRawMaterial.WidthMaterial = workOrderForm.WorkOrderProductionList
+                                    .FirstOrDefault(x => x.RawMaterialId.Trim() == recipeRawMaterial.WidthMaterialId.Trim());
+
+                glassRawMaterial.LengthMaterial = workOrderForm.WorkOrderProductionList
+                                    .FirstOrDefault(x => x.RawMaterialId.Trim() == recipeRawMaterial.LengthMaterialId.Trim());
+
+                if (glassRawMaterial.WidthMaterial != null || glassRawMaterial.LengthMaterial != null)
+                {
+                    workOrderFormFrontEnd.GlassRawMaterials.Add(glassRawMaterial);
+                }
+            }
+
+            //Üretimde kullanılacak panel cam hammadeleri reçeteye göre sıralı olarak listeye ekliyorum
+            foreach (var recipeRawMaterial in workOrderForm.RecipeType.PanelGlassRawMaterialIds)
+            {
+                var glassRawMaterial = new GlassRawMaterialDto();
+
+                glassRawMaterial.WidthMaterial = workOrderForm.WorkOrderProductionList
+                                    .FirstOrDefault(x => x.RawMaterialId.Trim() == recipeRawMaterial.WidthMaterialId.Trim());
+
+                glassRawMaterial.LengthMaterial = workOrderForm.WorkOrderProductionList
+                                    .FirstOrDefault(x => x.RawMaterialId.Trim() == recipeRawMaterial.LengthMaterialId.Trim());
+
+                if (glassRawMaterial.WidthMaterial != null || glassRawMaterial.LengthMaterial != null)
+                {
+                    workOrderFormFrontEnd.PanelGlassRawMaterials.Add(glassRawMaterial);
+                }
+            }
+
+            return workOrderFormFrontEnd;
         }
     }
 }

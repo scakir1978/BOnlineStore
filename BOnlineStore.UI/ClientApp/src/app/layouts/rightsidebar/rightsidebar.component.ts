@@ -57,11 +57,11 @@ export class RightsidebarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
+    /*setTimeout(() => {
       if (this.offcanvasService.hasOpenOffcanvas() == false) {
         this.openEnd(this.filtetcontent);
       }
-    }, 1000);
+    }, 1000);*/
     var layoutSettings = this.layoutService.getLayoutSettings();
 
     this.layout = layoutSettings.layoutType;
