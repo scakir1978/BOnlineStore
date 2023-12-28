@@ -94,4 +94,15 @@ export class RecipeTypeComponent extends BaseDefinitionsOnGridComponent {
         ];
       });
   }
+
+  onRawMaterialGridSelectionChanged(
+    selectedRowKeys,
+    cellInfo,
+    dropDownBoxComponent
+  ) {
+    cellInfo.setValue(selectedRowKeys[0]);
+    if (selectedRowKeys.length > 0) {
+      dropDownBoxComponent.close();
+    }
+  }
 }

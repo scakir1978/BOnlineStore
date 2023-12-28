@@ -13,6 +13,7 @@ namespace BOnlineStore.Services.Definitions.Api
             CreateMap<RecipeType, RecipeTypeUpdateDto>().DisableCtorValidation().ReverseMap().DisableCtorValidation()
                 .ForMember(dest => dest.Code, opt => opt.Condition(src => (src.Code != null)))
                 .ForMember(dest => dest.Name, opt => opt.Condition(src => (src.Name != null)))
+                .ForMember(dest => dest.FormName, opt => opt.Condition(src => (src.FormName != null)))
                 .ForMember(dest => dest.ThisRecipeHasPanel, opt => opt.Condition(src => (src.ThisRecipeHasPanel != null)))
                 .ForMember(dest => dest.GlassRawMaterialIds, opt => opt.Condition(src => (src.GlassRawMaterialIds != null)))
                 .ForMember(dest => dest.PanelGlassRawMaterialIds, opt => opt.Condition(src => (src.PanelGlassRawMaterialIds != null)))

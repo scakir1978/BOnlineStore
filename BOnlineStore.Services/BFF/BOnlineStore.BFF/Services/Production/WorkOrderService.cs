@@ -202,7 +202,8 @@ namespace BOnlineStore.BFF.Api.Services.Production
             foreach (var recipeRawMaterial in workOrderForm.RecipeType.RawMaterialIds)
             {
                 var rawMaterial = workOrderForm.WorkOrderProductionList
-                                    .FirstOrDefault(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim());
+                                    .Where(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim())
+                                    .FirstOrDefault();
 
                 if (rawMaterial != null)
                 {

@@ -60,6 +60,7 @@ export class FormulaFormComponent implements OnInit {
 
   onSubmit(e) {
     this.formula.modelId = this.modelGridValues[0];
+    this.formula.rawMaterialId = this.rawMaterialGridValues[0];
     this.closeForm.emit(this.formula);
   }
 

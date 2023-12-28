@@ -140,6 +140,7 @@
   >
   </dxi-column>
 
+  <!-- #region Hammadde Listesi -->
   <div *dxTemplate="let data of 'rawMaterialIdsTemplate'">
     <dx-data-grid
       [dataSource]="data.value"
@@ -152,9 +153,11 @@
       (onSaved)="onSaved($event, data)"
       (onRowInserting)="onRowInserting($event)"
     >
+      <dxo-scrolling mode="virtual"></dxo-scrolling>
       <dxi-column
         dataField="id"
         caption="{{ 'RECIPERAWMATERIALLIST' | translate }}"
+        editCellTemplate="rawMaterialDropDownBoxEditor"
       >
         <dxo-lookup
           [dataSource]="rawMaterialDataSource"
@@ -171,8 +174,56 @@
         [confirmDelete]="true"
         [useIcons]="true"
       ></dxo-editing>
+
+      <!-- #region [Hammadde dropdownbox] -->
+      <div
+        *dxTemplate="let rawMaterialCellInfo of 'rawMaterialDropDownBoxEditor'"
+      >
+        <dx-drop-down-box
+          [(value)]="rawMaterialCellInfo.value"
+          valueExpr="id"
+          displayExpr="name"
+          placeholder="{{ 'ENTERRAWMATERIAL' | translate }}"
+          [showClearButton]="true"
+          [dataSource]="rawMaterialDataSource"
+          [stylingMode]="'outlined'"
+          contentTemplate="contentTemplate"
+        >
+          <div *dxTemplate="let e of 'contentTemplate'">
+            <dx-data-grid
+              [dataSource]="rawMaterialDataSource"
+              [hoverStateEnabled]="true"
+              [selectedRowKeys]="[rawMaterialCellInfo.value]"
+              [focusedRowEnabled]="true"
+              [focusedRowKey]="rawMaterialCellInfo.value"
+              [hoverStateEnabled]="true"
+              (onSelectionChanged)="
+                onRawMaterialGridSelectionChanged(
+                  $event.selectedRowKeys,
+                  rawMaterialCellInfo,
+                  e.component
+                )
+              "
+              height="100%"
+            >
+              <dxo-selection mode="single"></dxo-selection>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+              <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+              <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+              </dxi-column>
+              <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+              </dxi-column>
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+      </div>
+      <!-- #endregion -->
     </dx-data-grid>
   </div>
+  <!-- #endregion -->
+
+  <!-- #region Panel Hammadde Listesi -->
   <div *dxTemplate="let panelData of 'panelRawMaterialIdsTemplate'">
     <dx-data-grid
       [dataSource]="panelData.value"
@@ -188,6 +239,7 @@
       <dxi-column
         dataField="id"
         caption="{{ 'PANELRAWMATERIALLIST' | translate }}"
+        editCellTemplate="panelRawMaterialDropDownBoxEditor"
       >
         <dxo-lookup
           [dataSource]="rawMaterialDataSource"
@@ -204,8 +256,57 @@
         [confirmDelete]="true"
         [useIcons]="true"
       ></dxo-editing>
+      <!-- #region [Hammadde dropdownbox] -->
+      <div
+        *dxTemplate="
+          let panelRawMaterialCellInfo of 'panelRawMaterialDropDownBoxEditor'
+        "
+      >
+        <dx-drop-down-box
+          [(value)]="panelRawMaterialCellInfo.value"
+          valueExpr="id"
+          displayExpr="name"
+          placeholder="{{ 'ENTERRAWMATERIAL' | translate }}"
+          [showClearButton]="true"
+          [dataSource]="rawMaterialDataSource"
+          [stylingMode]="'outlined'"
+          contentTemplate="contentTemplate"
+        >
+          <div *dxTemplate="let e of 'contentTemplate'">
+            <dx-data-grid
+              [dataSource]="rawMaterialDataSource"
+              [hoverStateEnabled]="true"
+              [selectedRowKeys]="[panelRawMaterialCellInfo.value]"
+              [focusedRowEnabled]="true"
+              [focusedRowKey]="panelRawMaterialCellInfo.value"
+              [hoverStateEnabled]="true"
+              (onSelectionChanged)="
+                onRawMaterialGridSelectionChanged(
+                  $event.selectedRowKeys,
+                  panelRawMaterialCellInfo,
+                  e.component
+                )
+              "
+              height="100%"
+            >
+              <dxo-selection mode="single"></dxo-selection>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+              <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+              <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+              </dxi-column>
+              <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+              </dxi-column>
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+      </div>
+      <!-- #endregion -->
     </dx-data-grid>
   </div>
+  <!-- #endregion -->
+
+  <!-- #region Cam Hammadde Listesi -->
   <div *dxTemplate="let glassData of 'glassRawMaterialIdsTemplate'">
     <dx-data-grid
       [dataSource]="glassData.value"
@@ -220,6 +321,7 @@
       <dxi-column
         dataField="lengthMaterialId"
         caption="{{ 'GLASSLENGTHRAWMATERIAL' | translate }}"
+        editCellTemplate="glassWidthRawMaterialDropDownBoxEditor"
       >
         <dxo-lookup
           [dataSource]="rawMaterialDataSource"
@@ -231,6 +333,7 @@
       <dxi-column
         dataField="widthMaterialId"
         caption="{{ 'GLASSWIDTHRAWMATERIAL' | translate }}"
+        editCellTemplate="glassWidthRawMaterialDropDownBoxEditor"
       >
         <dxo-lookup
           [dataSource]="rawMaterialDataSource"
@@ -247,8 +350,57 @@
         [confirmDelete]="true"
         [useIcons]="true"
       ></dxo-editing>
+      <!-- #region [Hammadde dropdownbox] -->
+      <div
+        *dxTemplate="
+          let glassWidthRawMaterialCellInfo of 'glassWidthRawMaterialDropDownBoxEditor'
+        "
+      >
+        <dx-drop-down-box
+          [(value)]="glassWidthRawMaterialCellInfo.value"
+          valueExpr="id"
+          displayExpr="name"
+          placeholder="{{ 'ENTERRAWMATERIAL' | translate }}"
+          [showClearButton]="true"
+          [dataSource]="rawMaterialDataSource"
+          [stylingMode]="'outlined'"
+          contentTemplate="contentTemplate"
+        >
+          <div *dxTemplate="let e of 'contentTemplate'">
+            <dx-data-grid
+              [dataSource]="rawMaterialDataSource"
+              [hoverStateEnabled]="true"
+              [selectedRowKeys]="[glassWidthRawMaterialCellInfo.value]"
+              [focusedRowEnabled]="true"
+              [focusedRowKey]="glassWidthRawMaterialCellInfo.value"
+              [hoverStateEnabled]="true"
+              (onSelectionChanged)="
+                onRawMaterialGridSelectionChanged(
+                  $event.selectedRowKeys,
+                  glassWidthRawMaterialCellInfo,
+                  e.component
+                )
+              "
+              height="100%"
+            >
+              <dxo-selection mode="single"></dxo-selection>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+              <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+              <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+              </dxi-column>
+              <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+              </dxi-column>
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+      </div>
+      <!-- #endregion -->
     </dx-data-grid>
   </div>
+  <!-- #endregion -->
+
+  <!-- #region Panel Cam Hammadde Listesi -->
   <div *dxTemplate="let panelGlassData of 'panelGlassRawMaterialIdsTemplate'">
     <dx-data-grid
       [dataSource]="panelGlassData.value"
@@ -263,6 +415,7 @@
       <dxi-column
         dataField="lengthMaterialId"
         caption="{{ 'PANELGLASSLENGTHRAWMATERIAL' | translate }}"
+        editCellTemplate="panelGlassWidthRawMaterialDropDownBoxEditor"
       >
         <dxo-lookup
           [dataSource]="rawMaterialDataSource"
@@ -274,6 +427,7 @@
       <dxi-column
         dataField="widthMaterialId"
         caption="{{ 'PANELGLASSWIDTHRAWMATERIAL' | translate }}"
+        editCellTemplate="panelGlassWidthRawMaterialDropDownBoxEditor"
       >
         <dxo-lookup
           [dataSource]="rawMaterialDataSource"
@@ -290,6 +444,52 @@
         [confirmDelete]="true"
         [useIcons]="true"
       ></dxo-editing>
+      <div
+        *dxTemplate="
+          let panelGlassWidthRawMaterialCellInfo of 'panelGlassWidthRawMaterialDropDownBoxEditor'
+        "
+      >
+        <dx-drop-down-box
+          [(value)]="panelGlassWidthRawMaterialCellInfo.value"
+          valueExpr="id"
+          displayExpr="name"
+          placeholder="{{ 'ENTERRAWMATERIAL' | translate }}"
+          [showClearButton]="true"
+          [dataSource]="rawMaterialDataSource"
+          [stylingMode]="'outlined'"
+          contentTemplate="contentTemplate"
+        >
+          <div *dxTemplate="let e of 'contentTemplate'">
+            <dx-data-grid
+              [dataSource]="rawMaterialDataSource"
+              [hoverStateEnabled]="true"
+              [selectedRowKeys]="[panelGlassWidthRawMaterialCellInfo.value]"
+              [focusedRowEnabled]="true"
+              [focusedRowKey]="panelGlassWidthRawMaterialCellInfo.value"
+              [hoverStateEnabled]="true"
+              (onSelectionChanged)="
+                onRawMaterialGridSelectionChanged(
+                  $event.selectedRowKeys,
+                  panelGlassWidthRawMaterialCellInfo,
+                  e.component
+                )
+              "
+              height="100%"
+            >
+              <dxo-selection mode="single"></dxo-selection>
+              <dxo-filter-row [visible]="true"></dxo-filter-row>
+              <dxo-scrolling mode="virtual"></dxo-scrolling>
+              <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+              <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+              </dxi-column>
+              <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+              </dxi-column>
+            </dx-data-grid>
+          </div>
+        </dx-drop-down-box>
+      </div>
+      <!-- #endregion -->
     </dx-data-grid>
   </div>
+  <!-- #endregion -->
 </dx-data-grid>

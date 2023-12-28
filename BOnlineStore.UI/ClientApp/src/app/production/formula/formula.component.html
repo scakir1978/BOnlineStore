@@ -16,6 +16,7 @@
     [rowAlternationEnabled]="true"
     (onExporting)="onExporting($event)"
   >
+    <dxo-scrolling rowRenderingMode="virtual"> </dxo-scrolling>
     <dxo-column-chooser [enabled]="true" [mode]="'select'">
       <dxo-search [enabled]="true"></dxo-search>
     </dxo-column-chooser>
