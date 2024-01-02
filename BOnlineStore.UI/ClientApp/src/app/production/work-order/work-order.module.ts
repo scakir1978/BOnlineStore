@@ -6,6 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthGuard } from './../../core/guards/auth.guard';
 import { WorkOrderComponent } from './work-order.component';
 import { WorkOrderService } from './work-order.service';
+import { WorkOrderDefaultFormComponent } from './work-order-forms/work-order-default-form/work-order-default-form.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [WorkOrderComponent],
+  declarations: [WorkOrderComponent, WorkOrderDefaultFormComponent],
   imports: [
     RouterModule.forChild(routes),
     TranslateModule,
