@@ -13,7 +13,7 @@ import { HttpRequestMethodsEnum } from 'app/base-classes/base-enums/http-request
 import { FormulaVariableTypes } from './models/formula-variable-types';
 import { TranslateService } from '@ngx-translate/core';
 import { IFormulaDetail } from './models/formula-form-interface';
-import { FormulaVariableTypeEnums } from 'app/base-classes/base-enums/formula-variable-type.enum';
+import { FormulaVariableTypeEnums } from 'app/enums/production/formula-variable-type.enum';
 
 @Injectable({
   providedIn: 'root',

@@ -197,6 +197,8 @@ namespace BOnlineStore.BFF.Api.Services.Production
 
             //İş emri master bilgileri taşıyorum.
             workOrderFormFrontEnd.WorkOrder = workOrderForm.WorkOrder;
+            //Reçete türü bilgileri taşıyorum.
+            workOrderFormFrontEnd.RecipeType = workOrderForm.RecipeType;
 
             //Üretimde kullanılacak hammaddeleri reçeteye göre sıralı olarak listeye ekliyorum.
             foreach (var recipeRawMaterial in workOrderForm.RecipeType.RawMaterialIds)

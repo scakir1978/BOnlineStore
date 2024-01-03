@@ -1,1 +1,20 @@
-<p>work-order-default-form works!</p>
+<div>
+  <p>Varsayılan Form</p>
+  <p>{{ this.workOrderForm.workOrder.id }}</p>
+  <div class="row align-items-end">
+    <div class="text-sm-end d-none d-sm-block">
+      <dx-button
+        text="{{ 'PRINT' | translate }}"
+        type="normal"
+        (onClick)="onClose()"
+        style="margin-left: 10px"
+      ></dx-button>
+      <dx-button
+        text="{{ 'CLOSE' | translate }}"
+        type="normal"
+        (onClick)="onClose()"
+        style="margin-left: 10px"
+      ></dx-button>
+    </div>
+  </div>
+</div>

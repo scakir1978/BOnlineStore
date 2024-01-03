@@ -1,4 +1,4 @@
-import { FormName } from '../../enums/form-name.enum';
+import { FormName } from '../../enums/production/form-name.enum';
 import { RawMaterialIdDto } from './raw-material-id-dto-interface';
 import { GlassRawMaterialIdDto } from './raw-material-id-dto-interface';
 import { EntityDto } from '../../base-classes/base-interfaces/entity-dto-interface';

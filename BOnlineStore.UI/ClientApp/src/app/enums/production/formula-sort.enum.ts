@@ -1,5 +1,5 @@
 export enum FormulaSortEnum {
-  BOTH,
-  PRODUCTION,
-  COST,
+  Both,
+  Production,
+  Cost,
 }

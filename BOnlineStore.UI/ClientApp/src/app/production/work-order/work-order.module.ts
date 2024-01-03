@@ -7,6 +7,7 @@ import { AuthGuard } from './../../core/guards/auth.guard';
 import { WorkOrderComponent } from './work-order.component';
 import { WorkOrderService } from './work-order.service';
 import { WorkOrderDefaultFormComponent } from './work-order-forms/work-order-default-form/work-order-default-form.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
     TranslateModule,
     DevExtremeModule,
     SharedModule,
+    CommonModule,
   ],
   exports: [TranslateModule],
   providers: [WorkOrderService, TranslateService],

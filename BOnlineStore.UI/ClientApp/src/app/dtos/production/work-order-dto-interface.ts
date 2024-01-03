@@ -4,8 +4,8 @@ import { ColorDto } from '../definitions/color-dto-interface';
 import { FirmDto } from '../definitions/firm-dto-interface';
 import { TemplateDto } from '../definitions/template-dto-interface';
 import { EntityDto } from '../../base-classes/base-interfaces/entity-dto-interface';
-import { SwingDirection } from '../../enums/swing-direction.enum';
-import { WorkOrderStatus } from '../../enums/work-order-status.enum';
+import { SwingDirection } from '../../enums/production/swing-direction.enum';
+import { WorkOrderStatus } from '../../enums/production/work-order-status.enum';
 
 export interface WorkOrderDto extends EntityDto {
   workOrderNo: string | null;

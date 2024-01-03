@@ -272,5 +272,7 @@
   "FORMNO1": "Birinci Form",
   "FORMNO2": "İkinci Form",
   "FORMNO3": "Üçüncü Form",
-  "FORMNO4": "Dördüncü Form"
+  "FORMNO4": "Dördüncü Form",
+  "PRINT": "Yazdır",
+  "CLOSE": "Kapat"
 }

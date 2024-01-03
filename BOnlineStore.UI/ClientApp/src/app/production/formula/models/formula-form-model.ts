@@ -1,4 +1,4 @@
-import { FormulaSortEnum } from '../enums/formula-sort.enum';
+import { FormulaSortEnum } from '../../../enums/production/formula-sort.enum';
 import { IFormula, IFormulaDetail } from './formula-form-interface';
 
 export class Formula implements IFormula {

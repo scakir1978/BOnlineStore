@@ -243,5 +243,7 @@
   "FORMNO2": "Second Form",
   "FORMNO3": "Third Form",
   "FORMNO4": "Fourth Form",
-  "WORKORDERINFORMATION": "Work Order Information"
+  "WORKORDERINFORMATION": "Work Order Information",
+  "PRINT": "Print",
+  "CLOSE": "Close"
 }

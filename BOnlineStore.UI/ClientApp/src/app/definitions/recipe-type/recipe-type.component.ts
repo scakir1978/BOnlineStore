@@ -1,9 +1,9 @@
+import { FormName } from '../../enums/production/form-name.enum';
+import { ICodeName } from './../../base-classes/base-interfaces/code-name-interface';
 import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
 import { RecipeTypeService } from './recipe-type.service';
 import { Component } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { FormNameEnum } from 'app/base-classes/base-enums/form-name.enum';
-import { ICodeName } from 'app/base-classes/base-interfaces/code-name-interface';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 import notify from 'devextreme/ui/notify';
@@ -72,23 +72,23 @@ export class RecipeTypeComponent extends BaseDefinitionsOnGridComponent {
       .subscribe((translations) => {
         this.formNameList = [
           {
-            code: FormNameEnum.DEFAULTFORM,
+            code: FormName.DefaultForm,
             name: translations['DEFAULTFORM'],
           },
           {
-            code: FormNameEnum.FORMNO1,
+            code: FormName.FormNo1,
             name: translations['FORMNO1'],
           },
           {
-            code: FormNameEnum.FORMNO2,
+            code: FormName.FormNo2,
             name: translations['FORMNO2'],
           },
           {
-            code: FormNameEnum.FORMNO3,
+            code: FormName.FormNo3,
             name: translations['FORMNO3'],
           },
           {
-            code: FormNameEnum.FORMNO4,
+            code: FormName.FormNo4,
             name: translations['FORMNO4'],
           },
         ];

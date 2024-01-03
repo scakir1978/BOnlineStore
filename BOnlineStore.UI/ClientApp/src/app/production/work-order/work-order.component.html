@@ -3,463 +3,488 @@
   [breadcrumbItems]="breadCrumbItems"
 ></app-breadcrumbs>
 
-<dx-data-grid
-  id="gridContainer"
-  [dataSource]="workOrderDataSource"
-  [showBorders]="true"
-  [remoteOperations]="true"
-  [repaintChangesOnly]="true"
-  [showColumnLines]="true"
-  [showRowLines]="true"
-  [rowAlternationEnabled]="true"
-  (onExporting)="onExporting($event)"
->
-  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
-  <dxo-filter-row [visible]="true"> </dxo-filter-row>
-  <dxo-header-filter [visible]="true"> </dxo-header-filter>
-  <dxo-editing
-    mode="popup"
-    [allowAdding]="true"
-    [allowDeleting]="true"
-    [allowUpdating]="true"
-    [useIcons]="true"
-    [refreshMode]="'full'"
-    [confirmDelete]="true"
+<div *ngIf="!this.formActive">
+  <dx-data-grid
+    id="gridContainer"
+    [dataSource]="workOrderDataSource"
+    [showBorders]="true"
+    [remoteOperations]="true"
+    [repaintChangesOnly]="true"
+    [showColumnLines]="true"
+    [showRowLines]="true"
+    [rowAlternationEnabled]="true"
+    (onExporting)="onExporting($event)"
   >
-    <dxo-form labelMode="floating">
-      <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
-        <dxi-item
-          itemType="group"
-          caption="{{ 'WORKORDERINFORMATION' | translate }}"
-        >
-          <dxi-item itemType="group" [colCount]="4">
-            <dxi-item dataField="workOrderNo"></dxi-item>
-            <dxi-item dataField="modelId" [colSpan]="3"></dxi-item>
-          </dxi-item>
+    <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+    <dxo-filter-row [visible]="true"> </dxo-filter-row>
+    <dxo-header-filter [visible]="true"> </dxo-header-filter>
+    <dxo-editing
+      mode="popup"
+      [allowAdding]="true"
+      [allowDeleting]="true"
+      [allowUpdating]="true"
+      [useIcons]="true"
+      [refreshMode]="'full'"
+      [confirmDelete]="true"
+    >
+      <dxo-form labelMode="floating">
+        <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+          <dxi-item
+            itemType="group"
+            caption="{{ 'WORKORDERINFORMATION' | translate }}"
+          >
+            <dxi-item itemType="group" [colCount]="4">
+              <dxi-item dataField="workOrderNo"></dxi-item>
+              <dxi-item dataField="modelId" [colSpan]="3"></dxi-item>
+            </dxi-item>
 
-          <dxi-item itemType="group" [colCount]="4">
+            <dxi-item itemType="group" [colCount]="4">
+              <dxi-item
+                dataField="amount"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+              <dxi-item dataField="colorId"></dxi-item>
+              <dxi-item dataField="glassId"></dxi-item>
+              <dxi-item dataField="swingDirection"></dxi-item>
+              <dxi-item
+                dataField="description"
+                editorType="dxTextArea"
+                [editorOptions]="{ height: 60 }"
+                [colSpan]="2"
+              ></dxi-item>
+              <dxi-item dataField="towelBar"></dxi-item>
+              <dxi-item dataField="status"></dxi-item>
+            </dxi-item>
             <dxi-item
-              dataField="amount"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
-            <dxi-item dataField="colorId"></dxi-item>
-            <dxi-item dataField="glassId"></dxi-item>
-            <dxi-item dataField="swingDirection"></dxi-item>
+              itemType="group"
+              caption="{{ 'DIMENSIONS' | translate }}"
+              [colCount]="4"
+            >
+              <dxi-item
+                dataField="width1"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+              <dxi-item
+                dataField="width2"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+              <dxi-item
+                dataField="width3"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+              <dxi-item
+                dataField="height"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+            </dxi-item>
             <dxi-item
-              dataField="description"
-              editorType="dxTextArea"
-              [editorOptions]="{ height: 60 }"
-              [colSpan]="2"
-            ></dxi-item>
-            <dxi-item dataField="towelBar"></dxi-item>
-            <dxi-item dataField="status"></dxi-item>
+              itemType="group"
+              caption="{{ 'PANELINFORMATION' | translate }}"
+              [colCount]="4"
+            >
+              <dxi-item
+                dataField="panelWidth"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+              <dxi-item
+                dataField="panelHeight"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+              <dxi-item
+                dataField="sidePanelWidth"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+              <dxi-item
+                dataField="sidePanelHeight"
+                editorType="dxNumberBox"
+                [editorOptions]="{
+                  format: '#,##0.00'
+                }"
+              ></dxi-item>
+            </dxi-item>
           </dxi-item>
-          <dxi-item
-            itemType="group"
-            caption="{{ 'DIMENSIONS' | translate }}"
-            [colCount]="4"
-          >
+          <dxi-item itemType="group">
             <dxi-item
-              dataField="width1"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
+              itemType="group"
+              caption="{{ 'DATEINFORMATIONS' | translate }}"
+              [colCount]="4"
+            >
+              <dxi-item dataField="orderDate"></dxi-item>
+              <dxi-item dataField="productionDate"></dxi-item>
+              <dxi-item dataField="workshopReleaseDate"></dxi-item>
+              <dxi-item dataField="deliveryDate"></dxi-item>
+            </dxi-item>
             <dxi-item
-              dataField="width2"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
+              itemType="group"
+              caption="{{ 'CUSTOMERINFORMATION' | translate }}"
+            >
+              <dxi-item dataField="firmId"></dxi-item>
+            </dxi-item>
             <dxi-item
-              dataField="width3"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
-            <dxi-item
-              dataField="height"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
-          </dxi-item>
-          <dxi-item
-            itemType="group"
-            caption="{{ 'PANELINFORMATION' | translate }}"
-            [colCount]="4"
-          >
-            <dxi-item
-              dataField="panelWidth"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
-            <dxi-item
-              dataField="panelHeight"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
-            <dxi-item
-              dataField="sidePanelWidth"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
-            <dxi-item
-              dataField="sidePanelHeight"
-              editorType="dxNumberBox"
-              [editorOptions]="{
-                format: '#,##0.00'
-              }"
-            ></dxi-item>
+              itemType="group"
+              [colCount]="3"
+              caption="{{ 'OTHERINFORMATION' | translate }}"
+            >
+              <dxi-item dataField="templateId"></dxi-item>
+              <dxi-item dataField="shim"></dxi-item>
+              <dxi-item dataField="assemblyKit"></dxi-item>
+              <dxi-item dataField="qualityControlInspector"></dxi-item>
+              <dxi-item dataField="consignee" [colSpan]="2"></dxi-item>
+            </dxi-item>
           </dxi-item>
         </dxi-item>
-        <dxi-item itemType="group">
-          <dxi-item
-            itemType="group"
-            caption="{{ 'DATEINFORMATIONS' | translate }}"
-            [colCount]="4"
-          >
-            <dxi-item dataField="orderDate"></dxi-item>
-            <dxi-item dataField="productionDate"></dxi-item>
-            <dxi-item dataField="workshopReleaseDate"></dxi-item>
-            <dxi-item dataField="deliveryDate"></dxi-item>
-          </dxi-item>
-          <dxi-item
-            itemType="group"
-            caption="{{ 'CUSTOMERINFORMATION' | translate }}"
-          >
-            <dxi-item dataField="firmId"></dxi-item>
-          </dxi-item>
-          <dxi-item
-            itemType="group"
-            [colCount]="3"
-            caption="{{ 'OTHERINFORMATION' | translate }}"
-          >
-            <dxi-item dataField="templateId"></dxi-item>
-            <dxi-item dataField="shim"></dxi-item>
-            <dxi-item dataField="assemblyKit"></dxi-item>
-            <dxi-item dataField="qualityControlInspector"></dxi-item>
-            <dxi-item dataField="consignee" [colSpan]="2"></dxi-item>
-          </dxi-item>
-        </dxi-item>
+      </dxo-form>
+    </dxo-editing>
+
+    <dxo-paging [pageSize]="10"></dxo-paging>
+
+    <dxo-pager
+      [visible]="true"
+      [displayMode]="'full'"
+      [showPageSizeSelector]="true"
+      [showInfo]="true"
+      [showNavigationButtons]="true"
+    >
+    </dxo-pager>
+
+    <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+
+    <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
+
+    <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
+
+    <dxo-group-panel [visible]="true"></dxo-group-panel>
+
+    <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
+
+    <dxo-toolbar>
+      <dxi-item location="after">
+        <div *dxTemplate>
+          <dx-button icon="refresh" (onClick)="refreshDataGrid($event)">
+          </dx-button>
+        </div>
       </dxi-item>
-    </dxo-form>
-  </dxo-editing>
+      <dxi-item name="groupPanel"></dxi-item>
+      <dxi-item name="addRowButton"></dxi-item>
+      <dxi-item name="saveButton"></dxi-item>
+      <dxi-item name="revertButton"></dxi-item>
+      <dxi-item name="exportButton"></dxi-item>
+      <dxi-item name="columnChooserButton"></dxi-item>
+    </dxo-toolbar>
 
-  <dxo-paging [pageSize]="10"></dxo-paging>
-
-  <dxo-pager
-    [visible]="true"
-    [displayMode]="'full'"
-    [showPageSizeSelector]="true"
-    [showInfo]="true"
-    [showNavigationButtons]="true"
-  >
-  </dxo-pager>
-
-  <dxo-filter-panel [visible]="true"></dxo-filter-panel>
-
-  <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
-
-  <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
-
-  <dxo-group-panel [visible]="true"></dxo-group-panel>
-
-  <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
-
-  <dxo-toolbar>
-    <dxi-item location="after">
-      <div *dxTemplate>
-        <dx-button icon="refresh" (onClick)="refreshDataGrid($event)">
-        </dx-button>
-      </div>
-    </dxi-item>
-    <dxi-item name="groupPanel"></dxi-item>
-    <dxi-item name="addRowButton"></dxi-item>
-    <dxi-item name="saveButton"></dxi-item>
-    <dxi-item name="revertButton"></dxi-item>
-    <dxi-item name="exportButton"></dxi-item>
-    <dxi-item name="columnChooserButton"></dxi-item>
-  </dxo-toolbar>
-
-  <!-- #region [Data grid columns] -->
-  <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
-  </dxi-column>
-  <dxi-column dataField="workOrderNo" caption="{{ 'WORKORDERNO' | translate }}">
-    <dxi-validation-rule type="required"></dxi-validation-rule>
-    <dxi-validation-rule
-      type="stringLength"
-      [max]="50"
-      message="{{ 'CODEMAXLENGTH' | translate }}"
-    ></dxi-validation-rule>
-  </dxi-column>
-  <dxi-column dataField="description" caption="{{ 'DESCRIPTION' | translate }}">
-    <dxi-validation-rule type="required"></dxi-validation-rule>
-    <dxi-validation-rule
-      type="stringLength"
-      [max]="250"
-      message="{{ 'NAMEMAXLENGTH' | translate }}"
-    ></dxi-validation-rule>
-  </dxi-column>
-  <dxi-column
-    dataField="modelId"
-    caption="{{ 'MODEL' | translate }}"
-    editCellTemplate="modelDropDownBoxEditor"
-  >
-    <dxo-lookup
-      [dataSource]="modelDataSource"
-      displayExpr="name"
-      valueExpr="id"
+    <!-- #region [Data grid columns] -->
+    <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
+    </dxi-column>
+    <dxi-column
+      dataField="workOrderNo"
+      caption="{{ 'WORKORDERNO' | translate }}"
     >
-    </dxo-lookup>
-  </dxi-column>
-  <dxi-column
-    dataField="amount"
-    dataType="number"
-    caption="{{ 'AMOUNT' | translate }}"
-    format=",##0.##"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="width1"
-    dataType="number"
-    caption="{{ 'WIDTH1' | translate }}"
-    format=",##0.##"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="width2"
-    dataType="number"
-    caption="{{ 'WIDTH2' | translate }}"
-    format=",##0.##"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="width3"
-    dataType="number"
-    caption="{{ 'WIDTH3' | translate }}"
-    format=",##0.##"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="height"
-    dataType="number"
-    caption="{{ 'HEIGHT' | translate }}"
-    format=",##0.##"
-  >
-  </dxi-column>
-  <dxi-column dataField="colorId" caption="{{ 'COLOR' | translate }}">
-    <dxo-lookup
-      [dataSource]="colorDataSource"
-      displayExpr="name"
-      valueExpr="id"
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+      <dxi-validation-rule
+        type="stringLength"
+        [max]="50"
+        message="{{ 'CODEMAXLENGTH' | translate }}"
+      ></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column
+      dataField="description"
+      caption="{{ 'DESCRIPTION' | translate }}"
     >
-    </dxo-lookup>
-  </dxi-column>
-  <dxi-column dataField="glassId" caption="{{ 'GLASS' | translate }}">
-    <dxo-lookup
-      [dataSource]="glassDataSource"
-      displayExpr="name"
-      valueExpr="id"
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+      <dxi-validation-rule
+        type="stringLength"
+        [max]="250"
+        message="{{ 'NAMEMAXLENGTH' | translate }}"
+      ></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column
+      dataField="modelId"
+      caption="{{ 'MODEL' | translate }}"
+      editCellTemplate="modelDropDownBoxEditor"
     >
-    </dxo-lookup>
-  </dxi-column>
-  <dxi-column dataField="firmId" caption="{{ 'FIRM' | translate }}">
-    <dxo-lookup [dataSource]="firmDataSource" displayExpr="name" valueExpr="id">
-    </dxo-lookup>
-  </dxi-column>
-  <dxi-column
-    dataField="panelWidth"
-    dataType="number"
-    caption="{{ 'PANELWIDTH' | translate }}"
-    format=",##0.##"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="panelHeight"
-    dataType="number"
-    caption="{{ 'PANELHEIGHT' | translate }}"
-    format=",##0.##"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="sidePanelWidth"
-    dataType="number"
-    caption="{{ 'SIDEPANELWIDTH' | translate }}"
-    format=",##0.##"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="sidePanelHeight"
-    dataType="number"
-    caption="{{ 'SIDEPANELHEIGHT' | translate }}"
-    format=",##0.##"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="towelBar"
-    caption="{{ 'TOWELBAR' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="swingDirection"
-    caption="{{ 'SWINGDIRECTION' | translate }}"
-    [visible]="false"
-  >
-    <dxo-lookup
-      [dataSource]="swingDirectionList"
-      displayExpr="name"
-      valueExpr="code"
+      <dxo-lookup
+        [dataSource]="modelDataSource"
+        displayExpr="name"
+        valueExpr="id"
+      >
+      </dxo-lookup>
+    </dxi-column>
+    <dxi-column
+      dataField="amount"
+      dataType="number"
+      caption="{{ 'AMOUNT' | translate }}"
+      format=",##0.##"
     >
-    </dxo-lookup>
-  </dxi-column>
-  <dxi-column dataField="status" caption="{{ 'STATUS' | translate }}">
-    <dxo-lookup
-      [(dataSource)]="workOrderStatusList"
-      displayExpr="name"
-      valueExpr="code"
+    </dxi-column>
+    <dxi-column
+      dataField="width1"
+      dataType="number"
+      caption="{{ 'WIDTH1' | translate }}"
+      format=",##0.##"
     >
-    </dxo-lookup>
-  </dxi-column>
-  <dxi-column
-    dataField="orderDate"
-    dataType="date"
-    caption="{{ 'ORDERDATE' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="productionDate"
-    dataType="date"
-    caption="{{ 'PRODUCTIONDATE' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="workshopReleaseDate"
-    dataType="date"
-    caption="{{ 'WORKSHOPRELEASEDATE' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="deliveryDate"
-    dataType="date"
-    caption="{{ 'DELIVERYDATE' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="templateId"
-    caption="{{ 'TEMPLATE' | translate }}"
-    [visible]="false"
-  >
-    <dxo-lookup
-      [dataSource]="templateDataSource"
-      displayExpr="name"
-      valueExpr="id"
+    </dxi-column>
+    <dxi-column
+      dataField="width2"
+      dataType="number"
+      caption="{{ 'WIDTH2' | translate }}"
+      format=",##0.##"
     >
-    </dxo-lookup>
-  </dxi-column>
-  <dxi-column
-    dataField="shim"
-    caption="{{ 'SHIM' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="assemblyKit"
-    caption="{{ 'ASSEMBLYKIT' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="qualityControlInspector"
-    caption="{{ 'QUALITYCONTROLINSPECTOR' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column
-    dataField="consignee"
-    caption="{{ 'CONSIGNEE' | translate }}"
-    [visible]="false"
-  >
-  </dxi-column>
-  <dxi-column type="buttons">
-    <dxi-button name="edit"></dxi-button>
-    <dxi-button name="delete"></dxi-button>
-    <dxi-button
-      hint="{{ 'WORKORDERFORM' | translate }}"
-      icon="textdocument"
-      [onClick]="showWorkOrderForm"
-    ></dxi-button>
-    <dxi-button
-      hint="{{ 'COSTFORM' | translate }}"
-      icon="smalliconslayout"
-    ></dxi-button>
-  </dxi-column>
-  <!-- #endregion -->
+    </dxi-column>
+    <dxi-column
+      dataField="width3"
+      dataType="number"
+      caption="{{ 'WIDTH3' | translate }}"
+      format=",##0.##"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="height"
+      dataType="number"
+      caption="{{ 'HEIGHT' | translate }}"
+      format=",##0.##"
+    >
+    </dxi-column>
+    <dxi-column dataField="colorId" caption="{{ 'COLOR' | translate }}">
+      <dxo-lookup
+        [dataSource]="colorDataSource"
+        displayExpr="name"
+        valueExpr="id"
+      >
+      </dxo-lookup>
+    </dxi-column>
+    <dxi-column dataField="glassId" caption="{{ 'GLASS' | translate }}">
+      <dxo-lookup
+        [dataSource]="glassDataSource"
+        displayExpr="name"
+        valueExpr="id"
+      >
+      </dxo-lookup>
+    </dxi-column>
+    <dxi-column dataField="firmId" caption="{{ 'FIRM' | translate }}">
+      <dxo-lookup
+        [dataSource]="firmDataSource"
+        displayExpr="name"
+        valueExpr="id"
+      >
+      </dxo-lookup>
+    </dxi-column>
+    <dxi-column
+      dataField="panelWidth"
+      dataType="number"
+      caption="{{ 'PANELWIDTH' | translate }}"
+      format=",##0.##"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="panelHeight"
+      dataType="number"
+      caption="{{ 'PANELHEIGHT' | translate }}"
+      format=",##0.##"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="sidePanelWidth"
+      dataType="number"
+      caption="{{ 'SIDEPANELWIDTH' | translate }}"
+      format=",##0.##"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="sidePanelHeight"
+      dataType="number"
+      caption="{{ 'SIDEPANELHEIGHT' | translate }}"
+      format=",##0.##"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="towelBar"
+      caption="{{ 'TOWELBAR' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="swingDirection"
+      caption="{{ 'SWINGDIRECTION' | translate }}"
+      [visible]="false"
+    >
+      <dxo-lookup
+        [dataSource]="swingDirectionList"
+        displayExpr="name"
+        valueExpr="code"
+      >
+      </dxo-lookup>
+    </dxi-column>
+    <dxi-column dataField="status" caption="{{ 'STATUS' | translate }}">
+      <dxo-lookup
+        [(dataSource)]="workOrderStatusList"
+        displayExpr="name"
+        valueExpr="code"
+      >
+      </dxo-lookup>
+    </dxi-column>
+    <dxi-column
+      dataField="orderDate"
+      dataType="date"
+      caption="{{ 'ORDERDATE' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="productionDate"
+      dataType="date"
+      caption="{{ 'PRODUCTIONDATE' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="workshopReleaseDate"
+      dataType="date"
+      caption="{{ 'WORKSHOPRELEASEDATE' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="deliveryDate"
+      dataType="date"
+      caption="{{ 'DELIVERYDATE' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="templateId"
+      caption="{{ 'TEMPLATE' | translate }}"
+      [visible]="false"
+    >
+      <dxo-lookup
+        [dataSource]="templateDataSource"
+        displayExpr="name"
+        valueExpr="id"
+      >
+      </dxo-lookup>
+    </dxi-column>
+    <dxi-column
+      dataField="shim"
+      caption="{{ 'SHIM' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="assemblyKit"
+      caption="{{ 'ASSEMBLYKIT' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="qualityControlInspector"
+      caption="{{ 'QUALITYCONTROLINSPECTOR' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column
+      dataField="consignee"
+      caption="{{ 'CONSIGNEE' | translate }}"
+      [visible]="false"
+    >
+    </dxi-column>
+    <dxi-column type="buttons">
+      <dxi-button name="edit"></dxi-button>
+      <dxi-button name="delete"></dxi-button>
+      <dxi-button
+        hint="{{ 'WORKORDERFORM' | translate }}"
+        icon="textdocument"
+        [onClick]="showWorkOrderForm"
+      ></dxi-button>
+      <dxi-button
+        hint="{{ 'COSTFORM' | translate }}"
+        icon="smalliconslayout"
+      ></dxi-button>
+    </dxi-column>
+    <!-- #endregion -->
 
-  <!-- #region [Model dropdownbox] -->
-  <div *dxTemplate="let cellInfo of 'modelDropDownBoxEditor'">
-    <dx-drop-down-box
-      label="{{ 'MODEL' | translate }}"
-      [(value)]="cellInfo.value"
-      valueExpr="id"
-      displayExpr="name"
-      placeholder="{{ 'ENTERMODEL' | translate }}"
-      [showClearButton]="true"
-      [dataSource]="modelDataSource"
-      [stylingMode]="'outlined'"
-      [labelMode]="'floating'"
-      contentTemplate="contentTemplate"
-    >
-      <div *dxTemplate="let e of 'contentTemplate'">
-        <dx-data-grid
-          [dataSource]="modelDataSource"
-          [hoverStateEnabled]="true"
-          [selectedRowKeys]="[cellInfo.value]"
-          [focusedRowEnabled]="true"
-          [focusedRowKey]="cellInfo.value"
-          [hoverStateEnabled]="true"
-          (onSelectionChanged)="
-            onModelGridSelectionChanged(
-              $event.selectedRowKeys,
-              cellInfo,
-              e.component
-            )
-          "
-          height="100%"
-        >
-          <dxo-selection mode="single"></dxo-selection>
-          <dxo-filter-row [visible]="true"></dxo-filter-row>
-          <dxo-scrolling mode="virtual"></dxo-scrolling>
-          <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
-          <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
-          </dxi-column>
-          <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
-          </dxi-column>
-        </dx-data-grid>
-      </div>
-    </dx-drop-down-box>
-  </div>
-  <!-- #endregion -->
-</dx-data-grid>
+    <!-- #region [Model dropdownbox] -->
+    <div *dxTemplate="let cellInfo of 'modelDropDownBoxEditor'">
+      <dx-drop-down-box
+        label="{{ 'MODEL' | translate }}"
+        [(value)]="cellInfo.value"
+        valueExpr="id"
+        displayExpr="name"
+        placeholder="{{ 'ENTERMODEL' | translate }}"
+        [showClearButton]="true"
+        [dataSource]="modelDataSource"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+        contentTemplate="contentTemplate"
+      >
+        <div *dxTemplate="let e of 'contentTemplate'">
+          <dx-data-grid
+            [dataSource]="modelDataSource"
+            [hoverStateEnabled]="true"
+            [selectedRowKeys]="[cellInfo.value]"
+            [focusedRowEnabled]="true"
+            [focusedRowKey]="cellInfo.value"
+            [hoverStateEnabled]="true"
+            (onSelectionChanged)="
+              onModelGridSelectionChanged(
+                $event.selectedRowKeys,
+                cellInfo,
+                e.component
+              )
+            "
+            height="100%"
+          >
+            <dxo-selection mode="single"></dxo-selection>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-scrolling mode="virtual"></dxo-scrolling>
+            <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+            <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+            </dxi-column>
+            <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+            </dxi-column>
+          </dx-data-grid>
+        </div>
+      </dx-drop-down-box>
+    </div>
+    <!-- #endregion -->
+  </dx-data-grid>
+</div>
+
+<!-- Default form -->
+<div
+  *ngIf="
+    this.workOrderFormName === this.workOrderDefaultFormName && this.formActive
+  "
+>
+  <app-work-order-default-form
+    [workOrderForm]="this.workOrderFormDto"
+    (closeForm)="closeForm()"
+  >
+  </app-work-order-default-form>
+</div>

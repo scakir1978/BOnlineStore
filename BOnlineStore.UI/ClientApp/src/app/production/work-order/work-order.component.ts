@@ -1,5 +1,5 @@
+import { FormName } from './../../enums/production/form-name.enum';
 import { WorkOrderFormFrontEndDto } from './../../dtos/production/work-order-form-front-end-interface';
-import { ColorGroupComponent } from './../../definitions/color-group/color-group.component';
 import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
 import { WorkOrderService } from './work-order.service';
 import { Component } from '@angular/core';
@@ -7,8 +7,8 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { ICodeName } from 'app/base-classes/base-interfaces/code-name-interface';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
-import { WorkOrderStatusEnum } from './enums/work-order-status.enum';
-import { SwingDirectionEnum } from './enums/swing-direction.enum';
+import { WorkOrderStatus } from '../../enums/production/work-order-status.enum';
+import { SwingDirection } from '../../enums/production/swing-direction.enum';
 
 @Component({
   selector: 'work-order',
@@ -24,7 +24,10 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   public templateDataSource: CustomStore;
   public swingDirectionList: ICodeName[];
   public workOrderStatusList: ICodeName[];
-  public workOrderFormFrontEndDto: WorkOrderFormFrontEndDto;
+  public workOrderFormDto: WorkOrderFormFrontEndDto;
+  public workOrderDefaultFormName: FormName = FormName.DefaultForm;
+  public workOrderFormName: FormName = FormName.DefaultForm;
+  public formActive: boolean = false;
 
   dropDownOptions: object;
 
@@ -52,6 +55,9 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
 
     this.showWorkOrderForm = this.showWorkOrderForm.bind(this);
     this.dropDownOptions = { width: 500 };
+
+    this.formActive = false;
+    this.workOrderFormName = FormName.DefaultForm;
   }
 
   translateAndGetArrays() {
@@ -68,34 +74,34 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
       .subscribe((translations) => {
         this.workOrderStatusList = [
           {
-            code: WorkOrderStatusEnum.ASSEMBLY,
+            code: WorkOrderStatus.Assembly,
             name: translations['ASSEMBLY'],
           },
           {
-            code: WorkOrderStatusEnum.CARGO,
+            code: WorkOrderStatus.Cargo,
             name: translations['CARGO'],
           },
           {
-            code: WorkOrderStatusEnum.DEALERDELIVERY,
+            code: WorkOrderStatus.DealerDelivery,
             name: translations['DEALERDELIVERY'],
           },
           {
-            code: WorkOrderStatusEnum.FACTORYFINISHED,
+            code: WorkOrderStatus.FactoryFinished,
             name: translations['FACTORYFINISHED'],
           },
         ];
 
         this.swingDirectionList = [
           {
-            code: SwingDirectionEnum.LEFTHANDED,
+            code: SwingDirection.LeftHanded,
             name: translations['LEFTHANDED'],
           },
           {
-            code: SwingDirectionEnum.NONE,
+            code: SwingDirection.None,
             name: translations['NONE'],
           },
           {
-            code: SwingDirectionEnum.RIGHTHANDED,
+            code: SwingDirection.RightHanded,
             name: translations['RIGHTHANDED'],
           },
         ];
@@ -106,7 +112,9 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
     this._workOrderService
       .calculateProductionListBff(e.row.data.id)
       .then((result: WorkOrderFormFrontEndDto) => {
-        this.workOrderFormFrontEndDto = result;
+        this.workOrderFormDto = result;
+        this.workOrderFormName = this.workOrderFormDto.recipeType.formName;
+        this.formActive = true;
       });
   }
 
@@ -115,5 +123,9 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
     if (selectedRowKeys.length > 0) {
       dropDownBoxComponent.close();
     }
+  }
+
+  closeForm() {
+    this.formActive = false;
   }
 }

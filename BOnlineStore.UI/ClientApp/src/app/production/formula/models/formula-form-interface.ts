@@ -1,4 +1,4 @@
-import { FormulaSortEnum } from '../enums/formula-sort.enum';
+import { FormulaSortEnum } from '../../../enums/production/formula-sort.enum';
 
 /* Formülü oluşturan unsurların, düzgün matematiksel bir ifadeye dönülmesi için buradaki detaylara bilgi girilir. */
 export interface IFormulaDetail {
