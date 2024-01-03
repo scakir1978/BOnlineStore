@@ -164,4 +164,18 @@ export abstract class BaseService {
 
     return lastValueFrom(request).then((response: any) => response.result);
   }
+
+  httpGetRequestGeneric<T>(
+    functionName: string,
+    queryParams: HttpParams,
+    controllerName: string = this._controllerName,
+    serviceUrl: string = this._serviceUrl
+  ): Promise<T> {
+    var request = this._http.get<T>(
+      serviceUrl + controllerName + '/' + functionName,
+      { params: queryParams }
+    );
+
+    return lastValueFrom<T>(request).then((response: any) => response.result);
+  }
 }

@@ -1,3 +1,4 @@
+import { WorkOrderFormFrontEndDto } from './../../dtos/production/work-order-form-front-end-interface';
 import { ColorGroupComponent } from './../../definitions/color-group/color-group.component';
 import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
 import { WorkOrderService } from './work-order.service';
@@ -23,6 +24,7 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   public templateDataSource: CustomStore;
   public swingDirectionList: ICodeName[];
   public workOrderStatusList: ICodeName[];
+  public workOrderFormFrontEndDto: WorkOrderFormFrontEndDto;
 
   dropDownOptions: object;
 
@@ -101,7 +103,11 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   }
 
   async showWorkOrderForm(e) {
-    this._workOrderService.calculateProductionListBff(e.row.data.id);
+    this._workOrderService
+      .calculateProductionListBff(e.row.data.id)
+      .then((result: WorkOrderFormFrontEndDto) => {
+        this.workOrderFormFrontEndDto = result;
+      });
   }
 
   onModelGridSelectionChanged(selectedRowKeys, cellInfo, dropDownBoxComponent) {

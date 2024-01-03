@@ -1,3 +1,4 @@
+import { WorkOrderFormFrontEndDto } from './../../dtos/production/work-order-form-front-end-interface';
 import { ProductionControllerNamesEnum } from '../../base-classes/base-enums/production-controller-names.enum';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -79,8 +80,10 @@ export class WorkOrderService extends BaseService implements Resolve<any> {
     );
   }
 
-  calculateProductionListBff(workOrderId: string): Promise<Object> {
-    return this.httpGetRequest(
+  calculateProductionListBff(
+    workOrderId: string
+  ): Promise<WorkOrderFormFrontEndDto> {
+    return this.httpGetRequestGeneric<WorkOrderFormFrontEndDto>(
       'CalculateProductionList',
       new HttpParams().append('workOrderId', workOrderId),
       BffControllerNamesEnum.ONLINESTORE,

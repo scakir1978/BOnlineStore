@@ -1,0 +1,44 @@
+import { ModelDto } from '../definitions/model-dto-interface';
+import { GlassDto } from '../definitions/glass-dto-interface';
+import { ColorDto } from '../definitions/color-dto-interface';
+import { FirmDto } from '../definitions/firm-dto-interface';
+import { TemplateDto } from '../definitions/template-dto-interface';
+import { EntityDto } from '../../base-classes/base-interfaces/entity-dto-interface';
+import { SwingDirection } from '../../enums/swing-direction.enum';
+import { WorkOrderStatus } from '../../enums/work-order-status.enum';
+
+export interface WorkOrderDto extends EntityDto {
+  workOrderNo: string | null;
+  description: string | null;
+  modelId: string | null;
+  model: ModelDto | null;
+  amount: number | null;
+  width1: number | null;
+  width2: number | null;
+  width3: number | null;
+  height: number | null;
+  panelWidth: number | null;
+  panelHeight: number | null;
+  sidePanelWidth: number | null;
+  sidePanelHeight: number | null;
+  glassId: string | null;
+  glass: GlassDto | null;
+  colorId: string | null;
+  color: ColorDto | null;
+  towelBar: string | null;
+  swingDirection: SwingDirection | null;
+  status: WorkOrderStatus | null;
+  orderDate: string | null;
+  productionDate: string | null;
+  workshopReleaseDate: string | null;
+  deliveryDate: string | null;
+  firmId: string | null;
+  firm: FirmDto | null;
+  deliveryAddressId: string | null;
+  templateId: string | null;
+  template: TemplateDto | null;
+  shim: string | null;
+  assemblyKit: string | null;
+  qualityControlInspector: string | null;
+  consignee: string | null;
+}
