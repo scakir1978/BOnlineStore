@@ -1,3 +1,4 @@
+import { AlertService } from './../../core/services/alert.service';
 import { SharedModule } from './../../shared/shared.module';
 import { DevExtremeModule } from 'devextreme-angular';
 import { NgModule } from '@angular/core';
@@ -30,6 +31,6 @@ const routes: Routes = [
     CommonModule,
   ],
   exports: [TranslateModule],
-  providers: [WorkOrderService, TranslateService],
+  providers: [WorkOrderService, TranslateService, AlertService],
 })
 export class WorkOrderModule {}

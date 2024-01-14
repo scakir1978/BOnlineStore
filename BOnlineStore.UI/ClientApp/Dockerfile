@@ -1,4 +1,4 @@
-FROM node:latest AS build
+FROM node:18.15.0 AS build
 WORKDIR /dist/src/app
 
 # Copy files to virtual directory

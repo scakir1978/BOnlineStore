@@ -1,3 +1,4 @@
+import { AlertService } from './../../core/services/alert.service';
 import { FormName } from './../../enums/production/form-name.enum';
 import { WorkOrderFormFrontEndDto } from './../../dtos/production/work-order-form-front-end-interface';
 import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
@@ -9,6 +10,7 @@ import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 import { WorkOrderStatus } from '../../enums/production/work-order-status.enum';
 import { SwingDirection } from '../../enums/production/swing-direction.enum';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'work-order',
@@ -28,12 +30,14 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   public workOrderDefaultFormName: FormName = FormName.DefaultForm;
   public workOrderFormName: FormName = FormName.DefaultForm;
   public formActive: boolean = false;
+  public loadingVisible = false;
 
   dropDownOptions: object;
 
   constructor(
     public override _translate: TranslateService,
-    private _workOrderService: WorkOrderService
+    private _workOrderService: WorkOrderService,
+    private _alertService: AlertService
   ) {
     super(
       _translate,
@@ -109,12 +113,25 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   }
 
   async showWorkOrderForm(e) {
+    Swal.fire({
+      title: 'Good job!',
+      text: 'You clicked the button!',
+      icon: 'success',
+    });
+
+    this.loadingVisible = true;
+
     this._workOrderService
       .calculateProductionListBff(e.row.data.id)
       .then((result: WorkOrderFormFrontEndDto) => {
         this.workOrderFormDto = result;
         this.workOrderFormName = this.workOrderFormDto.recipeType.formName;
+        this.loadingVisible = false;
         this.formActive = true;
+      })
+      .catch((reason) => {
+        this.loadingVisible = false;
+        this._alertService.showErrorMessage(reason.message);
       });
   }
 

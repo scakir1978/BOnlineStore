@@ -488,3 +488,15 @@
   >
   </app-work-order-default-form>
 </div>
+
+<dx-load-panel
+  #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  [position]="{ of: '#gridContainer' }"
+  [(visible)]="loadingVisible"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="false"
+  [hideOnOutsideClick]="false"
+>
+</dx-load-panel>

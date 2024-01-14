@@ -25,6 +25,7 @@ namespace BOnlineStore.Services.Production.Api.Controllers
         {
             loadOptions.StringToLower = true;
             return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<WorkOrderDto>>(_workOrderService.Load()), loadOptions));
+            //return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.ProjectTo<WorkOrderDto>(_workOrderService.Load()), loadOptions));
         }
 
         [HttpGet]

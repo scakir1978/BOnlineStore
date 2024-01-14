@@ -24,7 +24,7 @@ namespace BOnlineStore.Services.Definitions.Api.Controllers
         public IActionResult Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<RecipeTypeDto>>(_recipeTypeService.Load().ToList()), loadOptions));
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(_mapper.Map<List<RecipeTypeDto>>(_recipeTypeService.Load()), loadOptions));
         }
 
         [HttpPost("LoadForCombo")]

@@ -111,7 +111,7 @@
     "sass": "^1.69.7",
     "sass-loader": "^13.3.3",
     "simplebar-angular": "^2.5.0",
-    "sweetalert2": "^11.7.32",
+    "sweetalert2": "^11.10.2",
     "swiper": "^9.0.5",
     "tls": "^0.0.1",
     "tslib": "^2.4.1",
