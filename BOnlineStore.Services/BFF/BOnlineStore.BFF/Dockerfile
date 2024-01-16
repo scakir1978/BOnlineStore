@@ -14,14 +14,14 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["BOnlineStore.Services/BFF/BOnlineStore.BFF.Api/BOnlineStore.BFF.Api.csproj", "BOnlineStore.Services/BFF/BOnlineStore.BFF.Api/"]
+COPY ["BOnlineStore.Services/BFF/BOnlineStore.BFF/BOnlineStore.BFF.Api.csproj", "BOnlineStore.Services/BFF/BOnlineStore.BFF/"]
 COPY ["Shared/BOnlineStore.Generic.Service/BOnlineStore.Generic.Service.csproj", "Shared/BOnlineStore.Generic.Service/"]
 COPY ["Shared/BOnlineStore.MongoDb.GenericRepository/BOnlineStore.MongoDb.GenericRepository.csproj", "Shared/BOnlineStore.MongoDb.GenericRepository/"]
 COPY ["Shared/BOnlineStore.Shared/BOnlineStore.Shared.csproj", "Shared/BOnlineStore.Shared/"]
 COPY ["Shared/BOnlineStore.Localization/BOnlineStore.Localization.csproj", "Shared/BOnlineStore.Localization/"]
-RUN dotnet restore "BOnlineStore.Services/BFF/BOnlineStore.BFF.Api/BOnlineStore.BFF.Api.csproj"
+RUN dotnet restore "BOnlineStore.Services/BFF/BOnlineStore.BFF/BOnlineStore.BFF.Api.csproj"
 COPY . .
-WORKDIR "/src/BOnlineStore.Services/BFF/BOnlineStore.BFF.Api"
+WORKDIR "/src/BOnlineStore.Services/BFF/BOnlineStore.BFF"
 RUN dotnet build "BOnlineStore.BFF.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

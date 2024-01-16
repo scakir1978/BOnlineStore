@@ -21,7 +21,7 @@ FROM nginx:latest
 COPY --from=build /dist/src/app/dist/velzon /usr/share/nginx/html
 #COPY /dist/velzon /usr/share/nginx/html
 COPY ssl/bonlinestore.crt  /etc/nginx/certs/bonlinestore.crt
-COPY ssl/bonlinetore-decrypted.key  /etc/nginx/certs/bonlinestore.key
+COPY ssl/bonlinestore-decrypted.key  /etc/nginx/certs/bonlinestore.key
 COPY nginx.conf  /etc/nginx/conf.d/default.conf
 # Exposing a port, here it means that inside the container 
 # the app will be using Port 80 while running

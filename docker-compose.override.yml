@@ -123,5 +123,12 @@ services:
       - ASPNETCORE_URLS=https://+:443;http://+:80      
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
       - "IdentityServerUrl=https://identity.bonlinestore.com"
+      - "DefinitionsApiUrl=https://definitions.bonlinestore.com"
+      - "ProductionApiUrl=https://production.bonlinestore.com"
+      - "OrderApiUrl=https://order.bonlinestore.com"
       - "SeqServerUrl=http://seq:5341"
-      - "BFFRunningMode=docker"     
+      - "BFFRunningMode=docker" 
+    depends_on:
+      - "mongodb"
+      - "identity.bonlinestore.com"
+      - "seq"    
