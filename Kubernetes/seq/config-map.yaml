@@ -2,5 +2,6 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: seq-configmap
+  namespace: default
 data:
   accept-eula: "Y"

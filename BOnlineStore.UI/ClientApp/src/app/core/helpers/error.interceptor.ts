@@ -45,7 +45,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           });*/
         }
 
-        //Fluent validator üzerinden gelen hastalar
+        //Fluent validator üzerinden gelen hatalar
         if (err?.error?.Errors) {
           error = '';
           Object.entries(err.error.Errors).forEach((element: any) => {

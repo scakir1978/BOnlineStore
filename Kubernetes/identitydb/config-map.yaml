@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: identitydb-configmap
+  namespace: default
 data:
   accept-eula: "Y"
   mssql-pid: "Developer"

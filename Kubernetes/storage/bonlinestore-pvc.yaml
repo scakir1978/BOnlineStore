@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    pv.kubernetes.io/bind-completed: 'yes'
+  creationTimestamp: '2024-01-16T12:24:47Z'
+  finalizers:
+    - kubernetes.io/pvc-protection
+  managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:accessModes: {}
+          f:resources:
+            f:requests:
+              .: {}
+              f:storage: {}
+          f:storageClassName: {}
+          f:volumeMode: {}
+          f:volumeName: {}
+      manager: agent
+      operation: Update
+      time: '2024-01-16T12:24:47Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:pv.kubernetes.io/bind-completed: {}
+      manager: kube-controller-manager
+      operation: Update
+      time: '2024-01-16T12:24:59Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:accessModes: {}
+          f:capacity:
+            .: {}
+            f:storage: {}
+          f:phase: {}
+      manager: kube-controller-manager
+      operation: Update
+      subresource: status
+      time: '2024-01-16T12:24:59Z'
+  name: bonlinestore-pvc
+  namespace: default
+  resourceVersion: '51236'
+  uid: 0c8b98c2-3f03-4c6f-8d50-d0e2057b5700
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: local-storage
+  volumeMode: Filesystem
+  volumeName: bonlinestore-pv
+status:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  phase: Bound

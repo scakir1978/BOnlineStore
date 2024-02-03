@@ -29,11 +29,11 @@ spec:
             - containerPort: 27017
           volumeMounts:
             - name: "mongodb-persistent-storage"
-              mountPath: "/data/db"
+              mountPath: "/data/bonlinestore/mongodb"
       volumes:
         - name: "mongodb-persistent-storage"
           persistentVolumeClaim:
-            claimName: "mongo-pvc"
+            claimName: bonlinestore-pvc
 ---
 apiVersion: v1
 kind: Service

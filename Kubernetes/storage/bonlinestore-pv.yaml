@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  creationTimestamp: '2024-01-16T12:23:36Z'
+  finalizers:
+    - kubernetes.io/pv-protection
+  managedFields:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:accessModes: {}
+          f:capacity:
+            .: {}
+            f:storage: {}
+          f:local:
+            .: {}
+            f:path: {}
+          f:nodeAffinity:
+            .: {}
+            f:required: {}
+          f:persistentVolumeReclaimPolicy: {}
+          f:storageClassName: {}
+          f:volumeMode: {}
+      manager: agent
+      operation: Update
+      time: '2024-01-16T12:23:36Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:pv.kubernetes.io/bound-by-controller: {}
+        f:spec:
+          f:claimRef:
+            .: {}
+            f:apiVersion: {}
+            f:kind: {}
+            f:name: {}
+            f:namespace: {}
+            f:resourceVersion: {}
+            f:uid: {}
+      manager: kube-controller-manager
+      operation: Update
+      time: '2024-01-16T12:24:47Z'
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:phase: {}
+      manager: kube-controller-manager
+      operation: Update
+      subresource: status
+      time: '2024-01-16T12:24:47Z'
+  name: bonlinestore-pv
+  resourceVersion: '51156'
+  uid: b55acd77-3c94-4d5c-9ca2-da922974dcce
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: bonlinestore-pvc
+    namespace: default
+    resourceVersion: '51154'
+    uid: 0c8b98c2-3f03-4c6f-8d50-d0e2057b5700
+  local:
+    path: /data/bonlinestore
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - suleyman-virtual-machine
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  volumeMode: Filesystem
+status:
+  phase: Bound

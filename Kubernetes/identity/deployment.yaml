@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: identity.bonlinestore.com
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -79,6 +80,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: identity-bonlinestore-com
+  namespace: default
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-name: "identity.bonlinestore.com"
 spec:

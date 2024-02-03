@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: identitydb
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -46,16 +47,17 @@ spec:
                   key: mssql-sa-password
           volumeMounts:
             - name: "identitydb-persistent-storage"
-              mountPath: /var/opt/mssql
+              mountPath: /data/bonlinestore/mssql
       volumes:
         - name: "identitydb-persistent-storage"
           persistentVolumeClaim:
-            claimName: identitydb-pvc
+            claimName: bonlinestore-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: identitydb
+  namespace: default
 spec:
   selector:
     app: identitydb

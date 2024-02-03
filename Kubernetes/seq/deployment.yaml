@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: seq
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -19,11 +20,11 @@ spec:
           image: datalust/seq
           resources:
             requests:
-              memory: "2G"
-              cpu: "2000m"
+              memory: "1G"
+              cpu: "500m"
             limits:
-              memory: "2G"
-              cpu: "2000m"
+              memory: "1G"
+              cpu: "500m"
           ports:
             - containerPort: 80
             - containerPort: 5341
@@ -35,16 +36,17 @@ spec:
                   key: accept-eula
           volumeMounts:
             - name: "seq-persistent-storage"
-              mountPath: /data
+              mountPath: /data/bonlinestore/seq
       volumes:
         - name: "seq-persistent-storage"
           persistentVolumeClaim:
-            claimName: seq-pvc
+            claimName: bonlinestore-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: seq
+  namespace: default
 spec:
   selector:
     app: seq
@@ -53,3 +55,29 @@ spec:
       port: 5341
       targetPort: 80
   type: LoadBalancer
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seq-bonlinestore-com
+  namespace: default
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-name: "seq.bonlinestore.com"
+spec:
+  selector:
+    app: seq
+  ports:
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+    - name: http1
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: http2
+      protocol: TCP
+      port: 5341
+      targetPort: 5341
+  type: NodePort

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bff.bonlinestore.com
+data:
+  aspnetcore-environment: Development
+  aspnetcore-urls: https://+:443;http://+:80
+  identity-server-url: http://identity-bonlinestore-com
+  definitions-api-url: http://definitions-bonlinestore-com
+  production-api-url: http://production-bonlinestore-com
+  order-api-url: http://order-bonlinestore-com
+  seq-server-url: http://seq:5341
+  bff-running-mode: docker

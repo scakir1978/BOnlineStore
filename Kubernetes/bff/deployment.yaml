@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: definitions.bonlinestore.com  
+  name: bff.bonlinestore.com
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: definitions.bonlinestore.com
+      app: bff.bonlinestore.com
   template:
     metadata:
       labels:
-        app: definitions.bonlinestore.com
+        app: bff.bonlinestore.com
     spec:
       containers:
-        - name: definitions-bonlinestore-com
-          image: scakir1978/definitions.bonlinestore.com:latest
+        - name: bff-bonlinestore-com
+          image: scakir1978/bff.bonlinestore.com:latest
           imagePullPolicy: Always
           resources:
             limits:
@@ -27,43 +27,53 @@ spec:
             - name: ASPNETCORE_ENVIRONMENT
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
+                  name: bff.bonlinestore.com
                   key: aspnetcore-environment
             - name: ASPNETCORE_URLS
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
+                  name: bff.bonlinestore.com
                   key: aspnetcore-urls
             - name: IdentityServerUrl
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
+                  name: bff.bonlinestore.com
                   key: identity-server-url
-            - name: DatabaseSettings__ConnectionString
+            - name: DefinitionsApiUrl
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
-                  key: definitionsdb-connection-string
+                  name: bff.bonlinestore.com
+                  key: definitions-api-url
+            - name: ProductionApiUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: bff.bonlinestore.com
+                  key: production-api-url
+            - name: OrderApiUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: bff.bonlinestore.com
+                  key: order-api-url
             - name: SeqServerUrl
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
+                  name: bff.bonlinestore.com
                   key: seq-server-url
-            - name: DefinitionsRunningMode
+            - name: BffRunningMode
               valueFrom:
                 configMapKeyRef:
-                  name: definitions.bonlinestore.com
-                  key: definitions-running-mode
+                  name: bff.bonlinestore.com
+                  key: bff-running-mode
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: definitions-bonlinestore-com
+  name: bff-bonlinestore-com
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "definitions.bonlinestore.com"
+    service.beta.kubernetes.io/do-loadbalancer-name: "bff.bonlinestore.com"
 spec:
   selector:
-    app: definitions.bonlinestore.com
+    app: bff.bonlinestore.com
   ports:
     - name: https
       protocol: TCP
