@@ -1,0 +1,23 @@
+------- Kök sertifika oluşturma aşamaları ------------------
+
+openssl genrsa -des3 -out Root_Console_Log.key 4096
+
+openssl req -x509 -new -nodes -key Root_Console_Log.key -sha256 -days 1095 -out Root_Console_Log.crt
+
+Windowsta Console_Log.crt root sertifikası Sertifika yöneticisi tarafından güvenilir kök sertifikalarına yüklenir.
+
+------- Kök sertifika bağlı site için sertifika oluşturma aşamaları ------------------
+
+openssl genrsa -out bonlinestore.key 4096
+
+openssl req -new -key bonlinestore.key -out bonlinestore.csr
+
+openssl x509 -req -in bonlinestore.csr -CA Root_Console_Log.crt -CAkey Root_Console_Log.key -CAcreateserial -out bonlinestore.crt -days 1095 -sha256 -extfile bonlinestore.ext
+
+------- bonlinestore.crt sertifikasını .pfx e çevirme ------------------
+
+openssl pkcs12 -export -out bonlinestore.pfx -inkey bonlinestore.key -in bonlinestore.crt
+
+------- bonlinestore.key  decrypt etme ------------------
+
+openssl rsa -in bonlinestore.key  -out bonlinestore_decrypted.key

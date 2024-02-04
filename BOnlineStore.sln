@@ -44,8 +44,15 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Certificates", "Certificates", "{1CB0742F-CFD8-4FF1-B4D4-1D10D1F31766}"
 	ProjectSection(SolutionItems) = preProject
 		Shared\Certificates\bonlinestore.crt = Shared\Certificates\bonlinestore.crt
+		Shared\Certificates\bonlinestore.csr = Shared\Certificates\bonlinestore.csr
+		Shared\Certificates\bonlinestore.ext = Shared\Certificates\bonlinestore.ext
 		Shared\Certificates\bonlinestore.key = Shared\Certificates\bonlinestore.key
 		Shared\Certificates\bonlinestore.pfx = Shared\Certificates\bonlinestore.pfx
+		Shared\Certificates\bonlinestore_decrypted.key = Shared\Certificates\bonlinestore_decrypted.key
+		Shared\Certificates\Create_Certificate_Steps.txt = Shared\Certificates\Create_Certificate_Steps.txt
+		Shared\Certificates\Root_Console_Log.crt = Shared\Certificates\Root_Console_Log.crt
+		Shared\Certificates\Root_Console_Log.key = Shared\Certificates\Root_Console_Log.key
+		Shared\Certificates\Root_Console_Log.srl = Shared\Certificates\Root_Console_Log.srl
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{749EF661-EB48-4264-8785-5637B9A62C78}"

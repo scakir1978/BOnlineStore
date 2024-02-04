@@ -1,0 +1,16 @@
+
+authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+subjectAltName = @alt_names
+
+[alt_names]
+DNS.1 = bonlinestore.com
+DNS.2 = www.bonlinestore.com
+DNS.3 = *.bonlinestore.com
+DNS.4 = ui.bonlinestore.com
+DNS.5 = identity.bonlinestore.com
+DNS.6 = definitions.bonlinestore.com
+DNS.7 = production.bonlinestore.com
+DNS.8 = bff.bonlinestore.com
+DNS.9 = seq.bonlinestore.com
