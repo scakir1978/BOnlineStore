@@ -42,8 +42,9 @@ metadata:
 spec:
   selector:
     app: mongodb
-  type: LoadBalancer
+  type: ClusterIP
   ports:
-    - protocol: TCP
+    - name: http
       port: 27017
+      protocol: TCP
       targetPort: 27017
