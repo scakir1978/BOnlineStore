@@ -37,9 +37,7 @@ namespace BOnlineStore.Services.Production.Api.Services
         public async Task<bool> CopyFormula(string formulaId, string formulaCode, string modelId)
         {
             if (string.IsNullOrWhiteSpace(formulaId))
-            {
                 throw new Exception(_stringLocalizer[ProductionApiKeys.FormulaIdNotEmpty]);
-            }
 
             if (string.IsNullOrWhiteSpace(formulaCode))
             {
