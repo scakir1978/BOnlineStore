@@ -3,7 +3,7 @@
 // 
 
 .shepherd-element{
-    background: var(--#{$prefix}card-bg-custom);
+    background: var(--#{$prefix}secondary-bg);
     box-shadow: $box-shadow;
 }
 
@@ -15,9 +15,9 @@
         }
 
         .shepherd-cancel-icon{
-            color: rgba(var(--#{$prefix}dark-rgb), .75);
+            color: rgba(var(--#{$prefix}body-color-rgb), .75);
             &:hover{
-                color: rgba(var(--#{$prefix}dark-rgb), .75);
+                color: rgba(var(--#{$prefix}body-color-rgb), 1);
             }
         }
     }
@@ -47,7 +47,7 @@
 
     &.btn-light:not(:disabled):hover{
         background: rgba(var(--#{$prefix}light-rgb), .75);
-        color: var(--#{$prefix}dark);
+        color: var(--#{$prefix}body-color);
     }
 
     &.btn-primary:not(:disabled):hover{
@@ -67,7 +67,7 @@
     z-index: 1;
     background-color: transparent !important;
     transform: rotate(0deg);
-    color: $primary;
+    color: var(--#{$prefix}primary);
 }
 
 .shepherd-element[data-popper-placement^=bottom]>.shepherd-arrow{

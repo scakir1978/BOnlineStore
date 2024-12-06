@@ -13,7 +13,6 @@
             cursor: default;
             font-size: 11px;
             text-transform: uppercase;
-            color: $vertical-menu-title-color !important;
             font-weight: $font-weight-semibold;
 
             &:after {
@@ -62,16 +61,6 @@
                     }
                 }
             }
-
-            .nav-sm {
-                .nav-link {
-                    color: $vertical-menu-item-color;
-
-                    &.active {
-                        color: $vertical-menu-item-active-color;
-                    }
-                }
-            }
         }
 
         .container-fluid {
@@ -87,9 +76,23 @@
         }
     }
 
+    &:is([data-sidebar="dark"], [data-sidebar="gradient"], [data-sidebar="gradient-2"], [data-sidebar="gradient-3"], [data-sidebar="gradient-4"]) {   
+        .app-menu {
+            .navbar-brand-box {
+                .logo-light {
+                    display: block;
+                }
+
+                .logo-dark {
+                    display: none;
+                }
+            }
+        }
+    }
+
     .twocolumn-iconview {
         width: $twocolumn-menu-iconview-width;
-        background-color: $twocolumn-menu-iconview-bg;
+        background-color: var(--#{$prefix}twocolumn-menu-iconview-bg);
         height: 100%;
         left: -$twocolumn-menu-iconview-width;
         box-shadow: $twocolumn-menu-box-shadow;
@@ -116,8 +119,8 @@
         .nav-icon {
             width: 42px;
             height: 42px;
+            color: var(--#{$prefix}vertical-menu-item-color);
             line-height: 42px;
-            color: $vertical-menu-item-color;
             z-index: 1;
             font-size: 22px;
             text-align: center;
@@ -129,16 +132,17 @@
 
             .icon-dual {
                 width: 18px;
-                color: $vertical-menu-item-color;
+                color: var(--#{$prefix}vertical-menu-item-color);
+                fill: var(--#{$prefix}vertical-menu-item-bg);
             }
 
             &.active {
-                background-color: rgba($primary, 0.15);
-                color: $primary;
+                background-color: var(--#{$prefix}vertical-menu-item-active-bg);
+                color: var(--#{$prefix}vertical-menu-item-active-color);
 
                 .icon-dual {
-                    color: $primary;
-                    fill: rgba($primary, 0.10);
+                    color: var(--#{$prefix}vertical-menu-item-active-color);
+                    fill: var(--#{$prefix}vertical-menu-item-active-bg);
                 }
             }
         }
@@ -176,22 +180,7 @@
     }
 
     &[data-sidebar="dark"] {
-        .twocolumn-iconview {
-            background-color: $twocolumn-menu-iconview-bg-dark;
-
-            .nav-icon {
-                color: $twocolumn-menu-item-color-dark;
-
-                &.active {
-                    color: $twocolumn-menu-item-active-color-dark;
-                    background-color: $twocolumn-menu-item-active-bg-dark;
-                }
-            }
-        }
-
         .app-menu {
-            background-color: $twocolumn-menu-bg-dark;
-            border-right-color: $twocolumn-menu-border-dark;
 
             .navbar-brand-box {
                 .logo-light {
@@ -201,122 +190,6 @@
                 .logo-dark {
                     display: none;
                 }
-            }
-
-            .navbar-nav {
-                .nav-sm {
-                    .nav-link {
-                        color: $twocolumn-menu-item-color-dark;
-                    }
-                }
-            }
-        }
-
-        .navbar-menu {
-            .navbar-nav {
-                .nav-sm {
-                    .nav-link {
-
-                        &:hover,
-                        &.active {
-                            color: $twocolumn-menu-item-active-color-dark;
-
-                            &::before {
-                                background-color: $twocolumn-menu-item-active-color-dark !important;
-                            }
-                        }
-                    }
-                }
-
-                .nav-link {
-                    &[data-bs-toggle=collapse][aria-expanded=true] {
-                        color: $twocolumn-menu-item-active-color-dark;
-
-                        &:before {
-                            background-color: $twocolumn-menu-item-active-color-dark;
-                        }
-
-                        &::after {
-                            color: $twocolumn-menu-item-active-color-dark !important;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    &:is([data-sidebar="gradient"], [data-sidebar="gradient-2"], [data-sidebar="gradient-3"], [data-sidebar="gradient-4"]) {
-        .twocolumn-iconview {
-            background-color: $twocolumn-menu-iconview-bg-dark;
-    
-            .nav-icon {
-                color: $twocolumn-menu-item-color-gradient;
-    
-                &.active {
-                    color: $twocolumn-menu-item-active-color-dark;
-                    background-color: $twocolumn-menu-item-active-bg-dark;
-                }
-            }
-        }
-    
-        .app-menu {
-            background-color: $twocolumn-menu-bg-dark;
-            border-right-color: $twocolumn-menu-border-dark;
-    
-            .navbar-brand-box {
-                .logo-light {
-                    display: block;
-                }
-    
-                .logo-dark {
-                    display: none;
-                }
-            }
-    
-            .navbar-nav {
-                .nav-sm {
-                    .nav-link {
-                        color: $twocolumn-menu-item-color-gradient;
-                    }
-                }
-            }
-        }
-    
-        .navbar-menu {
-            .navbar-nav {
-                .nav-sm {
-                    .nav-link {
-    
-                        &:hover,
-                        &.active {
-                            color: $twocolumn-menu-item-active-color-dark;
-    
-                            &::before {
-                                background-color: $twocolumn-menu-item-active-color-dark !important;
-                            }
-                        }
-                    }
-                }
-    
-                .nav-link {
-                    &[data-bs-toggle=collapse][aria-expanded=true] {
-                        color: $twocolumn-menu-item-active-color-dark;
-    
-                        &:before {
-                            background-color: $twocolumn-menu-item-active-color-dark;
-                        }
-    
-                        &::after {
-                            color: $twocolumn-menu-item-active-color-dark !important;
-                        }
-                    }
-                }
-            }
-        }
-
-        &[data-layout-mode="dark"] {
-            .app-menu {
-                border-right-color: $gray-700; 
             }
         }
     }

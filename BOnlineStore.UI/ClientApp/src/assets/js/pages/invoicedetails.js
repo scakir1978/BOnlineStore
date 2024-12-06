@@ -61,7 +61,7 @@ if ((localStorage.getItem("invoices-list") !== null) && (localStorage.getItem("o
         document.getElementById("invoice-date").innerHTML = str_dt(viewobj.date);
         document.getElementById("invoice-time").innerHTML = tConvert(viewobj.date);
         document.getElementById("payment-status").innerHTML = viewobj.status;
-        document.getElementById("payment-status").classList.replace("badge-soft-success", 'badge-soft-' + badge);
+        document.getElementById("payment-status").classList.replace("bg-success-subtle text-success", 'badge-soft-' + badge);
         document.getElementById("total-amount").innerHTML = viewobj.invoice_amount;
 
         document.getElementById("billing-name").innerHTML = viewobj.billing_address.full_name;

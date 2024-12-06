@@ -4,7 +4,7 @@
 
 .layout-wrapper {
     &.landing {
-        background-color: var(--#{$prefix}card-bg-custom);
+        background-color: var(--#{$prefix}secondary-bg);
         font-size: 15px;
     }
 }
@@ -47,7 +47,7 @@
     padding: 10px 0px;
     transition: all 0.5s ease;
     @media (max-width: 991.98px) {
-        background-color: var(--#{$prefix}card-bg-custom);
+        background-color: var(--#{$prefix}secondary-bg);
         box-shadow: 0 1px 16px -2px rgba(56, 65, 74, 0.15);
         padding: 10px 8px;
     }
@@ -59,7 +59,7 @@
                 font-weight: $font-weight-medium;
                 transition: all 0.4s;
                 font-family: $font-family-secondary;
-                color: var(--#{$prefix}dark);
+                color: var(--#{$prefix}body-color);
                 padding: 14px;
 
                 @media (max-width: 991.98px) {
@@ -76,7 +76,7 @@
     }
 
     &.is-sticky {
-        background-color: var(--#{$prefix}card-bg-custom);
+        background-color: var(--#{$prefix}secondary-bg);
         box-shadow: 0 1px 16px -2px rgba(56, 65, 74, 0.15);
     }
 }
@@ -103,7 +103,7 @@
         .navbar-nav {
             .nav-item {
                 .nav-link {
-                    color: var(--#{$prefix}dark);
+                    color: var(--#{$prefix}body-color);
                 }
             }
         }
@@ -127,7 +127,7 @@
     .hero-shape-svg {
         svg {
             path {
-                fill: var(--#{$prefix}card-bg-custom);
+                fill: var(--#{$prefix}secondary-bg);
             }
         }
     }
@@ -147,7 +147,7 @@
 
     .carousel-item {
         .demo-item {
-            background-color: var(--#{$prefix}card-bg-custom);
+            background-color: var(--#{$prefix}secondary-bg);
             padding: 8px;
             border-radius: 7px;
         }
@@ -237,7 +237,7 @@
 
 // dark
 
-[data-layout-mode="dark"] {
+[data-bs-theme="dark"] {
     .layout-wrapper.landing {
 
         .demo-img-patten-top,
@@ -246,7 +246,7 @@
         }
 
         footer.bg-dark {
-            background-color: var(--#{$prefix}card-bg-custom) !important;
+            background-color: var(--#{$prefix}secondary-bg) !important;
         }
     }
 

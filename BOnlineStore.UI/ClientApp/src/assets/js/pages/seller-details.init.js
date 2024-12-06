@@ -33,7 +33,7 @@ if (TableProductListAll) {
                         '<div class="avatar-sm bg-light rounded p-1"><img src="assets/images/products/' + cell[0] + '" alt="" class="img-fluid d-block"></div>' +
                         '</div>' +
                         '<div class="flex-grow-1">' +
-                        '<h5 class="fs-14 mb-1"><a href="apps-ecommerce-product-details.html" class="text-dark">' + cell[1] + '</a></h5>' +
+                        '<h5 class="fs-14 mb-1"><a href="apps-ecommerce-product-details.html" class="text-body">' + cell[1] + '</a></h5>' +
                         '<p class="text-muted mb-0">Category : <span class="fw-medium">' + cell[2] + '</span></p>' +
                         '</div>' +
                         '</div>');
@@ -81,7 +81,7 @@ if (TableProductListAll) {
                         '<li><a class="dropdown-item" href="apps-ecommerce-product-details.html"><i class="ri-eye-fill align-bottom me-2 text-muted"></i> View</a></li>' +
                         '<li><a class="dropdown-item" href="apps-ecommerce-add-product.html"><i class="ri-pencil-fill align-bottom me-2 text-muted"></i> Edit</a></li>' +
                         '<li class="dropdown-divider"></li>' +
-                        '<li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#removeItemModal"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>' +
+                        '<li><a class="dropdown-item" href="#!"><i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i> Delete</a></li>' +
                         '</ul>' +
                         '</div>');
                 })

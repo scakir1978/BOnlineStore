@@ -19,8 +19,8 @@
     width: 307.875px;
     box-sizing: border-box;
     touch-action: manipulation;
-    background: var(--#{$prefix}choices-bg);
-    box-shadow: 1px 0 0 $border-color, -1px 0 0 $border-color, 0 1px 0 $border-color, 0 -1px 0 $border-color, 0 3px 13px rgba(0, 0, 0, 0.08);
+    background: var(--#{$prefix}secondary-bg);
+    box-shadow: 1px 0 0 var(--#{$prefix}border-color), -1px 0 0 var(--#{$prefix}border-color), 0 1px 0 var(--#{$prefix}border-color), 0 -1px 0 var(--#{$prefix}border-color), 0 3px 13px rgba(0, 0, 0, 0.08);
 
     &.open,
     &.inline {
@@ -105,7 +105,7 @@
 
     &.hasTime .flatpickr-time {
         height: 40px;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid var(--#{$prefix}border-color);
     }
 
     &.noCalendar.hasTime .flatpickr-time {
@@ -480,7 +480,7 @@
     display: flex;
     align-items: center;
     height: 36px;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--#{$prefix}border-color);
     .flatpickr-weekdaycontainer {
         display: flex;
         flex: 1;
@@ -585,7 +585,7 @@ span.flatpickr-weekday {
         &:focus {
             border-color: $primary;
             background-color: rgba($primary, 0.15);
-            color: var(--#{$prefix}dark);
+            color: var(--#{$prefix}body-color);
         }
     }
 
@@ -678,7 +678,7 @@ span.flatpickr-weekday {
     float: left;
     .flatpickr-weeks {
         padding: 0 12px;
-        box-shadow: 1px 0 0 #e6e6e6;
+        box-shadow: 1px 0 0 var(--#{$prefix}border-color);
     }
 
     .flatpickr-weekday {
@@ -693,7 +693,7 @@ span.flatpickr-weekday {
             display: block;
             width: 100%;
             max-width: none;
-            color: rgba(var(--#{$prefix}dark-rgb),0.3);
+            color: rgba(var(--#{$prefix}body-rgb),0.3);
             background: transparent;
             cursor: default;
             border: none;
@@ -739,7 +739,7 @@ span.flatpickr-weekday {
         span{
             &.arrowUp, &.arrowDown{
                 &:after {
-                    border-bottom-color: $border-color;
+                    border-bottom-color: var(--#{$prefix}border-color);
                 }
             }
         }

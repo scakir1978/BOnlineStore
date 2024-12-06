@@ -81,7 +81,7 @@ File: Chat init js
                 var isUserProfile = userData.profile ? '<img src="' + userData.profile + '" class="rounded-circle img-fluid userprofile" alt=""><span class="user-status"></span>'
                     : '<div class="avatar-title rounded-circle bg-primary text-white fs-10">' + userData.nickname + '</div><span class="user-status"></span>';
 
-                var isMessageCount = userData.messagecount ? '<div class="ms-auto"><span class="badge badge-soft-dark rounded p-1">' +
+                var isMessageCount = userData.messagecount ? '<div class="ms-auto"><span class="badge bg-dark-subtle text-body rounded p-1">' +
                     userData.messagecount +
                     "</span></div>"
                     : "";
@@ -110,11 +110,11 @@ File: Chat init js
             var channelsData = data[0].channels;
             channelsData.forEach(function (isChannel, index) {
                 var isMessage = isChannel.messagecount
-                    ? '<div class="flex-shrink-0 ms-2"><span class="badge badge-soft-dark rounded p-1">' +
+                    ? '<div class="flex-shrink-0 ms-2"><span class="badge bg-dark-subtle text-body rounded p-1">' +
                     isChannel.messagecount +
                     "</span></div>"
                     : "";
-                var isMessageCount = isChannel.messagecount ? '<div class="ms-auto"><span class="badge badge-soft-dark rounded p-1">' +
+                var isMessageCount = isChannel.messagecount ? '<div class="ms-auto"><span class="badge bg-dark-subtle text-body rounded p-1">' +
                     isChannel.messagecount +
                     "</span></div>"
                     : "";
@@ -336,7 +336,7 @@ File: Chat init js
             <div class="p-3 border-primary border rounded-3">\
             <div class="d-flex align-items-center attached-file">\
                 <div class="flex-shrink-0 avatar-sm me-3 ms-0 attached-file-avatar">\
-                    <div class="avatar-title bg-soft-primary text-primary rounded-circle font-size-20">\
+                    <div class="avatar-title bg-primary-subtle text-primary rounded-circle font-size-20">\
                         <i class="ri-attachment-2"></i>\
                     </div>\
                 </div>\
@@ -960,3 +960,8 @@ function searchMessages() {
         }
     });
 };
+
+
+// chat-conversation
+var scrollEl = new SimpleBar(document.getElementById('chat-conversation'));
+scrollEl.getScrollElement().scrollTop = document.getElementById("users-conversation").scrollHeight;

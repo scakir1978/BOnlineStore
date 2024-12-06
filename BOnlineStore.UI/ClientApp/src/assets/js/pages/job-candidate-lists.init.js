@@ -100,11 +100,11 @@ function loadCandidateListData(datas, page) {
 function isStatus(val) {
     switch (val) {
         case "Part Time":
-            return ('<span class="badge badge-soft-danger">' + val + "</span>");
+            return ('<span class="badge bg-danger-subtle text-danger">' + val + "</span>");
         case "Full Time":
-            return ('<span class="badge badge-soft-success">' + val + "</span>");
+            return ('<span class="badge bg-success-subtle text-success">' + val + "</span>");
         case "Freelancer":
-            return ('<span class="badge badge-soft-secondary">' + val + "</span>");
+            return ('<span class="badge bg-secondary-subtle text-secondary">' + val + "</span>");
     }
 }
 

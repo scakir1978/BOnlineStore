@@ -18,13 +18,15 @@
         "CRYPTO": "Krypto",
         "PROJECTS": "Projekte",
         "NFT": "NFT",
-        "JOB":"ARBEIT"
+        "JOB": "ARBEIT"
       }
     },
     "APPS": {
       "TEXT": "Anwendungen",
       "LIST": {
         "CALENDAR": "Kalender",
+        "MAINCALENDAR": "Hauptkalender",
+        "MONTHGRID": "Monatsraster",
         "CHAT": "Plaudern",
         "EMAIL": "Email",
         "MAILBOX": "Briefkasten",
@@ -78,17 +80,17 @@
         "CREATENFT": "NFT erstellen",
         "FILEMANAGER": "Dateimanager",
         "TODO": "Machen",
-        "JOBS":"ARBEITSPLÄTZE",
-        "STATISTICS":"STATISTIKEN",
-        "JOBLISTS":"JOBLISTEN",
-        "GRID":"Netz",
-        "CANDIDATELISTS":"Kandidatenliste",
-        "GRIDVIEW":"Rasteransicht",
-        "APPLICATION":"Anwendung",
-        "NEWJOB":"Neue Arbeit",
-        "COMPANIESLIST":"Firmenliste",
-        "JOBCATEGORIES":"Berufskategorien",
-        "APIKEY":"API-Schlüssel"
+        "JOBS": "ARBEITSPLÄTZE",
+        "STATISTICS": "STATISTIKEN",
+        "JOBLISTS": "JOBLISTEN",
+        "GRID": "Netz",
+        "CANDIDATELISTS": "Kandidatenliste",
+        "GRIDVIEW": "Rasteransicht",
+        "APPLICATION": "Anwendung",
+        "NEWJOB": "Neue Arbeit",
+        "COMPANIESLIST": "Firmenliste",
+        "JOBCATEGORIES": "Berufskategorien",
+        "APIKEY": "API-Schlüssel"
       }
     },
     "LAYOUTS": {
@@ -140,8 +142,8 @@
         "COMINGSOON": "Kommt bald",
         "SITEMAP": "Seitenverzeichnis",
         "SEARCHRESULTS": "Suchergebnisse",
-        "PRIVACYPOLICY":"DATENSCHUTZ-BESTIMMUNGEN",
-        "TERMS&CONDITIONS":"TERMS & AMP; BEDINGUNGEN"
+        "PRIVACYPOLICY": "DATENSCHUTZ-BESTIMMUNGEN",
+        "TERMS&CONDITIONS": "TERMS & AMP; BEDINGUNGEN"
       }
     },
     "LANDING": {
@@ -149,7 +151,7 @@
       "LIST": {
         "ONEPAGE": "Eine Seite",
         "NFTLANDING": "NFT-Landung",
-        "JOB":"ARBEIT"
+        "JOB": "ARBEIT"
       }
     },
     "COMPONENTS": {
@@ -178,6 +180,7 @@
         "EMBEDVIDEO": "Video einbetten",
         "TYPOGRAPHY": "Typografie",
         "LISTS": "Listen",
+        "LINKS": "Links",
         "GENERAL": "Allgemein",
         "RIBBONS": "Bänder",
         "UTILITIES": "Dienstprogramme"
@@ -237,6 +240,8 @@
         "BAR": "Bar",
         "MIXED": "Gemischt",
         "TIMELINE": "Zeitleiste",
+        "RANGEAREA": "Reichweitenbereich",
+        "FUNNEL": "Trichter",
         "CANDLSTICK": "Kerzenhalter",
         "BOXPLOT": "Box-Plot",
         "BUBBLE": "Blase",

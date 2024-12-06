@@ -12,7 +12,7 @@ function getTime(params) {
     params = new Date(params);
     if (params.getHours() != null) {
         var hour = params.getHours();
-        var minute = (params.getMinutes()) ? params.getMinutes() : 00;
+        var minute = (params.getMinutes()) ? params.getMinutes() : 0;
         return hour + ":" + minute;
     }
 }
@@ -1509,7 +1509,7 @@ Array.from(Invoices).forEach(function (raw) {
             var first_letter = avtar_title[0].slice(0, 1);
             letters = first_letter
         }
-        var avatar_ = `<div class="flex-shrink-0 avatar-xs me-2"><div class="avatar-title bg-soft-success text-success rounded-circle fs-13">` + letters + `</div></div>`;
+        var avatar_ = `<div class="flex-shrink-0 avatar-xs me-2"><div class="avatar-title bg-success-subtle text-success rounded-circle fs-13">` + letters + `</div></div>`;
     }
 
     var tableRawData = `<tr>
@@ -1528,7 +1528,7 @@ Array.from(Invoices).forEach(function (raw) {
                 <td class="country">USA</td>
                 <td class="date">` + str_dt(raw.date) + ` <small class="text-muted">` + tConvert(raw.date) + `</small></td>
                 <td class="invoice_amount">$` + (raw.invoice_amount) + `</td>
-                <td class="status"><span class="badge badge-soft-` + badge + ` text-uppercase">` + raw.status + `</span>
+                <td class="status"><span class="badge bg-` + badge + `-subtle text-` + badge + ` text-uppercase">` + raw.status + `</span>
                 </td>
                 <td>
                     <div class="dropdown">

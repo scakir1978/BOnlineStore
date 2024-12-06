@@ -49,11 +49,11 @@
     }
 
     &.disabled {
-        color: $text-muted;
+        color: var(--#{$prefix}secondary-color);
         cursor: default;
 
         &:hover {
-            color: $text-muted;
+            color: var(--#{$prefix}secondary-color);
         }
     }
 }

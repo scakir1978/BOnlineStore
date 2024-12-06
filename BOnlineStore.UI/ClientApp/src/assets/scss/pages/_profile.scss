@@ -56,8 +56,8 @@
 }
 
 .profile-project-card {
-    border: 1px solid $border-color;
-    border-left: 3px solid $border-color;
+    border: 1px solid var(--#{$prefix}border-color);
+    border-left: 3px solid var(--#{$prefix}border-color);
 }
 
 @each $color,
@@ -126,7 +126,7 @@ $value in $theme-colors {
 
         &::before {
             content: "";
-            border-left: 2px dashed $border-color;
+            border-left: 2px dashed var(--#{$prefix}border-color);
             position: absolute;
             height: 100%;
             left: 23px;

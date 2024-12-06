@@ -1,7 +1,7 @@
 /*
 Template Name: Velzon - Admin & Dashboard Template
 Author: Themesbrand
-Version: 2.4.0
+Version: 3.0.0
 Website: https://Themesbrand.com/
 Contact: Themesbrand@gmail.com
 File: Main Js File
@@ -663,6 +663,9 @@ File: Main Js File
 			if (sessionStorage.getItem("data-layout") == "vertical") {
 				document.documentElement.setAttribute("data-sidebar-size", "sm");
 			}
+			if (sessionStorage.getItem("data-layout") == "semibox") {
+				document.documentElement.setAttribute("data-sidebar-size", "sm");
+			}
 			if (document.querySelector(".hamburger-icon")) {
 				document.querySelector(".hamburger-icon").classList.add("open");
 			}
@@ -682,6 +685,9 @@ File: Main Js File
 					"data-sidebar-size",
 					sessionStorage.getItem("data-sidebar-size")
 				);
+			}
+			if (sessionStorage.getItem("data-layout") == "semibox") {
+				document.documentElement.setAttribute("data-sidebar-size", sessionStorage.getItem("data-sidebar-size"));
 			}
 			if (document.querySelector(".hamburger-icon")) {
 				document.querySelector(".hamburger-icon").classList.remove("open");
@@ -1157,7 +1163,7 @@ File: Main Js File
 						"afterend",
 						'<li class="nav-item">\
 						<a class="nav-link" href="#sidebarMore" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarMore">\
-							<i class="ri-briefcase-2-line"></i> ' + extraMenuName + '\
+							<i class="ri-briefcase-2-line"></i> <span data-key="t-more">' + extraMenuName + '</span>\
 						</a>\
 						<div class="collapse menu-dropdown" id="sidebarMore"><ul class="nav nav-sm flex-column">' + newMenus + "</ul></div>\
 					</li>");
@@ -1412,26 +1418,26 @@ File: Main Js File
 						break;
 				}
 
-				switch (isLayoutAttributes["data-layout-mode"]) {
+				switch (isLayoutAttributes["data-bs-theme"]) {
 					case "light":
-						getElementUsingTagname("data-layout-mode", "light");
-						document.documentElement.setAttribute("data-layout-mode", "light");
-						sessionStorage.setItem("data-layout-mode", "light");
+						getElementUsingTagname("data-bs-theme", "light");
+						document.documentElement.setAttribute("data-bs-theme", "light");
+						sessionStorage.setItem("data-bs-theme", "light");
 						break;
 					case "dark":
-						getElementUsingTagname("data-layout-mode", "dark");
-						document.documentElement.setAttribute("data-layout-mode", "dark");
-						sessionStorage.setItem("data-layout-mode", "dark");
+						getElementUsingTagname("data-bs-theme", "dark");
+						document.documentElement.setAttribute("data-bs-theme", "dark");
+						sessionStorage.setItem("data-bs-theme", "dark");
 						break;
 					default:
-						if (sessionStorage.getItem("data-layout-mode") && sessionStorage.getItem("data-layout-mode") == "dark") {
-							sessionStorage.setItem("data-layout-mode", "dark");
-							document.documentElement.setAttribute("data-layout-mode", "dark");
-							getElementUsingTagname("data-layout-mode", "dark");
+						if (sessionStorage.getItem("data-bs-theme") && sessionStorage.getItem("data-bs-theme") == "dark") {
+							sessionStorage.setItem("data-bs-theme", "dark");
+							document.documentElement.setAttribute("data-bs-theme", "dark");
+							getElementUsingTagname("data-bs-theme", "dark");
 						} else {
-							sessionStorage.setItem("data-layout-mode", "light");
-							document.documentElement.setAttribute("data-layout-mode", "light");
-							getElementUsingTagname("data-layout-mode", "light");
+							sessionStorage.setItem("data-bs-theme", "light");
+							document.documentElement.setAttribute("data-bs-theme", "light");
+							getElementUsingTagname("data-bs-theme", "light");
 						}
 						break;
 				}
@@ -1669,8 +1675,10 @@ File: Main Js File
 							document.documentElement.setAttribute("data-body-image", "img-1");
 
 							if (document.getElementById("theme-settings-offcanvas")) {
-								document.getElementById("sidebar-img").style.display = "none";
-								document.documentElement.removeAttribute("data-sidebar-image");
+								if (document.getElementById("sidebar-img")) { 
+									document.getElementById("sidebar-img").style.display = "none";
+									document.documentElement.removeAttribute("data-sidebar-image");
+								}
 							}
 						} else if (sessionStorage.getItem("data-body-image") == "img-2") {
 							sessionStorage.setItem("data-body-image", "img-2");
@@ -1713,6 +1721,7 @@ File: Main Js File
 	}
 
 	// add change event listener on right layout setting
+	var resizeEvent = new Event('resize');
 	function getElementUsingTagname(ele, val) {
 		Array.from(document.querySelectorAll("input[name=" + ele + "]")).forEach(function (x) {
 			val == x.value ? (x.checked = true) : (x.checked = false);
@@ -1762,6 +1771,25 @@ File: Main Js File
 					}
 				}
 
+				var sidebarSections = "block";
+				if (document.documentElement.getAttribute("data-layout") == "semibox") {
+					if(document.documentElement.getAttribute("data-sidebar-visibility") == "hidden"){
+						document.documentElement.removeAttribute("data-sidebar");
+						document.documentElement.removeAttribute("data-sidebar-image");
+						document.documentElement.removeAttribute("data-sidebar-size");
+						sidebarSections = "none";
+					} else {
+						document.documentElement.setAttribute("data-sidebar", sessionStorage.getItem("data-sidebar"));
+						document.documentElement.setAttribute("data-sidebar-image", sessionStorage.getItem("data-sidebar-image"));
+						document.documentElement.setAttribute("data-sidebar-size", sessionStorage.getItem("data-sidebar-size"));
+					}
+				}
+				document.getElementById("sidebar-size").style.display = sidebarSections;
+				document.getElementById("sidebar-color").style.display = sidebarSections;
+				if (document.getElementById("sidebar-img")) {
+					document.getElementById("sidebar-img").style.display = sidebarSections;
+				}
+
 				if (ele == "data-preloader" && x.value == "enable") {
 					document.documentElement.setAttribute("data-preloader", "enable");
 					var preloader = document.getElementById("preloader");
@@ -1775,6 +1803,11 @@ File: Main Js File
 				} else if (ele == "data-preloader" && x.value == "disable") {
 					document.documentElement.setAttribute("data-preloader", "disable");
 					document.getElementById("customizerclose-btn").click();
+				}
+
+				if(ele == 'data-bs-theme') {
+					// Dispatch the resize event on the window object
+					window.dispatchEvent(resizeEvent);
 				}
 			});
 		});
@@ -1794,6 +1827,18 @@ File: Main Js File
 						document.getElementById("sidebar-color-gradient").click();
 					});
 				}
+			});
+		}
+
+		if (document.querySelectorAll("[data-bs-target='#collapseBgGradient.show']")) {
+			Array.from(document.querySelectorAll("[data-bs-target='#collapseBgGradient.show']")).forEach(function (subElem) {
+				subElem.addEventListener("click", function(){
+					var myCollapse = document.getElementById('collapseBgGradient')
+					var bsCollapse = new bootstrap.Collapse(myCollapse, {
+						toggle: false,
+					})
+					bsCollapse.hide()
+				})
 			});
 		}
 
@@ -1838,7 +1883,7 @@ File: Main Js File
 			var isLayoutAttributes = {};
 			isLayoutAttributes["data-layout"] = sessionStorage.getItem("data-layout");
 			isLayoutAttributes["data-sidebar-size"] = sessionStorage.getItem("data-sidebar-size");
-			isLayoutAttributes["data-layout-mode"] = sessionStorage.getItem("data-layout-mode");
+			isLayoutAttributes["data-bs-theme"] = sessionStorage.getItem("data-bs-theme");
 			isLayoutAttributes["data-layout-width"] = sessionStorage.getItem("data-layout-width");
 			isLayoutAttributes["data-sidebar"] = sessionStorage.getItem("data-sidebar");
 			isLayoutAttributes['data-sidebar-image'] = sessionStorage.getItem('data-sidebar-image');
@@ -1907,9 +1952,11 @@ File: Main Js File
 		var lightDarkBtn = document.querySelectorAll(".light-dark-mode");
 		if (lightDarkBtn && lightDarkBtn.length) {
 			lightDarkBtn[0].addEventListener("click", function (event) {
-				html.hasAttribute("data-layout-mode") && html.getAttribute("data-layout-mode") == "dark" ?
-					setLayoutMode("data-layout-mode", "light", "layout-mode-light", html) :
-					setLayoutMode("data-layout-mode", "dark", "layout-mode-dark", html);
+				html.hasAttribute("data-bs-theme") && html.getAttribute("data-bs-theme") == "dark" ?
+					setLayoutMode("data-bs-theme", "light", "layout-mode-light", html) :
+					setLayoutMode("data-bs-theme", "dark", "layout-mode-dark", html);
+					// Dispatch the resize event on the window object
+					window.dispatchEvent(resizeEvent);
 			});
 		}
 	}

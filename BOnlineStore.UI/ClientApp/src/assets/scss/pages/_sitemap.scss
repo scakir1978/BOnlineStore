@@ -24,7 +24,7 @@
         a {
             display: block;
             background: var(--#{$prefix}light);
-            border: 2px solid var(--#{$prefix}card-bg-custom);
+            border: 2px solid var(--#{$prefix}secondary-bg);
             box-shadow: $box-shadow;
             font-size: $font-size-base;
             height: 60px;
@@ -64,7 +64,7 @@
             display: block;
             width: 0;
             height: 130px;
-            border-left: 2px dashed $border-color;
+            border-left: 2px dashed var(--#{$prefix}border-color);
             left: 45.45%;
             position: relative;
         }
@@ -75,11 +75,11 @@
                 height: 64px;
                 margin: 0 auto 92px auto;
                 padding-top: 25px;
-                border-bottom: 2px dashed $border-color;
+                border-bottom: 2px dashed var(--#{$prefix}border-color);
                 z-index: 1;
                 float: right;
                 right: 27.2%;
-                border-left: 2px dashed $border-color;
+                border-left: 2px dashed var(--#{$prefix}border-color);
 
                 a {
                     width: 100%;
@@ -115,7 +115,7 @@
             height: 64px;
             margin: 0 auto 92px auto;
             padding-top: 25px;
-            border-bottom: 2px dashed $border-color;
+            border-bottom: 2px dashed var(--#{$prefix}border-color);
             z-index: 1;
             float: left;
             left: 27%;
@@ -144,9 +144,9 @@
         position: absolute;
         width: 81.1%;
         height: 22px;
-        border-top: 2px dashed $border-color;
-        border-right: 2px dashed $border-color;
-        border-left: 2px dashed $border-color;
+        border-top: 2px dashed var(--#{$prefix}border-color);
+        border-right: 2px dashed var(--#{$prefix}border-color);
+        border-left: 2px dashed var(--#{$prefix}border-color);
         margin: 0 auto;
         top: 130px;
         left: 9.1%
@@ -170,7 +170,7 @@
 }
 
 .department {
-    border-left: 2px dashed $border-color;
+    border-left: 2px dashed var(--#{$prefix}border-color);
     float: left;
     margin-left: 1.75%;
     margin-bottom: 60px;
@@ -182,7 +182,7 @@
         position: absolute;
         width: 0;
         height: 22px;
-        border-left: 2px dashed $border-color;
+        border-left: 2px dashed var(--#{$prefix}border-color);
         z-index: 1;
         top: -22px;
         left: 50%;
@@ -200,11 +200,11 @@
 
         li {
             padding-left: 25px;
-            border-bottom: 2px dashed $border-color;
+            border-bottom: 2px dashed var(--#{$prefix}border-color);
             height: 80px;
 
             a {
-                background: var(--#{$prefix}card-bg-custom);
+                background: var(--#{$prefix}secondary-bg);
                 margin-top: 48px;
                 position: absolute;
                 z-index: 1;
@@ -295,7 +295,7 @@
                     &:before {
                         content: "";
                         height: calc(100% - 14px);
-                        border-right: 2px dashed $border-color;
+                        border-right: 2px dashed var(--#{$prefix}border-color);
                         position: absolute;
                         top: 0px;
                         left: 0px;
@@ -313,7 +313,7 @@
                     &:after {
                         content: "";
                         width: 24px;
-                        border-top: 2px dashed $border-color;
+                        border-top: 2px dashed var(--#{$prefix}border-color);
                         position: absolute;
                         top: 50%;
                         transform: translateY(-50%);
@@ -337,7 +337,7 @@
                     content: "";
                     height: 24px;
                     width: 0;
-                    border-right: 2px dashed $border-color;
+                    border-right: 2px dashed var(--#{$prefix}border-color);
                     position: absolute;
                     top: 0;
                     left: 0;
@@ -348,7 +348,7 @@
                 &:after {
                     content: "";
                     width: 100%;
-                    border-top: 2px dashed $border-color;
+                    border-top: 2px dashed var(--#{$prefix}border-color);
                     position: absolute;
                     top: 0;
                     left: 50%;
@@ -364,7 +364,7 @@
                     &::before {
                         content: "";
                         height: 23px;
-                        border-right: 2px dashed $border-color;
+                        border-right: 2px dashed var(--#{$prefix}border-color);
                         position: absolute;
                         top: 28px;
                         left: 0;
@@ -380,7 +380,7 @@
                     &::before {
                         content: "";
                         height: 21px;
-                        border-right: 2px dashed $border-color;
+                        border-right: 2px dashed var(--#{$prefix}border-color);
                         position: absolute;
                         top: 27px;
                         left: 49%;
@@ -424,7 +424,7 @@
         padding-top: 10px;
         &:before {
             content: "";
-            border-left: 2px dashed $border-color;
+            border-left: 2px dashed var(--#{$prefix}border-color);
             position: absolute;
             top: 0;
             height: 100%;
@@ -438,7 +438,7 @@
                 &::before {
                     content: "";
                     width: 24px;
-                    border-top: 2px dashed $border-color;
+                    border-top: 2px dashed var(--#{$prefix}border-color);
                     position: absolute;
                     top: 50%;
                     transform: translateY(-50%);
@@ -458,7 +458,7 @@
                 &:before {
                     content: "";
                     height: 100%;
-                    border-left: 2px dashed $border-color;
+                    border-left: 2px dashed var(--#{$prefix}border-color);
                     position: absolute;
                     top: 0;
                     left: 0;

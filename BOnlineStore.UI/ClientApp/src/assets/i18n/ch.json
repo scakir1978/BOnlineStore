@@ -18,13 +18,15 @@
         "CRYPTO": "加密货币",
         "PROJECTS": "项目",
         "NFT": "NFT",
-        "JOB":"工作"
+        "JOB": "工作"
       }
     },
     "APPS": {
       "TEXT": "应用",
       "LIST": {
         "CALENDAR": "日历",
+        "MAINCALENDAR": "主日历",
+        "MONTHGRID": "月份网格",
         "CHAT": "聊天",
         "EMAIL": "电子邮件",
         "MAILBOX": "邮箱",
@@ -78,17 +80,17 @@
         "CREATENFT": "創建 NFT",
         "FILEMANAGER": "文件管理器",
         "TODO": "去做",
-        "JOBS":"工作",
-        "STATISTICS":"统计数据",
-        "JOBLISTS":"职位列表",
-        "GRID":"网格",
-        "CANDIDATELISTS":"候选人名单",
-        "GRIDVIEW":"网格视图",
-        "APPLICATION":"应用",
-        "NEWJOB":"新工作",
-        "COMPANIESLIST":"公司名单",
-        "JOBCATEGORIES":"职位类别",
-        "APIKEY":"API密钥"
+        "JOBS": "工作",
+        "STATISTICS": "统计数据",
+        "JOBLISTS": "职位列表",
+        "GRID": "网格",
+        "CANDIDATELISTS": "候选人名单",
+        "GRIDVIEW": "网格视图",
+        "APPLICATION": "应用",
+        "NEWJOB": "新工作",
+        "COMPANIESLIST": "公司名单",
+        "JOBCATEGORIES": "职位类别",
+        "APIKEY": "API密钥"
       }
     },
     "LAYOUTS": {
@@ -140,8 +142,8 @@
         "COMINGSOON": "快来了",
         "SITEMAP": "网站地图",
         "SEARCHRESULTS": "搜索结果",
-        "PRIVACYPOLICY":"隐私政策",
-        "TERMS&CONDITIONS":"条款和条件"
+        "PRIVACYPOLICY": "隐私政策",
+        "TERMS&CONDITIONS": "条款和条件"
       }
     },
     "LANDING": {
@@ -149,7 +151,7 @@
       "LIST": {
         "ONEPAGE": "一页",
         "NFTLANDING": "NFT 登陆",
-        "JOB":"工作"
+        "JOB": "工作"
       }
     },
     "COMPONENTS": {
@@ -178,6 +180,7 @@
         "EMBEDVIDEO": "嵌入视频",
         "TYPOGRAPHY": "排版",
         "LISTS": "列表",
+        "LINKS": "链接",
         "GENERAL": "一般的",
         "RIBBONS": "丝带",
         "UTILITIES": "实用程序"
@@ -237,6 +240,8 @@
         "BAR": "酒吧",
         "MIXED": "混合",
         "TIMELINE": "时间线",
+        "RANGEAREA": "范围面积",
+        "FUNNEL": "漏斗",
         "CANDLSTICK": "烛台",
         "BOXPLOT": "箱形图",
         "BUBBLE": "气泡",
@@ -247,7 +252,7 @@
         "RADIALBAR": "径向杆",
         "RADAR": "雷达",
         "POLARAREA": "极地",
-        "CHARTJS": "Chartjs",
+        "CHARTJS": "图表",
         "ECHARTS": "图表"
       }
     },

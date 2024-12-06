@@ -18,13 +18,15 @@
         "CRYPTO": "Cripto",
         "PROJECTS": "Progetti",
         "NFT": "NFT",
-        "JOB":"Lavoro"
+        "JOB": "Lavoro"
       }
     },
     "APPS": {
       "TEXT": "App",
       "LIST": {
         "CALENDAR": "Calendario",
+        "MAINCALENDAR": "Calendario principale",
+        "MONTHGRID": "Griglia del mese",
         "CHAT": "Chiacchierata",
         "EMAIL": "E-mail",
         "MAILBOX": "Cassetta postale",
@@ -78,17 +80,17 @@
         "CREATENFT": "Crea NFT",
         "FILEMANAGER": "Gestore di file",
         "TODO": "Da fare",
-        "JOBS":"Lavori",
-        "STATISTICS":"Statistiche",
-        "JOBLISTS":"Liste di lavoro",
-        "GRID":"Griglia",
-        "CANDIDATELISTS":"Elenco dei candidati",
-        "GRIDVIEW":"Vista a griglia",
-        "APPLICATION":"Applicazione",
-        "NEWJOB":"Nuovo lavoro",
-        "COMPANIESLIST":"Elenco aziende",
-        "JOBCATEGORIES":"Categorie di lavoro",
-        "APIKEY":"Chiave API"
+        "JOBS": "Lavori",
+        "STATISTICS": "Statistiche",
+        "JOBLISTS": "Liste di lavoro",
+        "GRID": "Griglia",
+        "CANDIDATELISTS": "Elenco dei candidati",
+        "GRIDVIEW": "Vista a griglia",
+        "APPLICATION": "Applicazione",
+        "NEWJOB": "Nuovo lavoro",
+        "COMPANIESLIST": "Elenco aziende",
+        "JOBCATEGORIES": "Categorie di lavoro",
+        "APIKEY": "Chiave API"
       }
     },
     "LAYOUTS": {
@@ -140,8 +142,8 @@
         "COMINGSOON": "Prossimamente",
         "SITEMAP": "Mappa del sito",
         "SEARCHRESULTS": "risultati di ricerca",
-        "PRIVACYPOLICY":"politica sulla riservatezza",
-        "TERMS&CONDITIONS":"Termini e condizioni"
+        "PRIVACYPOLICY": "politica sulla riservatezza",
+        "TERMS&CONDITIONS": "Termini e condizioni"
       }
     },
     "LANDING": {
@@ -149,7 +151,7 @@
       "LIST": {
         "ONEPAGE": "Una pagina",
         "NFTLANDING": "Atterraggio NFT",
-        "JOB":"Lavoro"
+        "JOB": "Lavoro"
       }
     },
     "COMPONENTS": {
@@ -178,6 +180,7 @@
         "EMBEDVIDEO": "Incorpora video",
         "TYPOGRAPHY": "Tipografia",
         "LISTS": "Elenchi",
+        "LINKS": "Collegamenti",
         "GENERAL": "Generale",
         "RIBBONS": "Nastri",
         "UTILITIES": "Utilità"
@@ -237,6 +240,8 @@
         "BAR": "Sbarra",
         "MIXED": "Misto",
         "TIMELINE": "Sequenza temporale",
+        "RANGEAREA": "Area di portata",
+        "FUNNEL": "Imbuto",
         "CANDLSTICK": "Candeliere",
         "BOXPLOT": "Boxplot",
         "BUBBLE": "Bolla",

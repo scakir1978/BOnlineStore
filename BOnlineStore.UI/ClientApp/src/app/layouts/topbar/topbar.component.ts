@@ -147,17 +147,17 @@ export class TopbarComponent implements OnInit {
 
     switch (mode) {
       case 'light':
-        document.documentElement.setAttribute('data-layout-mode', 'light');
+        document.documentElement.setAttribute('data-bs-theme', 'light');
         window.localStorage.setItem('dx-theme', 'light');
         themes.current('light');
         break;
       case 'dark':
-        document.documentElement.setAttribute('data-layout-mode', 'dark');
+        document.documentElement.setAttribute('data-bs-theme', 'dark');
         window.localStorage.setItem('dx-theme', 'dark');
         themes.current('dark');
         break;
       default:
-        document.documentElement.setAttribute('data-layout-mode', 'light');
+        document.documentElement.setAttribute('data-bs-theme', 'light');
         window.localStorage.setItem('dx-theme', 'light');
         themes.current('light');
         break;

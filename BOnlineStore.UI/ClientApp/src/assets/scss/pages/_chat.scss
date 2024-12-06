@@ -12,7 +12,7 @@
 .chat-leftsidebar {
     height: calc(100vh - 137px);
     position: relative;
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
 
     @media (min-width: 992px) {
         min-width: 300px;
@@ -80,7 +80,7 @@
         height: 10px;
         background-color: $gray-500;
         border-radius: 50%;
-        border: 2px solid var(--#{$prefix}card-bg-custom);
+        border: 2px solid var(--#{$prefix}secondary-bg);
         position: absolute;
         right: 0;
         left: auto;
@@ -184,7 +184,7 @@
 
 .user-chat-topbar{
     border-bottom: 1px solid transparent;
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
     @media (max-width: 991.98px) {
         position: fixed;
         left: 0;
@@ -480,7 +480,7 @@
 
 .chat-input-section{
     border-top: 1px solid transparent;
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
     position: relative;
     z-index: 1;
 
@@ -527,7 +527,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    border-top: 1px solid $border-color;
+    border-top: 1px solid var(--#{$prefix}border-color);
     overflow: hidden;
     opacity: 0;
     bottom: 0;
@@ -553,11 +553,11 @@
     margin-bottom: 8px;
     text-align: left;
     border-radius: 4px;
-    background-color: rgba(var(--vz-success-rgb), 0.1);
-    border-left: 2px solid rgba(var(--vz-success-rgb), 1);
+    background-color: rgba(var(--#{$prefix}success-rgb), 0.1);
+    border-left: 2px solid rgba(var(--#{$prefix}success-rgb), 1);
 
     .conversation-name{
-        color: rgba(var(--vz-success-rgb), 1);
+        color: rgba(var(--#{$prefix}success-rgb), 1);
         font-size: 14px;
     }
 }

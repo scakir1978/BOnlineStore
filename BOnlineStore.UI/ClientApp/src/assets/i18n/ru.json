@@ -18,13 +18,15 @@
         "CRYPTO": "Крипто",
         "PROJECTS": "Проекты",
         "NFT": "NFT",
-        "JOB":"Работа"
+        "JOB": "Работа"
       }
     },
     "APPS": {
       "TEXT": "Программы",
       "LIST": {
         "CALENDAR": "Календарь",
+        "MAINCALENDAR": "Главный календарь",
+        "MONTHGRID": "Месячная сетка",
         "CHAT": "Чат",
         "EMAIL": "Эл. адрес",
         "MAILBOX": "Почтовый ящик",
@@ -78,17 +80,17 @@
         "CREATENFT": "Создать NFT",
         "FILEMANAGER": "Файловый менеджер",
         "TODO": "Сделать",
-        "JOBS":"Работа",
-        "STATISTICS":"Статистика",
-        "JOBLISTS":"Списки вакансий",
-        "GRID":"Сетка",
-        "CANDIDATELISTS":"Список кандидатов",
-        "GRIDVIEW":"Вид сетки",
-        "APPLICATION":"Заявление",
-        "NEWJOB":"Новая работа",
-        "COMPANIESLIST":"Список компаний",
-        "JOBCATEGORIES":"Категории работы",
-        "APIKEY":"API-ключ"
+        "JOBS": "Работа",
+        "STATISTICS": "Статистика",
+        "JOBLISTS": "Списки вакансий",
+        "GRID": "Сетка",
+        "CANDIDATELISTS": "Список кандидатов",
+        "GRIDVIEW": "Вид сетки",
+        "APPLICATION": "Заявление",
+        "NEWJOB": "Новая работа",
+        "COMPANIESLIST": "Список компаний",
+        "JOBCATEGORIES": "Категории работы",
+        "APIKEY": "API-ключ"
       }
     },
     "LAYOUTS": {
@@ -140,8 +142,8 @@
         "COMINGSOON": "Вскоре",
         "SITEMAP": "Карта сайта",
         "SEARCHRESULTS": "результаты поиска",
-        "PRIVACYPOLICY":"Политика конфиденциальности",
-        "TERMS&CONDITIONS":"Срок и условия"
+        "PRIVACYPOLICY": "Политика конфиденциальности",
+        "TERMS&CONDITIONS": "Срок и условия"
       }
     },
     "LANDING": {
@@ -149,7 +151,7 @@
       "LIST": {
         "ONEPAGE": "Одна страница",
         "NFTLANDING": "Посадка NFT",
-        "JOB":"Работа"
+        "JOB": "Работа"
       }
     },
     "COMPONENTS": {
@@ -178,6 +180,7 @@
         "EMBEDVIDEO": "Встроить видео",
         "TYPOGRAPHY": "Типография",
         "LISTS": "Списки",
+        "LINKS": "Ссылки",
         "GENERAL": "Общий",
         "RIBBONS": "ленты",
         "UTILITIES": "Утилиты"
@@ -237,6 +240,8 @@
         "BAR": "Бар",
         "MIXED": "Смешанный",
         "TIMELINE": "Лента новостей",
+        "RANGEAREA": "Область диапазона",
+        "FUNNEL": "Воронка",
         "CANDLSTICK": "Подсвечник",
         "BOXPLOT": "Блочная диаграмма",
         "BUBBLE": "Пузырь",

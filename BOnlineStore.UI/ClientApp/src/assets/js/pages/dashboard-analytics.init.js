@@ -35,15 +35,19 @@ function getChartColorsArray(chartId) {
     }
 }
 
-// world map with line & markers
-var vectorMapWorldLineColors = getChartColorsArray("users-by-country");
-if (vectorMapWorldLineColors) {
-    var worldlinemap = new jsVectorMap({
-        map: "world_merc",
-        selector: "#users-by-country",
-        zoomOnScroll: false,
-        zoomButtons: false,
-        markers: [{
+var worldemapmarkers = "";
+function loadCharts() {
+    // world map with line & markers
+    var vectorMapWorldLineColors = getChartColorsArray("users-by-country");
+    if (vectorMapWorldLineColors) {
+        document.getElementById("users-by-country").innerHTML = "";
+        worldlinemap = "";
+        worldlinemap = new jsVectorMap({
+            map: "world_merc",
+            selector: "#users-by-country",
+            zoomOnScroll: false,
+            zoomButtons: false,
+            markers: [{
                 name: "Greenland",
                 coords: [72, -42]
             },
@@ -79,8 +83,8 @@ if (vectorMapWorldLineColors) {
                 name: "Ukraine",
                 coords: [48.379433, 31.16558]
             },
-        ],
-        lines: [{
+            ],
+            lines: [{
                 from: "Canada",
                 to: "Egypt"
             },
@@ -112,21 +116,30 @@ if (vectorMapWorldLineColors) {
                 from: "Ukraine",
                 to: "Egypt"
             },
-        ],
-        regionStyle: {
-            initial: {
-                stroke: "#9599ad",
-                strokeWidth: 0.25,
-                fill: vectorMapWorldLineColors,
-                fillOpacity: 1,
+            ],
+            regionStyle: {
+                initial: {
+                    stroke: "#9599ad",
+                    strokeWidth: 0.25,
+                    fill: vectorMapWorldLineColors,
+                    fillOpacity: 1,
+                },
             },
-        },
-        lineStyle: {
-            animation: true,
-            strokeDasharray: "6 3 6",
-        },
-    })
+            lineStyle: {
+                animation: true,
+                strokeDasharray: "6 3 6",
+            },
+        })
+    }
 }
+
+window.onresize = function () {
+    setTimeout(() => {
+        loadCharts();
+    }, 0);
+};
+
+loadCharts();
 
 // Countries charts
 var barchartCountriesColors = getChartColorsArray("countries_charts");

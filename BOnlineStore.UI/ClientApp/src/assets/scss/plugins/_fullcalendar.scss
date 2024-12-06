@@ -49,8 +49,9 @@
     .fc-col-header-cell-cushion {
         display: block;
         padding: 8px 4px;
+        color: var(--#{$prefix}body-color);
     }
-
+    
     .fc-daygrid-day-number {
         width: 24px;
         height: 24px;
@@ -62,6 +63,7 @@
         font-size: 12px;
         font-weight: $font-weight-medium;
         margin: 2px;
+        color: var(--#{$prefix}body-color);
     }
 
     .fc-daygrid-day {
@@ -108,6 +110,10 @@
         border-top: $table-border-width solid $table-border-color;
     }
 
+    .fc-scrollgrid{
+        border: 0;
+    }
+
     .fc-scrollgrid-section-liquid>td{
         border-top: 0;
     }
@@ -152,8 +158,8 @@
 }
 
 .fc-button {
-    background: var(--#{$prefix}card-bg-custom);
-    border-color: $border-color;
+    background: var(--#{$prefix}secondary-bg);
+    border-color: var(--#{$prefix}border-color);
     color: $gray-700;
     text-transform: capitalize;
     box-shadow: none;
@@ -188,10 +194,6 @@
 .fc-daygrid-dot-event:hover {
     background-color: $primary;
 }
-
-// .fc-daygrid-dot-event {
-//     color: $white !important;
-// }
 
 .fc-event-title,
 .fc-sticky {
@@ -231,39 +233,14 @@
 .fc-prev-button,
 .fc-next-button {
     position: relative;
-    height: 37.5px;
-    width: 37.5px;
-
-    &::before {
-        position: absolute;
-        font-family: remixicon !important;
-        font-size: 20px;
-        top: 0;
-        bottom: 0px;
-        left: 0;
-        right: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+    padding: 6px 8px!important;
 }
 
-.fc-prev-button {
-    &::before {
-        content: "\ea64";
-    }
-}
-
-.fc-next-button {
-    &::before {
-        content: "\ea6e";
-    }
-}
 
 .fc-toolbar-chunk {
-    .btn-group {
+    .fc-button-group {
         box-shadow: $element-shadow;
-        .btn {
+        .fc-button {
             color: $secondary;
             background-color: rgba($secondary, 0.15);
             border: none;
@@ -282,6 +259,19 @@
         border: $secondary;
     }
 }
+
+.fc {
+    .fc-button-primary:not(:disabled).fc-button-active, 
+    .fc-button-primary:not(:disabled):active{
+        background-color: $secondary !important;
+        border-color: $secondary !important;
+        color: $white !important;
+    }
+    .fc-button-primary {
+        text-transform: capitalize;
+    }
+}
+
 
 .fc-toolbar {
     @media (max-width: 575.98px) {
@@ -334,20 +324,20 @@
 .fc-timegrid-slots {
     table {
         tr {
-            border-color: $border-color !important;
+            border-color: var(--#{$prefix}border-color) !important;
         }
     }
 }
 
 .fc-list-table {
-    border-color: $border-color;
+    border-color: var(--#{$prefix}border-color);
 }
 
 @each $color,
 $value in $theme-colors {
     .fc-daygrid-event-harness {
         .fc-daygrid-event {
-            &.bg-soft-#{$color} {
+            &.bg-#{$color}-subtle {
 
                 .fc-event-title,
                 .fc-event-main {
@@ -359,7 +349,7 @@ $value in $theme-colors {
 
     .fc-timegrid-event-harness {
         .fc-timegrid-event {
-            &.bg-soft-#{$color} {
+            &.bg-#{$color}-subtle {
                 .fc-event-title {
                     color: $value !important;
                 }
@@ -369,7 +359,7 @@ $value in $theme-colors {
 
     .fc-list-table {
         .fc-list-event {
-            &.bg-soft-#{$color} {
+            &.bg-#{$color}-subtle {
                 color: $value !important;
 
                 .fc-list-event-title {
@@ -386,9 +376,9 @@ $value in $theme-colors {
     }
 }
 
-.fc-daygrid-event-harness .fc-daygrid-event.bg-soft-dark{
+.fc-daygrid-event-harness .fc-daygrid-event.bg-dark-subtle{
     .fc-event-main, .fc-event-title {
-        color:  var(--#{$prefix}dark) !important;
+        color:  var(--#{$prefix}dark-text-emphasis) !important;
     }
 }
 

@@ -243,6 +243,7 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                 document.getElementById("close-modal").click();
                 clearFields();
                 refreshCallbacks();
+                tooltipElm();
                 count++;
                 Swal.fire({
                     position: 'center',
@@ -281,6 +282,7 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                 });
                 document.getElementById("close-modal").click();
                 clearFields();
+                tooltipElm();
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
@@ -422,7 +424,7 @@ function refreshCallbacks() {
                         var assignElem = new DOMParser().parseFromString(x._values.assignedto, "text/html");
                         assignElem.querySelectorAll(".avatar-group .avatar-group-item").forEach(function(item){
                             if(item.getAttribute('data-bs-title') == nameelem){
-                                subElem.setAttribute("checked", "checked");
+                                subElem.checked = true;
                             };
                         });
                     });
@@ -464,7 +466,7 @@ function clearFields() {
     dateDueField.value = "";
 
     document.querySelectorAll('input[name="assignedTo[]"]').forEach(function(item){
-        item.removeAttribute("checked");
+        item.checked = false;
     });
 
     if (example)
@@ -491,13 +493,13 @@ document.querySelector(".pagination-prev").addEventListener("click", function ()
 function isStatus(val) {
     switch (val) {
         case "Pending":
-            return ('<span class="badge badge-soft-warning text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-warning-subtle text-warning text-uppercase">' + val + "</span>");
         case "Inprogress":
-            return ('<span class="badge badge-soft-secondary text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-secondary-subtle text-secondary text-uppercase">' + val + "</span>");
         case "Completed":
-            return ('<span class="badge badge-soft-success text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-success-subtle text-success text-uppercase">' + val + "</span>");
         case "New":
-            return ('<span class="badge badge-soft-info text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>");
     }
 }
 

@@ -18,13 +18,15 @@
         "CRYPTO": "Cripto",
         "PROJECTS": "Proyectos",
         "NFT": "NFT",
-        "JOB":"TRABAJO"
+        "JOB": "TRABAJO"
       }
     },
     "APPS": {
       "TEXT": "aplicaciones",
       "LIST": {
         "CALENDAR": "Calendario",
+        "MAINCALENDAR": "Calendario principal",
+        "MONTHGRID": "Cuadrícula del mes",
         "CHAT": "Chat",
         "EMAIL": "Correo electrónico",
         "MAILBOX": "Buzón",
@@ -78,17 +80,17 @@
         "CREATENFT": "Crear NFT",
         "FILEMANAGER": "Administradora de archivos",
         "TODO": "Que hacer",
-        "JOBS":"TRABAJOS",
-        "STATISTICS":"Estadísticas",
-        "JOBLISTS":"Listas de trabajos",
-        "GRID":"Cuadrícula",
-        "CANDIDATELISTS":"Lista de candidatos",
-        "GRIDVIEW":"Vista en cuadrícula",
-        "APPLICATION":"Solicitud",
-        "NEWJOB":"Nuevo trabajo",
-        "COMPANIESLIST":"Lista de empresas",
-        "JOBCATEGORIES":"Categorías de trabajo",
-        "APIKEY":"Clave API"
+        "JOBS": "TRABAJOS",
+        "STATISTICS": "Estadísticas",
+        "JOBLISTS": "Listas de trabajos",
+        "GRID": "Cuadrícula",
+        "CANDIDATELISTS": "Lista de candidatos",
+        "GRIDVIEW": "Vista en cuadrícula",
+        "APPLICATION": "Solicitud",
+        "NEWJOB": "Nuevo trabajo",
+        "COMPANIESLIST": "Lista de empresas",
+        "JOBCATEGORIES": "Categorías de trabajo",
+        "APIKEY": "Clave API"
       }
     },
     "LAYOUTS": {
@@ -140,8 +142,8 @@
         "COMINGSOON": "Próximamente",
         "SITEMAP": "mapa del sitio",
         "SEARCHRESULTS": "Resultados de la búsqueda",
-        "PRIVACYPOLICY":"Política de privacidad",
-        "TERMS&CONDITIONS":"Términos y condiciones"
+        "PRIVACYPOLICY": "Política de privacidad",
+        "TERMS&CONDITIONS": "Términos y condiciones"
       }
     },
     "LANDING": {
@@ -149,7 +151,7 @@
       "LIST": {
         "ONEPAGE": "Una página",
         "NFTLANDING": "Aterrizaje NFT",
-        "JOB":"TRABAJO"
+        "JOB": "TRABAJO"
       }
     },
     "COMPONENTS": {
@@ -178,6 +180,7 @@
         "EMBEDVIDEO": "Insertar video",
         "TYPOGRAPHY": "Tipografía",
         "LISTS": "Liza",
+        "LINKS": "Enlaces",
         "GENERAL": "General",
         "RIBBONS": "Cintas",
         "UTILITIES": "Utilidades"
@@ -237,6 +240,8 @@
         "BAR": "Bar",
         "MIXED": "Mezclado",
         "TIMELINE": "Cronología",
+        "RANGEAREA": "Área de rango",
+        "FUNNEL": "Embudo",
         "CANDLSTICK": "candelabro",
         "BOXPLOT": "diagrama de caja",
         "BUBBLE": "Burbuja",

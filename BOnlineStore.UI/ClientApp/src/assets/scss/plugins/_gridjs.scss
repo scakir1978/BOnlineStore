@@ -28,12 +28,12 @@
     &::-webkit-scrollbar-thumb {
         background-color: rgba(var(--#{$prefix}dark-rgb), .075);
         border-radius: 10px;
-        border: 2px solid var(--#{$prefix}card-bg-custom);
+        border: 2px solid var(--#{$prefix}secondary-bg);
     }
 
     &::-webkit-scrollbar-track {
         border-radius: 10px;
-        background-color: var(--#{$prefix}card-bg-custom);
+        background-color: var(--#{$prefix}secondary-bg);
     }
 }
 
@@ -85,7 +85,7 @@ th {
 }
 
 .gridjs-summary {
-    color: $text-muted;
+    color: var(--#{$prefix}secondary-color);
     margin-top: 8px !important;
 }
 
@@ -146,7 +146,7 @@ th {
         transform: translateY(-50%);
         left: 10px;
         font-size: 14px;
-        color: $text-muted;
+        color: var(--#{$prefix}secondary-color);
     }
 }
 
@@ -259,12 +259,12 @@ button{
 }
 
 .gridjs-loading-bar {
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
 }
 
-[data-layout-mode="dark"]{
-    button{
-        &.gridjs-sort-neutral, &.gridjs-sort-asc, &.gridjs-sort-desc{
+[data-bs-theme="dark"] {
+    button {
+        &:is(.gridjs-sort-neutral, .gridjs-sort-asc, .gridjs-sort-desc) {
             filter: $btn-close-white-filter;
         }
     }

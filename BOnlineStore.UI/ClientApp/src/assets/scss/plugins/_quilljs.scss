@@ -38,7 +38,7 @@
 
     span {
         outline: none !important;
-        color: var(--#{$prefix}choices-link-color);
+        color: var(--#{$prefix}body-color);
 
         &:hover {
             color: $primary !important;
@@ -68,11 +68,11 @@
     .ql-stroke,
     .ql-script,
     .ql-strike svg {
-        stroke: var(--#{$prefix}choices-link-color);
+        stroke: var(--#{$prefix}body-color);
     }
 
     .ql-fill {
-        fill: var(--#{$prefix}choices-link-color);
+        fill: var(--#{$prefix}body-color);
     }
 
     .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) {
@@ -84,14 +84,14 @@
 
     .ql-picker {
         &.ql-expanded .ql-picker-label {
-            color: var(--#{$prefix}choices-link-color);
+            color: var(--#{$prefix}secondary-color);
         }
     }
 }
 
 .ql-snow {
     .ql-picker-options {
-        background-color: var(--#{$prefix}choices-bg);
-        border-color: $dropdown-border-color !important;
+        background-color: var(--#{$prefix}secondary-bg);
+        border-color: var(--#{$prefix}border-color) !important;
     }
 }

@@ -12,11 +12,11 @@
     .choices__inner{
         padding: 0;
         border: none;
-        background-color: var(--#{$prefix}card-bg-custom);
+        background-color: var(--#{$prefix}secondary-bg);
     }
 
     .choices__input{
-        background-color: var(--#{$prefix}card-bg-custom);
+        background-color: var(--#{$prefix}secondary-bg);
     }
 }
 
@@ -32,7 +32,7 @@
 .product-img-slider{
     .product-nav-slider{
         .nav-slide-item{
-            border: 1px solid $border-color;
+            border: 1px solid var(--#{$prefix}border-color);
             border-radius: $border-radius;
             padding: 0.5rem;
             cursor: pointer;
@@ -50,7 +50,7 @@
     a {
         &.active {
             .listname {
-                color: $success;
+                color: var(--#{$prefix}success);
             }
         }   
     }

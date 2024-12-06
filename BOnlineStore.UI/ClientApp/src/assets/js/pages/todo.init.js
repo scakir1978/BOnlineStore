@@ -663,13 +663,13 @@ function tooltipElm(){
 function isStatus(val) {
     switch (val) {
         case "Pending":
-            return ('<span class="badge badge-soft-warning text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-warning-subtle text-warning text-uppercase">' + val + "</span>");
         case "Inprogress":
-            return ('<span class="badge badge-soft-secondary text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-secondary-subtle text-secondary text-uppercase">' + val + "</span>");
         case "Completed":
-            return ('<span class="badge badge-soft-success text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-success-subtle text-success text-uppercase">' + val + "</span>");
         case "New":
-            return ('<span class="badge badge-soft-info text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>");
     }
 }
 

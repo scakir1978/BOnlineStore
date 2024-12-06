@@ -326,18 +326,9 @@ var currentChatId = "users-chat";
 scrollToBottom(currentChatId);
 // // Scroll to Bottom
 function scrollToBottom(id) {
-    setTimeout(function () {
-        var simpleBar = (document.getElementById(id).querySelector("#chat-conversation .simplebar-content-wrapper")) ?
-            document.getElementById(id).querySelector("#chat-conversation .simplebar-content-wrapper") : ''
-
-        var offsetHeight = document.getElementsByClassName("chat-conversation-list")[0] ?
-            document.getElementById(id).getElementsByClassName("chat-conversation-list")[0].scrollHeight - window.innerHeight + 750 : 0;
-
-        if (offsetHeight)
-            simpleBar.scrollTo({
-                top: offsetHeight,
-                behavior: "smooth"
-            });
+    setTimeout(() => {
+        var scrollEl = new SimpleBar(document.getElementById('chat-conversation'));
+        scrollEl.getScrollElement().scrollTop = document.getElementById("users-conversation").scrollHeight;
     }, 100);
 }
 

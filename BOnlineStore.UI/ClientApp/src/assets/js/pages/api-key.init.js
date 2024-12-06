@@ -117,9 +117,9 @@ xhttp.send();
 function isStatus(val) {
     switch (val) {
         case "Disable":
-            return ('<span class="badge badge-soft-danger">' + val + "</span>");
+            return ('<span class="badge bg-danger-subtle text-danger">' + val + "</span>");
         case "Active":
-            return ('<span class="badge badge-soft-success">' + val + "</span>");
+            return ('<span class="badge bg-success-subtle text-success">' + val + "</span>");
     }
 }
 

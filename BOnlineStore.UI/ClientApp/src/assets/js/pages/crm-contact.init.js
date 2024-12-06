@@ -114,7 +114,7 @@ xhttp.onload = function () {
         var tags = raw.tags;
         var tagHtml = '';
         Array.from(tags).forEach((tag, index) => {
-            tagHtml += '<span class="badge badge-soft-primary me-1">'+tag+'</span>'
+            tagHtml += '<span class="badge bg-primary-subtle text-primary me-1">'+tag+'</span>'
         })
 
         contactList.add({
@@ -233,7 +233,7 @@ var tagInputField = new Choices('#taginput-choices', {
 var tagInputFieldValue = tagInputField.getValue(true);
 var tagHtmlValue = '';
 Array.from(tagInputFieldValue).forEach((tag, index) => {
-    tagHtmlValue += '<span class="badge badge-soft-primary me-1">'+tag+'</span>'
+    tagHtmlValue += '<span class="badge bg-primary-subtle text-primary me-1">'+tag+'</span>'
 })
 var forms = document.querySelectorAll('.tablelist-form')
 Array.prototype.slice.call(forms).forEach(function (form) {
@@ -253,13 +253,13 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                 var tagInputFieldValue = tagInputField.getValue(true);
                 var tagHtmlValue = '';
                 Array.from(tagInputFieldValue).forEach((tag, index) => {
-                    tagHtmlValue += '<span class="badge badge-soft-primary me-1">' + tag + '</span>'
+                    tagHtmlValue += '<span class="badge bg-primary-subtle text-primary me-1">' + tag + '</span>'
                 })
                 contactList.add({
                     id: `<a href="javascript:void(0);" class="fw-medium link-primary">#VZ${count}</a>`,
                     // name: customerNameField.value,
                     name: '<div class="d-flex align-items-center">\
-                    <div class="flex-shrink-0"><img src="'+ customerImg.src + '" alt="" class="avatar-xs rounded-circle object-cover"></div>\
+                    <div class="flex-shrink-0"><img src="'+ customerImg.src + '" alt="" class="avatar-xs rounded-circle object-fit-cover"></div>\
                     <div class="flex-grow-1 ms-2 name">'+ customerNameField.value + '</div>\
                     </div>',
                     company_name: company_nameField.value,
@@ -298,13 +298,13 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                     var tagInputFieldValue = tagInputField.getValue(true);
                     var tagHtmlValue = '';
                     Array.from(tagInputFieldValue).forEach((tag, index) => {
-                        tagHtmlValue += '<span class="badge badge-soft-primary me-1">' + tag + '</span>'
+                        tagHtmlValue += '<span class="badge bg-primary-subtle text-primary me-1">' + tag + '</span>'
                     })
                     if (selectedid == itemId) {
                         x.values({
                             id: `<a href="javascript:void(0);" class="fw-medium link-primary">#VZ${idField.value}</a>`,
                             name: '<div class="d-flex align-items-center">\
-                            <div class="flex-shrink-0"><img src="'+customerImg.src+'" alt="" class="avatar-xs rounded-circle object-cover"></div>\
+                            <div class="flex-shrink-0"><img src="'+customerImg.src+'" alt="" class="avatar-xs rounded-circle object-fit-cover"></div>\
                             <div class="flex-grow-1 ms-2 name">'+customerNameField.value+'</div>\
                             </div>',
                             company_name: company_nameField.value,
@@ -430,7 +430,7 @@ function refreshCallbacks() {
                         <div class="card-body text-center">
                             <div class="position-relative d-inline-block">
                                 <img src="${new DOMParser().parseFromString(x._values.name, "text/html").body.querySelector("img").src}" alt=""
-                                    class="avatar-lg rounded-circle img-thumbnail object-cover">
+                                    class="avatar-lg rounded-circle img-thumbnail object-fit-cover">
                                 <span class="contact-active position-absolute rounded-circle bg-success"><span
                                         class="visually-hidden"></span>
                             </div>
@@ -440,19 +440,19 @@ function refreshCallbacks() {
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item avatar-xs">
                                     <a href="javascript:void(0);"
-                                        class="avatar-title bg-soft-success text-success fs-15 rounded">
+                                        class="avatar-title bg-success-subtle text-success fs-15 rounded">
                                         <i class="ri-phone-line"></i>
                                     </a>
                                 </li>
                                 <li class="list-inline-item avatar-xs">
                                     <a href="javascript:void(0);"
-                                        class="avatar-title bg-soft-danger text-danger fs-15 rounded">
+                                        class="avatar-title bg-danger-subtle text-danger fs-15 rounded">
                                         <i class="ri-mail-line"></i>
                                     </a>
                                 </li>
                                 <li class="list-inline-item avatar-xs">
                                     <a href="javascript:void(0);"
-                                        class="avatar-title bg-soft-warning text-warning fs-15 rounded">
+                                        class="avatar-title bg-warning-subtle text-warning fs-15 rounded">
                                         <i class="ri-question-answer-line"></i>
                                     </a>
                                 </li>

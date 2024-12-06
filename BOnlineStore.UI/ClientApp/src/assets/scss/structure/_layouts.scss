@@ -4,11 +4,11 @@
 
 [data-layout-width="boxed"] {
     body {
-        background-color: $boxed-body-bg;
+        background-color: var(--#{$prefix}boxed-body-bg);
     }
 
     #layout-wrapper {
-        max-width: $boxed-layout-width;
+        max-width: var(--#{$prefix}boxed-layout-width);
         margin: 0 auto;
         box-shadow: $box-shadow;
         background-color: var(--#{$prefix}body-bg);
@@ -22,7 +22,7 @@
 
     #page-topbar,
     .footer {
-        max-width: $boxed-layout-width;
+        max-width: var(--#{$prefix}boxed-layout-width);
         margin: 0 auto;
         left: 0 !important;
     }
@@ -46,10 +46,10 @@
         #page-topbar,
         .footer {
             left: 0 !important;
-            max-width: calc(#{$boxed-layout-width} - #{$vertical-menu-width-sm});
+            max-width: calc(var(--#{$prefix}boxed-layout-width) - var(--#{$prefix}vertical-menu-width-sm));
 
             @media (min-width: 768px) {
-                left: $vertical-menu-width-sm !important;
+                left: var(--#{$prefix}vertical-menu-width-sm) !important;
             }
         }
     }
@@ -59,10 +59,10 @@
 
         #page-topbar,
         .footer {
-            max-width: calc(#{$boxed-layout-width} - #{$vertical-menu-width});
+            max-width: calc(var(--#{$prefix}boxed-layout-width) - var(--#{$prefix}vertical-menu-width));
 
             @media (min-width: 768px) {
-                left: $vertical-menu-width !important;
+                left: var(--#{$prefix}vertical-menu-width) !important;
             }
         }
     }
@@ -71,10 +71,10 @@
 
         #page-topbar,
         .footer {
-            max-width: calc(#{$boxed-layout-width} - #{$vertical-menu-width-md});
+            max-width: calc(var(--#{$prefix}boxed-layout-width) - var(--#{$prefix}vertical-menu-width-md));
 
             @media (min-width: 768px) {
-                left: $vertical-menu-width-md !important;
+                left: var(--#{$prefix}vertical-menu-width-md) !important;
             }
         }
     }
@@ -123,11 +123,11 @@
 
     .container-fluid,
     .navbar-header {
-        max-width: $boxed-layout-width;
+        max-width: var(--#{$prefix}boxed-layout-width);
     }
 
     .navbar-header {
-        padding: 0 calc(#{$grid-gutter-width} / 2) 0 0;
+        padding: 0 calc(#{$grid-gutter-width} * 0.5) 0 0;
     }
 
     &[data-sidebar-size="sm-hover"],
@@ -211,11 +211,11 @@
 
     &:is([data-sidebar="dark"], [data-sidebar="gradient"], [data-sidebar="gradient-2"], [data-sidebar="gradient-3"], [data-sidebar="gradient-4"]) {
         .logo-dark {
-            display: inline-block;
+            display: none;
         }
 
         .logo-light {
-            display: none;
+            display: inline-block;
         }
     }
 
@@ -230,11 +230,11 @@
         }
 
         .footer {
-            left: calc(#{$semibox-width} + #{$grid-gutter-width});
+            left: calc(var(--#{$prefix}semibox-width) + #{$grid-gutter-width});
         }
 
         #page-topbar {
-            left: calc(#{$semibox-width} + #{$grid-gutter-width});
+            left: calc(var(--#{$prefix}semibox-width) + #{$grid-gutter-width});
         }
 
         .main-content {

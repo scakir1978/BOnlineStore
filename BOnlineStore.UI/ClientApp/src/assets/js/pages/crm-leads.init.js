@@ -104,7 +104,7 @@ xhttp.onload = function () {
         var tags = raw.tags;
         var tagHtml = '';
         Array.from(tags).forEach((tag, index) => {
-            tagHtml += '<span class="badge badge-soft-primary me-1">'+tag+'</span>'
+            tagHtml += '<span class="badge bg-primary-subtle text-primary me-1">'+tag+'</span>'
         })
 
         leadsList.add({
@@ -199,7 +199,7 @@ var tagInputField = new Choices('#taginput-choices', {
 var tagInputFieldValue = tagInputField.getValue(true);
 var tagHtmlValue = '';
 Array.from(tagInputFieldValue).forEach((tag, index) => {
-  tagHtmlValue += '<span class="badge badge-soft-primary me-1">'+tag+'</span>'
+  tagHtmlValue += '<span class="badge bg-primary-subtle text-primary me-1">'+tag+'</span>'
 })
 
 var forms = document.querySelectorAll('.tablelist-form')
@@ -220,7 +220,7 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                 var tagInputFieldValue = tagInputField.getValue(true);
                 var tagHtmlValue = '';
                 Array.from(tagInputFieldValue).forEach((tag, index) => {
-                    tagHtmlValue += '<span class="badge badge-soft-primary me-1">' + tag + '</span>'
+                    tagHtmlValue += '<span class="badge bg-primary-subtle text-primary me-1">' + tag + '</span>'
                 })
                 leadsList.add({
                     id: '<a href="javascript:void(0);" class="fw-medium link-primary">#VZ'+count+"</a>",
@@ -262,7 +262,7 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                         var tagInputFieldValue = tagInputField.getValue(true);
                         var tagHtmlValue = '';
                         Array.from(tagInputFieldValue).forEach((tag, index) => {
-                            tagHtmlValue += '<span class="badge badge-soft-primary me-1">' + tag + '</span>'
+                            tagHtmlValue += '<span class="badge bg-primary-subtle text-primary me-1">' + tag + '</span>'
                         })
                         if (selectedid == itemId) {
                             x.values({

@@ -18,13 +18,15 @@
         "CRYPTO": "Crypto",
         "PROJECTS": "Projets",
         "NFT": "NFT",
-        "JOB":"TRAVAIL"
+        "JOB": "TRAVAIL"
       }
     },
     "APPS": {
       "TEXT": "applications",
       "LIST": {
         "CALENDAR": "Calendrier",
+        "MAINCALENDAR": "Calendrier principal",
+        "MONTHGRID": "Grille mensuelle",
         "CHAT": "Discuter",
         "EMAIL": "E-mail",
         "MAILBOX": "Boites aux lettres",
@@ -78,17 +80,17 @@
         "CREATENFT": "Créer NFT",
         "FILEMANAGER": "Gestionnaire de fichiers",
         "TODO": "Faire",
-        "JOBS":"Travaux",
-        "STATISTICS":"Statistiques",
-        "JOBLISTS":"Listes de tâches",
-        "GRID":"Grille",
-        "CANDIDATELISTS":"Liste des candidats",
-        "GRIDVIEW":"Vue Grille",
-        "APPLICATION":"Application",
-        "NEWJOB":"Nouveau travail",
-        "COMPANIESLIST":"Liste des entreprises",
-        "JOBCATEGORIES":"Catégories d'emploi",
-        "APIKEY":"Clé API"
+        "JOBS": "Travaux",
+        "STATISTICS": "Statistiques",
+        "JOBLISTS": "Listes de tâches",
+        "GRID": "Grille",
+        "CANDIDATELISTS": "Liste des candidats",
+        "GRIDVIEW": "Vue Grille",
+        "APPLICATION": "Application",
+        "NEWJOB": "Nouveau travail",
+        "COMPANIESLIST": "Liste des entreprises",
+        "JOBCATEGORIES": "Catégories d'emploi",
+        "APIKEY": "Clé API"
       }
     },
     "LAYOUTS": {
@@ -140,8 +142,8 @@
         "COMINGSOON": "À venir",
         "SITEMAP": "Plan du site",
         "SEARCHRESULTS": "Résultats de recherche",
-        "PRIVACYPOLICY":"Politique de confidentialité",
-        "TERMS&CONDITIONS":"Conditions générales"
+        "PRIVACYPOLICY": "Politique de confidentialité",
+        "TERMS&CONDITIONS": "Conditions générales"
       }
     },
     "LANDING": {
@@ -149,7 +151,7 @@
       "LIST": {
         "ONEPAGE": "Une page",
         "NFTLANDING": "Atterrissage NFT",
-        "JOB":"TRAVAIL"
+        "JOB": "TRAVAIL"
       }
     },
     "COMPONENTS": {
@@ -178,6 +180,7 @@
         "EMBEDVIDEO": "Intégrer la vidéo",
         "TYPOGRAPHY": "Typographie",
         "LISTS": "Listes",
+        "LINKS": "Liens",
         "GENERAL": "Général",
         "RIBBONS": "Rubans",
         "UTILITIES": "Utilitaires"
@@ -237,6 +240,8 @@
         "BAR": "Bar",
         "MIXED": "Mixte",
         "TIMELINE": "Chronologie",
+        "RANGEAREA": "Zone de portée",
+        "FUNNEL": "Entonnoir",
         "CANDLSTICK": "Chandelier",
         "BOXPLOT": "Boîte à moustaches",
         "BUBBLE": "Bulle",

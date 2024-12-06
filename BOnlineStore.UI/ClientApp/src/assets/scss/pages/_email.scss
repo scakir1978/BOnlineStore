@@ -12,7 +12,7 @@
 .email-menu-sidebar {
     height: calc(100vh - 137px);
     position: relative;
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
     transition: all 0.2s;
 
     @media (min-width: 992px) {
@@ -86,7 +86,7 @@
 }
 .email-topbar-link {
     .btn-ghost-secondary {
-        color: $text-muted;
+        color: var(--#{$prefix}secondary-color);
 
         &:hover {
             color: $secondary;
@@ -96,7 +96,7 @@
 
 .email-content {
     width: 100%;
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
     transition: all 0.2s;
 }
 
@@ -114,7 +114,7 @@
     bottom: 0;
     left: -2px;
     width: 0;
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
     transform: translateX(200%);
     transition: all 0.2s;
     display: none;
@@ -134,7 +134,7 @@
 }
 
 .email-detail-content-scroll {
-    height: calc(100vh - 395px);
+    height: calc(100vh - 400px);
 
     @media (max-width: 1349.98px) {
         height: calc(100vh - 257px);
@@ -164,7 +164,7 @@
         clear: both;
 
         a {
-            color: var(--#{$prefix}gray-700);
+            color: var(--#{$prefix}heading-color);
         }
 
         &:hover {
@@ -244,7 +244,7 @@
                 white-space: nowrap;
 
                 .teaser{
-                    color: var(--#{$prefix}gray-600);
+                    color: var(--#{$prefix}secondary-color);
                 }
             }
 
@@ -263,10 +263,10 @@
 
 
         &.unread {
-            color: var(--#{$prefix}gray-800);
+            color: var(--#{$prefix}body-color);
 
             a {
-                color: var(--#{$prefix}gray-800);
+                color: var(--#{$prefix}body-color);
                 font-weight: $font-weight-semibold;
             }
         }
@@ -345,6 +345,33 @@
     @media (max-width: 515.98px) {
         left: 16px;
         right: 16px;
+    }
+}
+
+.message-list-scroll{
+    position: relative;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+
+    &::-webkit-scrollbar:vertical {
+        width: 12px;
+    }
+
+    &::-webkit-scrollbar:horizontal {
+        height: 12px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(var(--#{$prefix}body-color-rgb), .075);
+        border-radius: 10px;
+        border: 2px solid var(--#{$prefix}secondary-bg);
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 10px;
+        background-color: var(--#{$prefix}secondary-bg);
     }
 }
 

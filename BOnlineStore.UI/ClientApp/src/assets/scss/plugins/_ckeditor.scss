@@ -30,13 +30,13 @@
 
     &.ck-editor__main>.ck-editor__editable {
         border-top: 0 !important;
-        background-color: var(--#{$prefix}card-bg-custom) !important;
+        background-color: var(--#{$prefix}secondary-bg) !important;
         border-color: $input-border-color !important;
         box-shadow: none !important;
     }
 
     &.ck-dropdown__panel{
-        background: var(--#{$prefix}choices-bg) !important;
+        background: var(--#{$prefix}secondary-bg) !important;
         box-shadow: $box-shadow-lg;
         animation-name: DropDownSlide;
         animation-duration: .3s;
@@ -45,7 +45,7 @@
     }
 
     &.ck-list {
-        background: var(--#{$prefix}choices-bg) !important;
+        background: var(--#{$prefix}secondary-bg) !important;
     }
 
     &.ck-dropdown {

@@ -21,7 +21,7 @@
     align-items: center;
     font-size: 16px;
     border-radius: 50%;
-    color: $text-muted;
+    color: var(--#{$prefix}secondary-color);
     background-color: var(--#{$prefix}light);
     z-index: 1;
   }

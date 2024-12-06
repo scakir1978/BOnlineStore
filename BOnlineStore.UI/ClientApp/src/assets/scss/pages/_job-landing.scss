@@ -14,7 +14,7 @@
     }
 
     @media (max-width: 991.98px) {
-        background-color: var(--#{$prefix}card-bg-custom);
+        background-color: var(--#{$prefix}secondary-bg);
         padding: 16px 0;
     }
 }
@@ -27,7 +27,7 @@
 }
 
 .job-panel-filter {
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
     border-radius: $border-radius;
     overflow: hidden;
 
@@ -43,7 +43,7 @@
     }
 
     input.form-control {
-        border-right: 1px solid $border-color;
+        border-right: 1px solid var(--#{$prefix}border-color);
     }
 
     @media (max-width: 767.98px) {
@@ -72,7 +72,7 @@
     margin: 0 auto;
 
     .circle {
-        border: 1px solid $border-color;
+        border: 1px solid var(--#{$prefix}border-color);
         height: 240px;
         width: 240px;
         margin: 0 auto;
@@ -83,7 +83,7 @@
         position: absolute;
         top: -20px;
         right: -20px;
-        border: 1px solid $border-color;
+        border: 1px solid var(--#{$prefix}border-color);
         height: 280px;
         width: 280px;
         margin: 0 auto;
@@ -94,7 +94,7 @@
         position: absolute;
         top: -40px;
         right: -40px;
-        border: 1px solid $border-color;
+        border: 1px solid var(--#{$prefix}border-color);
         height: 320px;
         width: 320px;
         margin: 0 auto;
@@ -105,7 +105,7 @@
         position: absolute;
         top: -60px;
         right: -60px;
-        border: 1px solid $border-color;
+        border: 1px solid var(--#{$prefix}border-color);
         height: 360px;
         width: 360px;
         margin: 0 auto;

@@ -341,6 +341,169 @@ if (chartColumnStacked100Colors) {
     chart.render();
 }
 
+//grouped_stacked_columns
+var groupedStackedColors = getChartColorsArray("grouped_stacked_columns");
+if (groupedStackedColors) {
+    var options = {
+        series: [
+            {
+                name: 'Q1 Budget',
+                group: 'budget',
+                data: [44000, 55000, 41000, 67000, 22000, 43000]
+            },
+            {
+                name: 'Q1 Actual',
+                group: 'actual',
+                data: [48000, 50000, 40000, 65000, 25000, 40000]
+            },
+            {
+                name: 'Q2 Budget',
+                group: 'budget',
+                data: [13000, 36000, 20000, 8000, 13000, 27000]
+            },
+            {
+                name: 'Q2 Actual',
+                group: 'actual',
+                data: [20000, 40000, 25000, 10000, 12000, 28000]
+            }
+        ],
+        chart: {
+            type: 'bar',
+            height: 350,
+            stacked: true,
+        },
+        stroke: {
+            width: 1,
+            colors: ['#fff']
+        },
+        dataLabels: {
+            formatter: (val) => {
+                return val / 1000 + 'K'
+            }
+        },
+        plotOptions: {
+            bar: {
+                horizontal: false
+            }
+        },
+        xaxis: {
+            categories: [
+                'Online advertising',
+                'Sales Training',
+                'Print advertising',
+                'Catalogs',
+                'Meetings',
+                'Public relations'
+            ]
+        },
+        fill: {
+            opacity: 1
+        },
+        colors: groupedStackedColors,
+        yaxis: {
+            labels: {
+                formatter: (val) => {
+                    return val / 1000 + 'K'
+                }
+            }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'left'
+        }
+    };
+    var chart = new ApexCharts(document.querySelector("#grouped_stacked_columns"), options);
+    chart.render();
+}
+
+//dumbbell_chart
+var dumbbellChartColors = getChartColorsArray("dumbbell_chart");
+if (dumbbellChartColors) {
+    var options = {
+        series: [
+            {
+                data: [
+                    {
+                        x: '2008',
+                        y: [2800, 4500]
+                    },
+                    {
+                        x: '2009',
+                        y: [3200, 4100]
+                    },
+                    {
+                        x: '2010',
+                        y: [2950, 7800]
+                    },
+                    {
+                        x: '2011',
+                        y: [3000, 4600]
+                    },
+                    {
+                        x: '2012',
+                        y: [3500, 4100]
+                    },
+                    {
+                        x: '2013',
+                        y: [4500, 6500]
+                    },
+                    {
+                        x: '2014',
+                        y: [4100, 5600]
+                    }
+                ]
+            }
+        ],
+        chart: {
+            height: 350,
+            type: 'rangeBar',
+            zoom: {
+                enabled: false
+            }
+        },
+        plotOptions: {
+            bar: {
+                isDumbbell: true,
+                columnWidth: 3,
+                dumbbellColors: dumbbellChartColors
+            }
+        },
+        legend: {
+            show: true,
+            showForSingleSeries: true,
+            position: 'top',
+            horizontalAlign: 'left',
+            customLegendItems: ['Product A', 'Product B']
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                type: 'vertical',
+                gradientToColors: ['#00E396'],
+                inverseColors: true,
+                stops: [0, 100]
+            }
+        },
+        grid: {
+            xaxis: {
+                lines: {
+                    show: true
+                }
+            },
+            yaxis: {
+                lines: {
+                    show: false
+                }
+            }
+        },
+        xaxis: {
+            tickPlacement: 'on'
+        }
+    };
+    var chart = new ApexCharts(document.querySelector("#dumbbell_chart"), options);
+    chart.render();
+}
+
 // column with Markers
 var chartColumnMarkersColors = getChartColorsArray("column_markers");
 if (chartColumnMarkersColors) {

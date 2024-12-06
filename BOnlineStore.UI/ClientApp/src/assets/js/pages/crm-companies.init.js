@@ -365,7 +365,7 @@ function refreshCallbacks() {
                             <div class="position-relative d-inline-block">
                                 <div class="avatar-md">
                                     <div class="avatar-title bg-light rounded-circle">
-                                        <img src="${x._values.image_src}" alt="" class="avatar-sm rounded-circle object-cover">
+                                        <img src="${x._values.image_src}" alt="" class="avatar-sm rounded-circle object-fit-cover">
                                     </div>
                                 </div>
                             </div>
@@ -375,19 +375,19 @@ function refreshCallbacks() {
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item avatar-xs">
                                     <a href="javascript:void(0);"
-                                        class="avatar-title bg-soft-success text-success fs-15 rounded">
+                                        class="avatar-title bg-success-subtle text-success fs-15 rounded">
                                         <i class="ri-global-line"></i>
                                     </a>
                                 </li>
                                 <li class="list-inline-item avatar-xs">
                                     <a href="javascript:void(0);"
-                                        class="avatar-title bg-soft-danger text-danger fs-15 rounded">
+                                        class="avatar-title bg-danger-subtle text-danger fs-15 rounded">
                                         <i class="ri-mail-line"></i>
                                     </a>
                                 </li>
                                 <li class="list-inline-item avatar-xs">
                                     <a href="javascript:void(0);"
-                                        class="avatar-title bg-soft-warning text-warning fs-15 rounded">
+                                        class="avatar-title bg-warning-subtle text-warning fs-15 rounded">
                                         <i class="ri-question-answer-line"></i>
                                     </a>
                                 </li>

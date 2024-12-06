@@ -398,7 +398,7 @@ if (document.getElementById("custom-sa-email-verify"))
                 '</div>' +
                 '<div class="mt-4 pt-2 fs-15">' +
                 '<h4 class="fs-20 fw-semibold">Verify Your Email</h4>' +
-                '<p class="text-muted mb-0 mt-3 fs-13">We have sent you verification email <span class="fw-medium text-dark">example@abc.com</span>, <br/> Please check it.</p>' +
+                '<p class="text-muted mb-0 mt-3 fs-13">We have sent you verification email <span class="fw-medium text-body">example@abc.com</span>, <br/> Please check it.</p>' +
                 '</div>' +
                 '</div>',
             showCancelButton: false,

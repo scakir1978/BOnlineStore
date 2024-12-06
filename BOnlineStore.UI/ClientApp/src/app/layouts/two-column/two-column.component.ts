@@ -33,7 +33,7 @@ export class TwoColumnComponent implements OnInit {
     document.documentElement.setAttribute('data-topbar', 'light');
     document.documentElement.setAttribute('data-sidebar', 'dark');
     document.documentElement.setAttribute('data-layout-style', 'default');
-    document.documentElement.setAttribute('data-layout-mode', 'dark');
+    document.documentElement.setAttribute('data-bs-theme', 'dark');
     document.documentElement.setAttribute('data-layout-width', 'fluid');
     document.documentElement.setAttribute('data-layout-position', 'fixed');
     document.documentElement.setAttribute('data-preloader', 'disable');

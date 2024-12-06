@@ -4,7 +4,7 @@
 
 .jvm-tooltip {
     border-radius: 3px;
-    background-color: $primary;
+    background-color: var(--#{$prefix}primary);
     font-family: $font-family-base;
     box-shadow: $box-shadow-lg;
     padding: 5px 9px;
@@ -14,10 +14,10 @@
     text {
         font-family: $font-family-base;
         font-size: $font-size-base;
-        fill: var(--#{$prefix}gray-700);
+        fill: var(--#{$prefix}body-color);
     }
 }
 
 .jvm-zoom-btn {
-    background-color: $primary;
+    background-color: var(--#{$prefix}primary);
 }

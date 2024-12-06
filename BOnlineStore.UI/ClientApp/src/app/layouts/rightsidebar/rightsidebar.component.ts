@@ -198,7 +198,7 @@ export class RightsidebarComponent implements OnInit {
   // Mode Change
   changeMode(mode: string) {
     this.mode = mode;
-    document.documentElement.setAttribute('data-layout-mode', mode);
+    document.documentElement.setAttribute('data-bs-theme', mode);
 
     this.layoutService.setLayoutSettings(
       this.layout!,

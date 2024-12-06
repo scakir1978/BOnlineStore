@@ -7,7 +7,7 @@
     .page-item {
         .page-link {
             margin-left: 0.35rem;
-            border-radius: $border-radius;
+            border-radius: var(--#{$prefix}border-radius);
         }
     }
 }

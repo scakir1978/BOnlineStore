@@ -9,9 +9,6 @@ File: Custom Css File
 // Select 2 
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
-// Arch Wizard 
-@import "~angular-archwizard/styles/archwizard.css";
-
 // Lightbox
 @import "~ngx-lightbox/lightbox.css";
 
@@ -59,7 +56,7 @@ File: Custom Css File
 
 .feather-icon-align {
   svg {
-    vertical-align: text-top;
+    vertical-align: top;
   }
 }
 
@@ -271,196 +268,219 @@ $value in $theme-colors {
 }
 
 // Form wizard
-  .custom-nav {
+.custom-nav {
+  aw-wizard-navigation-bar {
+    &.horizontal {
+      &.large-empty-symbols {
+        ul {
+          &.steps-indicator {
+            padding: 48px 0 6px 0;
+
+            li {
+              width: 100%;
+              padding: 0 2px;
+
+              .step-indicator {
+                width: 32px;
+                height: 32px;
+                line-height: 0px;
+                background-color: var(--#{$variable-prefix}light);
+                border-color: var(--#{$variable-prefix}light);
+                left: -14px;
+                top: -42px;
+                z-index: 1;
+
+                .nav-item {
+                  .nav-link {
+                    background-color: transparent;
+                    width: 32px !important;
+                    height: 32px !important;
+                    padding: 0px;
+                    margin-left: -2px;
+                  }
+                }
+              }
+
+              &.current {
+                .step-indicator {
+                  border-color: $primary;
+                  background-color: $primary;
+
+                  .nav-item {
+                    .nav-link {
+                      color: $white;
+                    }
+                  }
+                }
+              }
+
+              &.done {
+                .step-indicator {
+                  border-color: $primary;
+                  background-color: $primary;
+
+                  .nav-item {
+                    .nav-link {
+                      color: $white;
+                    }
+                  }
+                }
+
+                &:not(:last-child) {
+                  &::after {
+                    background-color: $primary;
+                  }
+                }
+              }
+
+              &:not(:last-child) {
+                &::after {
+                  background-color: var(--#{$variable-prefix}light);
+                  width: 100%;
+                  left: calc(50% + 15px);
+                  z-index: 0;
+                }
+              }
+
+              &.navigable {
+                a {
+                  &:hover {
+                    .step-indicator {
+                      width: 32px;
+                      height: 32px;
+                      line-height: 0px;
+                      border-color: $primary;
+                    }
+                  }
+                }
+
+                &.done {
+                  a {
+                    &:hover {
+                      .step-indicator {
+                        border-color: $primary;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.custom-nav {
+  &.nav-wizard {
     aw-wizard-navigation-bar {
       &.horizontal {
         &.large-empty-symbols {
           ul {
             &.steps-indicator {
-              padding: 48px 0 6px 0;
               li {
-                width: 100%;
-                padding: 0 2px;
+                a {
+                  width: 100%;
+                  display: inline-block;
+                }
+
+                text-align: left;
+
                 .step-indicator {
-                  width: 32px;
-                  height: 32px;
-                  line-height: 0px;
-                  background-color: var(--#{$variable-prefix}light);
-                  border-color: var(--#{$variable-prefix}light);
-                  left: -14px;
-                  top: -42px;
-                  z-index: 1;
+                  width: 100%;
+                  border-radius: 0px;
+                  left: 0px;
+                  // @media (max-width: 575.98px) {
+                  //   width: 130px !important;
+                  // }
+                  // @media (max-width: 375px) {
+                  //   width: 100px !important;
+                  // }
+                  // @media (max-width: 320px) {
+                  //   width: 80px !important;
+                  //   padding: 0;
+                  // }
+
                   .nav-item {
                     .nav-link {
-                      background-color: transparent;
-                      width: 32px !important;
-                      height: 32px !important;
-                      padding: 0px;
-                      margin-left: -2px;
+                      padding: $nav-link-padding-y $nav-link-padding-x;
+                      color: $dark;
+                      font-weight: $font-weight-medium;
+                      width: 100% !important;
+                      margin-left: 0px;
+
+                      @media (max-width: 575.98px) {
+                        width: 100% !important;
+                        padding: 0;
+                      }
+
+                      @media (max-width: 375px) {
+                        width: 100% !important;
+                        padding: 0;
+                      }
+
+                      @media (max-width: 320px) {
+                        width: 80px !important;
+                        padding: 0;
+                      }
                     }
                   }
                 }
+
                 &.current {
                   .step-indicator {
-                    border-color: $primary;
-                    background-color: $primary;
+                    border-color: transparent;
+                    background-color: rgba($primary, 0.2);
+
                     .nav-item {
                       .nav-link {
-                        color: $white;
+                        color: $primary;
                       }
                     }
                   }
                 }
+
                 &.done {
                   .step-indicator {
-                    border-color: $primary;
-                    background-color: $primary;
+                    border-color: transparent;
+                    background-color: rgba($primary, 0.2);
+
                     .nav-item {
                       .nav-link {
-                        color: $white;
+                        color: $primary;
                       }
                     }
                   }
+
                   &:not(:last-child) {
                     &::after {
-                      background-color: $primary;
+                      background-color: transparent;
                     }
                   }
                 }
+
                 &:not(:last-child) {
                   &::after {
-                    background-color: var(--#{$variable-prefix}light);
-                    width: 100%;
-                    left: calc(50% + 15px);
-                    z-index: 0;
+                    background-color: transparent;
                   }
                 }
+
                 &.navigable {
                   a {
                     &:hover {
                       .step-indicator {
-                        width: 32px;
-                        height: 32px;
-                        line-height: 0px;
-                        border-color: $primary;
+                        width: 250px;
+                        border-radius: 0px;
                       }
                     }
                   }
-                  &.done {
-                    a {
-                      &:hover {
-                        .step-indicator {
-                          border-color: $primary;
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  
-  .custom-nav {
-    &.nav-wizard {
-      aw-wizard-navigation-bar {
-        &.horizontal {
-          &.large-empty-symbols {
-            ul {
-              &.steps-indicator {
-                li {
-                  a{
-                    width: 100%;
-                    display: inline-block;
-                  }
-                  text-align: left;
-                  .step-indicator {
-                    width: 100%;
-                    border-radius: 0px;
-                    left: 0px;
-                    // @media (max-width: 575.98px) {
-                    //   width: 130px !important;
-                    // }
-                    // @media (max-width: 375px) {
-                    //   width: 100px !important;
-                    // }
-                    // @media (max-width: 320px) {
-                    //   width: 80px !important;
-                    //   padding: 0;
-                    // }
 
-                    .nav-item {
-                      .nav-link {
-                        padding: $nav-link-padding-y $nav-link-padding-x;
-                        color: $light;
-                        font-weight: $font-weight-medium;
-                        width: 100% !important;
-                        margin-left: 0px;
-                        @media (max-width: 575.98px) {
-                          width: 100% !important;
-                          padding: 0;
-                        }
-                        @media (max-width: 375px) {
-                          width: 100% !important;
-                          padding: 0;
-                        }
-                        @media (max-width: 320px) {
-                          width: 80px !important;
-                          padding: 0;
-                        }
-                      }
-                    }
-                  }
-                  &.current {
-                    .step-indicator {
-                      border-color: transparent;
-                      background-color: rgba($primary, 0.2);
-                      .nav-item {
-                        .nav-link {
-                          color: $primary;
-                        }
-                      }
-                    }
-                  }
                   &.done {
-                    .step-indicator {
-                      border-color: transparent;
-                      background-color: rgba($primary, 0.2);
-                      .nav-item {
-                        .nav-link {
-                          color: $primary;
-                        }
-                      }
-                    }
-                    &:not(:last-child) {
-                      &::after {
-                        background-color: transparent;
-                      }
-                    }
-                  }
-                  &:not(:last-child) {
-                    &::after {
-                      background-color: transparent;
-                    }
-                  }
-                  &.navigable {
                     a {
                       &:hover {
                         .step-indicator {
-                          width: 250px;
-                          border-radius: 0px;
-                        }
-                      }
-                    }
-                    &.done {
-                      a {
-                        &:hover {
-                          .step-indicator {
-                            border-color: transparent;
-                          }
+                          border-color: transparent;
                         }
                       }
                     }
@@ -473,6 +493,7 @@ $value in $theme-colors {
       }
     }
   }
+}
 
 // filter slider
 .ngx-slider {
@@ -825,7 +846,7 @@ swiper>.swiper.s-wrapper .swiper-pagination .swiper-pagination-handle {
   }
 }
 
-[data-layout-mode="dark"] {
+[data-bs-theme="dark"] {
   .light-dark-mode {
     .bx-moon {
       display: none;
@@ -838,6 +859,14 @@ swiper>.swiper.s-wrapper .swiper-pagination .swiper-pagination-handle {
   .form-control option{
     background-color: #07223f;
   }
+
+  .table-border {
+    border-color: #32383e !important;
+  }
+}
+
+.table-border {
+  border-color: #E9EBEC !important;
 }
 
 .leaflet-container {
@@ -1072,7 +1101,7 @@ swiper>.swiper.s-wrapper .swiper-pagination .swiper-pagination-handle {
   }
 }
 
-[data-layout-mode="dark"]{
+[data-bs-theme="dark"]{
   .form-select {
     background-color: var(--#{$prefix}gray-200) !important;
     border-color: var(--#{$prefix}border-color) !important;

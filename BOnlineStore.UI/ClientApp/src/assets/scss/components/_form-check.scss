@@ -57,7 +57,7 @@ $value in $theme-colors {
     .form-check-input {
         float: right;
         margin-left: 0;
-        margin-right: $form-check-padding-start * -1;
+        margin-right: calc($form-check-padding-start * -1);
     }
 
     .form-check-label {
@@ -66,7 +66,7 @@ $value in $theme-colors {
 
     &.form-switch {
         .form-check-input {
-            margin-right: $form-check-padding-start * -1.6;
+            margin-right: calc($form-check-padding-start * -1.6);
         }
     }
 }
@@ -224,7 +224,7 @@ $value in $theme-colors {
             position: absolute;
             font-size: 20px;
             left: -3px;
-            color: $text-muted;
+            color: var(--#{$prefix}secondary-color);
             @include transition($form-switch-transition);
         }
 
@@ -249,14 +249,14 @@ $value in $theme-colors {
 
 .form-switch-right {
     display: inline-block;
-    padding-right: $form-check-padding-start * .5;
+    padding-right: calc($form-check-padding-start * .5);
     margin-bottom: 0;
     padding-left: 0 !important;
 
     .form-check-input {
         float: right;
         margin-left: 0;
-        margin-right: $form-check-padding-start * -1;
+        margin-right: calc($form-check-padding-start * -1);
         margin-top: .1em !important;
     }
 
@@ -271,8 +271,8 @@ $value in $theme-colors {
     padding: 0;
 
     .form-check-label {
-        background-color: var(--#{$prefix}card-bg-custom);
-        border: 1px solid var(--#{$prefix}input-check-border);
+        background-color: var(--#{$prefix}secondary-bg);
+        border: 1px solid var(--#{$prefix}border-color);
         border-radius: $border-radius;
         padding: 1rem;
         overflow: hidden;
@@ -312,14 +312,6 @@ $value in $theme-colors {
                     color: $white;
                 }
             }
-        }
-    }
-}
-
-[data-layout-mode="dark"]{
-    .form-switch{
-        .form-check-input, .form-check-input:focus{
-            background-image: escape-svg(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='3' fill='#{$gray-400}'/></svg>"));
         }
     }
 }

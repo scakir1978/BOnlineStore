@@ -97,7 +97,7 @@ export class LayoutService {
     );
 
     document.documentElement.setAttribute(
-      'data-layout-mode',
+      'data-bs-theme',
       layoutSettings.layoutMode!
     );
 

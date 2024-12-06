@@ -343,13 +343,13 @@ var statusVal = new Choices(statusField, {
 function isStatus(val) {
     switch (val) {
         case "Open":
-            return ('<span class="badge badge-soft-success text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-success-subtle text-success text-uppercase">' + val + "</span>");
         case "Inprogress":
-            return ('<span class="badge badge-soft-warning text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-warning-subtle text-warning text-uppercase">' + val + "</span>");
         case "Closed":
-            return ('<span class="badge badge-soft-danger text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-danger-subtle text-danger text-uppercase">' + val + "</span>");
         case "New":
-            return ('<span class="badge badge-soft-info text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>");
     }
 }
 

@@ -38,7 +38,7 @@
             left: 0;
         }
         .flatpickr-monthDropdown-months {
-            border: 1px solid $border-color;
+            border: 1px solid var(--#{$prefix}border-color);
             border-radius: 4px;
             height: 26px;
         }
@@ -46,7 +46,7 @@
             background-color: var(--#{$prefix}light);
             border: none;
             span.flatpickr-weekday {
-                color: var(--#{$prefix}dark);
+                color: var(--#{$prefix}body-color);
                 background-color: var(--#{$prefix}light);
             }
         }
@@ -79,7 +79,7 @@
 
 .crm-widget {
     .col {
-        border-right: 1px solid $border-color;
+        border-right: 1px solid var(--#{$prefix}border-color);
         &:last-child {
             border: 0px;
         }
@@ -88,12 +88,12 @@
                 border-right: 0px;
             }
             &:last-child { 
-                border-right: 1px solid $border-color;
+                border-right: 1px solid var(--#{$prefix}border-color);
             }
          }
         @media (max-width: 767.98px) {
             border-right: 0px;
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid var(--#{$prefix}border-color);
         }
     }
 }   
@@ -121,7 +121,7 @@
 .dash-countdown {
     .countdownlist {
         .count-num {
-            background-color: var(--#{$prefix}card-bg-custom);
+            background-color: var(--#{$prefix}secondary-bg);
             padding: 16px 8px;
             font-size: 22px;
 
@@ -135,6 +135,14 @@
             @media (max-width: 575.98px) {
                 font-size: 10px;
             }
+        }
+    }
+}
+
+[data-layout-width="boxed"] {
+    .dash-countdown {
+        .countdownlist {
+            flex-wrap: wrap;
         }
     }
 }
@@ -186,9 +194,10 @@
     vertical-align: middle;
 }
 
-// #recomended-jobs {
-//     .gridjs-search{
-//         padding: 0;
-//         float: right !important;
-//     }
-// }
+#portfolio_donut_charts {
+    .apexcharts-pie {
+        text {
+            fill: var(--#{$prefix}body-color) ;
+        }
+    }
+}

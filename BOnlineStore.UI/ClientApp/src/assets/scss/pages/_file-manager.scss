@@ -13,7 +13,7 @@
         padding: 5px 0px;
 
         a {
-            color: var(--#{$prefix}dark);
+            color: var(--#{$prefix}body-color);
             font-weight: $font-weight-medium;
             transition: all 0.5s ease;
 
@@ -43,7 +43,7 @@
 
 .file-manager-sidebar {
     position: relative;
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
 
     @media (min-width: 992px) {
         min-width: 300px;
@@ -79,7 +79,7 @@
 }
 
 .file-manager-content {
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
 }
 
 .file-manager-content-scroll{
@@ -107,7 +107,7 @@
 .file-manager-detail-content {
     width: 32%;
     max-width: 100%;
-    background-color: var(--#{$prefix}card-bg-custom);
+    background-color: var(--#{$prefix}secondary-bg);
     display: none;
 }
 

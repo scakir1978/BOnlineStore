@@ -48,20 +48,27 @@ export class LayoutComponent implements OnInit {
    * Check if the vertical layout is requested
    */
   isVerticalLayoutRequested() {
-    return this.layoutType === LAYOUT_VERTICAL;
+    return this.layoutType === 'vertical';
+  }
+
+  /**
+   * Check if the semibox layout is requested
+   */
+  isSemiboxLayoutRequested() {
+    return this.layoutType === 'semibox';
   }
 
   /**
    * Check if the horizontal layout is requested
    */
   isHorizontalLayoutRequested() {
-    return this.layoutType === LAYOUT_HORIZONTAL;
+    return this.layoutType === 'horizontal';
   }
 
   /**
    * Check if the horizontal layout is requested
    */
   isTwoColumnLayoutRequested() {
-    return this.layoutType === LAYOUT_TWOCOLUMN;
+    return this.layoutType === 'twocolumn';
   }
 }

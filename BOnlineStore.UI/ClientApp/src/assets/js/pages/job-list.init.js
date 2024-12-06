@@ -107,7 +107,7 @@ function loadJobListData(datas, page) {
             var tags = datas[i].tags;
             var tagHtml = '';
             Array.from(tags).forEach((tag, index) => {
-                tagHtml += '<span class="badge badge-soft-primary me-1">' + tag + '</span>'
+                tagHtml += '<span class="badge bg-primary-subtle text-primary me-1">' + tag + '</span>'
             })
         }
         if (datas[i]) {

@@ -45,9 +45,9 @@
 }
 
 .select2-dropdown {
-    border: $dropdown-border-width solid $dropdown-border-color;
+    border: var(--#{$prefix}dropdown-border-width) solid $dropdown-border-color;
     box-shadow: $box-shadow;
-    background-color: var(--#{$prefix}choices-bg);
+    background-color: var(--#{$prefix}secondary-bg);
     z-index: $zindex-modal + 1;
 }
 
@@ -57,7 +57,7 @@
     }
     .select2-search--dropdown {
         padding: 10px;
-        background-color: var(--#{$prefix}choices-bg);
+        background-color: var(--#{$prefix}secondary-bg);
         .select2-search__field {
             outline: none;
             border: 1px solid $input-border-color;
@@ -70,8 +70,8 @@
         background-color: $primary;
     }
     .select2-results__option[aria-selected=true] {
-        background-color: var(--#{$prefix}choices-bg);
-        color: var(--#{$prefix}choices-link-active-color);
+        background-color: var(--#{$prefix}secondary-bg);
+        color: var(--#{$prefix}dropdown-link-active-color);
         &:hover {
             background-color: $primary;
             color: $white;
@@ -130,6 +130,7 @@
     .select2-search--inline {
         .select2-search__field {
             margin-top: 7px;
+            height: 22px;
             font-family: $font-family-base;
         }
     }

@@ -2,27 +2,6 @@
 // alerts.scss
 //
 
-// alert solid
-
-.alert-solid {
-    .alert-link {
-        color: $white;
-    }
-}
-
-// alert outline
-
-.alert-outline {
-    background-color: var(--#{$prefix}card-bg-custom);
-    border-width: 2px;
-}
-
-// alert borderless
-
-.alert-borderless {
-    border-width: 0;
-}
-
 // alert-label-icon
 
 .alert-label-icon {
@@ -68,8 +47,8 @@
 // alert top border example
 
 .alert-top-border {
-    background-color: var(--#{$prefix}card-bg-custom);
-    border-color: $border-color;
+    background-color: var(--#{$prefix}secondary-bg);
+    border-color: var(--#{$prefix}border-color);
     border-top: 2px solid;
     color: var(--#{$prefix}body-color);
 }
@@ -106,33 +85,18 @@
 // Alert example loop
 
 @each $color, $value in $theme-colors {
-    // alert solid
-    .alert-solid {
-        &.alert-#{$color} {
-            background-color: $value;
-            border-color: $value;
-            color: set-color-from-background($value);
-        }
-    }
-
-    // alert outline
-    .alert-outline {
-        &.alert-#{$color} {
-            color: $value;
-        }
-    }
 
     // alert border left
     .alert-border-left {
         &.alert-#{$color} {
-            border-left-color: $value;
+            border-left-color: var(--#{$prefix}#{$color});
         }
     }
 
     // alert top border
     .alert-top-border {
         &.alert-#{$color} {
-            border-top-color: $value;
+            border-top-color: var(--#{$prefix}#{$color});
         }
     }
     
@@ -142,8 +106,8 @@
     .rounded-label {
         &.alert-#{$color} {
             .label-icon {
-                background-color: $value;
-                color: set-color-from-background($value);
+                background-color: var(--#{$prefix}#{$color});
+                color: color-contrast($value);
             }
         }
     }
@@ -153,10 +117,10 @@
     .label-arrow {
         &.alert-#{$color} {
             .label-icon {
-                color: set-color-from-background($value);
-                background-color: $value;
+                color: color-contrast($value);
+                background-color: var(--#{$prefix}#{$color});
                 &:after {
-                    border-left-color: $value !important;
+                    border-left-color: var(--#{$prefix}#{$color}) !important;
                 }
             }
         }
@@ -165,7 +129,7 @@
     .alert{
         &.alert-#{$color} {
             .btn-close::after{
-                color: $value;
+                color: var(--#{$prefix}#{$color});
             }
         }
         
@@ -175,8 +139,8 @@
     .alert-additional {
         &.alert-#{$color} {
             .alert-content {
-                background-color: $value;
-                color: set-color-from-background($value);
+                background-color: var(--#{$prefix}#{$color});
+                color: color-contrast($value);
             }
         }
     }   
@@ -192,9 +156,5 @@
             font-family: "Material Design Icons" !important;
         }
     }
-}
-
-.alert-outline.alert-dark{
-    color: var(--#{$prefix}dark);
 }
    

@@ -131,69 +131,82 @@ if (chartDonutBasicColors) {
     chart.render();
 }
 
-// world map with markers
-var vectorMapWorldMarkersColors = getChartColorsArray("sales-by-locations");
-if (vectorMapWorldMarkersColors) {
-    var worldemapmarkers = new jsVectorMap({
-        map: "world_merc",
-        selector: "#sales-by-locations",
-        zoomOnScroll: false,
-        zoomButtons: false,
-        selectedMarkers: [0, 5],
-        regionStyle: {
-            initial: {
-                stroke: "#9599ad",
-                strokeWidth: 0.25,
-                fill: vectorMapWorldMarkersColors[0],
-                fillOpacity: 1,
-            },
-        },
-        markersSelectable: true,
-        markers: [{
-            name: "Palestine",
-            coords: [31.9474, 35.2272],
-        },
-        {
-            name: "Russia",
-            coords: [61.524, 105.3188],
-        },
-        {
-            name: "Canada",
-            coords: [56.1304, -106.3468],
-        },
-        {
-            name: "Greenland",
-            coords: [71.7069, -42.6043],
-        },
-        ],
-        markerStyle: {
-            initial: {
-                fill: vectorMapWorldMarkersColors[1],
-            },
-            selected: {
-                fill: vectorMapWorldMarkersColors[2],
-            },
-        },
-        labels: {
-            markers: {
-                render: function (marker) {
-                    return marker.name;
+var worldemapmarkers = "";
+function loadCharts() {
+    // world map with markers
+    var vectorMapWorldMarkersColors = getChartColorsArray("sales-by-locations");
+    if (vectorMapWorldMarkersColors) {
+        document.getElementById("sales-by-locations").innerHTML = "";
+        worldemapmarkers = "";
+        worldemapmarkers = new jsVectorMap({
+            map: "world_merc",
+            selector: "#sales-by-locations",
+            zoomOnScroll: false,
+            zoomButtons: false,
+            selectedMarkers: [0, 5],
+            regionStyle: {
+                initial: {
+                    stroke: "#9599ad",
+                    strokeWidth: 0.25,
+                    fill: vectorMapWorldMarkersColors[0],
+                    fillOpacity: 1,
                 },
             },
-        },
-    });
+            markersSelectable: true,
+            markers: [{
+                name: "Palestine",
+                coords: [31.9474, 35.2272],
+            },
+            {
+                name: "Russia",
+                coords: [61.524, 105.3188],
+            },
+            {
+                name: "Canada",
+                coords: [56.1304, -106.3468],
+            },
+            {
+                name: "Greenland",
+                coords: [71.7069, -42.6043],
+            },
+            ],
+            markerStyle: {
+                initial: {
+                    fill: vectorMapWorldMarkersColors[1],
+                },
+                selected: {
+                    fill: vectorMapWorldMarkersColors[2],
+                },
+            },
+            labels: {
+                markers: {
+                    render: function (marker) {
+                        return marker.name;
+                    },
+                },
+            },
+        });
+    }
 }
+
+window.onresize = function () {
+    setTimeout(() => {
+        loadCharts();
+    }, 0);
+};
+
+loadCharts();
 
 var jobListAllData = [
     ["Marketing Director", "Meta4Systems", "Vinninga, Sweden", "$250 - $800", "0-5 year", "Full Time"],
     ["UI/UX designer", "Zoetic Fashion", "Cullera, Spain", "$400+", "0-2 year", "Part Time"],
     ["Web Designer", "Force Medicines", "Ugashik, US", "$412 - $241 ", "3+ year", "Freelancer"],
     ["Full Stack Engineer", "Syntyce Solutions", "Zuweihir, UAE", "$650 - $900", "0-1+ year", "Full Time"],
-    ["Assistant / Store Keeper", "Moetic Fashion", "Limestone, US", "$340 - $800", "0-3 year", "Intership"],
+    ["Assistant / Store Keeper", "Moetic Fashion", "Limestone, US", "$340 - $800", "0-3 year", "Internship"],
     ["Project Manager", "Themesbrand", "California, US", "$400 - $600", "3+ year", "Part Time"],
     ["Education Training", "Micro Design", "Germany", "$750 - $940", "1.5+ year", "Freelancer"],
     ["Graphic Designer", "Digitech Galaxy", "Mughairah, UAE", "$160 - $230", "2-3+ year", "Full Time"],
-    ["React Developer", "iTest Factory", "Khabākhib, UAE", "$90 - $160", "5+ year", "Intership"],
+    ["React Developer", "iTest Factory", "Khabākhib, UAE", "$90 - $160", "5+ year", "Internship"],
     ["Executive, HR Operations", "Micro Design", "Texanna, US", "$50 - $120", "1-5 year", "Part Time"],
     ["Project Manager", "Meta4Systems", "Limestone, US", "$210 - $300", "0-2+ year", "Freelancer"],
     ["Full Stack Engineer", "Force Medicines", "Ugashik, US", "$120 - $180", "2-5 year", "Part Time"],

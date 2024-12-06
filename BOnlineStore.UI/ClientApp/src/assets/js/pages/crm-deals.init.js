@@ -44,7 +44,7 @@ form.addEventListener('submit', function (event) {
             letters = first_letter
         }
 
-        var avatar_ = `<div class="flex-shrink-0 avatar-xs me-2"><div class="avatar-title bg-soft-success text-success rounded-circle fs-13">` + letters + `</div></div>`;
+        var avatar_ = `<div class="flex-shrink-0 avatar-xs me-2"><div class="avatar-title bg-success-subtle text-success rounded-circle fs-13">` + letters + `</div></div>`;
         var newDeals = `<div class="card">
                             <div class="card-body">
                                 <a class="d-flex align-items-center" data-bs-toggle="collapse" href="#` + dealTitle + `" role="button" aria-expanded="false" aria-controls="leadDiscovered1">
@@ -59,7 +59,7 @@ form.addEventListener('submit', function (event) {
                             </div>
                             <div class="collapse border-top border-top-dashed" id="` + dealTitle + `">
                                 <div class="card-body">
-                                    <h6 class="fs-14 mb-1">` + dealOwner + ` <small class="badge badge-soft-danger">4 Days</small></h6>
+                                    <h6 class="fs-14 mb-1">` + dealOwner + ` <small class="badge bg-danger-subtle text-danger">4 Days</small></h6>
                                     <p class="text-muted">` + contactDescription + `</p>
                                     <ul class="list-unstyled vstack gap-2 mb-0">
                                         <li>

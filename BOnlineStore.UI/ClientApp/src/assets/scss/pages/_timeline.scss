@@ -37,8 +37,8 @@
         top: 30px;
         right: -30px;
         padding: 9px 0;
-        background: var(--#{$prefix}card-bg-custom);
-        border: 1px solid $border-color;
+        background: var(--#{$prefix}secondary-bg);
+        border: 1px solid var(--#{$prefix}border-color);
         border-radius: 50px;
         color: $success;
         z-index: 1;
@@ -56,9 +56,9 @@
 
     .content {
         padding: 20px;
-        background: var(--#{$prefix}card-bg-custom);
+        background: var(--#{$prefix}secondary-bg);
         position: relative;
-        border: 1px solid $border-color;
+        border: 1px solid var(--#{$prefix}border-color);
         border-radius: $border-radius;
         box-shadow: $box-shadow-sm;
     }
@@ -117,7 +117,7 @@
 
             &::before {
                 left: 110px;
-                border-color: transparent transparent transparent $border-color;
+                border-color: transparent transparent transparent var(--#{$prefix}border-color);
             }
 
             .date {
@@ -200,9 +200,9 @@
         display: inline-block;
         margin: 23px 62px;
         padding: 20px;
-        border: 1px solid $border-color;
+        border: 1px solid var(--#{$prefix}border-color);
         border-radius: 6px;
-        background: var(--#{$prefix}card-bg-custom);
+        background: var(--#{$prefix}secondary-bg);
         max-width: 695px;
         @media (max-width: 991.98px){
             margin-right: 0;
@@ -217,7 +217,7 @@
             border-style: solid;
             top: 26px;
             right: 100%;
-            border-color: transparent var(--#{$prefix}card-bg-custom) transparent transparent;
+            border-color: transparent var(--#{$prefix}secondary-bg) transparent transparent;
             border-width: 10px;
         }
 
@@ -230,7 +230,7 @@
             border-style: solid;
             right: 100%;
             top: 24px;
-            border-color: transparent $border-color transparent transparent;
+            border-color: transparent var(--#{$prefix}border-color) transparent transparent;
             border-width: 12px;
         }
 
@@ -243,7 +243,7 @@
     .timeline-launch {
         position: relative;
         display: inline-block;
-        border: 1px solid $border-color;
+        border: 1px solid var(--#{$prefix}border-color);
         border-radius: 6px;
         background: $white;
         width: 100%;
@@ -260,14 +260,14 @@
                 left: 30px;
                 margin-left: 0px;
                 top: -20px;
-                border-color: transparent transparent $border-color transparent;
+                border-color: transparent transparent var(--#{$prefix}border-color) transparent;
             }
 
             &::before {
                 left: 30px;
                 margin-left: 0px;
                 top: -19px;
-                border-color: transparent transparent var(--#{$prefix}card-bg-custom) transparent;
+                border-color: transparent transparent var(--#{$prefix}secondary-bg) transparent;
                 border-width: 10px;
                 z-index: 1;
             }
@@ -419,8 +419,8 @@
         }
 
         .acitivity-avatar {
-            background-color: var(--#{$prefix}card-bg-custom);
-            border: 3px solid var(--#{$prefix}card-bg-custom);
+            background-color: var(--#{$prefix}secondary-bg);
+            border: 3px solid var(--#{$prefix}secondary-bg);
             height: 32px;
             width: 32px;
         }
@@ -428,7 +428,7 @@
         &:before {
             content: "";
             position: absolute;
-            border-left: 1px dashed $border-color;
+            border-left: 1px dashed var(--#{$prefix}border-color);
             left: 16px;
             height: 100%;
             top: 5px;

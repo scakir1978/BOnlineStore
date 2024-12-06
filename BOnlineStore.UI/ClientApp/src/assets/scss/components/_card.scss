@@ -8,7 +8,7 @@
 }
 
 .card-header {
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid var(--#{$prefix}border-color);
 }
 
 //Card Header Dropdown
@@ -19,20 +19,12 @@
 }
 
 .card-footer {
-    border-top: 1px solid $border-color;
-}
-
-.card-drop {
-    color: $body-color;
+    border-top: 1px solid var(--#{$prefix}border-color);
 }
 
 .card-title {
     font-size: 16px;
     margin: 0 0 7px 0;
-}
-
-.card-title-desc {
-    margin-bottom: 24px;
 }
 
 .card-height-100 {
@@ -51,24 +43,20 @@
 
 // card color variant
 
-@mixin card-variant($bg) {
-    color: $white;
-    background-color: $bg;
-}
-
 @each $color,
 $value in $theme-colors {
     .card-#{$color} {
-        @include card-variant($value);
+        background-color: $value;
+        color: color-contrast($value);
 
         .card-header, .card-footer {
             background-color: rgba($white, 0.1);
-            color: $white;
+            color: color-contrast($value);
             border-color: transparent;
         }
 
         .card-title {
-            color: $white;
+            color: color-contrast($value);
         }
     }
 }
@@ -94,11 +82,6 @@ $value in $theme-colors {
         color: var(--#{$prefix}body-color) !important;
     }
 }
-
-.stretched-link {
-    position: static;
-}
-
 
 // Loader
 

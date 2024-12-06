@@ -14,7 +14,7 @@
 .swal2-popup{
   padding-bottom: 24px;
   border-radius: $modal-content-border-radius;
-  background-color: var(--#{$prefix}card-bg-custom);
+  background-color: var(--#{$prefix}secondary-bg);
   color: var(--#{$prefix}body-color);
 
   .swal2-title{

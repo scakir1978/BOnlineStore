@@ -622,26 +622,29 @@ if (linechartBasicColors) {
 }
 
 
-
-//creators-by-locations world map with markers
-var vectorMapWorldMarkersColors = getChartColorsArray("creators-by-locations");
-if (vectorMapWorldMarkersColors) {
-    var worldemapmarkers = new jsVectorMap({
-        map: "world_merc",
-        selector: "#creators-by-locations",
-        zoomOnScroll: false,
-        zoomButtons: false,
-        selectedMarkers: [0, 5],
-        regionStyle: {
-            initial: {
-                stroke: "#9599ad",
-                strokeWidth: 0.25,
-                fill: vectorMapWorldMarkersColors[0],
-                fillOpacity: 1,
+var worldemapmarkers = "";
+function loadCharts() {
+    //creators-by-locations world map with markers
+    var vectorMapWorldMarkersColors = getChartColorsArray("creators-by-locations");
+    if (vectorMapWorldMarkersColors) {
+        document.getElementById("creators-by-locations").innerHTML = "";
+        worldemapmarkers = "";
+        worldemapmarkers = new jsVectorMap({
+            map: "world_merc",
+            selector: "#creators-by-locations",
+            zoomOnScroll: false,
+            zoomButtons: false,
+            selectedMarkers: [0, 5],
+            regionStyle: {
+                initial: {
+                    stroke: "#9599ad",
+                    strokeWidth: 0.25,
+                    fill: vectorMapWorldMarkersColors[0],
+                    fillOpacity: 1,
+                },
             },
-        },
-        markersSelectable: true,
-        markers: [{
+            markersSelectable: true,
+            markers: [{
                 name: "United States",
                 coords: [37.0902, 95.7129],
                 style: {
@@ -676,22 +679,31 @@ if (vectorMapWorldMarkersColors) {
                     image: "assets/images/flags/germany.svg",
                 }
             },
-        ],
-        markerStyle: {
-            initial: {
+            ],
+            markerStyle: {
+                initial: {
                 
-                fill: vectorMapWorldMarkersColors[1],
-            },
-            selected: {
-                fill: vectorMapWorldMarkersColors[2],
-            },
-        },
-        labels: {
-            markers: {
-                render: function (marker) {
-                    return marker.name;
+                    fill: vectorMapWorldMarkersColors[1],
+                },
+                selected: {
+                    fill: vectorMapWorldMarkersColors[2],
                 },
             },
-        },
-    });
+            labels: {
+                markers: {
+                    render: function (marker) {
+                        return marker.name;
+                    },
+                },
+            },
+        });
+    }
 }
+
+window.onresize = function () {
+    setTimeout(() => {
+        loadCharts();
+    }, 0);
+};
+
+loadCharts();

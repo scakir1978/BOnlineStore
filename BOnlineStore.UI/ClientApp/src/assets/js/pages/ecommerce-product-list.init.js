@@ -251,7 +251,7 @@ var productListAll = new gridjs.Grid({
 						'<div class="avatar-sm bg-light rounded p-1"><img src="' + row.product.img + '" alt="" class="img-fluid d-block"></div>' +
 						'</div>' +
 						'<div class="flex-grow-1">' +
-						'<h5 class="fs-14 mb-1"><a href="apps-ecommerce-product-details.html" class="text-dark">' + row.product.title + '</a></h5>' +
+						'<h5 class="fs-14 mb-1"><a href="apps-ecommerce-product-details.html" class="text-body">' + row.product.title + '</a></h5>' +
 						'<p class="text-muted mb-0">Category : <span class="fw-medium">' + row.product.category + '</span></p>' +
 						'</div>' +
 						'</div>');
@@ -423,7 +423,7 @@ var productListPublished = new gridjs.Grid({
 						'<div class="avatar-sm bg-light rounded p-1"><img src="' + row.product.img + '" alt="" class="img-fluid d-block"></div>' +
 						'</div>' +
 						'<div class="flex-grow-1">' +
-						'<h5 class="fs-14 mb-1"><a href="apps-ecommerce-product-details.html" class="text-dark">' + row.product.title + '</a></h5>' +
+						'<h5 class="fs-14 mb-1"><a href="apps-ecommerce-product-details.html" class="text-body">' + row.product.title + '</a></h5>' +
 						'<p class="text-muted mb-0">Category : <span class="fw-medium">' + row.product.category + '</span></p>' +
 						'</div>' +
 						'</div>');

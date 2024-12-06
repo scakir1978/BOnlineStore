@@ -364,35 +364,35 @@ function isStatus(val) {
     switch (val) {
         case "Delivered":
             return (
-                '<span class="badge badge-soft-success text-uppercase">' +
+                '<span class="badge bg-success-subtle text-success text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Cancelled":
             return (
-                '<span class="badge badge-soft-danger text-uppercase">' +
+                '<span class="badge bg-danger-subtle text-danger text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Inprogress":
             return (
-                '<span class="badge badge-soft-secondary text-uppercase">' +
+                '<span class="badge bg-secondary-subtle text-secondary text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Pickups":
             return (
-                '<span class="badge badge-soft-info text-uppercase">' + val + "</span>"
+                '<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>"
             );
         case "Returns":
             return (
-                '<span class="badge badge-soft-primary text-uppercase">' +
+                '<span class="badge bg-primary-subtle text-primary text-uppercase">' +
                 val +
                 "</span>"
             );
         case "Pending":
             return (
-                '<span class="badge badge-soft-warning text-uppercase">' +
+                '<span class="badge bg-warning-subtle text-warning text-uppercase">' +
                 val +
                 "</span>"
             );

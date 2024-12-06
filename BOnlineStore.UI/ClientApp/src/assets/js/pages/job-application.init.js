@@ -104,7 +104,7 @@ xhttp.onload = function () {
             id: '<a href="#" class="fw-medium link-primary">#VZ'+element.id+'</a>',
             company: '<div class="d-flex align-items-center">\
             <div class="flex-shrink-0">\
-                <img src="'+element.company[0]+'" alt="" class="avatar-xxs rounded-circle image_src object-cover">\
+                <img src="'+element.company[0]+'" alt="" class="avatar-xxs rounded-circle image_src object-fit-cover">\
             </div>\
             <div class="flex-grow-1 ms-2 name">'+element.company[1]+'</div>\
         </div>',
@@ -125,13 +125,13 @@ xhttp.send();
 function isStatus(val) {
     switch (val) {
         case "Approved":
-            return ('<span class="badge badge-soft-success text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-success-subtle text-success text-uppercase">' + val + "</span>");
         case "New":
-            return ('<span class="badge badge-soft-info text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-info-subtle text-info text-uppercase">' + val + "</span>");
         case "Pending":
-            return ('<span class="badge badge-soft-warning text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-warning-subtle text-warning text-uppercase">' + val + "</span>");
         case "Rejected":
-            return ('<span class="badge badge-soft-danger text-uppercase">' + val + "</span>");
+            return ('<span class="badge bg-danger-subtle text-danger text-uppercase">' + val + "</span>");
     }
 }
 
@@ -294,7 +294,7 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                     id: '<a href="#" class="fw-medium link-primary">#VZ'+count+'</a>',
                     company: '<div class="d-flex align-items-center">\
                     <div class="flex-shrink-0">\
-                        <img src="'+ companyLogoImg.src + '" alt="" class="avatar-xxs rounded-circle image_src object-cover">\
+                        <img src="'+ companyLogoImg.src + '" alt="" class="avatar-xxs rounded-circle image_src object-fit-cover">\
                     </div>\
                     <div class="flex-grow-1 ms-2 name">'+companyField.value+'</div>\
                 </div>',
@@ -335,7 +335,7 @@ Array.prototype.slice.call(forms).forEach(function (form) {
                             id: '<a href="javascript:void(0);" class="fw-medium link-primary">'+idField.value+"</a>",
                             company: '<div class="d-flex align-items-center">\
                             <div class="flex-shrink-0">\
-                                <img src="'+companyLogoImg.src+'" alt="" class="avatar-xxs rounded-circle image_src object-cover">\
+                                <img src="'+companyLogoImg.src+'" alt="" class="avatar-xxs rounded-circle image_src object-fit-cover">\
                             </div>\
                             <div class="flex-grow-1 ms-2 name">'+companyField.value+'</div>\
                         </div>',

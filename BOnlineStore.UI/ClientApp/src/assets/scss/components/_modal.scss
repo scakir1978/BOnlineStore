@@ -107,7 +107,7 @@
 	min-height: calc(100% - #{$modal-dialog-margin-y-sm-up});
 
 	@media (min-width: 576px) {
-		min-height: calc(100% - #{$modal-dialog-margin-y-sm-up*2 });
+		min-height: calc(100% - #{$modal-dialog-margin-y-sm-up* 2 });
 	}
 }
 

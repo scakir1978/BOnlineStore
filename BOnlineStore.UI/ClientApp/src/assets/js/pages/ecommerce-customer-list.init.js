@@ -304,13 +304,13 @@ function isStatus(val) {
   switch (val) {
     case "Active":
       return (
-        '<span class="badge badge-soft-success text-uppercase">' +
+        '<span class="badge bg-success-subtle text-success text-uppercase">' +
         val +
         "</span>"
       );
     case "Block":
       return (
-        '<span class="badge badge-soft-danger text-uppercase">' +
+        '<span class="badge bg-danger-subtle text-danger text-uppercase">' +
         val +
         "</span>"
       );

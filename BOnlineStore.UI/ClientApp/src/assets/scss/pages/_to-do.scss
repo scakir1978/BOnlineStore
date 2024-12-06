@@ -36,7 +36,7 @@
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: rgba(var(--#{$prefix}dark-rgb), .075);
+        background-color: rgba(var(--#{$prefix}body-color-rgb), .075);
         border-radius: 8px;
     }
 

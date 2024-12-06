@@ -43,23 +43,22 @@ var linechartcustomerColors = getChartColorsArray("customer_impression_charts");
 if (linechartcustomerColors) {
     var options = {
         series: [{
-                name: "Orders",
-                type: "area",
-                data: [34, 65, 46, 68, 49, 61, 42, 44, 78, 52, 63, 67],
-            },
-            {
-                name: "Earnings",
-                type: "bar",
-                data: [
-                    89.25, 98.58, 68.74, 108.87, 77.54, 84.03, 51.24, 28.57, 92.57, 42.36,
-                    88.51, 36.57,
-                ],
-            },
-            {
-                name: "Refunds",
-                type: "line",
-                data: [8, 12, 7, 17, 21, 11, 5, 9, 7, 29, 12, 35],
-            },
+            name: "Orders",
+            type: "area",
+            data: [34, 65, 46, 68, 49, 61, 42, 44, 78, 52, 63, 67],
+        },
+        {
+            name: "Earnings",
+            type: "bar",
+            data: [
+                89.25, 98.58, 68.74, 108.87, 77.54, 84.03, 51.24, 28.57, 92.57, 42.36, 88.51, 36.57,
+            ],
+        },
+        {
+            name: "Refunds",
+            type: "line",
+            data: [8, 12, 7, 17, 21, 11, 5, 9, 7, 29, 12, 35],
+        },
         ],
         chart: {
             height: 370,
@@ -149,29 +148,29 @@ if (linechartcustomerColors) {
         tooltip: {
             shared: true,
             y: [{
-                    formatter: function (y) {
-                        if (typeof y !== "undefined") {
-                            return y.toFixed(0);
-                        }
-                        return y;
-                    },
+                formatter: function (y) {
+                    if (typeof y !== "undefined") {
+                        return y.toFixed(0);
+                    }
+                    return y;
                 },
-                {
-                    formatter: function (y) {
-                        if (typeof y !== "undefined") {
-                            return "$" + y.toFixed(2) + "k";
-                        }
-                        return y;
-                    },
+            },
+            {
+                formatter: function (y) {
+                    if (typeof y !== "undefined") {
+                        return "$" + y.toFixed(2) + "k";
+                    }
+                    return y;
                 },
-                {
-                    formatter: function (y) {
-                        if (typeof y !== "undefined") {
-                            return y.toFixed(0) + " Sales";
-                        }
-                        return y;
-                    },
+            },
+            {
+                formatter: function (y) {
+                    if (typeof y !== "undefined") {
+                        return y.toFixed(0) + " Sales";
+                    }
+                    return y;
                 },
+            },
             ],
         },
     };
@@ -213,25 +212,29 @@ if (chartDonutBasicColors) {
     chart.render();
 }
 
-// world map with markers
-var vectorMapWorldMarkersColors = getChartColorsArray("sales-by-locations");
-if (vectorMapWorldMarkersColors) {
-    var worldemapmarkers = new jsVectorMap({
-        map: "world_merc",
-        selector: "#sales-by-locations",
-        zoomOnScroll: false,
-        zoomButtons: false,
-        selectedMarkers: [0, 5],
-        regionStyle: {
-            initial: {
-                stroke: "#9599ad",
-                strokeWidth: 0.25,
-                fill: vectorMapWorldMarkersColors[0],
-                fillOpacity: 1,
+var worldemapmarkers = "";
+function loadCharts() {
+    // world map with markers
+    var vectorMapWorldMarkersColors = getChartColorsArray("sales-by-locations");
+    if (vectorMapWorldMarkersColors) {
+        document.getElementById("sales-by-locations").innerHTML = "";
+        worldemapmarkers = "";
+        worldemapmarkers = new jsVectorMap({
+            map: "world_merc",
+            selector: "#sales-by-locations",
+            zoomOnScroll: false,
+            zoomButtons: false,
+            selectedMarkers: [0, 5],
+            regionStyle: {
+                initial: {
+                    stroke: "#9599ad",
+                    strokeWidth: 0.25,
+                    fill: vectorMapWorldMarkersColors[0],
+                    fillOpacity: 1,
+                },
             },
-        },
-        markersSelectable: true,
-        markers: [{
+            markersSelectable: true,
+            markers: [{
                 name: "Palestine",
                 coords: [31.9474, 35.2272],
             },
@@ -247,24 +250,33 @@ if (vectorMapWorldMarkersColors) {
                 name: "Greenland",
                 coords: [71.7069, -42.6043],
             },
-        ],
-        markerStyle: {
-            initial: {
-                fill: vectorMapWorldMarkersColors[1],
-            },
-            selected: {
-                fill: vectorMapWorldMarkersColors[2],
-            },
-        },
-        labels: {
-            markers: {
-                render: function (marker) {
-                    return marker.name;
+            ],
+            markerStyle: {
+                initial: {
+                    fill: vectorMapWorldMarkersColors[1],
+                },
+                selected: {
+                    fill: vectorMapWorldMarkersColors[2],
                 },
             },
-        },
-    });
+            labels: {
+                markers: {
+                    render: function (marker) {
+                        return marker.name;
+                    },
+                },
+            },
+        });
+    }
 }
+
+window.onresize = function() {
+    setTimeout(() => {
+        loadCharts();
+    }, 0);
+};
+
+loadCharts();
 
 // Vertical Swiper
 var swiper = new Swiper(".vertical-swiper", {
@@ -306,7 +318,7 @@ if (layoutRightSideBtn) {
         }
 
         var htmlAttr = document.documentElement;
-        if(htmlAttr.getAttribute("data-layout") == "semibox"){
+        if (htmlAttr.getAttribute("data-layout") == "semibox") {
             userProfileSidebar.classList.remove("d-block");
             userProfileSidebar.classList.add("d-none");
         }
@@ -335,7 +347,7 @@ window.addEventListener("load", function () {
 
     var htmlAttr = document.documentElement
 
-    if(htmlAttr.getAttribute("data-layout") == "semibox"){
+    if (htmlAttr.getAttribute("data-layout") == "semibox") {
         if (window.outerWidth > 1699) {
             userProfileSidebar.classList.remove("d-block");
             userProfileSidebar.classList.add("d-none");

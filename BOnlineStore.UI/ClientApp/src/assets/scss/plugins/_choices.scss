@@ -161,7 +161,7 @@
     vertical-align: middle;
     width: 100%;
     background-color: $form-select-bg;
-    padding: 0.25rem ($form-select-padding-x + $form-select-indicator-padding) 0.1rem 0.5rem;
+    padding: 0.25rem calc($form-select-padding-x + $form-select-indicator-padding) 0.1rem 0.5rem;
     border: $form-select-border-width solid $form-select-border-color;
     border-radius: $form-select-border-radius !important;
     font-size: $input-font-size;
@@ -237,7 +237,7 @@
     z-index: 1;
     position: absolute;
     width: 100%;
-    background-color: var(--#{$prefix}choices-bg);
+    background-color: var(--#{$prefix}secondary-bg);
     border: 1px solid var(--#{$prefix}border-color);
     box-shadow: $dropdown-box-shadow;
     top: 100%;
@@ -257,7 +257,7 @@
     }
 
     .choices__item--selectable.is-highlighted {
-        background-color: var(--#{$prefix}choices-link-hover-bg);
+        background-color: var(--#{$prefix}tertiary-bg);
     }
 
     .choices__list {
@@ -355,8 +355,8 @@
     font-weight: $font-weight-semibold;
     font-size: 12px;
     padding: 10px 16px;
-    border-bottom: 1px solid $border-color;
-    color: $text-muted;
+    border-bottom: 1px solid var(--#{$prefix}border-color);
+    color: var(--#{$prefix}secondary-color);
 }
   
 .choices__button {
@@ -397,7 +397,7 @@
 }
 
 
-[data-layout-mode="dark"]{
+[data-bs-theme="dark"]{
     .choices[data-type*=select-one]{
         .choices__button{
             filter: $btn-close-white-filter;

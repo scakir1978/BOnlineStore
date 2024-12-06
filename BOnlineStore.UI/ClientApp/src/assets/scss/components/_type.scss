@@ -2,11 +2,6 @@
 // type.scss
 //
 
-// Text colors
-.text-white-75 {
-    color: rgba($white, 0.75) !important;
-}
-
 // Blockquote
 .custom-blockquote {
     &.blockquote {
@@ -14,7 +9,7 @@
         border-left: 3px solid;
         
         &.blockquote-outline{
-            background-color: var(--#{$prefix}card-bg-custom) !important;
+            background-color: var(--#{$prefix}secondary-bg) !important;
             border: 1px solid;
             border-left: 3px solid;
         }
@@ -26,43 +21,21 @@ $value in $theme-colors {
     .custom-blockquote {
         &.blockquote {
             &.blockquote-#{$color} {
-                color: #{$value};
-                border-color: #{$value};
-                background-color: rgba($value, 0.15);
+                border-color: var(--#{$prefix}#{$color});
+                background-color: var(--#{$prefix}#{$color}-bg-subtle);
 
                 .blockquote-footer {
-                    color: #{$value};
+                    color: var(--#{$prefix}#{$color}-text-emphasis);
                 }
             }
 
             &.blockquote-outline{
                 &.blockquote-#{$color} {
-                    border-color: #{$value};
+                    border-color: var(--#{$prefix}#{$color});
 
                     .blockquote-footer {
-                        color: #{$value};
+                        color: var(--#{$prefix}#{$color}-text-emphasis);
                     }
-                }
-            }
-        }
-    }
-}
-
-.custom-blockquote{
-    &.blockquote{
-        &.blockquote-dark{
-            color: var(--#{$prefix}dark);
-            border-color: var(--#{$prefix}dark);
-            background-color: rgba(var(--#{$prefix}dark-rgb), 0.15);
-            .blockquote-footer {
-                color: var(--#{$prefix}dark);
-            }
-        }
-        &.blockquote-outline{
-            &.blockquote-dark{
-                border-color: var(--#{$prefix}dark);
-                .blockquote-footer {
-                    color: var(--#{$prefix}dark);
                 }
             }
         }
