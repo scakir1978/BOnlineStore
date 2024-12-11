@@ -167,7 +167,8 @@ namespace BOnlineStore.Services.Production.Api.Services
                             break;
                         case FormulaVariableTypeConstants.RESULTVARIABLE:
                             var formula = await _repository.GetByIdAsync(formulaDetail.FormulId ?? "");
-                            formulaText = formulaText + $" {await ExecuteFormula(formula.FormulaDetails, width1, width2, width3, height)}";
+                            var result = await ExecuteFormula(formula.FormulaDetails, width1, width2, width3, height);
+                            formulaText = formulaText + $" {result.ToString().Replace(",", ".")}";
                             break;
                         case FormulaVariableTypeConstants.CONSTANT:
                             formulaText = formulaText + $" {formulaDetail.VariableValue?.ToString().Replace(",", ".") ?? ""}";
@@ -201,7 +202,7 @@ namespace BOnlineStore.Services.Production.Api.Services
             }
             catch (Exception ex)
             {
-                throw new Exception($"Formül Hatası: {formulaText}");
+                throw new Exception($"Formül Hatası: ({formulaText}) Formül Adı: {formulaDetails.FirstOrDefault()?.FormulId ?? ""} ");
             }
         }
     }

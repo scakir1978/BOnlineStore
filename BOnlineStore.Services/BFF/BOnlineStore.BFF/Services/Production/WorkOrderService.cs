@@ -203,25 +203,25 @@ namespace BOnlineStore.BFF.Api.Services.Production
             //Üretimde kullanılacak hammaddeleri reçeteye göre sıralı olarak listeye ekliyorum.
             foreach (var recipeRawMaterial in workOrderForm.RecipeType.RawMaterialIds)
             {
-                var rawMaterial = workOrderForm.WorkOrderProductionList
-                                    .Where(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim())
-                                    .FirstOrDefault();
+                var rawMaterials = workOrderForm.WorkOrderProductionList
+                                    .Where(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim()).ToList();
+                                    
 
-                if (rawMaterial != null)
+                if (rawMaterials != null)
                 {
-                    workOrderFormFrontEnd.RawMaterials.Add(rawMaterial);
+                    workOrderFormFrontEnd.RawMaterials.AddRange(rawMaterials);
                 }
             }
 
             //Üretimde kullanılacak panel hammaddeleri reçeteye göre sıralı olarak listeye ekliyorum.
             foreach (var recipeRawMaterial in workOrderForm.RecipeType.PanelRawMaterialIds)
             {
-                var rawMaterial = workOrderForm.WorkOrderProductionList
-                                    .FirstOrDefault(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim());
+                var rawMaterials = workOrderForm.WorkOrderProductionList
+                                    .Where(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim()).ToList();
 
-                if (rawMaterial != null)
+                if (rawMaterials != null)
                 {
-                    workOrderFormFrontEnd.PanelRawMaterials.Add(rawMaterial);
+                    workOrderFormFrontEnd.PanelRawMaterials.AddRange(rawMaterials);
                 }
             }
 

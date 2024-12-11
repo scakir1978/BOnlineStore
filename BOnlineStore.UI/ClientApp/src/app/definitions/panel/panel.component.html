@@ -116,7 +116,6 @@
     editCellTemplate="editCellTemplate"
     caption="{{ 'PICTURE' | translate }}"
   >
-    <dxi-validation-rule type="required"></dxi-validation-rule>
     <dxi-validation-rule
       type="custom"
       [validationCallback]="validateFileSize"
@@ -197,7 +196,6 @@
       class="uploadedImage"
       [src]="data.value"
       [hidden]="isPictureNotLoaded(data.value)"
-      style="object-fit: contain; width: 45%; height: 45%"
     />
     <dx-file-uploader
       #fileUploader
