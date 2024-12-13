@@ -172,8 +172,13 @@ namespace BOnlineStore.BFF.Api.Services.Production
 
             foreach (var rawMaterialDto in rawMaterialDtoList)
             {
-                var productionMaterial = workOrderForm.WorkOrderProductionList.Where(x => x.RawMaterialId == rawMaterialDto.Id).FirstOrDefault();
-                productionMaterial.RawMaterial = rawMaterialDto;
+                var productionMaterials = workOrderForm.WorkOrderProductionList.Where(x => x.RawMaterialId == rawMaterialDto.Id).ToList();
+
+                foreach (var productionMaterial in productionMaterials)
+                {
+                    productionMaterial.RawMaterial = rawMaterialDto;
+                }
+                
             }
 
         }

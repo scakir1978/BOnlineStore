@@ -1,20 +1,266 @@
-<div>
-  <p>Varsayılan Form</p>
-  <p>{{ this.workOrderForm.workOrder.id }}</p>
-  <div class="row align-items-end">
-    <div class="text-sm-end d-none d-sm-block">
-      <dx-button
-        text="{{ 'PRINT' | translate }}"
-        type="normal"
-        (onClick)="onClose()"
-        style="margin-left: 10px"
-      ></dx-button>
-      <dx-button
-        text="{{ 'CLOSE' | translate }}"
-        type="normal"
-        (onClick)="onClose()"
-        style="margin-left: 10px"
-      ></dx-button>
-    </div>
+<div class="row">
+  <div class="col-12">
+    <table class="table table-striped table-responsive table-bordered">
+      <thead>
+        <tr>
+          <td colspan="2" style="text-align: center; vertical-align: middle">
+            <h4>{{ "Üretim Formu" }}</h4>
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td width="10%" style="text-align: left; vertical-align: middle">
+            Müşteri:
+          </td>
+          <td width="90%" style="text-align: left; vertical-align: middle">
+            {{ this.workOrderForm.workOrder.firm.name }}
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" style="text-align: left; vertical-align: middle">
+            Adres:
+          </td>
+          <td width="90%" style="text-align: left; vertical-align: middle">
+            {{ this.workOrderForm.workOrder.firm.adress }}
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" style="text-align: left; vertical-align: middle">
+            Telefon:
+          </td>
+          <td width="90%" style="text-align: left; vertical-align: middle">
+            {{ this.workOrderForm.workOrder.firm.telephoneNumber1 }}
+          </td>
+        </tr>
+        <tr>
+          <td width="10%" style="text-align: left; vertical-align: middle">
+            Bayi:
+          </td>
+          <td width="90%" style="text-align: left; vertical-align: middle">
+            {{ this.workOrderForm.workOrder.firm.name }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <table class="table table-striped table-responsive table-bordered">
+      <tbody>
+        <tr>
+          <td width="20%" style="text-align: left; vertical-align: middle">
+            İmalat Numarası:
+          </td>
+          <td width="90%" style="text-align: left; vertical-align: middle">
+            {{ this.workOrderForm.workOrder.workOrderNo }}
+          </td>
+        </tr>
+        <tr>
+          <td width="20%" style="text-align: left; vertical-align: middle">
+            İmalat Tarihi:
+          </td>
+          <td width="90%" style="text-align: left; vertical-align: middle">
+            {{
+              this.workOrderForm?.workOrder?.productionDate ?? ""
+                | date : "d.M.y"
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td width="20%" style="text-align: left; vertical-align: middle">
+            İmalat Bitiş Tarihi:
+          </td>
+          <td width="90%" style="text-align: left; vertical-align: middle">
+            {{
+              this.workOrderForm?.workOrder?.workshopReleaseDate ?? ""
+                | date : "d.M.y"
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td width="20%" style="text-align: left; vertical-align: middle">
+            Teslim Tarihi:
+          </td>
+          <td width="90%" style="text-align: left; vertical-align: middle">
+            {{
+              this.workOrderForm?.workOrder?.deliveryDate ?? "" | date : "d.M.y"
+            }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6">
+    <table class="table table-striped table-responsive table-bordered">
+      <thead>
+        <tr>
+          <th width="20%"></th>
+          <th width="20%">Onay</th>
+          <th width="60%">Personel Adı</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td width="20%">Kesildi</td>
+          <td width="20%"></td>
+          <td width="60%"></td>
+        </tr>
+        <tr>
+          <td width="20%">Toplandı</td>
+          <td width="20%"></td>
+          <td width="60%"></td>
+        </tr>
+        <tr>
+          <td width="20%">Kontrol</td>
+          <td width="20%"></td>
+          <td width="60%"></td>
+        </tr>
+        <tr>
+          <td>Paket</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <table class="table table-striped table-responsive table-bordered">
+      <thead>
+        <tr>
+          <th width="30%">Model</th>
+          <th width="20%">Renk</th>
+          <th width="20%">Cam</th>
+          <th width="10%">En-1</th>
+          <th width="10%">En-2</th>
+          <th width="10%">Yükseklik</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td width="30%">{{ this.workOrderForm.workOrder.model.name }}</td>
+          <td width="20%">
+            {{ this.workOrderForm?.workOrder?.color?.name ?? "" }}
+          </td>
+          <td width="20%">
+            {{ this.workOrderForm?.workOrder?.glass.name ?? "" }}
+          </td>
+          <td width="10%">{{ this.workOrderForm?.workOrder?.width1 ?? "" }}</td>
+          <td width="10%">{{ this.workOrderForm?.workOrder?.width2 ?? "" }}</td>
+          <td width="10%">{{ this.workOrderForm?.workOrder?.height ?? "" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <table class="table table-responsive table-borderless">
+      <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td width="80%">
+            Açıklamalar: {{ this.workOrderForm?.workOrder?.description ?? "" }}
+          </td>
+          <td width="20%">
+            Panel Varmı? {{ isPanelExists(this.workOrderForm) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <table class="table table-responsive table-borderless">
+      <tbody>
+        <tr>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+        </tr>
+        <tr>
+          <td style="text-align: center; vertical-align: middle">
+            <img src="{{ this.workOrderForm.workOrder.model.picture }}" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6">
+    <table class="table table-striped table-responsive table-bordered">
+      <thead>
+        <tr>
+          <th>Malzeme Adı</th>
+          <th>Ölçü</th>
+          <th>Adet</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of this.workOrderForm.rawMaterials">
+        <tr>
+          <td>{{ item?.rawMaterial?.name ?? "" }}</td>
+          <td>{{ item?.productionMeasure ?? "" }}</td>
+          <td>{{ item?.amount ?? "" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-6">
+    <table class="table table-striped table-responsive table-bordered">
+      <thead>
+        <tr>
+          <th>Cam Ölçüleri</th>
+          <th>Ölçü</th>
+          <th>Adet</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of this.workOrderForm.glassRawMaterials">
+        <tr>
+          <td>
+            {{ item?.widthMaterial?.rawMaterial?.name ?? "" }}-{{
+              item?.lengthMaterial?.rawMaterial?.name ?? ""
+            }}
+          </td>
+          <td>
+            {{ item?.widthMaterial?.productionMeasure ?? "" }}-{{
+              item?.lengthMaterial?.productionMeasure ?? ""
+            }}
+          </td>
+          <td>{{ item?.widthMaterial?.amount ?? "" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row align-items-end">
+  <div class="text-sm-end d-none d-sm-block">
+    <dx-button
+      text="{{ 'PRINT' | translate }}"
+      type="normal"
+      (onClick)="onClose()"
+      style="margin-left: 10px"
+    ></dx-button>
+    <dx-button
+      text="{{ 'CLOSE' | translate }}"
+      type="normal"
+      (onClick)="onClose()"
+      style="margin-left: 10px"
+    ></dx-button>
+  </div>
+</div>
+<div class="row">
+  <table class="table table-responsive table-borderless">
+    <tbody>
+      <tr></tr>
+    </tbody>
+  </table>
 </div>

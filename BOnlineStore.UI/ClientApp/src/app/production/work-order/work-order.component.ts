@@ -113,12 +113,6 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   }
 
   async showWorkOrderForm(e) {
-    Swal.fire({
-      title: 'Good job!',
-      text: 'You clicked the button!',
-      icon: 'success',
-    });
-
     this.loadingVisible = true;
 
     this._workOrderService

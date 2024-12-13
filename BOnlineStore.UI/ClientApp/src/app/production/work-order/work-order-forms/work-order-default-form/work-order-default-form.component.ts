@@ -13,4 +13,17 @@ export class WorkOrderDefaultFormComponent {
   onClose() {
     this.closeForm.emit();
   }
+
+  telephoneFormat(telephoneNumber: string) {}
+
+  isPanelExists(workOrderForm: WorkOrderFormFrontEndDto): string {
+    if (
+      workOrderForm.workOrder.panelHeight ||
+      (!workOrderForm.workOrder.panelWidth &&
+        workOrderForm.workOrder.sidePanelHeight) ||
+      workOrderForm.workOrder.sidePanelWidth
+    )
+      return 'Var';
+    return 'Yok';
+  }
 }
