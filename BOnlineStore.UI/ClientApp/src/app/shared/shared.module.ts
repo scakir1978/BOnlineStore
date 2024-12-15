@@ -13,6 +13,9 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 
 import { ScrollspyDirective } from './scrollspy.directive';
 
+//Printing
+import { NgxPrintModule } from 'ngx-print';
+
 @NgModule({
   declarations: [BreadcrumbsComponent, ScrollspyDirective],
   imports: [
@@ -20,7 +23,8 @@ import { ScrollspyDirective } from './scrollspy.directive';
     NgbNavModule,
     NgbAccordionModule,
     NgbDropdownModule,
-    //CountToModule
+    //CountToModule,
+    NgxPrintModule,
   ],
   exports: [BreadcrumbsComponent, ScrollspyDirective],
 })

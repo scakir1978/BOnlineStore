@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { WorkOrderFormFrontEndDto } from '../../../../dtos/production/work-order-form-front-end-interface';
+import { NgxPrintService, PrintOptions } from 'ngx-print';
 
 @Component({
   selector: 'app-work-order-default-form',
@@ -7,6 +8,7 @@ import { WorkOrderFormFrontEndDto } from '../../../../dtos/production/work-order
   styleUrls: ['./work-order-default-form.component.scss'],
 })
 export class WorkOrderDefaultFormComponent {
+  constructor(private printService: NgxPrintService) {}
   @Input() workOrderForm: WorkOrderFormFrontEndDto;
   @Output() closeForm = new EventEmitter<any>();
 
@@ -25,5 +27,14 @@ export class WorkOrderDefaultFormComponent {
     )
       return 'Var';
     return 'Yok';
+  }
+
+  printForm() {
+    const customPrintOptions: PrintOptions = new PrintOptions({
+      printSectionId: 'print-section',
+      printTitle: 'Üretim Formu',
+      useExistingCss: true,
+    });
+    this.printService.print(customPrintOptions);
   }
 }
