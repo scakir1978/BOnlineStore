@@ -21,20 +21,40 @@ namespace BOnlineStore.Services.Definitions.Api.Helpers
             //Örneğin Region entitysi gönderilmesi durumunda RegionService class tipi elde edilir.
             var typeClass = Type.GetType($"BOnlineStore.Services.Definitions.Api.Services.{entityName.Trim()}Service");
 
+            if (typeInterface == null || typeClass == null)
+            {
+                throw new ArgumentException("Invalid entity name provided.");
+            }
+
             //Interface tipine bağlı DI sisteminden servise ulaşılır.
             var service = _serviceProvider.GetService(typeInterface);
+
+            if (service == null)
+            {
+                throw new InvalidOperationException($"Service for type {typeInterface.FullName} not found.");
+            }
 
             //Class tipinden çağıracağımız GetByIdAsync metoduna ulaşılır.
             var method = typeClass.GetMethod("GetByIdAsync");
 
+            if (method == null)
+            {
+                throw new InvalidOperationException($"Method GetByIdAsync not found in type {typeClass.FullName}.");
+            }
+
             //Method service kullanılarak, gönderilen entity id ile çağrılır.
-            dynamic result = method.Invoke(service, new object[] { entityId });
+            var result = method.Invoke(service, new object[] { entityId });
+
+            if (result == null)
+            {
+                throw new InvalidOperationException("The invoked method returned null.");
+            }
 
             //Dönen metod async bir fonksiyon olduğu için await ile sonucuna ulaşılır
-            await result;
+            await (dynamic)result;
 
             //entity datası oluşturulur.
-            var entity = result.GetAwaiter().GetResult();
+            var entity = ((dynamic)result).GetAwaiter().GetResult();
 
             return (object)entity;
         }

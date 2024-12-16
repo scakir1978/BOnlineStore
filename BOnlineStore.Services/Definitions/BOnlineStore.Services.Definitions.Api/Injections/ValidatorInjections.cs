@@ -36,7 +36,7 @@ namespace BOnlineStore.Services.Definitions.Api.Injections
             services.AddScoped<IValidator<Country>, CountryValidator>();
             services.AddScoped<IValidator<District>, DistrictValidator>();
             services.AddScoped<IValidator<PriceListMaster>, PriceListMasterValidator>();
-
+            services.AddScoped<IValidator<DeliveryAdress>, DeliveryAdressValidator>();
 
             return services;
         }

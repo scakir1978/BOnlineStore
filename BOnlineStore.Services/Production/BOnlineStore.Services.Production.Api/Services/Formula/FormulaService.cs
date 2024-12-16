@@ -9,6 +9,7 @@ using BOnlineStore.Shared;
 using FluentValidation;
 using Microsoft.Extensions.Localization;
 using System.Globalization;
+using System.Text;
 
 namespace BOnlineStore.Services.Production.Api.Services
 {
@@ -29,28 +30,11 @@ namespace BOnlineStore.Services.Production.Api.Services
             _stringLocalizer = stringLocalizer;
         }
 
-        /// <summary>
-        /// Seçilen formülü, yine seçilen modele kopyalar.
-        /// </summary>
-        /// <param name="formulaId">Kopyalanacak formülün idsi</param>
-        /// <param name="modelId">Formülün kopyalanacağı modelin idsi</param>        
         public async Task<bool> CopyFormula(string formulaId, string formulaCode, string modelId)
         {
-            if (string.IsNullOrWhiteSpace(formulaId))
-                throw new Exception(_stringLocalizer[ProductionApiKeys.FormulaIdNotEmpty]);
-
-            if (string.IsNullOrWhiteSpace(formulaCode))
-            {
-                throw new Exception(_stringLocalizer[ProductionApiKeys.FormulaCodeNotEmpty]);
-            }
-
-            if (string.IsNullOrWhiteSpace(modelId))
-            {
-                throw new Exception(_stringLocalizer[ProductionApiKeys.ModelIdNotEmpty]);
-            }
+            ValidateInput(formulaId, formulaCode, modelId);
 
             var formula = await _repository.GetByIdAsync(formulaId);
-
             if (formula == null)
             {
                 throw new InvalidOperationException(_stringLocalizer[ProductionApiKeys.FormulaIdNotFound]);
@@ -64,146 +48,149 @@ namespace BOnlineStore.Services.Production.Api.Services
             await AddAsync(formulaCreateDto);
 
             return true;
-
         }
 
-        /// <summary>
-        /// Formüş girişi ekranında tanımlanan formülün, 
-        /// düzgün oluşup oluşmadığını anlamak için, sanal değerler ile formül oluşturulup çalıştırılır.
-        /// Eğer formül düzgün oluşmuş ise formül sanal değerler ile hata vermeden çalışır.
-        /// Formülün içinde EN1, EN2, EN3, YUKSEKLIK ve SONUCDEGISKENI için "100" değeri kullanılır. 
-        /// SABIT içinse girilen değer kullanılır.        
-        /// </summary>
-        /// <param name="formulaDetails"></param>
-        /// <returns></returns>
         public async Task<bool> ExecuteFormulaTest(List<FormulaDetail> formulaDetails)
         {
             try
             {
-                string formulaText = string.Empty;
-
-                foreach (FormulaDetail formulaDetail in formulaDetails)
-                {
-                    switch (formulaDetail.VariableType)
-                    {
-                        case FormulaVariableTypeConstants.WIDTH1:
-                        case FormulaVariableTypeConstants.WIDTH2:
-                        case FormulaVariableTypeConstants.WIDTH3:
-                        case FormulaVariableTypeConstants.HEIGHT:
-                        case FormulaVariableTypeConstants.RESULTVARIABLE:
-                            formulaText = formulaText + " 100";
-                            break;
-                        case FormulaVariableTypeConstants.CONSTANT:
-                            formulaText = formulaText + $" {formulaDetail.VariableValue?.ToString().Replace(",", ".") ?? ""}";
-                            break;
-                        case FormulaVariableTypeConstants.OPENPARENTHESIS:
-                            formulaText = formulaText + " (";
-                            break;
-                        case FormulaVariableTypeConstants.CLOSEPARENTHESIS:
-                            formulaText = formulaText + " )";
-                            break;
-                        case FormulaVariableTypeConstants.PLUS:
-                            formulaText = formulaText + " +";
-                            break;
-                        case FormulaVariableTypeConstants.MINUS:
-                            formulaText = formulaText + " -";
-                            break;
-                        case FormulaVariableTypeConstants.MULTIPLY:
-                            formulaText = formulaText + " *";
-                            break;
-                        case FormulaVariableTypeConstants.DIVIDE:
-                            formulaText = formulaText + " /";
-                            break;
-                    }
-                }
-
-                NCalc.Expression e = new NCalc.Expression(formulaText.Trim());
-
-                e.Evaluate();
-
-                return true;
+                var formulaText = BuildFormulaText(formulaDetails);
+                var expression = new NCalc.Expression(formulaText.Trim());
+                expression.Evaluate();
+                return await Task.FromResult(true);
             }
-            catch (Exception ex)
+            catch (NCalc.EvaluationException)
             {
-                return false;
+                return await Task.FromResult(false);
             }
         }
 
-        /// <summary>
-        /// Formül tanımına göre, formül değerini hesaplar.
-        /// </summary>
-        /// <param name="formulaDetails">Formül tanımının bulunduğu detaylar</param>
-        /// <param name="width1">Formül hesaplamada kullanılacak En-1 bilgisi</param>
-        /// <param name="width2">Formül hesaplamada kullanılacak En-2 bilgisi</param>
-        /// <param name="width3">Formül hesaplamada kullanılacak En-3 bilgisi</param>
-        /// <param name="height">Formül hesaplamada kullanılacak Yükseklik bilgisi</param>
-        /// <returns></returns>
         public async Task<decimal> ExecuteFormula(List<FormulaDetail>? formulaDetails, decimal? width1, decimal? width2, decimal? width3, decimal? height)
         {
-            string formulaText = string.Empty;
-
             if (formulaDetails == null)
             {
-                throw new Exception($"Formül Hatası: Formül detaylarına ulaşılamadı.");
+                throw new ArgumentException("Formula details cannot be null.");
             }
+
+            string formulaText = string.Empty;
 
             try
             {
-                foreach (FormulaDetail formulaDetail in formulaDetails)
-                {
-                    switch (formulaDetail.VariableType)
-                    {
-                        case FormulaVariableTypeConstants.WIDTH1:
-                            formulaText = formulaText + $" {width1}";
-                            break;
-                        case FormulaVariableTypeConstants.WIDTH2:
-                            formulaText = formulaText + $" {width2}";
-                            break;
-                        case FormulaVariableTypeConstants.WIDTH3:
-                            formulaText = formulaText + $" {width3}";
-                            break;
-                        case FormulaVariableTypeConstants.HEIGHT:
-                            formulaText = formulaText + $" {height}";
-                            break;
-                        case FormulaVariableTypeConstants.RESULTVARIABLE:
-                            var formula = await _repository.GetByIdAsync(formulaDetail.FormulId ?? "");
-                            var result = await ExecuteFormula(formula.FormulaDetails, width1, width2, width3, height);
-                            formulaText = formulaText + $" {result.ToString().Replace(",", ".")}";
-                            break;
-                        case FormulaVariableTypeConstants.CONSTANT:
-                            formulaText = formulaText + $" {formulaDetail.VariableValue?.ToString().Replace(",", ".") ?? ""}";
-                            break;
-                        case FormulaVariableTypeConstants.OPENPARENTHESIS:
-                            formulaText = formulaText + " (";
-                            break;
-                        case FormulaVariableTypeConstants.CLOSEPARENTHESIS:
-                            formulaText = formulaText + " )";
-                            break;
-                        case FormulaVariableTypeConstants.PLUS:
-                            formulaText = formulaText + " +";
-                            break;
-                        case FormulaVariableTypeConstants.MINUS:
-                            formulaText = formulaText + " -";
-                            break;
-                        case FormulaVariableTypeConstants.MULTIPLY:
-                            formulaText = formulaText + " *";
-                            break;
-                        case FormulaVariableTypeConstants.DIVIDE:
-                            formulaText = formulaText + " /";
-                            break;
-                    }
-                }
-
-                NCalc.Expression e = new NCalc.Expression(formulaText.Trim());
-
-                var formulaValue = Convert.ToDecimal(e.Evaluate());
-
+                formulaText = await BuildFormulaTextAsync(formulaDetails, width1, width2, width3, height);
+                var expression = new NCalc.Expression(formulaText.Trim());
+                var formulaValue = Convert.ToDecimal(expression.Evaluate());
                 return formulaValue;
             }
-            catch (Exception ex)
+            catch (NCalc.EvaluationException ex)
             {
-                throw new Exception($"Formül Hatası: ({formulaText}) Formül Adı: {formulaDetails.FirstOrDefault()?.FormulId ?? ""} ");
+                throw new InvalidOperationException($"Formula Error: ({formulaText}) Formula ID: {formulaDetails.FirstOrDefault()?.FormulId ?? ""}", ex);
             }
+        }
+
+        private void ValidateInput(string formulaId, string formulaCode, string modelId)
+        {
+            if (string.IsNullOrWhiteSpace(formulaId))
+                throw new ArgumentException(_stringLocalizer[ProductionApiKeys.FormulaIdNotEmpty]);
+
+            if (string.IsNullOrWhiteSpace(formulaCode))
+                throw new ArgumentException(_stringLocalizer[ProductionApiKeys.FormulaCodeNotEmpty]);
+
+            if (string.IsNullOrWhiteSpace(modelId))
+                throw new ArgumentException(_stringLocalizer[ProductionApiKeys.ModelIdNotEmpty]);
+        }
+
+        private string BuildFormulaText(List<FormulaDetail> formulaDetails)
+        {
+            var formulaText = new StringBuilder();
+
+            foreach (var formulaDetail in formulaDetails)
+            {
+                switch (formulaDetail.VariableType)
+                {
+                    case FormulaVariableTypeConstants.WIDTH1:
+                    case FormulaVariableTypeConstants.WIDTH2:
+                    case FormulaVariableTypeConstants.WIDTH3:
+                    case FormulaVariableTypeConstants.HEIGHT:
+                    case FormulaVariableTypeConstants.RESULTVARIABLE:
+                        formulaText.Append(" 100");
+                        break;
+                    case FormulaVariableTypeConstants.CONSTANT:
+                        formulaText.Append($" {formulaDetail.VariableValue?.ToString().Replace(",", ".") ?? ""}");
+                        break;
+                    case FormulaVariableTypeConstants.OPENPARENTHESIS:
+                        formulaText.Append(" (");
+                        break;
+                    case FormulaVariableTypeConstants.CLOSEPARENTHESIS:
+                        formulaText.Append(" )");
+                        break;
+                    case FormulaVariableTypeConstants.PLUS:
+                        formulaText.Append(" +");
+                        break;
+                    case FormulaVariableTypeConstants.MINUS:
+                        formulaText.Append(" -");
+                        break;
+                    case FormulaVariableTypeConstants.MULTIPLY:
+                        formulaText.Append(" *");
+                        break;
+                    case FormulaVariableTypeConstants.DIVIDE:
+                        formulaText.Append(" /");
+                        break;
+                }
+            }
+
+            return formulaText.ToString();
+        }
+
+        private async Task<string> BuildFormulaTextAsync(List<FormulaDetail> formulaDetails, decimal? width1, decimal? width2, decimal? width3, decimal? height)
+        {
+            var formulaText = new StringBuilder();
+
+            foreach (var formulaDetail in formulaDetails)
+            {
+                switch (formulaDetail.VariableType)
+                {
+                    case FormulaVariableTypeConstants.WIDTH1:
+                        formulaText.Append($" {width1}");
+                        break;
+                    case FormulaVariableTypeConstants.WIDTH2:
+                        formulaText.Append($" {width2}");
+                        break;
+                    case FormulaVariableTypeConstants.WIDTH3:
+                        formulaText.Append($" {width3}");
+                        break;
+                    case FormulaVariableTypeConstants.HEIGHT:
+                        formulaText.Append($" {height}");
+                        break;
+                    case FormulaVariableTypeConstants.RESULTVARIABLE:
+                        var formula = await _repository.GetByIdAsync(formulaDetail.FormulId ?? "");
+                        var result = await ExecuteFormula(formula.FormulaDetails, width1, width2, width3, height);
+                        formulaText.Append($" {result.ToString().Replace(",", ".")}");
+                        break;
+                    case FormulaVariableTypeConstants.CONSTANT:
+                        formulaText.Append($" {formulaDetail.VariableValue?.ToString().Replace(",", ".") ?? ""}");
+                        break;
+                    case FormulaVariableTypeConstants.OPENPARENTHESIS:
+                        formulaText.Append(" (");
+                        break;
+                    case FormulaVariableTypeConstants.CLOSEPARENTHESIS:
+                        formulaText.Append(" )");
+                        break;
+                    case FormulaVariableTypeConstants.PLUS:
+                        formulaText.Append(" +");
+                        break;
+                    case FormulaVariableTypeConstants.MINUS:
+                        formulaText.Append(" -");
+                        break;
+                    case FormulaVariableTypeConstants.MULTIPLY:
+                        formulaText.Append(" *");
+                        break;
+                    case FormulaVariableTypeConstants.DIVIDE:
+                        formulaText.Append(" /");
+                        break;
+                }
+            }
+
+            return formulaText.ToString();
         }
     }
 }

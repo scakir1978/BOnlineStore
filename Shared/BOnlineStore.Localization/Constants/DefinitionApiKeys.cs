@@ -100,5 +100,10 @@ namespace BOnlineStore.Localization.Constants
         public const string PriceListMasterCodeNotEmpty = "PriceListMasterCodeNotEmpty";
         public const string PriceListMasterCodeMaxLength = "PriceListMasterCodeMaxLength";
         public const string PriceListMasterCodeMustBeUnique = "PriceListMasterCodeMustBeUnique";
+        public const string DeliveryAdressNameNotEmpty = "DeliveryAdressNameNotEmpty";
+        public const string DeliveryAdressNameMaxLength = "DeliveryAdressNameMaxLength";
+        public const string DeliveryAdressCodeNotEmpty = "DeliveryAdressCodeNotEmpty";
+        public const string DeliveryAdressCodeMaxLength = "DeliveryAdressCodeMaxLength";
+        public const string DeliveryAdressCodeMustBeUnique = "DeliveryAdressCodeMustBeUnique";
     }
 }
