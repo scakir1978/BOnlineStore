@@ -28,4 +28,5 @@ export enum DefinitionsControllerNamesEnum {
   DISTRICT = 'District',
   FIRM = 'Firm',
   PRICELIST = 'PriceList',
+  DELIVERYADRESS = 'DeliveryAdress',
 }

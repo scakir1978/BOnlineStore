@@ -163,6 +163,12 @@ export const MENU: MenuItem[] = [
             link: '/definitions/firm-type',
             parentId: 10210,
           },
+          {
+            id: 10235,
+            label: 'DELIVERYADRESS',
+            link: '/definitions/delivery-adress',
+            parentId: 10210,
+          },
         ],
       },
 

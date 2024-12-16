@@ -245,5 +245,6 @@
   "FORMNO4": "Fourth Form",
   "WORKORDERINFORMATION": "Work Order Information",
   "PRINT": "Print",
-  "CLOSE": "Close"
+  "CLOSE": "Close",
+  "DELIVERYADRESS": "Delivery Adresses"
 }
