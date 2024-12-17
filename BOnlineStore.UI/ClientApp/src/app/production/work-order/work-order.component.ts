@@ -11,6 +11,7 @@ import DataSource from 'devextreme/data/data_source';
 import { WorkOrderStatus } from '../../enums/production/work-order-status.enum';
 import { SwingDirection } from '../../enums/production/swing-direction.enum';
 import Swal from 'sweetalert2';
+import { Column } from 'devextreme/ui/data_grid';
 
 @Component({
   selector: 'work-order',
@@ -24,6 +25,12 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
   public glassDataSource: CustomStore;
   public firmDataSource: CustomStore;
   public templateDataSource: CustomStore;
+  public deliveryAdressDataSource: CustomStore;
+  public countryDataSource: CustomStore;
+  public cityDataSource: CustomStore;
+  public countyDataSource: CustomStore;
+  public districtDataSource: CustomStore;
+
   public swingDirectionList: ICodeName[];
   public workOrderStatusList: ICodeName[];
   public workOrderFormDto: WorkOrderFormFrontEndDto;
@@ -51,6 +58,12 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
     this.glassDataSource = _workOrderService.getRawGlassDataSource();
     this.firmDataSource = _workOrderService.getRawFirmDataSource();
     this.templateDataSource = _workOrderService.getRawTemplateDataSource();
+    this.deliveryAdressDataSource =
+      _workOrderService.getRawDeliveryAdressDataSource();
+    this.countryDataSource = _workOrderService.getCountryDataSource();
+    this.cityDataSource = _workOrderService.getCityDataSource();
+    this.countyDataSource = _workOrderService.getCountyDataSource();
+    this.districtDataSource = _workOrderService.getDistrictDataSource();
 
     this.translateAndGetArrays();
     this._translate.onLangChange.subscribe((value: LangChangeEvent) => {
@@ -58,7 +71,11 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
     });
 
     this.showWorkOrderForm = this.showWorkOrderForm.bind(this);
-    this.dropDownOptions = { width: 500 };
+    this.getFilteredCities = this.getFilteredCities.bind(this);
+    this.getFilteredCounties = this.getFilteredCounties.bind(this);
+    this.getFilteredDistricts = this.getFilteredDistricts.bind(this);
+
+    this.dropDownOptions = { width: 900 };
 
     this.formActive = false;
     this.workOrderFormName = FormName.DefaultForm;
@@ -134,6 +151,38 @@ export class WorkOrderComponent extends BaseDefinitionsOnGridComponent {
     if (selectedRowKeys.length > 0) {
       dropDownBoxComponent.close();
     }
+  }
+
+  onDeliveryAdressGridSelectionChanged(
+    selectedRowKeys,
+    cellInfo,
+    dropDownBoxComponent
+  ) {
+    cellInfo.setValue(selectedRowKeys[0]);
+    if (selectedRowKeys.length > 0) {
+      dropDownBoxComponent.close();
+    }
+  }
+
+  getFilteredCities(options) {
+    return {
+      store: this.cityDataSource,
+      filter: options.data ? ['countryId', '=', options.data.countryId] : null,
+    };
+  }
+
+  getFilteredCounties(options) {
+    return {
+      store: this.countyDataSource,
+      filter: options.data ? ['cityId', '=', options.data.cityId] : null,
+    };
+  }
+
+  getFilteredDistricts(options) {
+    return {
+      store: this.districtDataSource,
+      filter: options.data ? ['countyId', '=', options.data.countyId] : null,
+    };
   }
 
   closeForm() {

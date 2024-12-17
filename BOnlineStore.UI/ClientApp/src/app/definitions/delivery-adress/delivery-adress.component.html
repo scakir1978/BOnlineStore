@@ -18,7 +18,7 @@
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
   <dxo-header-filter [visible]="true"> </dxo-header-filter>
   <dxo-editing
-    mode="batch"
+    mode="popup"
     [allowAdding]="true"
     [allowDeleting]="true"
     [allowUpdating]="true"
@@ -26,6 +26,49 @@
     [refreshMode]="'full'"
     [confirmDelete]="true"
   >
+    <dxo-form labelMode="floating">
+      <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
+        <dxi-item
+          itemType="group"
+          caption="{{ 'GENERALINFORMATION' | translate }}"
+        >
+          <dxi-item itemType="group" [colCount]="2">
+            <dxi-item dataField="code"></dxi-item>
+            <dxi-item dataField="name"></dxi-item>
+          </dxi-item>
+          <dxi-item dataField="customerName"></dxi-item>
+          <dxi-item itemType="group" [colCount]="2">
+            <dxi-item
+              dataField="telephoneNumber"
+              [editorOptions]="{ mask: '(000) 000-0000' }"
+            ></dxi-item>
+            <dxi-item
+              dataField="cellPhoneNumber"
+              [editorOptions]="{ mask: '(000) 000-0000' }"
+            ></dxi-item>
+          </dxi-item>
+          <dxi-item dataField="eMail"></dxi-item>
+        </dxi-item>
+        <dxi-item
+          itemType="group"
+          [colCount]="2"
+          caption="{{ 'ADRESSINFORMATION' | translate }}"
+        >
+          <dxi-item dataField="countryId"></dxi-item>
+          <dxi-item dataField="regionId"></dxi-item>
+          <dxi-item dataField="cityId"></dxi-item>
+          <dxi-item dataField="countyId"></dxi-item>
+          <dxi-item dataField="districtId"></dxi-item>
+          <dxi-item dataField="postalCode"></dxi-item>
+          <dxi-item
+            dataField="adress"
+            [colSpan]="2"
+            editorType="dxTextArea"
+            [editorOptions]="{ height: 85 }"
+          ></dxi-item>
+        </dxi-item>
+      </dxi-item>
+    </dxo-form>
   </dxo-editing>
 
   <dxo-paging [pageSize]="10"></dxo-paging>
@@ -76,6 +119,135 @@
       type="stringLength"
       [max]="250"
       message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="customerName"
+    caption="{{ 'CUSTOMERNAME' | translate }}"
+  >
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="countryId"
+    caption="{{ 'COUNTRY' | translate }}"
+    [setCellValue]="setCountryValue"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="countryDataSource"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="regionId"
+    caption="{{ 'REGION' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="getFilteredRegions"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="cityId"
+    caption="{{ 'CITY' | translate }}"
+    [visible]="false"
+    [setCellValue]="setCityValue"
+  >
+    <dxo-lookup
+      [dataSource]="getFilteredCities"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="countyId"
+    caption="{{ 'COUNTY' | translate }}"
+    [visible]="false"
+    [setCellValue]="setCountyValue"
+  >
+    <dxo-lookup
+      [dataSource]="getFilteredCounties"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="districtId"
+    caption="{{ 'DISTRICT' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="getFilteredDistricts"
+      displayExpr="name"
+      valueExpr="id"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="postalCode"
+    caption="{{ 'POSTALCODE' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="10"
+      message="{{ 'POSTALCODEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="adress"
+    caption="{{ 'ADRESS' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="500"
+      message="{{ 'ADRESSMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="cellPhoneNumber"
+    caption="{{ 'CELLPHONENUMBER' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'CELLPHONENUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="telephoneNumber"
+    caption="{{ 'TELEPHONENUMBER' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'TELEPHONENUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="eMail"
+    caption="{{ 'EMAIL' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'EMAILMAXLENGTH' | translate }}"
     ></dxi-validation-rule>
   </dxi-column>
 </dx-data-grid>

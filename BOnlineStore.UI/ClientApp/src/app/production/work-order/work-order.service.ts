@@ -73,6 +73,41 @@ export class WorkOrderService extends BaseService implements Resolve<any> {
     );
   }
 
+  getRawDeliveryAdressDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.DELIVERYADRESS
+    );
+  }
+
+  getCountryDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.COUNTRY
+    );
+  }
+
+  getCityDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.CITY
+    );
+  }
+
+  getCountyDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.COUNTY
+    );
+  }
+
+  getDistrictDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.DISTRICT
+    );
+  }
+
   calculateProductionList(workOrderId: string): Promise<Object> {
     return this.httpGetRequest(
       'CalculateProductionList',

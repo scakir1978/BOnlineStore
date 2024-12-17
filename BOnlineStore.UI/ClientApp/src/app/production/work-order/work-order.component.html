@@ -143,6 +143,7 @@
               caption="{{ 'CUSTOMERINFORMATION' | translate }}"
             >
               <dxi-item dataField="firmId"></dxi-item>
+              <dxi-item dataField="deliveryAddressId"></dxi-item>
             </dxi-item>
             <dxi-item
               itemType="group"
@@ -287,6 +288,18 @@
     <dxi-column dataField="firmId" caption="{{ 'FIRM' | translate }}">
       <dxo-lookup
         [dataSource]="firmDataSource"
+        displayExpr="name"
+        valueExpr="id"
+      >
+      </dxo-lookup>
+    </dxi-column>
+    <dxi-column
+      dataField="deliveryAddressId"
+      caption="{{ 'DELIVERYADDRESS' | translate }}"
+      editCellTemplate="deliveryAddressDropDownBoxEditor"
+    >
+      <dxo-lookup
+        [dataSource]="deliveryAddressDataSource"
         displayExpr="name"
         valueExpr="id"
       >
@@ -467,6 +480,113 @@
             <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
             </dxi-column>
             <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+            </dxi-column>
+          </dx-data-grid>
+        </div>
+      </dx-drop-down-box>
+    </div>
+    <!-- #endregion -->
+
+    <!-- #region [Delivery adress dropdownbox] -->
+    <div *dxTemplate="let cellInfo of 'deliveryAddressDropDownBoxEditor'">
+      <dx-drop-down-box
+        label="{{ 'DELIVERYADRESS' | translate }}"
+        [(value)]="cellInfo.value"
+        valueExpr="id"
+        displayExpr="name"
+        placeholder="{{ 'ENTERDELIVERYADRESS' | translate }}"
+        [showClearButton]="true"
+        [dataSource]="deliveryAdressDataSource"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+        contentTemplate="contentTemplate"
+      >
+        <div *dxTemplate="let e of 'contentTemplate'">
+          <dx-data-grid
+            [dataSource]="deliveryAdressDataSource"
+            [hoverStateEnabled]="true"
+            [selectedRowKeys]="[cellInfo.value]"
+            [focusedRowEnabled]="true"
+            [focusedRowKey]="cellInfo.value"
+            [hoverStateEnabled]="true"
+            (onSelectionChanged)="
+              onDeliveryAdressGridSelectionChanged(
+                $event.selectedRowKeys,
+                cellInfo,
+                e.component
+              )
+            "
+            height="100%"
+            [columnAutoWidth]="true"
+          >
+            <dxo-selection mode="single"></dxo-selection>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-scrolling mode="virtual"></dxo-scrolling>
+            <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+            <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+            </dxi-column>
+            <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+            </dxi-column>
+            <dxi-column
+              dataField="customerName"
+              caption="{{ 'CUSTOMERNAME' | translate }}"
+            >
+            </dxi-column>
+            <dxi-column
+              dataField="countryId"
+              caption="{{ 'COUNTRY' | translate }}"
+              [visible]="true"
+            >
+              <dxo-lookup
+                [dataSource]="countryDataSource"
+                displayExpr="name"
+                valueExpr="id"
+              >
+              </dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              dataField="cityId"
+              caption="{{ 'CITY' | translate }}"
+              [visible]="true"
+              [setCellValue]="setCityValue"
+            >
+              <dxo-lookup
+                [dataSource]="getFilteredCities"
+                displayExpr="name"
+                valueExpr="id"
+              >
+              </dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              dataField="countyId"
+              caption="{{ 'COUNTY' | translate }}"
+              [visible]="true"
+              [setCellValue]="setCountyValue"
+            >
+              <dxo-lookup
+                [dataSource]="getFilteredCounties"
+                displayExpr="name"
+                valueExpr="id"
+              >
+              </dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              dataField="districtId"
+              caption="{{ 'DISTRICT' | translate }}"
+              [visible]="true"
+            >
+              <dxo-lookup
+                [dataSource]="getFilteredDistricts"
+                displayExpr="name"
+                valueExpr="id"
+              >
+              </dxo-lookup>
+            </dxi-column>
+            <dxi-column
+              dataField="adress"
+              caption="{{ 'ADRESS' | translate }}"
+              [visible]="true"
+            >
             </dxi-column>
           </dx-data-grid>
         </div>

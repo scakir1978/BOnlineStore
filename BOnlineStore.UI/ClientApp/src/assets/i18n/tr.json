@@ -275,5 +275,6 @@
   "FORMNO4": "Dördüncü Form",
   "PRINT": "Yazdır",
   "CLOSE": "Kapat",
-  "DELIVERYADRESS": "Sevk Adresleri"
+  "DELIVERYADRESS": "Sevk Adresleri",
+  "CUSTOMERNAME": "Müşteri Adı"
 }

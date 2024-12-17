@@ -246,5 +246,6 @@
   "WORKORDERINFORMATION": "Work Order Information",
   "PRINT": "Print",
   "CLOSE": "Close",
-  "DELIVERYADRESS": "Delivery Adresses"
+  "DELIVERYADRESS": "Delivery Adresses",
+  "CUSTOMERNAME": "Customer Name"
 }
