@@ -34,7 +34,7 @@ export interface WorkOrderDto extends EntityDto {
   deliveryDate: string | null;
   firmId: string | null;
   firm: FirmDto | null;
-  deliveryAddressId: string | null;
+  deliveryAdressId: string | null;
   templateId: string | null;
   template: TemplateDto | null;
   shim: string | null;

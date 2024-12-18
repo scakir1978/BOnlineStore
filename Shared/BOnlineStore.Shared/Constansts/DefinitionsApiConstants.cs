@@ -38,5 +38,10 @@ namespace BOnlineStore.Shared.Constansts
         public const string Template = "Template";
         public const string RawMaterial = "RawMaterial";
         public const string RecipeType = "RecipeType";
+        public const string DeliveryAdress = "DeliveryAdress";
+        public const string City = "City";
+        public const string Country = "Country";
+        public const string County = "County";
+        public const string District = "District";
     }
 }

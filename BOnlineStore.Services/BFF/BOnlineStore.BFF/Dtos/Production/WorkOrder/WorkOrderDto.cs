@@ -149,7 +149,12 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         /// Sevk adresi idsi
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? DeliveryAddressId { get; set; }
+        public string? DeliveryAdressId { get; set; }
+
+        /// <summary>
+        /// Sevk adresi detay bilgileri
+        /// </summary>
+        public DeliveryAdressDto? DeliveryAdress { get; set; }
 
         /// <summary>
         /// Şablon idsi
@@ -223,7 +228,7 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
             DeliveryDate = deliveryDate;
             FirmId = firmId;
             Firm = firm;
-            DeliveryAddressId = deliveryAddressId;
+            DeliveryAdressId = deliveryAddressId;
             TemplateId = templateId;
             Template = template;
             Shim = shim;

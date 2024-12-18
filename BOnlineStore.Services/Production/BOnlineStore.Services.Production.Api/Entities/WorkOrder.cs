@@ -129,7 +129,7 @@ namespace BOnlineStore.Services.Production.Api.Entities
         /// Sevk adresi idsi
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? DeliveryAddressId { get; private set; }
+        public string? DeliveryAdressId { get; private set; }
 
         /// <summary>
         /// Şablon idsi
@@ -195,7 +195,7 @@ namespace BOnlineStore.Services.Production.Api.Entities
             WorkshopReleaseDate = workshopReleaseDate;
             DeliveryDate = deliveryDate;
             FirmId = firmId;
-            DeliveryAddressId = deliveryAddressId;
+            DeliveryAdressId = deliveryAddressId;
             TemplateId = templateId;
             Shim = shim;
             AssemblyKit = assemblyKit;

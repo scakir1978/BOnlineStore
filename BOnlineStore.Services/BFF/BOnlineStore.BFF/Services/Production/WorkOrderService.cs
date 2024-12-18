@@ -59,6 +59,8 @@ namespace BOnlineStore.BFF.Api.Services.Production
             //İş emrindeki tanımlama dataları, DefinitionsService üzeriden çekilir.
             List<DefinitionsResponseDto> responseDefinitionsEntities = await GetByIdFromDefinitionsServiceAsync(workOrderForm);
 
+            List<DefinitionsResponseDto> responseDeliveryAdressDefinitionsEntities = await GetDeliveryAdressDefinitionsServiceAsync(workOrderForm.WorkOrder.DeliveryAdress);
+
             //Çekilen veriler, iş emri formundaki dtolara atanır.
             FillWorkOrderDefinitionsDataToDto(workOrderForm, responseDefinitionsEntities);
 
@@ -83,6 +85,8 @@ namespace BOnlineStore.BFF.Api.Services.Production
 
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.FirmId))
                 definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.FirmId, EntityName = DefinitionsApiEntityNameConstants.Firm });
+            if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.DeliveryAdressId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.DeliveryAdressId, EntityName = DefinitionsApiEntityNameConstants.DeliveryAdress });
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ColorId))
                 definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.ColorId, EntityName = DefinitionsApiEntityNameConstants.Color });
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.ModelId))
@@ -91,6 +95,30 @@ namespace BOnlineStore.BFF.Api.Services.Production
                 definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.GlassId, EntityName = DefinitionsApiEntityNameConstants.Glass });
             if (!string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.TemplateId))
                 definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = workOrderForm.WorkOrder.TemplateId, EntityName = DefinitionsApiEntityNameConstants.Template });
+
+            var response = await _definitionsService.GetByIdAsync(definitionsRequestList);
+            return response;
+        }
+
+        /// <summary>
+        /// Definitions service üzerinden istenen sevk adres tablosundaki tanımlama bilgilerini dto olarak döner
+        /// </summary>
+        /// <param name="deliveryAdress">Sevk adreslerine ait entity</param>
+        /// <returns></returns>
+        private async Task<List<DefinitionsResponseDto>> GetDeliveryAdressDefinitionsServiceAsync(DeliveryAdressDto? deliveryAdress)
+        {
+            if (deliveryAdress == null) return new List<DefinitionsResponseDto>();
+
+            var definitionsRequestList = new List<DefinitionsRequestDto>();
+
+            if (!string.IsNullOrWhiteSpace(deliveryAdress.CountryId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = deliveryAdress.CountryId, EntityName = DefinitionsApiEntityNameConstants.Country });
+            if (!string.IsNullOrWhiteSpace(deliveryAdress.CityId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = deliveryAdress.CityId, EntityName = DefinitionsApiEntityNameConstants.City });
+            if (!string.IsNullOrWhiteSpace(deliveryAdress.CountyId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = deliveryAdress.CountryId, EntityName = DefinitionsApiEntityNameConstants.County });
+            if (!string.IsNullOrWhiteSpace(deliveryAdress.DistrictId))
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = deliveryAdress.DistrictId, EntityName = DefinitionsApiEntityNameConstants.District });
 
             var response = await _definitionsService.GetByIdAsync(definitionsRequestList);
             return response;
@@ -110,6 +138,10 @@ namespace BOnlineStore.BFF.Api.Services.Production
                     case DefinitionsApiEntityNameConstants.Firm:
                         if (entityItem.Entity != null)
                             workOrderForm.WorkOrder.Firm = JsonConvert.DeserializeObject<FirmDto>(entityItem.Entity.ToString());
+                        break;
+                    case DefinitionsApiEntityNameConstants.DeliveryAdress:
+                        if (entityItem.Entity != null)
+                            workOrderForm.WorkOrder.DeliveryAdress = JsonConvert.DeserializeObject<DeliveryAdressDto>(entityItem.Entity.ToString());
                         break;
                     case DefinitionsApiEntityNameConstants.Color:
                         if (entityItem.Entity != null)
