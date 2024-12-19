@@ -213,4 +213,16 @@
     <value>Validation errors occurred.</value>
     <comment>Validasyon hataları oluştu.</comment>
   </data>
+  <data name="AssemblerCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of assembler code can be 50</value>
+  </data>
+  <data name="AssemblerCodeMustBeUnique" xml:space="preserve">
+    <value>Assembler code must be unique</value>
+  </data>
+  <data name="AssemblerCodeNotEmpty" xml:space="preserve">
+    <value>Assembler code cannot be empty</value>
+  </data>
+  <data name="RegionCodeNotEmpty" xml:space="preserve">
+    <value>Region code cannot be empty.</value>
+  </data>
 </root>

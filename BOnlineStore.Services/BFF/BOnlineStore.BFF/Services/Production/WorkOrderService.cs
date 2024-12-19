@@ -59,10 +59,15 @@ namespace BOnlineStore.BFF.Api.Services.Production
             //İş emrindeki tanımlama dataları, DefinitionsService üzeriden çekilir.
             List<DefinitionsResponseDto> responseDefinitionsEntities = await GetByIdFromDefinitionsServiceAsync(workOrderForm);
 
-            List<DefinitionsResponseDto> responseDeliveryAdressDefinitionsEntities = await GetDeliveryAdressDefinitionsServiceAsync(workOrderForm.WorkOrder.DeliveryAdress);
-
             //Çekilen veriler, iş emri formundaki dtolara atanır.
             FillWorkOrderDefinitionsDataToDto(workOrderForm, responseDefinitionsEntities);
+
+            if (workOrderForm.WorkOrder?.DeliveryAdress != null)
+            {
+                List<DefinitionsResponseDto> responseDeliveryAdressDefinitionsEntities = await GetDeliveryAdressDefinitionsServiceAsync(workOrderForm.WorkOrder.DeliveryAdress);
+
+                FillDeliveryAdressDefinitionsDataToDto(workOrderForm.WorkOrder.DeliveryAdress, responseDeliveryAdressDefinitionsEntities);
+            }
 
             //Reçete türü bilgilerine ulaşılır.
             await FillRecipeTypeToDto(workOrderForm);
@@ -105,10 +110,8 @@ namespace BOnlineStore.BFF.Api.Services.Production
         /// </summary>
         /// <param name="deliveryAdress">Sevk adreslerine ait entity</param>
         /// <returns></returns>
-        private async Task<List<DefinitionsResponseDto>> GetDeliveryAdressDefinitionsServiceAsync(DeliveryAdressDto? deliveryAdress)
+        private async Task<List<DefinitionsResponseDto>> GetDeliveryAdressDefinitionsServiceAsync(DeliveryAdressDto deliveryAdress)
         {
-            if (deliveryAdress == null) return new List<DefinitionsResponseDto>();
-
             var definitionsRequestList = new List<DefinitionsRequestDto>();
 
             if (!string.IsNullOrWhiteSpace(deliveryAdress.CountryId))
@@ -116,7 +119,7 @@ namespace BOnlineStore.BFF.Api.Services.Production
             if (!string.IsNullOrWhiteSpace(deliveryAdress.CityId))
                 definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = deliveryAdress.CityId, EntityName = DefinitionsApiEntityNameConstants.City });
             if (!string.IsNullOrWhiteSpace(deliveryAdress.CountyId))
-                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = deliveryAdress.CountryId, EntityName = DefinitionsApiEntityNameConstants.County });
+                definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = deliveryAdress.CountyId, EntityName = DefinitionsApiEntityNameConstants.County });
             if (!string.IsNullOrWhiteSpace(deliveryAdress.DistrictId))
                 definitionsRequestList.Add(new DefinitionsRequestDto { EntityId = deliveryAdress.DistrictId, EntityName = DefinitionsApiEntityNameConstants.District });
 
@@ -162,6 +165,37 @@ namespace BOnlineStore.BFF.Api.Services.Production
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Tanımlama bilgileri, iş emrindeki dtolara taşınır.
+        /// </summary>
+        /// <param name="deliveryAdress">Dto bilgilerinin atanacağı iş emri formu</param>
+        /// <param name="responseDefinitionsEntities">Definitions servisinden dönen tanımlama dto nesnesi</param>
+        private void FillDeliveryAdressDefinitionsDataToDto(DeliveryAdressDto deliveryAdress, List<DefinitionsResponseDto> responseDefinitionsEntities)
+        {
+            foreach (var entityItem in responseDefinitionsEntities)
+            {
+                switch (entityItem.EntityName)
+                {
+                    case DefinitionsApiEntityNameConstants.Country:
+                        if (entityItem.Entity != null)
+                            deliveryAdress.Country = JsonConvert.DeserializeObject<CountryDto>(entityItem.Entity.ToString());
+                        break;
+                    case DefinitionsApiEntityNameConstants.City:
+                        if (entityItem.Entity != null)
+                            deliveryAdress.City = JsonConvert.DeserializeObject<CityDto>(entityItem.Entity.ToString());
+                        break;
+                    case DefinitionsApiEntityNameConstants.County:
+                        if (entityItem.Entity != null)
+                            deliveryAdress.County = JsonConvert.DeserializeObject<CountyDto>(entityItem.Entity.ToString());
+                        break;
+                    case DefinitionsApiEntityNameConstants.District:
+                        if (entityItem.Entity != null)
+                            deliveryAdress.District = JsonConvert.DeserializeObject<DistrictDto>(entityItem.Entity.ToString());
+                        break;
+                }
+            }
         }
 
         /// <summary>

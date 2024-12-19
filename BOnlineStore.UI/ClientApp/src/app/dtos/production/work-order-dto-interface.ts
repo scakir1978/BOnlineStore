@@ -6,6 +6,7 @@ import { TemplateDto } from '../definitions/template-dto-interface';
 import { EntityDto } from '../../base-classes/base-interfaces/entity-dto-interface';
 import { SwingDirection } from '../../enums/production/swing-direction.enum';
 import { WorkOrderStatus } from '../../enums/production/work-order-status.enum';
+import { DeliveryAdressDto } from './delivery-adress-dto-interface';
 
 export interface WorkOrderDto extends EntityDto {
   workOrderNo: string | null;
@@ -35,6 +36,7 @@ export interface WorkOrderDto extends EntityDto {
   firmId: string | null;
   firm: FirmDto | null;
   deliveryAdressId: string | null;
+  deliveryAdress: DeliveryAdressDto | null;
   templateId: string | null;
   template: TemplateDto | null;
   shim: string | null;

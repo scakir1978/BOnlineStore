@@ -15,7 +15,7 @@
               Müşteri:
             </td>
             <td width="90%" style="text-align: left; vertical-align: middle">
-              {{ this.workOrderForm.workOrder.firm.name }}
+              {{ this.workOrderForm.workOrder.deliveryAdress.customerName }}
             </td>
           </tr>
           <tr>
@@ -23,7 +23,15 @@
               Adres:
             </td>
             <td width="90%" style="text-align: left; vertical-align: middle">
-              {{ this.workOrderForm.workOrder.firm.adress }}
+              {{
+                this.workOrderForm.workOrder.deliveryAdress.district.name +
+                  " " +
+                  this.workOrderForm.workOrder.deliveryAdress.adress +
+                  " " +
+                  this.workOrderForm.workOrder.deliveryAdress.city.name +
+                  "/" +
+                  this.workOrderForm.workOrder.deliveryAdress.country.name
+              }}
             </td>
           </tr>
           <tr>
