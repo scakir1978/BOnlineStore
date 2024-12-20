@@ -33,7 +33,7 @@
         </dx-validator>
       </dx-text-box>
     </div>
-    <div class="col-4 pb-2">
+    <div class="col-3 pb-2">
       <dx-drop-down-box
         label="{{ 'MODEL' | translate }}"
         [(value)]="modelGridValues"
@@ -67,7 +67,41 @@
         </div>
       </dx-drop-down-box>
     </div>
-    <div class="col-4 pb-2">
+    <div class="col-3 pb-2">
+      <dx-drop-down-box
+        label="{{ 'PANEL' | translate }}"
+        [(value)]="panelGridValues"
+        [(opened)]="isPanelGridBoxOpened"
+        valueExpr="id"
+        [deferRendering]="false"
+        displayExpr="name"
+        placeholder="{{ 'ENTERPANEL' | translate }}"
+        [showClearButton]="true"
+        [dataSource]="panelDataSource"
+        (onOptionChanged)="onPanelGridOptionChanged($event)"
+        [stylingMode]="'outlined'"
+        [labelMode]="'floating'"
+      >
+        <div *dxTemplate="let data of 'content'">
+          <dx-data-grid
+            [dataSource]="panelDataSource"
+            [hoverStateEnabled]="true"
+            [(selectedRowKeys)]="panelGridValues"
+            height="100%"
+          >
+            <dxo-selection mode="single"></dxo-selection>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+            <dxo-scrolling mode="virtual"></dxo-scrolling>
+            <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>
+            <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
+            </dxi-column>
+            <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
+            </dxi-column>
+          </dx-data-grid>
+        </div>
+      </dx-drop-down-box>
+    </div>
+    <div class="col-3 pb-2">
       <dx-drop-down-box
         label="{{ 'RAWMATERIAL' | translate }}"
         [(value)]="rawMaterialGridValues"

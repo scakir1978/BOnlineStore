@@ -7,5 +7,7 @@
         public string? FormulaCode { get; set; }
 
         public string? ModelId { get; set; }
+
+        public string? PanelId { get; set; }
     }
 }

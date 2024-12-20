@@ -23,6 +23,7 @@ namespace BOnlineStore.Localization.Constants
         public const string WorkOrderNoNotEmpty = "WorkOrderNoNotEmpty";
         public const string WorkOrderNoMaxLength = "WorkOrderNoMaxLength";
         public const string WorkOrderNoMustBeUnique = "WorkOrderNoMustBeUnique";
+        public const string ModelIdAndPanelIdCannotBeBothSet = "ModelIdAndPanelIdCannotBeBothSet";
 
     }
 }

@@ -276,5 +276,8 @@
   "PRINT": "Yazdır",
   "CLOSE": "Kapat",
   "DELIVERYADRESS": "Sevk Adresleri",
-  "CUSTOMERNAME": "Müşteri Adı"
+  "CUSTOMERNAME": "Müşteri Adı",
+  "ERROR": "Hata",
+  "WARNING": "Uyarı",
+  "SUCCESS": "Başarılı"
 }

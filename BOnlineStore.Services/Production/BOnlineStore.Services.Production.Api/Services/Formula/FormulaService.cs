@@ -30,11 +30,12 @@ namespace BOnlineStore.Services.Production.Api.Services
             _stringLocalizer = stringLocalizer;
         }
 
-        public async Task<bool> CopyFormula(string formulaId, string formulaCode, string modelId)
+        public async Task<bool> CopyFormula(string formulaId, string formulaCode, string modelId, string panelId)
         {
-            ValidateInput(formulaId, formulaCode, modelId);
+            ValidateInput(formulaId, formulaCode, modelId, panelId);
 
             var formula = await _repository.GetByIdAsync(formulaId);
+
             if (formula == null)
             {
                 throw new InvalidOperationException(_stringLocalizer[ProductionApiKeys.FormulaIdNotFound]);
@@ -43,7 +44,8 @@ namespace BOnlineStore.Services.Production.Api.Services
             var formulaCreateDto = _mapper.Map<FormulaCreateDto>(formula);
             formulaCreateDto.Id = formula.GetNewId();
             formulaCreateDto.Code = formulaCode;
-            formulaCreateDto.ModelId = modelId;
+            formulaCreateDto.ModelId = string.IsNullOrWhiteSpace(modelId) ? null : modelId;
+            formulaCreateDto.PanelId = string.IsNullOrWhiteSpace(panelId) ? null: panelId;
 
             await AddAsync(formulaCreateDto);
 
@@ -87,7 +89,7 @@ namespace BOnlineStore.Services.Production.Api.Services
             }
         }
 
-        private void ValidateInput(string formulaId, string formulaCode, string modelId)
+        private void ValidateInput(string formulaId, string formulaCode, string modelId, string panelId)
         {
             if (string.IsNullOrWhiteSpace(formulaId))
                 throw new ArgumentException(_stringLocalizer[ProductionApiKeys.FormulaIdNotEmpty]);
@@ -95,8 +97,8 @@ namespace BOnlineStore.Services.Production.Api.Services
             if (string.IsNullOrWhiteSpace(formulaCode))
                 throw new ArgumentException(_stringLocalizer[ProductionApiKeys.FormulaCodeNotEmpty]);
 
-            if (string.IsNullOrWhiteSpace(modelId))
-                throw new ArgumentException(_stringLocalizer[ProductionApiKeys.ModelIdNotEmpty]);
+            if (!string.IsNullOrWhiteSpace(modelId) && !string.IsNullOrWhiteSpace(panelId))
+                throw new ArgumentException(_stringLocalizer[ProductionApiKeys.ModelIdAndPanelIdCannotBeBothSet]);
         }
 
         private string BuildFormulaText(List<FormulaDetail> formulaDetails)

@@ -47,6 +47,14 @@ export class FormulaService extends BaseService {
     );
   }
 
+  getRawPanelDataSource(): CustomStore {
+    return super.getBaseRawCustomStore(
+      environment.definitionsUrl,
+      DefinitionsControllerNamesEnum.PANEL,
+      'LoadForCombo'
+    );
+  }
+
   getRawMaterialDataSource(): CustomStore {
     return super.getBaseRawCustomStore(
       environment.definitionsUrl,
@@ -177,12 +185,14 @@ export class FormulaService extends BaseService {
   copyFormula(
     formulaId: string,
     formulaCode: string,
-    modelId: string
+    modelId: string,
+    panelId: string
   ): Promise<Object> {
     return this.httpPostRequest('CopyFormula', {
       formulaId: formulaId,
       formulaCode: formulaCode,
       modelId: modelId,
+      panelId: panelId,
     });
   }
 }

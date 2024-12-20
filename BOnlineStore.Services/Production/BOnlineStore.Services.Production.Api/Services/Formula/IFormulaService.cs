@@ -24,7 +24,8 @@ namespace BOnlineStore.Services.Production.Api.Services
         /// <param name="formulaId">Kopyalanacak formülün idsi</param>
         /// <param name="formulaCode">Kopyalanacak formülün kod bilgisi</param>
         /// <param name="modelId">Formülün kopyalanacağı modelin idsi</param>        
-        Task<bool> CopyFormula(string formulaId, string formulaCode, string modelId);
+        /// <param name="panelId">Formülün kopyalanacağı panelin idsi</param>        
+        Task<bool> CopyFormula(string formulaId, string formulaCode, string modelId, string panelId);
 
         /// <summary>
         /// Formül tanımına göre, formül değerini hesaplar.

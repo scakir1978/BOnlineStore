@@ -13,6 +13,7 @@ import { FormulaService } from '../formula.service';
 import { ObjectId } from 'bson';
 import { FormulaVariableTypes } from '../models/formula-variable-types';
 import { forEach } from 'lodash';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formula-form',
@@ -25,6 +26,7 @@ export class FormulaFormComponent implements OnInit {
   @Output() cancelForm = new EventEmitter<any>();
 
   public modelDataSource: any;
+  public panelDataSource: any;
   public rawMaterialDataSource: any;
   public formulaTypeDataSource: any;
   public formulaDataSource: any;
@@ -32,6 +34,9 @@ export class FormulaFormComponent implements OnInit {
 
   isModelGridBoxOpened: boolean;
   modelGridValues: string[] = [];
+
+  isPanelGridBoxOpened: boolean;
+  panelGridValues: string[] = [];
 
   isRawMaterialGridBoxOpened: boolean;
   rawMaterialGridValues: string[] = [];
@@ -42,6 +47,7 @@ export class FormulaFormComponent implements OnInit {
     private ref: ChangeDetectorRef
   ) {
     this.modelDataSource = _formulaService.getRawModelDataSource();
+    this.panelDataSource = _formulaService.getRawPanelDataSource();
     this.rawMaterialDataSource = _formulaService.getRawMaterialDataSource();
     this.formulaTypeDataSource = _formulaService.getRawFormulaTypeDataSource();
     this.formulaVariableTypes = _formulaService.getFormulaVariableTypes();
@@ -55,11 +61,19 @@ export class FormulaFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.modelGridValues.push(this.formula.modelId);
+    this.panelGridValues.push(this.formula.panelId);
     this.rawMaterialGridValues.push(this.formula.rawMaterialId);
   }
 
   onSubmit(e) {
-    this.formula.modelId = this.modelGridValues[0];
+    if (this.modelGridValues && this.modelGridValues[0])
+      this.formula.modelId = this.modelGridValues[0];
+    else this.formula.modelId = null;
+
+    if (this.panelGridValues && this.panelGridValues[0])
+      this.formula.panelId = this.panelGridValues[0];
+    else this.formula.panelId = null;
+
     this.formula.rawMaterialId = this.rawMaterialGridValues[0];
     this.closeForm.emit(this.formula);
   }
@@ -68,15 +82,29 @@ export class FormulaFormComponent implements OnInit {
     this.cancelForm.emit();
   }
 
-  onSaved(e: any, data: any) {
-    var values = e.component.getDataSource().items();
-    data.setValue(values);
-  }
-
   //Detay gridde yeni kayıt ekleyince devreye giriyor
   onInitNewRow(e: any) {
+    if (this.modelGridValues[0] && this.panelGridValues[0]) {
+      this.showModelIdAndPanelIdCannotBeBothSetMessage().then(() => {
+        window.setTimeout(function () {
+          e.component.cancelEditData();
+        }, 0);
+        return;
+      });
+    }
+
     var objectId = new ObjectId();
     e.data.id = objectId.toString();
+  }
+
+  showModelIdAndPanelIdCannotBeBothSetMessage() {
+    return Swal.fire({
+      title: this._translate.instant('ERROR'),
+      text: this._translate.instant('MODELIDANDPANELIDCANNOTBEBOTHSET'),
+      icon: 'error',
+      confirmButtonColor: '#364574',
+      confirmButtonText: this._translate.instant('OK'),
+    });
   }
 
   onReorder(e) {
@@ -137,6 +165,13 @@ export class FormulaFormComponent implements OnInit {
   onModelGridOptionChanged(e) {
     if (e.name === 'value') {
       this.isModelGridBoxOpened = false;
+      this.ref.detectChanges();
+    }
+  }
+
+  onPanelGridOptionChanged(e) {
+    if (e.name === 'value') {
+      this.isPanelGridBoxOpened = false;
       this.ref.detectChanges();
     }
   }

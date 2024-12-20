@@ -26,6 +26,11 @@ namespace BOnlineStore.Services.Production.Api.Dtos
         public string? ModelId { get; set; }
 
         /// <summary>
+        /// Panel
+        /// </summary>
+        public string? PanelId { get; set; }
+
+        /// <summary>
         /// Hammadde
         /// </summary>
         public string? RawMaterialId { get; set; }

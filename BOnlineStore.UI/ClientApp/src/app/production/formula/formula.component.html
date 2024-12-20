@@ -77,6 +77,18 @@
       >
       </dxo-lookup>
     </dxi-column>
+    <dxi-column
+      dataField="panelId"
+      caption="{{ 'Panel' | translate }}"
+      [hidingPriority]="4"
+    >
+      <dxo-lookup
+        [dataSource]="panelDataSource"
+        displayExpr="name"
+        valueExpr="id"
+      >
+      </dxo-lookup>
+    </dxi-column>
     <dxi-column dataField="code" caption="{{ 'CODE' | translate }}">
     </dxi-column>
     <dxi-column dataField="name" caption="{{ 'NAME' | translate }}">
@@ -151,6 +163,7 @@
 
 <!-- Formül kopyalama -->
 <dx-popup
+  id="copyFormulaPopup"
   [width]="'auto'"
   [height]="'auto'"
   [showTitle]="true"
@@ -181,12 +194,33 @@
           [showClearButton]="true"
           [dataSource]="modelDataSource"
         >
-          <dx-validator>
+          <!-- <dx-validator>
             <dxi-validation-rule
-              type="required"
-              message="{{ 'MODELNOTEMPTY' | translate }}"
+              type="custom"
+              [validationCallback]="validateModelIdAndPanelIdCannotBeBothSet"
+              message="{{ 'MODELIDANDPANELIDCANNOTBEBOTHSET' | translate }}"
             ></dxi-validation-rule>
-          </dx-validator>
+          </dx-validator> -->
+        </dx-select-box>
+        <dx-select-box
+          label="{{ 'PANEL' | translate }}"
+          [(value)]="copyPanelId"
+          [inputAttr]="{ 'aria-label': 'Owner' }"
+          [stylingMode]="'outlined'"
+          [labelMode]="'floating'"
+          valueExpr="id"
+          displayExpr="name"
+          placeholder="{{ 'ENTERPANEL' | translate }}"
+          [showClearButton]="true"
+          [dataSource]="panelDataSource"
+        >
+          <!-- <dx-validator>
+            <dxi-validation-rule
+              type="custom"
+              [validationCallback]="validateModelIdAndPanelIdCannotBeBothSet"
+              message="{{ 'MODELIDANDPANELIDCANNOTBEBOTHSET' | translate }}"
+            ></dxi-validation-rule>
+          </dx-validator> -->
         </dx-select-box>
         <dx-text-box
           [(value)]="copyFormulaCode"

@@ -19,6 +19,9 @@ export class Formula implements IFormula {
   /* Model */
   modelId: string | null;
 
+  /* Panel */
+  panelId: string | null;
+
   /* Hammadde */
   rawMaterialId: string | null;
 

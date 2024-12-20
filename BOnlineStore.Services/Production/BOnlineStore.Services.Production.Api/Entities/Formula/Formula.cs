@@ -28,6 +28,12 @@ namespace BOnlineStore.Services.Production.Api.Entities
         public string? ModelId { get; private set; }
 
         /// <summary>
+        /// Panel
+        /// </summary>
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? PanelId { get; private set; }
+
+        /// <summary>
         /// Hammadde
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]

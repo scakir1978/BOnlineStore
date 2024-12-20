@@ -247,5 +247,8 @@
   "PRINT": "Print",
   "CLOSE": "Close",
   "DELIVERYADRESS": "Delivery Adresses",
-  "CUSTOMERNAME": "Customer Name"
+  "CUSTOMERNAME": "Customer Name",
+  "ERROR": "Error",
+  "WARNING": "Warning",
+  "SUCCESS": "Success"
 }

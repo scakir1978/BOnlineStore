@@ -17,6 +17,7 @@ import Swal from 'sweetalert2';
 export class FormulaComponent extends BaseDefinitionsOnGridComponent {
   public formulaDataSource: DataSource;
   public modelDataSource: CustomStore;
+  public panelDataSource: CustomStore;
   public rawMaterialDataSource: CustomStore;
   public formulaTypeDataSource: CustomStore;
 
@@ -27,6 +28,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
   //Popup properties
   public popupVisible = false;
   public copyModelId: string;
+  public copyPanelId: string;
   public copyFormulaId: string;
   public copyFormulaCode: string;
   public copyFormulaName: string;
@@ -46,6 +48,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
     );
     this.formulaDataSource = _formulaService.getDataSource();
     this.modelDataSource = _formulaService.getRawModelDataSource();
+    this.panelDataSource = _formulaService.getRawPanelDataSource();
     this.rawMaterialDataSource = _formulaService.getRawMaterialDataSource();
     this.formulaTypeDataSource = _formulaService.getRawFormulaTypeDataSource();
 
@@ -73,9 +76,13 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
   }
 
   removeFormula(e) {
-    this._formulaService.delete(e.row.data.id);
-    this.refreshDataGrid();
-    e.event.preventDefault();
+    this.showFormulDeleteConfirmationMessage().then((result) => {
+      if (result.isConfirmed) {
+        this._formulaService.delete(e.row.data.id);
+        this.refreshDataGrid();
+        e.event.preventDefault();
+      }
+    });
   }
 
   cancelForm() {
@@ -109,7 +116,8 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
       await this._formulaService.copyFormula(
         this.copyFormulaId,
         this.copyFormulaCode,
-        this.copyModelId
+        this.copyModelId,
+        this.copyPanelId
       );
       this.showSuccessMessage(this._translate.instant('COPYFORMULASUCCESS'));
       this.popupVisible = false;
@@ -125,6 +133,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
 
   showCopyFormulaPopup(e) {
     this.copyModelId = null;
+    this.copyPanelId = null;
     this.copyFormulaId = e.row.data.id;
     this.copyFormulaCode = e.row.data.code;
     this.copyFormulaName = e.row.data.name;
@@ -138,6 +147,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
       icon: 'error',
       confirmButtonColor: '#364574',
       confirmButtonText: this._translate.instant('OK'),
+      customClass: { container: 'swal2-container-get-front' },
     });
   }
 
@@ -148,6 +158,28 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
       icon: 'success',
       confirmButtonColor: '#364574',
       confirmButtonText: this._translate.instant('OK'),
+    });
+  }
+
+  validateModelIdAndPanelIdCannotBeBothSet() {
+    if (this.copyModelId && this.copyPanelId) {
+      return false;
+    }
+    return true;
+  }
+
+  showFormulDeleteConfirmationMessage() {
+    return Swal.fire({
+      title: this._translate.instant('WARNING'),
+      text: this._translate.instant('FORMULDELETECONFIRMATIONMESSAGE'),
+      showCancelButton: true,
+      focusConfirm: false,
+      focusCancel: true,
+      icon: 'warning',
+      confirmButtonColor: '#364574',
+      confirmButtonText: this._translate.instant('OK'),
+      cancelButtonText: this._translate.instant('CANCEL'),
+      cancelButtonColor: '#364574',
     });
   }
 }
