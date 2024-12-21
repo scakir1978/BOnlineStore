@@ -33,6 +33,12 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         /// Formülde kullanılan malzemenin adı
         /// </summary>
         public RawMaterialDto? RawMaterial { get; set; }
+
+        /// <summary>
+        /// Formülde kullanılan malzeme panele ait ise true olur.
+        /// </summary>
+        public bool IsPanel { get; set; }
+
         /// <summary>
         /// Üretim Adedi
         /// </summary>

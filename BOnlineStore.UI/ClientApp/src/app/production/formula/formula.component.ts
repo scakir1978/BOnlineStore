@@ -123,6 +123,7 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
       this.popupVisible = false;
       this.refreshDataGrid();
     } catch (error) {
+      this.popupVisible = false;
       this.showErrorMessage(error.message);
     }
   }
@@ -147,7 +148,9 @@ export class FormulaComponent extends BaseDefinitionsOnGridComponent {
       icon: 'error',
       confirmButtonColor: '#364574',
       confirmButtonText: this._translate.instant('OK'),
-      customClass: { container: 'swal2-container-get-front' },
+      customClass: {
+        popup: 'swal2-custom-zindex',
+      },
     });
   }
 

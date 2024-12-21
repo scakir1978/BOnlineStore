@@ -205,7 +205,7 @@ namespace BOnlineStore.BFF.Api.Services.Production
         /// <exception cref="ArgumentNullException"></exception>
         private async Task FillRecipeTypeToDto(WorkOrderFormDto workOrderForm)
         {
-            if (string.IsNullOrWhiteSpace(workOrderForm.WorkOrder.Model.RecipeTypeId))
+            if (string.IsNullOrWhiteSpace(workOrderForm?.WorkOrder?.Model?.RecipeTypeId))
                 throw new ArgumentNullException(nameof(workOrderForm.WorkOrder.Model.RecipeTypeId), _stringLocalizer[SharedKeys.WorkOrderModelRecipeTypeCannotBeNull]);
 
             var definitionsRequest = new List<DefinitionsRequestDto>()
@@ -275,7 +275,7 @@ namespace BOnlineStore.BFF.Api.Services.Production
             foreach (var recipeRawMaterial in workOrderForm.RecipeType.RawMaterialIds)
             {
                 var rawMaterials = workOrderForm.WorkOrderProductionList
-                                    .Where(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim()).ToList();
+                                    .Where(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim() && x.IsPanel == false).ToList();
                                     
 
                 if (rawMaterials != null)
@@ -288,7 +288,7 @@ namespace BOnlineStore.BFF.Api.Services.Production
             foreach (var recipeRawMaterial in workOrderForm.RecipeType.PanelRawMaterialIds)
             {
                 var rawMaterials = workOrderForm.WorkOrderProductionList
-                                    .Where(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim()).ToList();
+                                    .Where(x => x.RawMaterialId.Trim() == recipeRawMaterial.Id.Trim() && x.IsPanel == true).ToList();
 
                 if (rawMaterials != null)
                 {

@@ -144,10 +144,17 @@ export class FormulaFormComponent implements OnInit {
   }
 
   getFilteredFormulas(options) {
-    return {
-      store: this.formulaDataSource,
-      filter: options.data ? ['modelId', '=', this.formula.modelId] : null,
-    };
+    if (this.modelGridValues[0]) {
+      return {
+        store: this.formulaDataSource,
+        filter: options.data ? ['modelId', '=', this.modelGridValues[0]] : null,
+      };
+    } else if (this.panelGridValues[0]) {
+      return {
+        store: this.formulaDataSource,
+        filter: options.data ? ['panelId', '=', this.panelGridValues[0]] : null,
+      };
+    }
   }
 
   async executeFormula(e) {

@@ -29,6 +29,12 @@ namespace BOnlineStore.Services.Production.Api.Dtos
         /// </summary>
         [BsonRepresentation(BsonType.ObjectId)]
         public string? RawMaterialId { get; set; }
+
+        /// <summary>
+        /// Formülde kullanılan malzeme panele ait ise true olur.
+        /// </summary>
+        public bool IsPanel { get; set; }
+
         /// <summary>
         /// Üretim Adedi
         /// </summary>
