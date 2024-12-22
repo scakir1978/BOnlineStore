@@ -11,7 +11,7 @@ import CustomStore from 'devextreme/data/custom_store';
 @Injectable({
   providedIn: 'root',
 })
-export class PanelService extends BaseService  {
+export class PanelService extends BaseService {
   constructor(public override _http: HttpClient) {
     super(
       _http,

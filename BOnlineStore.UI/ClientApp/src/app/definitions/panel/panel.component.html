@@ -186,8 +186,8 @@
   </dxi-column>
   <div *dxTemplate="let data of 'cellTemplate'">
     <img
-      [src]="data.value"
-      style="object-fit: contain; width: 10%; height: 10%"
+      [src]="data.value ? data.value : noPicture"
+      [style]="data.value ? pictureStyle : noPictureStyle"
     />
   </div>
   <div *dxTemplate="let data of 'editCellTemplate'">
@@ -196,6 +196,7 @@
       class="uploadedImage"
       [src]="data.value"
       [hidden]="isPictureNotLoaded(data.value)"
+      style="object-fit: contain; width: 40%; height: 40%"
     />
     <dx-file-uploader
       #fileUploader

@@ -2,6 +2,7 @@ import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definiti
 import { ModelService } from './model.service';
 import { Component, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { NoPictureBase64Class } from '../../base-classes/shared/no-picture-base64-class';
 import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 import { ValueChangedEvent } from 'devextreme/ui/file_uploader';
@@ -17,6 +18,10 @@ export class ModelComponent extends BaseDefinitionsOnGridComponent {
   public recipeTypeDataSource: CustomStore;
   public modelGroupDataSource: CustomStore;
   public fileSize: number = 0;
+
+  public noPicture: string = '';
+  public pictureStyle: string = 'object-fit: contain; width: 10%; height: 10%';
+  public noPictureStyle: string = 'object-fit: contain; width: 5%; height: 10%';
 
   @ViewChild('uploadedImage') uploadedImageRef!: HTMLImageElement;
 
@@ -37,6 +42,8 @@ export class ModelComponent extends BaseDefinitionsOnGridComponent {
     this.panelDataSource = _modelService.getPanelDataSource();
     this.recipeTypeDataSource = _modelService.getRecipeTypeDataSource();
     this.modelGroupDataSource = _modelService.getModelGroupDataSource();
+
+    this.noPicture = NoPictureBase64Class.getBase64128();
   }
 
   onValueChanged(e: any, cellInfo: any): void {
