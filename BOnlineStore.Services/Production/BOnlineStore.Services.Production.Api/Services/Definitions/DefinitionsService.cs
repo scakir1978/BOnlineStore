@@ -4,7 +4,7 @@ using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Extensions;
 using Microsoft.Extensions.Localization;
 
-namespace BOnlineStore.Production.Api.Services.Definitions
+namespace BOnlineStore.Production.Api.Services
 {
     public class DefinitionsService : IDefinitionsService
     {

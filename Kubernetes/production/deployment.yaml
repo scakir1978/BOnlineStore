@@ -39,6 +39,11 @@ spec:
                 configMapKeyRef:
                   name: production.bonlinestore.com
                   key: identity-server-url
+            - name: IdentityServerUrl
+              valueFrom:
+                configMapKeyRef:
+                  name: production.bonlinestore.com
+                  key: definitions-api-url
             - name: DatabaseSettings__ConnectionString
               valueFrom:
                 configMapKeyRef:

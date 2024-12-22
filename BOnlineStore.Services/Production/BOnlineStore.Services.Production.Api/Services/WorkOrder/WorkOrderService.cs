@@ -2,7 +2,7 @@
 using BOnlineStore.Generic.Service;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
-using BOnlineStore.Production.Api.Services.Definitions;
+using BOnlineStore.Production.Api.Services;
 using BOnlineStore.Services.Production.Api.Dtos;
 using BOnlineStore.Services.Production.Api.Entities;
 using BOnlineStore.Services.Production.Api.Repositories;

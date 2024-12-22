@@ -6,6 +6,7 @@ data:
   aspnetcore-environment: Development
   aspnetcore-urls: https://+:443;http://+:80
   identity-server-url: http://identity-bonlinestore-com
+  definitions-api-url: http://definitions-bonlinestore-com
   productiondb-connection-string: mongodb://mongodb:27017
   seq-server-url: http://seq:5341
   production-running-mode: docker

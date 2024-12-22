@@ -116,7 +116,7 @@ builder.Services.AddMappingInjections();
 builder.Services.AddMongoDbConfigurationAndInjections(builder.Configuration);
 builder.Services.AddValidatorInjections();
 builder.Services.AddRepositoryInjections();
-builder.Services.AddServiceInjections();
+builder.Services.AddServiceInjections(builder.Configuration);
 
 var app = builder.Build();
 

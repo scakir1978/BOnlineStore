@@ -1,6 +1,6 @@
 ﻿using BOnlineStore.Services.Production.Api.Dtos;
 
-namespace BOnlineStore.Production.Api.Services.Definitions
+namespace BOnlineStore.Production.Api.Services
 {
     public interface IDefinitionsService
     {
