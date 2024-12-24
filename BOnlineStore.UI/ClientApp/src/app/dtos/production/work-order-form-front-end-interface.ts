@@ -7,7 +7,9 @@ export interface WorkOrderFormFrontEndDto {
   workOrder: WorkOrderDto | null;
   rawMaterials: WorkOrderProductionListDto[] | null;
   panelRawMaterials: WorkOrderProductionListDto[] | null;
+  sidePanelRawMaterials: WorkOrderProductionListDto[] | null;
   glassRawMaterials: GlassRawMaterialDto[] | null;
   panelGlassRawMaterials: GlassRawMaterialDto[] | null;
+  sidepanelGlassRawMaterials: GlassRawMaterialDto[] | null;
   recipeType: RecipeTypeDto | null;
 }

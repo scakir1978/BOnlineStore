@@ -213,6 +213,19 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-12">
+      <table class="table table-striped table-responsive table-bordered">
+        <thead>
+          <tr>
+            <td style="text-align: center; vertical-align: middle">
+              <h6>{{ "Ana Malzeme Listesi" }}</h6>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-6">
       <table class="table table-striped table-responsive table-bordered">
         <thead>
@@ -241,6 +254,65 @@
           </tr>
         </thead>
         <tbody *ngFor="let item of this.workOrderForm.glassRawMaterials">
+          <tr>
+            <td>
+              {{ item?.widthMaterial?.rawMaterial?.name ?? "" }}-{{
+                item?.lengthMaterial?.rawMaterial?.name ?? ""
+              }}
+            </td>
+            <td>
+              {{ item?.widthMaterial?.productionMeasure ?? "" }}-{{
+                item?.lengthMaterial?.productionMeasure ?? ""
+              }}
+            </td>
+            <td>{{ item?.widthMaterial?.amount ?? "" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped table-responsive table-bordered">
+        <thead>
+          <tr>
+            <td style="text-align: center; vertical-align: middle">
+              <h6>{{ "Panel Malzeme Listesi" }}</h6>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <table class="table table-striped table-responsive table-bordered">
+        <thead>
+          <tr>
+            <th>Malzeme Adı</th>
+            <th>Ölçü</th>
+            <th>Adet</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of this.workOrderForm.panelRawMaterials">
+          <tr>
+            <td>{{ item?.rawMaterial?.name ?? "" }}</td>
+            <td>{{ item?.productionMeasure ?? "" }}</td>
+            <td>{{ item?.amount ?? "" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6">
+      <table class="table table-striped table-responsive table-bordered">
+        <thead>
+          <tr>
+            <th>Cam Ölçüleri</th>
+            <th>Ölçü</th>
+            <th>Adet</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of this.workOrderForm.panelGlassRawMaterials">
           <tr>
             <td>
               {{ item?.widthMaterial?.rawMaterial?.name ?? "" }}-{{

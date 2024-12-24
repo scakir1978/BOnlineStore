@@ -36,6 +36,11 @@ namespace BOnlineStore.Services.Production.Api.Dtos
         public bool IsPanel { get; set; }
 
         /// <summary>
+        /// Formülde kullanılan malzeme yan panele ait ise true olur.
+        /// </summary>
+        public bool IsSidePanel { get; set; }
+
+        /// <summary>
         /// Üretim Adedi
         /// </summary>
         public decimal? Amount { get; set; }

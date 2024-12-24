@@ -34,6 +34,7 @@ namespace BOnlineStore.Services.Production.Api.Services
             _stringLocalizer = stringLocalizer;
             _formulaRepository = formulaRepository;
             _formulaService = formulaService;
+            _definitionsService = definitionsService;
         }
 
         /// <summary>
@@ -73,7 +74,7 @@ namespace BOnlineStore.Services.Production.Api.Services
                                                           x.FormulaSort != Shared.FormulaSortEnum.FormulaSort.Cost)
                                                     .ToList();
 
-                await AddFormulasToProductionList(formulaList, workOrder, workOrderProductionList, true);
+                await AddFormulasToProductionList(formulaListPanel, workOrder, workOrderProductionList, true, false);
             }
 
             //Eğer iş emrinde yan panel bilgisi varsa yan panel bilgisine ait formüller de listeye ekleniyor.
@@ -84,7 +85,7 @@ namespace BOnlineStore.Services.Production.Api.Services
                                                           x.FormulaSort != Shared.FormulaSortEnum.FormulaSort.Cost)
                                                     .ToList();
 
-                await AddFormulasToProductionList(formulaList, workOrder, workOrderProductionList, true);
+                await AddFormulasToProductionList(formulaListPanel, workOrder, workOrderProductionList, false, true);
             }
 
             return new WorkOrderFormDto(workOrder, workOrderProductionList);
@@ -98,11 +99,27 @@ namespace BOnlineStore.Services.Production.Api.Services
         /// <param name="workOrder">İş emri</param>
         /// <param name="workOrderProductionList">Formüllerin hesaplanarak eklendiği üretim listesi</param>
         /// <param name="isPanel">Paneller ile ilgili bir hesaplama yapılıyorsa true olur.</param>
+        /// <param name="isSidePanel">Yan paneller ile ilgili bir hesaplama yapılıyorsa true olur.</param>
         /// <returns></returns>
         private async Task AddFormulasToProductionList(List<Formula> formulaList, WorkOrderDto workOrder,
                                                        List<WorkOrderProductionListDto> workOrderProductionList,
-                                                       bool isPanel = false)
+                                                       bool isPanel = false, bool isSidePanel = false)
         {
+            decimal? width1 = workOrder.Width1;
+            decimal? width2 = workOrder.Width2;
+            decimal? width3 = workOrder.Width3;
+            decimal? height = workOrder.Height;
+            if (isPanel)
+            {
+                width1 = workOrder.PanelWidth;
+                height = workOrder.PanelHeight;
+            }
+            if (isSidePanel)
+            {
+                width1 = workOrder.SidePanelWidth;
+                height = workOrder.SidePanelHeight;
+            }
+
             foreach (var formula in formulaList)
             {
                 var workOrderProductionItem = new WorkOrderProductionListDto
@@ -111,8 +128,9 @@ namespace BOnlineStore.Services.Production.Api.Services
                     FormulName = formula.Name,
                     RawMaterialId = formula.RawMaterialId,
                     Amount = formula.UsageAmount,
-                    ProductionMeasure = await CalculateFormula(formula.FormulaDetails, workOrder.Width1, workOrder.Width2, workOrder.Width3, workOrder.Height),
-                    IsPanel = isPanel
+                    ProductionMeasure = await CalculateFormula(formula.FormulaDetails, width1, width2, width3, height),
+                    IsPanel = isPanel,
+                    IsSidePanel = isSidePanel
                 };
 
                 workOrderProductionList.Add(workOrderProductionItem);
