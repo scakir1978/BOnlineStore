@@ -240,7 +240,12 @@
     caption="{{ 'STOCKUNIT' | translate }}"
     [visible]="false"
   >
-    <dxo-lookup [dataSource]="unitDataSource" displayExpr="name" valueExpr="id">
+    <dxo-lookup
+      [dataSource]="unitDataSource"
+      displayExpr="name"
+      valueExpr="id"
+      allowClearing="true"
+    >
     </dxo-lookup>
   </dxi-column>
   <dxi-column
@@ -256,7 +261,12 @@
     caption="{{ 'STOCKUNIT02' | translate }}"
     [visible]="false"
   >
-    <dxo-lookup [dataSource]="unitDataSource" displayExpr="name" valueExpr="id">
+    <dxo-lookup
+      [dataSource]="unitDataSource"
+      displayExpr="name"
+      valueExpr="id"
+      allowClearing="true"
+    >
     </dxo-lookup>
   </dxi-column>
   <dxi-column
@@ -272,7 +282,12 @@
     caption="{{ 'STOCKUNIT03' | translate }}"
     [visible]="false"
   >
-    <dxo-lookup [dataSource]="unitDataSource" displayExpr="name" valueExpr="id">
+    <dxo-lookup
+      [dataSource]="unitDataSource"
+      displayExpr="name"
+      valueExpr="id"
+      allowClearing="true"
+    >
     </dxo-lookup>
   </dxi-column>
   <dxi-column
@@ -288,7 +303,12 @@
     caption="{{ 'PRODUCTIONUNIT' | translate }}"
     [visible]="false"
   >
-    <dxo-lookup [dataSource]="unitDataSource" displayExpr="name" valueExpr="id">
+    <dxo-lookup
+      [dataSource]="unitDataSource"
+      displayExpr="name"
+      valueExpr="id"
+      allowClearing="true"
+    >
     </dxo-lookup>
   </dxi-column>
   <dxi-column
@@ -331,6 +351,7 @@
       [dataSource]="rawMaterialMasterGroupDataSource"
       displayExpr="name"
       valueExpr="id"
+      allowClearing="true"
     >
     </dxo-lookup>
   </dxi-column>
@@ -343,6 +364,7 @@
       [dataSource]="rawMaterialGroupDataSource"
       displayExpr="name"
       valueExpr="id"
+      allowClearing="true"
     >
     </dxo-lookup>
   </dxi-column>

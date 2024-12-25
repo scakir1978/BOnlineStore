@@ -37,4 +37,9 @@ export class WorkOrderDefaultFormComponent {
     });
     this.printService.print(customPrintOptions);
   }
+
+  phoneFormat(telephoneNumber: string): string {
+    var phoneFormatter = require('phone-formatter');
+    return phoneFormatter.format(telephoneNumber, '(NNN) NNN-NNNN');
+  }
 }

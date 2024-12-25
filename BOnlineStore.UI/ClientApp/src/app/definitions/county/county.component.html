@@ -69,7 +69,12 @@
     <dxi-validation-rule type="required"></dxi-validation-rule>
   </dxi-column>
   <dxi-column dataField="cityId" caption="{{ 'CITY' | translate }}">
-    <dxo-lookup [dataSource]="cityDataSource" displayExpr="name" valueExpr="id">
+    <dxo-lookup
+      [dataSource]="cityDataSource"
+      displayExpr="name"
+      valueExpr="id"
+      allowClearing="true"
+    >
     </dxo-lookup>
   </dxi-column>
 </dx-data-grid>

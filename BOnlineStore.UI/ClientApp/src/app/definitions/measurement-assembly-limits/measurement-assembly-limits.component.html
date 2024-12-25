@@ -63,7 +63,12 @@
   <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
   </dxi-column>
   <dxi-column dataField="day" caption="{{ 'DAY' | translate }}">
-    <dxo-lookup [dataSource]="daysDataSource" displayExpr="name" valueExpr="id">
+    <dxo-lookup
+      [dataSource]="daysDataSource"
+      displayExpr="name"
+      valueExpr="id"
+      allowClearing="true"
+    >
     </dxo-lookup>
     <dxi-validation-rule type="required"></dxi-validation-rule>
   </dxi-column>
@@ -72,6 +77,7 @@
       [dataSource]="assemblerDataSource"
       displayExpr="name"
       valueExpr="id"
+      allowClearing="true"
     >
     </dxo-lookup>
     <dxi-validation-rule type="required"></dxi-validation-rule>
@@ -81,6 +87,7 @@
       [dataSource]="regionDataSource"
       displayExpr="name"
       valueExpr="id"
+      allowClearing="true"
     >
     </dxo-lookup>
     <dxi-validation-rule
@@ -94,6 +101,7 @@
       [dataSource]="regionDataSource"
       displayExpr="name"
       valueExpr="id"
+      allowClearing="true"
     >
     </dxo-lookup>
     <dxi-validation-rule
@@ -107,6 +115,7 @@
       [dataSource]="regionDataSource"
       displayExpr="name"
       valueExpr="id"
+      allowClearing="true"
     >
     </dxo-lookup>
     <dxi-validation-rule
@@ -120,6 +129,7 @@
       [dataSource]="regionDataSource"
       displayExpr="name"
       valueExpr="id"
+      allowClearing="true"
     >
     </dxo-lookup>
     <dxi-validation-rule
@@ -133,6 +143,7 @@
       [dataSource]="regionDataSource"
       displayExpr="name"
       valueExpr="id"
+      allowClearing="true"
     >
     </dxo-lookup>
     <dxi-validation-rule

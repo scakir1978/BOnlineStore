@@ -107,6 +107,7 @@
     "oidc-client": "^1.11.5",
     "oidc-client-ts": "^2.2.2",
     "os-browserify": "^0.3.0",
+    "phone-formatter": "^0.0.2",
     "prismjs": "^1.29.0",
     "rxjs": "^7.6.0",
     "sass": "^1.69.7",

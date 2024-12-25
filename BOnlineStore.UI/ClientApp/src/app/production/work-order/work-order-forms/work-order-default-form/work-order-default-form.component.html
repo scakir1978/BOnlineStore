@@ -39,7 +39,11 @@
               Telefon:
             </td>
             <td width="90%" style="text-align: left; vertical-align: middle">
-              {{ this.workOrderForm.workOrder.firm.telephoneNumber1 }}
+              {{
+                phoneFormat(
+                  this.workOrderForm.workOrder.deliveryAdress.cellPhoneNumber
+                )
+              }}
             </td>
           </tr>
           <tr>
@@ -227,7 +231,7 @@
   </div>
   <div class="row">
     <div class="col-6">
-      <table class="table table-striped table-responsive table-bordered">
+      <table class="table table-responsive table-bordered">
         <thead>
           <tr>
             <th>Malzeme Adı</th>
@@ -245,7 +249,7 @@
       </table>
     </div>
     <div class="col-6">
-      <table class="table table-striped table-responsive table-bordered">
+      <table class="table table-responsive table-bordered">
         <thead>
           <tr>
             <th>Cam Ölçüleri</th>
@@ -271,7 +275,13 @@
       </table>
     </div>
   </div>
-  <div class="row">
+  <div
+    *ngIf="
+      this.workOrderForm.panelRawMaterials.length > 0 &&
+      this.workOrderForm.panelGlassRawMaterials.length > 0
+    "
+    class="row"
+  >
     <div class="col-12">
       <table class="table table-striped table-responsive table-bordered">
         <thead>
@@ -284,9 +294,15 @@
       </table>
     </div>
   </div>
-  <div class="row">
-    <div class="col-6">
-      <table class="table table-striped table-responsive table-bordered">
+  <div
+    *ngIf="
+      this.workOrderForm.panelRawMaterials.length > 0 &&
+      this.workOrderForm.panelGlassRawMaterials.length > 0
+    "
+    class="row"
+  >
+    <div *ngIf="this.workOrderForm.panelRawMaterials.length > 0" class="col-6">
+      <table class="table table-responsive table-bordered">
         <thead>
           <tr>
             <th>Malzeme Adı</th>
@@ -303,7 +319,10 @@
         </tbody>
       </table>
     </div>
-    <div class="col-6">
+    <div
+      *ngIf="this.workOrderForm.panelGlassRawMaterials.length > 0"
+      class="col-6"
+    >
       <table class="table table-striped table-responsive table-bordered">
         <thead>
           <tr>
