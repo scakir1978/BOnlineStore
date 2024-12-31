@@ -12,11 +12,7 @@ import { LayoutsModule } from './layouts/layouts.module';
 import { PagesModule } from './pages/pages.module';
 
 // Auth
-import {
-  HttpClientModule,
-  HttpClient,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { initFirebaseBackend } from './authUtils';
@@ -38,35 +34,24 @@ export function createTranslateLoader(http: HttpClient): any {
   FakeBackendInterceptor;
 }*/
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    TranslateModule.forRoot({
-      defaultLanguage: 'tr',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-    }),
-    BrowserAnimationsModule,
-    HttpClientModule,
-    BrowserModule,
-    AppRoutingModule,
-    LayoutsModule,
-    PagesModule,
-    //Ng2SearchPipeModule,
-    CallbackModule,
-  ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    /*{
-      provide: HTTP_INTERCEPTORS,
-      useClass: FakeBackendInterceptor,
-      multi: true,
-    },*/
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [AppComponent],
+    bootstrap: [AppComponent], imports: [TranslateModule.forRoot({
+            defaultLanguage: 'tr',
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient],
+            },
+        }),
+        BrowserAnimationsModule,
+        BrowserModule,
+        AppRoutingModule,
+        LayoutsModule,
+        PagesModule,
+        //Ng2SearchPipeModule,
+        CallbackModule], providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {}
