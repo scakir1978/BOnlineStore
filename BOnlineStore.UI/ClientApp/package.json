@@ -120,7 +120,7 @@
     "zone.js": "^0.15.0"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^16.0.1",
+    "@angular-builders/custom-webpack": "^17.0.2",
     "@angular-devkit/build-angular": "^17.3.11",
     "@angular/cli": "^17.3.11",
     "@angular/compiler-cli": "^17.3.12",
@@ -135,7 +135,7 @@
     "karma-jasmine": "^5.1.0",
     "karma-jasmine-html-reporter": "^2.0.0",
     "node-polyfill-webpack-plugin": "^2.0.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.4.5"
   },
   "browserslist": [
     "last 1 version",
