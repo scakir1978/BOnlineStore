@@ -10,8 +10,6 @@ import CustomStore from 'devextreme/data/custom_store';
 import DataSource from 'devextreme/data/data_source';
 import { WorkOrderStatus } from '../../enums/production/work-order-status.enum';
 import { SwingDirection } from '../../enums/production/swing-direction.enum';
-import Swal from 'sweetalert2';
-import { Column } from 'devextreme/ui/data_grid';
 
 @Component({
   selector: 'work-order',
