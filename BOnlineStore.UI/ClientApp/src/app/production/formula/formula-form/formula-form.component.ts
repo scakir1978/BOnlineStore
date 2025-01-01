@@ -84,8 +84,23 @@ export class FormulaFormComponent implements OnInit {
 
   //Detay gridde yeni kayıt ekleyince devreye giriyor
   onInitNewRow(e: any) {
-    if (this.modelGridValues[0] && this.panelGridValues[0]) {
+    if (
+      this.modelGridValues &&
+      this.modelGridValues[0] &&
+      this.panelGridValues &&
+      this.panelGridValues[0]
+    ) {
       this.showModelIdAndPanelIdCannotBeBothSetMessage().then(() => {
+        window.setTimeout(function () {
+          e.component.cancelEditData();
+        }, 0);
+        return;
+      });
+    } else if (
+      (!this.modelGridValues || !this.modelGridValues[0]) &&
+      (!this.panelGridValues || !this.panelGridValues[0])
+    ) {
+      this.showModelIdAndPanelIdCannotBeBothEmptyMessage().then(() => {
         window.setTimeout(function () {
           e.component.cancelEditData();
         }, 0);
@@ -101,6 +116,16 @@ export class FormulaFormComponent implements OnInit {
     return Swal.fire({
       title: this._translate.instant('ERROR'),
       text: this._translate.instant('MODELIDANDPANELIDCANNOTBEBOTHSET'),
+      icon: 'error',
+      confirmButtonColor: '#364574',
+      confirmButtonText: this._translate.instant('OK'),
+    });
+  }
+
+  showModelIdAndPanelIdCannotBeBothEmptyMessage() {
+    return Swal.fire({
+      title: this._translate.instant('ERROR'),
+      text: this._translate.instant('MODELIDANDPANELIDCANNOTBEBOTHEMPTY'),
       icon: 'error',
       confirmButtonColor: '#364574',
       confirmButtonText: this._translate.instant('OK'),
@@ -144,15 +169,21 @@ export class FormulaFormComponent implements OnInit {
   }
 
   getFilteredFormulas(options) {
-    if (this.modelGridValues[0]) {
+    if (this.modelGridValues && this.modelGridValues[0]) {
       return {
         store: this.formulaDataSource,
         filter: options.data ? ['modelId', '=', this.modelGridValues[0]] : null,
       };
-    } else if (this.panelGridValues[0]) {
+    } else if (this.panelGridValues && this.panelGridValues[0]) {
       return {
         store: this.formulaDataSource,
         filter: options.data ? ['panelId', '=', this.panelGridValues[0]] : null,
+      };
+    } else {
+      //Boş bir şekilde geri data dönülür.
+      return {
+        store: this.formulaDataSource,
+        filter: options.data ? ['modelId', '=', ''] : null,
       };
     }
   }
