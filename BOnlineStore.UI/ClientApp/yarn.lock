@@ -6193,7 +6193,7 @@ devexpress-gantt@4.1.56:
     "@devexpress/utils" "^1.4.3"
     tslib "2.3.1"
 
-devextreme-angular@^23.1.7:
+devextreme-angular@^23.2.11:
   version "23.2.11"
   resolved "https://registry.npmjs.org/devextreme-angular/-/devextreme-angular-23.2.11.tgz"
   integrity sha512-MUrJnkAdTD/Td703M9LGUKKzRjs2VslCx0TCuQRZktvH4sFIA9t9XvkoPZeV3jzEWcDeef0+Z41+wElDJd5qWw==
@@ -6225,7 +6225,7 @@ devextreme-schematics@*:
     "@angular-devkit/schematics" "^17.2.1"
     "@schematics/angular" "^17.2.1"
 
-devextreme@^23.1.7:
+devextreme@^23.2.11:
   version "23.2.11"
   resolved "https://registry.npmjs.org/devextreme/-/devextreme-23.2.11.tgz"
   integrity sha512-I4ChT4jtSqwmIp2fRCONlX2YZtItJHdVrd9Y0eMngz7q2JKs8+AVvcNY0PK2wbvM7nW4393UFS6CY7vo0DUgMA==
