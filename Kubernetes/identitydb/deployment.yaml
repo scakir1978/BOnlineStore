@@ -13,20 +13,12 @@ spec:
       labels:
         app: identitydb
     spec:
-      terminationGracePeriodSeconds: 30
-      hostname: identitydb
-      securityContext:
-        fsGroup: 10001
+      securityContext: # Pod'un güvenlik ayarlarý root user (administrator) olarak çalýþmasýný saðlýyor.
+        runAsUser: 0
+        runAsGroup: 0
       containers:
         - name: identitydb
-          image: mcr.microsoft.com/mssql/server:2019-latest
-          resources:
-            requests:
-              memory: "2G"
-              cpu: "2000m"
-            limits:
-              memory: "2G"
-              cpu: "2000m"
+          image: mcr.microsoft.com/mssql/server:2019-latest          
           ports:
             - containerPort: 1433
           env:
@@ -39,19 +31,19 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: identitydb-configmap
-                  key: accept-eula
+                  key: accept-eula            
             - name: MSSQL_SA_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: identitydb-secret
                   key: mssql-sa-password
           volumeMounts:
-            - name: "identitydb-persistent-storage"
-              mountPath: /data/bonlinestore/mssql
+            - name: sql-volume
+              mountPath: /var/opt/mssql
       volumes:
-        - name: "identitydb-persistent-storage"
+        - name: sql-volume
           persistentVolumeClaim:
-            claimName: bonlinestore-pvc
+            claimName: sql-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -65,4 +57,4 @@ spec:
     - protocol: TCP
       port: 1433
       targetPort: 1433
-  type: LoadBalancer
+  type: NodePort

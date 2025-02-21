@@ -5,4 +5,4 @@ metadata:
   namespace: default
 data:
   accept-eula: "Y"
-  mssql-pid: "Developer"
+  mssql-pid: "Developer"  

@@ -3,10 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: mongo-pvc
 spec:
+  accessModes:
+    - ReadWriteOnce # PV ile ayný eriþim modunu kullanmalý
   resources:
     requests:
-      storage: 5Gi
-  volumeMode: Filesystem
-  storageClassName: mongo-storage
-  accessModes:
-    - ReadWriteOnce
+      storage: 20Gi # PV ile ayný boyutta depolama alaný talep ediyoruz

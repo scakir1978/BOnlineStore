@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongo-pv
+  name: sql-pv
 spec:
   capacity:
     storage: 20Gi # 20 Gigabyte depolama alaný
   accessModes:
     - ReadWriteOnce # Ayný anda sadece bir Pod tarafýndan eriþilebilir
   hostPath:
-    path: /mnt/mongodb # Fiziksel makinedeki klasör yolu Bu klasörün oluþturulmasý gerekmektedir.
+    path: /mnt/sql # Fiziksel makinedeki klasör yolu Bu klasörün oluþturulmasý gerekmektedir.
