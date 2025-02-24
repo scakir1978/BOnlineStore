@@ -13,18 +13,14 @@ spec:
       labels:
         app: seq
     spec:
+      securityContext: # Pod'un güvenlik ayarlarý root user (administrator) olarak çalýþmasýný saðlýyor.
+        runAsUser: 0
+        runAsGroup: 0
       terminationGracePeriodSeconds: 30
       hostname: seq
       containers:
         - name: seq
-          image: datalust/seq
-          resources:
-            requests:
-              memory: "1G"
-              cpu: "500m"
-            limits:
-              memory: "1G"
-              cpu: "500m"
+          image: datalust/seq:latest
           ports:
             - containerPort: 80
             - containerPort: 5341
@@ -35,13 +31,15 @@ spec:
                   name: seq-configmap
                   key: accept-eula
           volumeMounts:
-            - name: "seq-persistent-storage"
-              mountPath: /data/bonlinestore/seq
+            - name: seq-volume
+              mountPath: /data
       volumes:
-        - name: "seq-persistent-storage"
+        - name: seq-volume
           persistentVolumeClaim:
-            claimName: bonlinestore-pvc
+            claimName: seq-pvc
+
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -51,33 +49,15 @@ spec:
   selector:
     app: seq
   ports:
-    - protocol: TCP
-      port: 5341
-      targetPort: 80
-  type: LoadBalancer
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: seq-bonlinestore-com
-  namespace: default
-  annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "seq.bonlinestore.com"
-spec:
-  selector:
-    app: seq
-  ports:
-    - name: https
-      protocol: TCP
-      port: 443
-      targetPort: 443
-    - name: http1
-      protocol: TCP
-      port: 80
-      targetPort: 80
-    - name: http2
-      protocol: TCP
-      port: 5341
-      targetPort: 5341
+  - name: http
+    protocol: TCP
+    port: 80 # Hizmet portu (küme içi)
+    targetPort: 80 # Kapsayýcý portu
+    nodePort: 30080 # NodePort numarasý (30000-32767 aralýðýnda)
+  - name: events
+    protocol: TCP
+    port: 5341 # Olay alma hizmeti portu (küme içi)
+    targetPort: 5341 # Olay alma kapsayýcý portu
+    nodePort: 30341 # NodePort numarasý (30000-32767 aralýðýnda)
   type: NodePort
+

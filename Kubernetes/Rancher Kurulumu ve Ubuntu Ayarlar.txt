@@ -1,0 +1,27 @@
+Docker Kurulumu:
+curl https://releases.rancher.com/install-docker/27.5.1.sh | sh 
+27.5.1 24.02.2025 itibari ile son veriyon yeni kurulum yapýlacaksa en son versiyon kullanýlmalýdýr.
+
+Rancher Kurulumu:
+docker run -d --name=rancher-server --restart=unless-stopped -p 4443:443 -p 8080:80 --privileged rancher/rancher:latest
+
+Rancher ilk admin þifreye ulaþmak için:
+docker logs  fa90d4de9016  2>&1 | grep "Bootstrap Password:"
+fa90d4de9016 => id rancher-server container idsi. Yeni kurulumda farklý olabilir.
+
+Ubuntu Ayarlarý:
+/etc/sysctl.conf dosyasýný düzenleyin ve aþaðýdaki satýrý ekleyin
+net.bridge.bridge-nf-call-iptables = 1
+fs.inotify.max_user_instances = 1024
+fs.inotify.max_user_watches = 1048576
+
+Ayarlarý kayýt ettikten sonra
+sudo sysctl -p 
+komutu çalýþtýrýlýr.
+
+Ubuntu restart edilir.
+
+https://ubuntubilgisayarip:4443/dashboard/home
+
+
+

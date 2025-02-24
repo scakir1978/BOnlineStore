@@ -2,11 +2,10 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: seq-pvc
+  namespace: default
 spec:
+  accessModes:
+    - ReadWriteOnce # PV ile ayný eriþim modunu kullanmalý
   resources:
     requests:
-      storage: 5Gi
-  volumeMode: Filesystem
-  storageClassName: seq-storage
-  accessModes:
-    - ReadWriteOnce
+      storage: 10Gi # PV ile ayný boyutta depolama alaný talep ediyoruz

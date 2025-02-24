@@ -16,11 +16,7 @@ spec:
       containers:
         - name: identity-bonlinestore-com
           image: scakir1978/identity.bonlinestore.com:latest
-          imagePullPolicy: Always
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          imagePullPolicy: Always          
           ports:
             - containerPort: 443
             - containerPort: 80
@@ -91,8 +87,10 @@ spec:
       protocol: TCP
       port: 443
       targetPort: 443
+      nodePort: 30401 # NodePort numarasý (30000-32767 aralýðýnda)
     - name: http
       protocol: TCP
       port: 80
       targetPort: 80
+      nodePort: 30801 # NodePort numarasý (30000-32767 aralýðýnda)
   type: NodePort

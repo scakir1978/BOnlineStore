@@ -1,44 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo-deployment
+  name: mongodb
   namespace: default
 spec:
   replicas: 1 # Tek bir MongoDB Pod'u çalýþtýrýyoruz
   selector:
     matchLabels:
-      app: mongo
+      app: mongodb
   template:
     metadata:
       labels:
-        app: mongo
+        app: mongodb
     spec:
       securityContext: # Pod'un güvenlik ayarlarý root user (administrator) olarak çalýþmasýný saðlýyor.
         runAsUser: 0
         runAsGroup: 0
       containers:
-        - name: mongo
+        - name: mongodb
           image: mongo:latest # En son MongoDB imajýný kullanýyoruz
           ports:
             - containerPort: 27017 # MongoDB'nin kullandýðý port
           volumeMounts:
-            - name: mongo-volume
+            - name: mongodb-volume
               mountPath: /data/db # MongoDB konteyneri içindeki veri yolu
       volumes:
-        - name: mongo-volume
+        - name: mongodb-volume
           persistentVolumeClaim:
             claimName: mongo-pvc # PVC'yi Pod'a baðlýyoruz
+
 ---
+# MongoDB servisini oluþturuyoruz
 apiVersion: v1
 kind: Service
 metadata:
   name: mongodb
+  namespace: default
 spec:
   selector:
     app: mongodb
-  type: ClusterIP
   ports:
-    - name: http
+    - protocol: TCP
       port: 27017
-      protocol: TCP
       targetPort: 27017
+      nodePort: 32717 # NodePort numarasý (30000-32767 aralýðýnda)
+  type: NodePort

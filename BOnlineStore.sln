@@ -59,6 +59,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", 
 	ProjectSection(SolutionItems) = preProject
 		Kubernetes\admin-user.yaml = Kubernetes\admin-user.yaml
 		Kubernetes\cluster-role-binding.yaml = Kubernetes\cluster-role-binding.yaml
+		Kubernetes\Rancher Kurulumu ve Ubuntu Ayarlar.txt = Kubernetes\Rancher Kurulumu ve Ubuntu Ayarlar.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Definitions", "Definitions", "{78844FEE-8643-48F0-ABFF-FDAC56678305}"
@@ -84,16 +85,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityDb", "IdentityDb", 
 	ProjectSection(SolutionItems) = preProject
 		Kubernetes\identitydb\config-map.yaml = Kubernetes\identitydb\config-map.yaml
 		Kubernetes\identitydb\deployment.yaml = Kubernetes\identitydb\deployment.yaml
-		Kubernetes\identitydb\pvc.yaml = Kubernetes\identitydb\pvc.yaml
 		Kubernetes\identitydb\pv.yaml = Kubernetes\identitydb\pv.yaml
+		Kubernetes\identitydb\pvc.yaml = Kubernetes\identitydb\pvc.yaml
 		Kubernetes\identitydb\secret.yaml = Kubernetes\identitydb\secret.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MongoDb", "MongoDb", "{D4125129-6F0D-4109-BE1F-C6F6A6C8D43C}"
 	ProjectSection(SolutionItems) = preProject
 		Kubernetes\mongodb\deployment.yaml = Kubernetes\mongodb\deployment.yaml
-		Kubernetes\mongodb\pvc.yaml = Kubernetes\mongodb\pvc.yaml
 		Kubernetes\mongodb\pv.yaml = Kubernetes\mongodb\pv.yaml
+		Kubernetes\mongodb\pvc.yaml = Kubernetes\mongodb\pvc.yaml
 		Kubernetes\mongodb\secret.yaml = Kubernetes\mongodb\secret.yaml
 	EndProjectSection
 EndProject
@@ -118,7 +119,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Seq", "Seq", "{E2CC7CA3-2E6
 		Kubernetes\seq\config-map.yaml = Kubernetes\seq\config-map.yaml
 		Kubernetes\seq\deployment.yaml = Kubernetes\seq\deployment.yaml
 		Kubernetes\seq\pvc.yaml = Kubernetes\seq\pvc.yaml
-		Kubernetes\seq\storage.yaml = Kubernetes\seq\storage.yaml
+		Kubernetes\seq\pv.yaml = Kubernetes\seq\pv.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4964C439-379C-4411-A0D4-32FA1774FAC9}"
@@ -162,8 +163,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bff", "Bff", "{EB108F52-68E
 		Kubernetes\bff\config-map.yaml = Kubernetes\bff\config-map.yaml
 		Kubernetes\bff\deployment.yaml = Kubernetes\bff\deployment.yaml
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{25BEF8EE-3157-4299-BA76-3E2BF1D6C75F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -253,7 +252,6 @@ Global
 		{FF4C7310-1ABF-4C1E-810B-416EFB3E38C7} = {49D3AC90-63E2-45A5-ADB3-74652029FED4}
 		{E61D3FF9-F156-4DB8-8BE0-3DF56BC16214} = {FF4C7310-1ABF-4C1E-810B-416EFB3E38C7}
 		{EB108F52-68ED-4E92-BEDE-50F03F19B996} = {749EF661-EB48-4264-8785-5637B9A62C78}
-		{25BEF8EE-3157-4299-BA76-3E2BF1D6C75F} = {749EF661-EB48-4264-8785-5637B9A62C78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A12FA703-13AF-486D-90AA-45AC95F5C81E}

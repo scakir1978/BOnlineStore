@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: seq-pv
+spec:
+  capacity:
+    storage: 10Gi # 10 Gigabyte depolama alaný
+  accessModes:
+    - ReadWriteOnce # Ayný anda sadece bir Pod tarafýndan eriþilebilir
+  hostPath:
+    path: /mnt/seq # Fiziksel makinedeki klasör yolu Bu klasörün oluþturulmasý gerekmektedir.

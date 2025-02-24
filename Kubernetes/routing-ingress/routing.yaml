@@ -13,6 +13,7 @@ metadata:
     #nginx.ingress.kubernetes.io/proxy-buffers-number: "4"
     #nginx.ingress.kubernetes.io/rewrite-target: /$2
   name: bonlinestore-routing
+  namespace: default
   labels:
     name: bonlinestore-routing
 spec:

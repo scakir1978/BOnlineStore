@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bff.bonlinestore.com
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -15,11 +16,7 @@ spec:
       containers:
         - name: bff-bonlinestore-com
           image: scakir1978/bff.bonlinestore.com:latest
-          imagePullPolicy: Always
-          resources:
-            limits:
-              memory: "512Mi"
-              cpu: "128m"
+          imagePullPolicy: Always          
           ports:
             - containerPort: 443
             - containerPort: 80
@@ -69,6 +66,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: bff-bonlinestore-com
+  namespace: default
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-name: "bff.bonlinestore.com"
 spec:
@@ -79,8 +77,9 @@ spec:
       protocol: TCP
       port: 443
       targetPort: 443
+      nodePort: 30413 # NodePort numarasý (30000-32767 aralýðýnda)
     - name: http
       protocol: TCP
       port: 80
-      targetPort: 80
+      nodePort: 30813 # NodePort numarasý (30000-32767 aralýðýnda)
   type: NodePort

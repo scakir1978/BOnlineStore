@@ -57,4 +57,5 @@ spec:
     - protocol: TCP
       port: 1433
       targetPort: 1433
+      nodePort: 31433 # NodePort numarasý (30000-32767 aralýðýnda)
   type: NodePort

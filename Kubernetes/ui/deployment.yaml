@@ -16,11 +16,7 @@ spec:
       containers:
         - name: ui-bonlinestore-com
           image: scakir1978/ui.bonlinestore.com:latest
-          imagePullPolicy: Always
-          resources:
-            limits:
-              memory: "128Mi"
-              cpu: "500m"
+          imagePullPolicy: Always          
           ports:
             - containerPort: 443
             - containerPort: 80
@@ -50,4 +46,5 @@ spec:
     - protocol: TCP
       port: 443
       targetPort: 443
+      nodePort: 30443 # NodePort numarasý (30000-32767 aralýðýnda)
   type: NodePort
