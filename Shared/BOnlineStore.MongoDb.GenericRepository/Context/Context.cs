@@ -10,8 +10,6 @@ namespace BOnlineStore.MongoDb.GenericRepository
         public Context(IDatabaseSettings settings)
         {
             MongoClientSettings mongoClientSettings = MongoClientSettings.FromConnectionString(settings.ConnectionString);
-            mongoClientSettings.LinqProvider = MongoDB.Driver.Linq.LinqProvider.V2;
-
             Client = new MongoClient(mongoClientSettings);            
             Database = Client.GetDatabase(settings.DatabaseName);
         }        

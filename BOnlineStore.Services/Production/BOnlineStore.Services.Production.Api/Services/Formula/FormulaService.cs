@@ -61,7 +61,7 @@ namespace BOnlineStore.Services.Production.Api.Services
                 expression.Evaluate();
                 return await Task.FromResult(true);
             }
-            catch (NCalc.EvaluationException)
+            catch (NCalc.Exceptions.NCalcEvaluationException)
             {
                 return await Task.FromResult(false);
             }
@@ -83,7 +83,7 @@ namespace BOnlineStore.Services.Production.Api.Services
                 var formulaValue = Convert.ToDecimal(expression.Evaluate());
                 return formulaValue;
             }
-            catch (NCalc.EvaluationException ex)
+            catch (NCalc.Exceptions.NCalcEvaluationException ex)
             {
                 throw new InvalidOperationException($"Formula Error: ({formulaText}) Formula ID: {formulaDetails.FirstOrDefault()?.FormulId ?? ""}", ex);
             }

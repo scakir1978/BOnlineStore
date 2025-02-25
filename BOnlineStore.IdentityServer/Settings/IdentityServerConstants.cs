@@ -24,6 +24,7 @@
         public const string ApiScopesBFFFullPermission = "bff_full_permission";
         public const string ApiScopesDefinitionsTenantId = "tenantId";
         public const string ApiScopesDefinitionsLocale = "locale";
+        public const string ApiScopesMongoDBFullPermission = "mongodb_full_permission";
 
         #endregion
     }

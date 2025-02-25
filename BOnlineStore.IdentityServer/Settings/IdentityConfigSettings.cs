@@ -7,5 +7,7 @@
         public string AllowedCorsOrigin2 { get; set; }
         public string PostLogoutRedirectUri { get; set; }
         public string FrontChannelLogoutUri { get; set; }
+        public string MongoDBRedirectUri { get; set; }
+        public string MongoDBPostLogoutRedirectUri { get; set; }
     }
 }

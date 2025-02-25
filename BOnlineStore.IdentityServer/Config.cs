@@ -69,6 +69,23 @@ public static class Config
                 AccessTokenLifetime = ((60 * 60) * 6), // 6 saat
                 RefreshTokenUsage = TokenUsage.OneTimeOnly,
                 AbsoluteRefreshTokenLifetime = (((60 * 60) * 24) * 5 ), //5 gün                
-            }
+            },
+            new Client
+        {
+            ClientId = "MongoDBClient",
+            ClientName = "MongoDB Client",
+            RequireClientSecret = true,
+            ClientSecrets = { new Secret("3vBKDNUdSYzYZW7vG5dUeX7VdhdremPr".Sha256()) },
+            AllowedGrantTypes = GrantTypes.Code,
+            RedirectUris = { _identityConfigSettings.MongoDBRedirectUri },
+            PostLogoutRedirectUris = { _identityConfigSettings.MongoDBPostLogoutRedirectUri },
+            AllowedScopes =
+            {
+                Duende.IdentityServer.IdentityServerConstants.StandardScopes.OpenId,
+                Duende.IdentityServer.IdentityServerConstants.StandardScopes.Profile,
+                IdentityServerConstants.ApiScopesMongoDBFullPermission
+            },
+            AllowAccessTokensViaBrowser = true
+        }
         };
 }
