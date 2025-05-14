@@ -37,6 +37,7 @@ public static class Config
             new ApiScope(IdentityServerConstants.ApiScopesOrderFullPermission),
             new ApiScope(IdentityServerConstants.ApiScopesGatewayFullPermission),
             new ApiScope(IdentityServerConstants.ApiScopesBFFFullPermission),
+            new ApiScope(IdentityServerConstants.ApiScopesMongoDBFullPermission),
             new ApiScope(Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName),
         };
 
@@ -71,21 +72,19 @@ public static class Config
                 AbsoluteRefreshTokenLifetime = (((60 * 60) * 24) * 5 ), //5 gün                
             },
             new Client
-        {
-            ClientId = "MongoDBClient",
-            ClientName = "MongoDB Client",
-            RequireClientSecret = true,
-            ClientSecrets = { new Secret("3vBKDNUdSYzYZW7vG5dUeX7VdhdremPr".Sha256()) },
-            AllowedGrantTypes = GrantTypes.Code,
-            RedirectUris = { _identityConfigSettings.MongoDBRedirectUri },
-            PostLogoutRedirectUris = { _identityConfigSettings.MongoDBPostLogoutRedirectUri },
-            AllowedScopes =
             {
-                Duende.IdentityServer.IdentityServerConstants.StandardScopes.OpenId,
-                Duende.IdentityServer.IdentityServerConstants.StandardScopes.Profile,
-                IdentityServerConstants.ApiScopesMongoDBFullPermission
-            },
-            AllowAccessTokensViaBrowser = true
-        }
+                ClientId = "MongoDBClient",
+                ClientName = "MongoDB Client",
+                RequireClientSecret = true,
+                ClientSecrets = { new Secret("cyxtLPb0aKRMzqYgOCRuQURt3kV1DwZwNDuHnjErdtidTVHRzD6BhcXfStuBPEW0sbb4LQ==".Sha256()) },
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                RedirectUris = { _identityConfigSettings.RedirectUri },
+                PostLogoutRedirectUris = { _identityConfigSettings.PostLogoutRedirectUri },
+                AllowedScopes =
+                {                    
+                    IdentityServerConstants.ApiScopesMongoDBFullPermission
+                },
+                AllowAccessTokensViaBrowser = true
+            }
         };
 }

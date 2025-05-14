@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 services:
   mongodb:
@@ -8,6 +8,9 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    environment:    
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=Scag18548912345*   
 
   identitydbdocker:
     container_name: identitydbdocker

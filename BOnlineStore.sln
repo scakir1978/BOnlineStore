@@ -118,8 +118,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Seq", "Seq", "{E2CC7CA3-2E6
 	ProjectSection(SolutionItems) = preProject
 		Kubernetes\seq\config-map.yaml = Kubernetes\seq\config-map.yaml
 		Kubernetes\seq\deployment.yaml = Kubernetes\seq\deployment.yaml
-		Kubernetes\seq\pvc.yaml = Kubernetes\seq\pvc.yaml
 		Kubernetes\seq\pv.yaml = Kubernetes\seq\pv.yaml
+		Kubernetes\seq\pvc.yaml = Kubernetes\seq\pvc.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4964C439-379C-4411-A0D4-32FA1774FAC9}"
@@ -129,6 +129,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{4964C439-379C-
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{EFE41373-F21F-490D-A15D-9D4C860E350F}"
+	ProjectSection(SolutionItems) = preProject
+		Misc\entrypoint.sh = Misc\entrypoint.sh
+		Misc\init-mongo.js = Misc\init-mongo.js
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{8579F60D-7110-400C-9BC5-CAE6D434BD89}"
 EndProject
