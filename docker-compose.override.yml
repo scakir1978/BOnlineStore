@@ -10,7 +10,7 @@ services:
       - mongo_data:/data/db
     environment:    
       - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=Scag18548912345*   
+      - MONGO_INITDB_ROOT_PASSWORD=Scag18548912345*
 
   identitydbdocker:
     container_name: identitydbdocker

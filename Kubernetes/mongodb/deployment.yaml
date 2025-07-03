@@ -21,6 +21,17 @@ spec:
           image: mongo:latest # En son MongoDB imajýný kullanýyoruz
           ports:
             - containerPort: 27017 # MongoDB'nin kullandýðý port
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-root-username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-secret
+                  key: mongo-root-password
           volumeMounts:
             - name: mongodb-volume
               mountPath: /data/db # MongoDB konteyneri içindeki veri yolu
