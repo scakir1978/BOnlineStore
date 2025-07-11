@@ -6,8 +6,19 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
 {
     public class DeliveryAdressDto : EntityDto
     {
+        /// <summary>
+        /// Teslimat adresi kodu
+        /// </summary>
         public string? Code { get; set; }
+
+        /// <summary>
+        /// Teslimat adresi adı
+        /// </summary>
         public string? Name { get; set; }
+
+        /// <summary>
+        /// Müşteri adı
+        /// </summary>
         public string? CustomerName { get; private set; }
 
         [BsonRepresentation(BsonType.ObjectId)]
@@ -15,7 +26,7 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         /// Ülke Id
         /// </summary>
         public string? CountryId { get; private set; }
-        
+
         /// <summary>
         /// Ülke bilgileri
         /// </summary>
@@ -82,7 +93,7 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
         public string? EMail { get; private set; }
 
         public DeliveryAdressDto(string id, string code, string name, string customerName, string? countryId, CountryDto country,
-                                 string? cityId, CityDto city,  string? countyId, CountyDto county, string? districtId, DistrictDto district,
+                                 string? cityId, CityDto city, string? countyId, CountyDto county, string? districtId, DistrictDto district,
                                  string? adress, string? postalCode, string? cellPhoneNumber, string? telephoneNumber, string? eMail)
         {
             Id = id;

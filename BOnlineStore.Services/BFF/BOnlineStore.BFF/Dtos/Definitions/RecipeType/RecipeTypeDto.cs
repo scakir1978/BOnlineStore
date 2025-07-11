@@ -7,7 +7,14 @@ namespace BOnlineStore.Services.BFF.Api.Dtos
 {
     public class RecipeTypeDto : EntityDto
     {
+        /// <summary>
+        /// Reçete türü kodu
+        /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// Reçete türü adı
+        /// </summary>
         public string Name { get; set; }
 
         /// <summary>
