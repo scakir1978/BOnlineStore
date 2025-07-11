@@ -250,5 +250,10 @@
   "CUSTOMERNAME": "Customer Name",
   "ERROR": "Error",
   "WARNING": "Warning",
-  "SUCCESS": "Success"
+  "SUCCESS": "Success",
+  "CHOOSE_SIDEBAR_VISIBILITY": "Choose show or Hidden sidebar.",
+  "CHOOSE_LAYOUT_WIDTH": "Choose Fluid or Boxed layout.",
+  "CHOOSE_LAYOUT_POSITION": "Choose Fixed or Scrollable Layout Position.",
+  "CHOOSE_TOPBAR_COLOR": "Choose Light or Dark Topbar Color.",
+  "CHOOSE_SIDEBAR_SIZE": "Choose a size of Sidebar."
 }

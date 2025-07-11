@@ -279,5 +279,10 @@
   "CUSTOMERNAME": "Müşteri Adı",
   "ERROR": "Hata",
   "WARNING": "Uyarı",
-  "SUCCESS": "Başarılı"
+  "SUCCESS": "Başarılı",
+  "CHOOSE_SIDEBAR_VISIBILITY": "Görünür veya gizli yan menü seçin.",
+  "CHOOSE_LAYOUT_WIDTH": "Akışkan veya kutulu düzen seçin.",
+  "CHOOSE_LAYOUT_POSITION": "Sabit veya kaydırılabilir düzen konumu seçin.",
+  "CHOOSE_TOPBAR_COLOR": "Açık veya koyu üst bar rengi seçin.",
+  "CHOOSE_SIDEBAR_SIZE": "Yan menü boyutu seçin."
 }
