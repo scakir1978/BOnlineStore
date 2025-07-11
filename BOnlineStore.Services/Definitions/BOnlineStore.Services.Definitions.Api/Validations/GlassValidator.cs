@@ -18,7 +18,9 @@ namespace BOnlineStore.Services.Definitions.Api.Validations
             _repository = repository;
 
             RuleFor(x => x.Name).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.GlassNameNotEmpty]);
+            RuleFor(x => x.Name).MaximumLength(250).WithMessage(_stringLocalizer[DefinitionApiKeys.GlassNameMaxLength]);
             RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.GlassCodeNotEmpty]);
+            RuleFor(x => x.Code).MaximumLength(50).WithMessage(_stringLocalizer[DefinitionApiKeys.GlassCodeMaxLength]);
             RuleFor(x => x.GlassGroupId).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.GlassGroupNotEmpty]);
 
             //Bu rule sadece kayıt ekleme işlemi sırasında devreye giriyor.

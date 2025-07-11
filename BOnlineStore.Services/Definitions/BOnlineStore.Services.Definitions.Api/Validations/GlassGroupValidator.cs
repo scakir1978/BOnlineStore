@@ -19,7 +19,9 @@ namespace BOnlineStore.Services.Definitions.Api.Validations
             _repository = repository;
 
             RuleFor(x => x.Name).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.GlassGroupNameNotEmpty]);
+            RuleFor(x => x.Name).MaximumLength(250).WithMessage(_stringLocalizer[DefinitionApiKeys.GlassGroupNameMaxLength]);
             RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.GlassGroupCodeNotEmpty]);
+            RuleFor(x => x.Code).MaximumLength(50).WithMessage(_stringLocalizer[DefinitionApiKeys.GlassGroupCodeMaxLength]);
 
             //Bu rule sadece kayıt ekleme işlemi sırasında devreye giriyor.
             //Oda service üzerinden kayıt ekleme işlemi olduğunda aşağıdaki gibi bir kod çalıştırılacak sağlanıyor.

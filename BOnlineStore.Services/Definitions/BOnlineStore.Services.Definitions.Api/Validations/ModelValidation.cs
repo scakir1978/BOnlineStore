@@ -20,7 +20,9 @@ namespace BOnlineStore.Services.Definitions.Api.Validations
             _repository = repository;
 
             RuleFor(x => x.Name).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.ModelNameNotEmpty]);
+            RuleFor(x => x.Name).MaximumLength(250).WithMessage(_stringLocalizer[DefinitionApiKeys.ModelNameMaxLength]);
             RuleFor(x => x.Code).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.ModelCodeNotEmpty]);
+            RuleFor(x => x.Code).MaximumLength(50).WithMessage(_stringLocalizer[DefinitionApiKeys.ModelCodeMaxLength]);
             RuleFor(x => x.ModelGroupId).NotEmpty().WithMessage(_stringLocalizer[DefinitionApiKeys.ModelGroupNotEmpty]);
 
             //Bu rule sadece kayıt ekleme işlemi sırasında devreye giriyor.

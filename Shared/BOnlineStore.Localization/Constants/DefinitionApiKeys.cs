@@ -8,6 +8,34 @@ namespace BOnlineStore.Localization.Constants
 {
     public class DefinitionApiKeys
     {
+        public const string FirmTypeNameMaxLength = "FirmTypeNameMaxLength";
+        public const string FirmTypeCodeMaxLength = "FirmTypeCodeMaxLength";
+        public const string FirmNameMaxLength = "FirmNameMaxLength";
+        public const string FirmCodeMaxLength = "FirmCodeMaxLength";
+        public const string ExpenseNameMaxLength = "ExpenseNameMaxLength";
+        public const string ExpenseCodeMaxLength = "ExpenseCodeMaxLength";
+        public const string CurrencyNameMaxLength = "CurrencyNameMaxLength";
+        public const string CurrencyCodeMaxLength = "CurrencyCodeMaxLength";
+        public const string CountyNameMaxLength = "CountyNameMaxLength";
+        public const string CountyCodeMaxLength = "CountyCodeMaxLength";
+        public const string RawMaterialNameMaxLength = "RawMaterialNameMaxLength";
+        public const string RawMaterialCodeMaxLength = "RawMaterialCodeMaxLength";
+        public const string RawMaterialGroupNameMaxLength = "RawMaterialGroupNameMaxLength";
+        public const string RawMaterialGroupCodeMaxLength = "RawMaterialGroupCodeMaxLength";
+        public const string PanelNameMaxLength = "PanelNameMaxLength";
+        public const string PanelCodeMaxLength = "PanelCodeMaxLength";
+        public const string ModelNameMaxLength = "ModelNameMaxLength";
+        public const string ModelCodeMaxLength = "ModelCodeMaxLength";
+        public const string RecipeTypeNameMaxLength = "RecipeTypeNameMaxLength";
+        public const string RecipeTypeCodeMaxLength = "RecipeTypeCodeMaxLength";
+        public const string ModelGroupNameMaxLength = "ModelGroupNameMaxLength";
+        public const string ModelGroupCodeMaxLength = "ModelGroupCodeMaxLength";
+        public const string LengthNameMaxLength = "LengthNameMaxLength";
+        public const string LengthCodeMaxLength = "LengthCodeMaxLength";
+        public const string GlassNameMaxLength = "GlassNameMaxLength";
+        public const string GlassCodeMaxLength = "GlassCodeMaxLength";
+        public const string GlassGroupNameMaxLength = "GlassGroupNameMaxLength";
+        public const string GlassGroupCodeMaxLength = "GlassGroupCodeMaxLength";    
         public const string ModelGroupCodeNotEmpty = "ModelGroupCodeNotEmpty";
         public const string ModelGroupNameNotEmpty = "ModelGroupNameNotEmpty";
         public const string ModelGroupCodeMustBeUnique = "ModelGroupCodeMustBeUnique";

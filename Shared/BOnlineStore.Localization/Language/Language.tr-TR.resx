@@ -129,6 +129,90 @@
   <data name="AssemblerNameMaxLength" xml:space="preserve">
     <value>Montör adı 250 karakterden uzun olamaz. </value>
   </data>
+  <data name="FirmTypeNameMaxLength" xml:space="preserve">
+    <value>Firma tipi adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="FirmTypeCodeMaxLength" xml:space="preserve">
+    <value>Firma tipi kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="FirmNameMaxLength" xml:space="preserve">
+    <value>Firma adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="FirmCodeMaxLength" xml:space="preserve">
+    <value>Firma kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="ExpenseNameMaxLength" xml:space="preserve">
+    <value>Gider adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="ExpenseCodeMaxLength" xml:space="preserve">
+    <value>Gider kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="CurrencyNameMaxLength" xml:space="preserve">
+    <value>Para birimi adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="CurrencyCodeMaxLength" xml:space="preserve">
+    <value>Para birimi kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="CountyNameMaxLength" xml:space="preserve">
+    <value>İlçe adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="CountyCodeMaxLength" xml:space="preserve">
+    <value>İlçe kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="RawMaterialNameMaxLength" xml:space="preserve">
+    <value>Hammadde adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="RawMaterialCodeMaxLength" xml:space="preserve">
+    <value>Hammadde kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="RawMaterialGroupNameMaxLength" xml:space="preserve">
+    <value>Hammadde grup adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="RawMaterialGroupCodeMaxLength" xml:space="preserve">
+    <value>Hammadde grup kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="PanelNameMaxLength" xml:space="preserve">
+    <value>Panel adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="PanelCodeMaxLength" xml:space="preserve">
+    <value>Panel kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="ModelNameMaxLength" xml:space="preserve">
+    <value>Model adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="ModelCodeMaxLength" xml:space="preserve">
+    <value>Model kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="RecipeTypeNameMaxLength" xml:space="preserve">
+    <value>Reçete tip adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="RecipeTypeCodeMaxLength" xml:space="preserve">
+    <value>Reçete tip kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="ModelGroupNameMaxLength" xml:space="preserve">
+    <value>Model grup adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="ModelGroupCodeMaxLength" xml:space="preserve">
+    <value>Model grup kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="LengthNameMaxLength" xml:space="preserve">
+    <value>Uzunluk adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="LengthCodeMaxLength" xml:space="preserve">
+    <value>Uzunluk kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="GlassNameMaxLength" xml:space="preserve">
+    <value>Cam adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="GlassCodeMaxLength" xml:space="preserve">
+    <value>Cam kodu en fazla 50 karakter olabilir.</value>
+  </data>
+  <data name="GlassGroupNameMaxLength" xml:space="preserve">
+    <value>Cam grup adı en fazla 250 karakter olabilir.</value>
+  </data>
+  <data name="GlassGroupCodeMaxLength" xml:space="preserve">
+    <value>Cam grup kodu en fazla 50 karakter olabilir.</value>
+  </data>
   <data name="AssemblerNameNotEmpty" xml:space="preserve">
     <value>Montör adı boş olamaz.</value>
   </data>

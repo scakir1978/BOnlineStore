@@ -121,6 +121,118 @@
     <value>The maximum length of assembler name can be 250</value>
     <comment>Montör adı 250 karakterden uzun olamaz.</comment>
   </data>
+  <data name="FirmTypeNameMaxLength" xml:space="preserve">
+    <value>The maximum length of firm type name can be 250.</value>
+    <comment>Firma tipi adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="FirmTypeCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of firm type code can be 50.</value>
+    <comment>Firma tipi kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="FirmNameMaxLength" xml:space="preserve">
+    <value>The maximum length of firm name can be 250.</value>
+    <comment>Firma adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="FirmCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of firm code can be 50.</value>
+    <comment>Firma kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="ExpenseNameMaxLength" xml:space="preserve">
+    <value>The maximum length of expense name can be 250.</value>
+    <comment>Gider adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="ExpenseCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of expense code can be 50.</value>
+    <comment>Gider kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="CurrencyNameMaxLength" xml:space="preserve">
+    <value>The maximum length of currency name can be 250.</value>
+    <comment>Para birimi adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="CurrencyCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of currency code can be 50.</value>
+    <comment>Para birimi kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="CountyNameMaxLength" xml:space="preserve">
+    <value>The maximum length of county name can be 250.</value>
+    <comment>İlçe adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="CountyCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of county code can be 50.</value>
+    <comment>İlçe kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="RawMaterialNameMaxLength" xml:space="preserve">
+    <value>The maximum length of raw material name can be 250.</value>
+    <comment>Hammadde adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="RawMaterialCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of raw material code can be 50.</value>
+    <comment>Hammadde kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="RawMaterialGroupNameMaxLength" xml:space="preserve">
+    <value>The maximum length of raw material group name can be 250.</value>
+    <comment>Hammadde grup adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="RawMaterialGroupCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of raw material group code can be 50.</value>
+    <comment>Hammadde grup kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="PanelNameMaxLength" xml:space="preserve">
+    <value>The maximum length of panel name can be 250.</value>
+    <comment>Panel adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="PanelCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of panel code can be 50.</value>
+    <comment>Panel kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="ModelNameMaxLength" xml:space="preserve">
+    <value>The maximum length of model name can be 250.</value>
+    <comment>Model adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="ModelCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of model code can be 50.</value>
+    <comment>Model kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="RecipeTypeNameMaxLength" xml:space="preserve">
+    <value>The maximum length of recipe type name can be 250.</value>
+    <comment>Reçete tip adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="RecipeTypeCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of recipe type code can be 50.</value>
+    <comment>Reçete tip kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="ModelGroupNameMaxLength" xml:space="preserve">
+    <value>The maximum length of model group name can be 250.</value>
+    <comment>Model grup adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="ModelGroupCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of model group code can be 50.</value>
+    <comment>Model grup kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="LengthNameMaxLength" xml:space="preserve">
+    <value>The maximum length of length name can be 250.</value>
+    <comment>Uzunluk adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="LengthCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of length code can be 50.</value>
+    <comment>Uzunluk kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="GlassNameMaxLength" xml:space="preserve">
+    <value>The maximum length of glass name can be 250.</value>
+    <comment>Cam adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="GlassCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of glass code can be 50.</value>
+    <comment>Cam kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="GlassGroupNameMaxLength" xml:space="preserve">
+    <value>The maximum length of glass group name can be 250.</value>
+    <comment>Cam grup adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="GlassGroupCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of glass group code can be 50.</value>
+    <comment>Cam grup kodu en fazla 50 karakter olabilir.</comment>
+  </data>
   <data name="AssemblerNameNotEmpty" xml:space="preserve">
     <value>Assembler name cannot be empty</value>
     <comment>Montör adı boş olamaz.</comment>
