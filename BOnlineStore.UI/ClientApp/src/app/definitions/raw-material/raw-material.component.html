@@ -14,7 +14,9 @@
   [rowAlternationEnabled]="true"
   (onExporting)="onExporting($event)"
 >
-  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+  <dxo-column-chooser [enabled]="true" [mode]="'select'">
+    <dxo-search [enabled]="true"></dxo-search>
+  </dxo-column-chooser>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
   <dxo-header-filter [visible]="true"> </dxo-header-filter>
   <dxo-editing
