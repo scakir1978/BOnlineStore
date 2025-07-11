@@ -6,11 +6,18 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     public class ModelGroupDto : EntityDto
     {
+        /// <summary>
+        /// Model grubu kodu
+        /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// Model grubu adı
+        /// </summary>
         public string Name { get; set; }
 
         public ModelGroupDto(string id, string code, string name)
-        {            
+        {
             Id = id;
             Code = code;
             Name = name;

@@ -5,7 +5,14 @@
     /// </summary>
     public class AssemblerUpdateDto
     {
+        /// <summary>
+        /// Montör kodu
+        /// </summary>
         public string? Code { get; set; }
+
+        /// <summary>
+        /// Montör adı
+        /// </summary>
         public string? Name { get; set; }
 
         public AssemblerUpdateDto(string? code, string? name)

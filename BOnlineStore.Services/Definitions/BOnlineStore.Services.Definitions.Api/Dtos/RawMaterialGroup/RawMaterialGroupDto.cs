@@ -6,7 +6,14 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     public class RawMaterialGroupDto : EntityDto
     {
+        /// <summary>
+        /// Hammadde grubu kodu
+        /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// Hammadde grubu adı
+        /// </summary>
         public string Name { get; set; }
 
         public RawMaterialGroupDto(string id, string code, string name)

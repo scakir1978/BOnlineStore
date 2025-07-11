@@ -7,7 +7,14 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
     /// </summary>
     public class AssemblerDto : EntityDto
     {
+        /// <summary>
+        /// Montör kodu
+        /// </summary>
         public string? Code { get; set; }
+
+        /// <summary>
+        /// Montör adı
+        /// </summary>
         public string? Name { get; set; }
 
         public AssemblerDto(string id, string code, string name)

@@ -9,7 +9,14 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
     /// </summary>
     public class BankDto : EntityDto
     {
+        /// <summary>
+        /// Banka kodu
+        /// </summary>
         public string? Code { get; set; }
+
+        /// <summary>
+        /// Banka adı
+        /// </summary>
         public string? Name { get; set; }
 
         public BankDto(string id, string code, string name)

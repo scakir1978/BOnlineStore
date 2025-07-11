@@ -6,7 +6,14 @@ namespace BOnlineStore.Services.Definitions.Api.Dtos
 {
     public class FirmTypeDto : EntityDto
     {
+        /// <summary>
+        /// Firma türü kodu
+        /// </summary>
         public string Code { get; set; }
+
+        /// <summary>
+        /// Firma türü adı
+        /// </summary>
         public string Name { get; set; }
 
         public FirmTypeDto(string id, string code, string name)

@@ -5,6 +5,9 @@
     /// </summary>
     public class RawMaterialIdDto
     {
+        /// <summary>
+        /// Hammadde kimliği
+        /// </summary>
         public string? Id { get; set; }
     }
 
