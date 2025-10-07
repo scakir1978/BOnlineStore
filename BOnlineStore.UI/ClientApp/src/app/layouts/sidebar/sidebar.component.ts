@@ -1,43 +1,70 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
   EventEmitter,
   Output,
   ViewChild,
   ElementRef,
-} from "@angular/core";
-import { NavigationEnd, Router } from "@angular/router";
-import { TranslateService } from "@ngx-translate/core";
+} from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { EventService } from '../../core/services/event.service';
 
-import { MENU } from "././../../menu/menu";
-import { MenuItem } from "./../../menu/menu.model";
+import { MENU } from '././../../menu/menu';
+import { MenuItem } from './../../menu/menu.model';
 
 @Component({
-  selector: "app-sidebar",
-  templateUrl: "./sidebar.component.html",
-  styleUrls: ["./sidebar.component.scss"],
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   menu: any;
   toggle: any = true;
   menuItems: MenuItem[] = [];
-  @ViewChild("sideMenu") sideMenu!: ElementRef;
+  currentTheme: string = 'light';
+  private themeSubscription: any;
+  @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
-  constructor(private router: Router, public translate: TranslateService) {
-    translate.setDefaultLang("tr");
+  constructor(
+    private router: Router,
+    public translate: TranslateService,
+    private eventService: EventService
+  ) {
+    translate.setDefaultLang('tr');
   }
 
   ngOnInit(): void {
+    // Initialize theme from current document attribute
+    const currentTheme =
+      document.documentElement.getAttribute('data-bs-theme') || 'light';
+    this.currentTheme = currentTheme;
+
+    // Listen for theme change events
+    this.themeSubscription = this.eventService.subscribe(
+      'changeMode',
+      (mode: string) => {
+        this.currentTheme = mode;
+      }
+    );
+
     // Menu Items
     this.menuItems = MENU;
     this.router.events.subscribe((event) => {
-      if (document.documentElement.getAttribute("data-layout") != "twocolumn") {
+      if (document.documentElement.getAttribute('data-layout') != 'twocolumn') {
         if (event instanceof NavigationEnd) {
           this.initActiveMenu();
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
   }
 
   /***
@@ -51,126 +78,126 @@ export class SidebarComponent implements OnInit {
 
   removeActivation(items: any) {
     items.forEach((item: any) => {
-      if (item.classList.contains("menu-link")) {
-        if (!item.classList.contains("active")) {
-          item.setAttribute("aria-expanded", false);
+      if (item.classList.contains('menu-link')) {
+        if (!item.classList.contains('active')) {
+          item.setAttribute('aria-expanded', false);
         }
         item.nextElementSibling
-          ? item.nextElementSibling.classList.remove("show")
+          ? item.nextElementSibling.classList.remove('show')
           : null;
       }
-      if (item.classList.contains("nav-link")) {
+      if (item.classList.contains('nav-link')) {
         if (item.nextElementSibling) {
-          item.nextElementSibling.classList.remove("show");
+          item.nextElementSibling.classList.remove('show');
         }
-        item.setAttribute("aria-expanded", false);
+        item.setAttribute('aria-expanded', false);
       }
-      item.classList.remove("active");
+      item.classList.remove('active');
     });
   }
 
   toggleSubItem(event: any) {
-    let isCurrentMenuId = event.target.closest("a.nav-link");
+    let isCurrentMenuId = event.target.closest('a.nav-link');
     let isMenu = isCurrentMenuId.nextElementSibling as any;
-    if (isMenu.classList.contains("show")) {
-      isMenu.classList.remove("show");
-      isCurrentMenuId.setAttribute("aria-expanded", "false");
+    if (isMenu.classList.contains('show')) {
+      isMenu.classList.remove('show');
+      isCurrentMenuId.setAttribute('aria-expanded', 'false');
     } else {
-      let dropDowns = Array.from(document.querySelectorAll(".sub-menu"));
+      let dropDowns = Array.from(document.querySelectorAll('.sub-menu'));
       dropDowns.forEach((node: any) => {
-        node.classList.remove("show");
+        node.classList.remove('show');
       });
 
       let subDropDowns = Array.from(
-        document.querySelectorAll(".menu-dropdown .nav-link")
+        document.querySelectorAll('.menu-dropdown .nav-link')
       );
       subDropDowns.forEach((submenu: any) => {
-        submenu.setAttribute("aria-expanded", "false");
+        submenu.setAttribute('aria-expanded', 'false');
       });
 
       if (event.target && event.target.nextElementSibling) {
-        isCurrentMenuId.setAttribute("aria-expanded", "true");
-        event.target.nextElementSibling.classList.toggle("show");
+        isCurrentMenuId.setAttribute('aria-expanded', 'true');
+        event.target.nextElementSibling.classList.toggle('show');
       }
     }
   }
 
   toggleExtraSubItem(event: any) {
-    let isCurrentMenuId = event.target.closest("a.nav-link");
+    let isCurrentMenuId = event.target.closest('a.nav-link');
     let isMenu = isCurrentMenuId.nextElementSibling as any;
-    if (isMenu.classList.contains("show")) {
-      isMenu.classList.remove("show");
-      isCurrentMenuId.setAttribute("aria-expanded", "false");
+    if (isMenu.classList.contains('show')) {
+      isMenu.classList.remove('show');
+      isCurrentMenuId.setAttribute('aria-expanded', 'false');
     } else {
-      let dropDowns = Array.from(document.querySelectorAll(".extra-sub-menu"));
+      let dropDowns = Array.from(document.querySelectorAll('.extra-sub-menu'));
       dropDowns.forEach((node: any) => {
-        node.classList.remove("show");
+        node.classList.remove('show');
       });
 
       let subDropDowns = Array.from(
-        document.querySelectorAll(".menu-dropdown .nav-link")
+        document.querySelectorAll('.menu-dropdown .nav-link')
       );
       subDropDowns.forEach((submenu: any) => {
-        submenu.setAttribute("aria-expanded", "false");
+        submenu.setAttribute('aria-expanded', 'false');
       });
 
       if (event.target && event.target.nextElementSibling) {
-        isCurrentMenuId.setAttribute("aria-expanded", "true");
-        event.target.nextElementSibling.classList.toggle("show");
+        isCurrentMenuId.setAttribute('aria-expanded', 'true');
+        event.target.nextElementSibling.classList.toggle('show');
       }
     }
   }
 
   // Click wise Parent active class add
   toggleParentItem(event: any) {
-    let isCurrentMenuId = event.target.closest("a.nav-link");
-    let dropDowns = Array.from(document.querySelectorAll("#navbar-nav .show"));
+    let isCurrentMenuId = event.target.closest('a.nav-link');
+    let dropDowns = Array.from(document.querySelectorAll('#navbar-nav .show'));
     dropDowns.forEach((node: any) => {
-      node.classList.remove("show");
+      node.classList.remove('show');
     });
-    const ul = document.getElementById("navbar-nav");
+    const ul = document.getElementById('navbar-nav');
     if (ul) {
-      const iconItems = Array.from(ul.getElementsByTagName("a"));
+      const iconItems = Array.from(ul.getElementsByTagName('a'));
       let activeIconItems = iconItems.filter((x: any) =>
-        x.classList.contains("active")
+        x.classList.contains('active')
       );
       activeIconItems.forEach((item: any) => {
-        item.setAttribute("aria-expanded", "false");
-        item.classList.remove("active");
+        item.setAttribute('aria-expanded', 'false');
+        item.classList.remove('active');
       });
     }
-    isCurrentMenuId.setAttribute("aria-expanded", "true");
+    isCurrentMenuId.setAttribute('aria-expanded', 'true');
     if (isCurrentMenuId) {
       this.activateParentDropdown(isCurrentMenuId);
     }
   }
 
   toggleItem(event: any) {
-    let isCurrentMenuId = event.target.closest("a.nav-link");
+    let isCurrentMenuId = event.target.closest('a.nav-link');
     let isMenu = isCurrentMenuId.nextElementSibling as any;
-    if (isMenu.classList.contains("show")) {
-      isMenu.classList.remove("show");
-      isCurrentMenuId.setAttribute("aria-expanded", "false");
+    if (isMenu.classList.contains('show')) {
+      isMenu.classList.remove('show');
+      isCurrentMenuId.setAttribute('aria-expanded', 'false');
     } else {
       let dropDowns = Array.from(
-        document.querySelectorAll("#navbar-nav .show")
+        document.querySelectorAll('#navbar-nav .show')
       );
       dropDowns.forEach((node: any) => {
-        node.classList.remove("show");
+        node.classList.remove('show');
       });
-      isMenu ? isMenu.classList.add("show") : null;
-      const ul = document.getElementById("navbar-nav");
+      isMenu ? isMenu.classList.add('show') : null;
+      const ul = document.getElementById('navbar-nav');
       if (ul) {
-        const iconItems = Array.from(ul.getElementsByTagName("a"));
+        const iconItems = Array.from(ul.getElementsByTagName('a'));
         let activeIconItems = iconItems.filter((x: any) =>
-          x.classList.contains("active")
+          x.classList.contains('active')
         );
         activeIconItems.forEach((item: any) => {
-          item.setAttribute("aria-expanded", "false");
-          item.classList.remove("active");
+          item.setAttribute('aria-expanded', 'false');
+          item.classList.remove('active');
         });
       }
-      isCurrentMenuId.setAttribute("aria-expanded", "true");
+      isCurrentMenuId.setAttribute('aria-expanded', 'true');
       if (isCurrentMenuId) {
         this.activateParentDropdown(isCurrentMenuId);
       }
@@ -178,41 +205,41 @@ export class SidebarComponent implements OnInit {
   }
 
   activateParentDropdown(item: any) {
-    item.classList.add("active");
-    let parentCollapseDiv = item.closest(".collapse.menu-dropdown");
+    item.classList.add('active');
+    let parentCollapseDiv = item.closest('.collapse.menu-dropdown');
 
     if (parentCollapseDiv) {
       // to set aria expand true remaining
-      parentCollapseDiv.classList.add("show");
-      parentCollapseDiv.parentElement.children[0].classList.add("active");
+      parentCollapseDiv.classList.add('show');
+      parentCollapseDiv.parentElement.children[0].classList.add('active');
       parentCollapseDiv.parentElement.children[0].setAttribute(
-        "aria-expanded",
-        "true"
+        'aria-expanded',
+        'true'
       );
-      if (parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown")) {
+      if (parentCollapseDiv.parentElement.closest('.collapse.menu-dropdown')) {
         parentCollapseDiv.parentElement
-          .closest(".collapse")
-          .classList.add("show");
+          .closest('.collapse')
+          .classList.add('show');
         if (
-          parentCollapseDiv.parentElement.closest(".collapse")
+          parentCollapseDiv.parentElement.closest('.collapse')
             .previousElementSibling
         )
           parentCollapseDiv.parentElement
-            .closest(".collapse")
-            .previousElementSibling.classList.add("active");
+            .closest('.collapse')
+            .previousElementSibling.classList.add('active');
         if (
           parentCollapseDiv.parentElement
-            .closest(".collapse")
-            .previousElementSibling.closest(".collapse")
+            .closest('.collapse')
+            .previousElementSibling.closest('.collapse')
         ) {
           parentCollapseDiv.parentElement
-            .closest(".collapse")
-            .previousElementSibling.closest(".collapse")
-            .classList.add("show");
+            .closest('.collapse')
+            .previousElementSibling.closest('.collapse')
+            .classList.add('show');
           parentCollapseDiv.parentElement
-            .closest(".collapse")
-            .previousElementSibling.closest(".collapse")
-            .previousElementSibling.classList.add("active");
+            .closest('.collapse')
+            .previousElementSibling.closest('.collapse')
+            .previousElementSibling.classList.add('active');
         }
       }
       return false;
@@ -221,9 +248,9 @@ export class SidebarComponent implements OnInit {
   }
 
   updateActive(event: any) {
-    const ul = document.getElementById("navbar-nav");
+    const ul = document.getElementById('navbar-nav');
     if (ul) {
-      const items = Array.from(ul.querySelectorAll("a.nav-link"));
+      const items = Array.from(ul.querySelectorAll('a.nav-link'));
       this.removeActivation(items);
     }
     this.activateParentDropdown(event.target);
@@ -231,11 +258,11 @@ export class SidebarComponent implements OnInit {
 
   initActiveMenu() {
     const pathName = window.location.pathname;
-    const ul = document.getElementById("navbar-nav");
+    const ul = document.getElementById('navbar-nav');
     if (ul) {
-      const items = Array.from(ul.querySelectorAll("a.nav-link"));
+      const items = Array.from(ul.querySelectorAll('a.nav-link'));
       let activeItems = items.filter((x: any) =>
-        x.classList.contains("active")
+        x.classList.contains('active')
       );
       this.removeActivation(activeItems);
 
@@ -257,17 +284,26 @@ export class SidebarComponent implements OnInit {
   }
 
   /**
+   * Get logo path based on current theme
+   */
+  getLogoPath(): string {
+    return this.currentTheme === 'dark'
+      ? 'assets/images/logo-console-log-dark.png'
+      : 'assets/images/logo-console-log-light.png';
+  }
+
+  /**
    * Toggle the menu bar when having mobile screen
    */
   toggleMobileMenu(event: any) {
     var sidebarsize =
-      document.documentElement.getAttribute("data-sidebar-size");
-    if (sidebarsize == "sm-hover-active") {
-      document.documentElement.setAttribute("data-sidebar-size", "sm-hover");
+      document.documentElement.getAttribute('data-sidebar-size');
+    if (sidebarsize == 'sm-hover-active') {
+      document.documentElement.setAttribute('data-sidebar-size', 'sm-hover');
     } else {
       document.documentElement.setAttribute(
-        "data-sidebar-size",
-        "sm-hover-active"
+        'data-sidebar-size',
+        'sm-hover-active'
       );
     }
   }
@@ -277,6 +313,6 @@ export class SidebarComponent implements OnInit {
    * @param content modal content
    */
   SidebarHide() {
-    document.body.classList.remove("vertical-sidebar-enable");
+    document.body.classList.remove('vertical-sidebar-enable');
   }
 }
