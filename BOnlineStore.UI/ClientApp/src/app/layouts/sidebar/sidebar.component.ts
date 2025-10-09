@@ -319,10 +319,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   private normalizeText(text: string): string {
     if (!text) return '';
 
-    // First convert to lowercase for case insensitive search
-    let normalized = text.toLowerCase();
-
-    // Turkish character mappings
+    // Turkish character mappings - handling i/İ/ı/I correctly
     const turkishCharMap: { [key: string]: string } = {
       ğ: 'g',
       Ğ: 'g',
@@ -331,7 +328,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
       ş: 's',
       Ş: 's',
       ı: 'i',
+      I: 'i', // Turkish: ı -> i, I -> i
       İ: 'i',
+      i: 'i', // Turkish: İ -> i, i -> i
       î: 'i',
       í: 'i',
       ì: 'i',
@@ -354,10 +353,14 @@ export class SidebarComponent implements OnInit, OnDestroy {
       ù: 'u',
     };
 
-    // Replace Turkish and other accented characters
+    // First apply Turkish character mappings before lowercasing
+    let normalized = text;
     for (const [accented, plain] of Object.entries(turkishCharMap)) {
       normalized = normalized.replace(new RegExp(accented, 'g'), plain);
     }
+
+    // Then convert to lowercase
+    normalized = normalized.toLowerCase();
 
     return normalized.trim();
   }
