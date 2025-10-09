@@ -34,6 +34,7 @@ export class AuthenticationService {
     scope: `${AuthenticationScopesEnum.OPENID} ${AuthenticationScopesEnum.PROFILE} ${AuthenticationScopesEnum.DEFINITIONS_FULL_PERMISSION} ${AuthenticationScopesEnum.PRODUCTION_FULL_PERMISSION} ${AuthenticationScopesEnum.GATEWAY_FULL_PERMISSION} ${AuthenticationScopesEnum.BFF_FULL_PERMISSION} ${AuthenticationScopesEnum.IDENTITYSERVERAPI} ${AuthenticationScopesEnum.OFFLINE_ACCESS}`,
     automaticSilentRenew: true,
     response_mode: 'query',
+    loadUserInfo: true, // UserInfo endpoint'inden claim'leri çek
   };
 
   private identityUser: oidc.User | null | undefined = null;
@@ -130,10 +131,23 @@ export class AuthenticationService {
   }
 
   completeAuthentication(): Promise<oidc.User> {
-    return this.userManager.signinRedirectCallback().then((identityUser) => {
-      this.createUIUser(identityUser);
-      return identityUser;
-    });
+    return this.userManager
+      .signinRedirectCallback()
+      .then(async (identityUser) => {
+        // UserInfo endpoint'inden ek claim'leri al
+        /*try {
+        const userInfo = await this.userManager.getUser();
+        if (userInfo) {
+          // UserInfo'dan gelen claim'leri identityUser.profile'a ekle
+          Object.assign(identityUser.profile, userInfo.profile);
+        }
+      } catch (error) {
+        console.warn('UserInfo alınamadı:', error);
+      }*/
+
+        this.createUIUser(identityUser);
+        return identityUser;
+      });
   }
 
   loginIndetity(returnUrl: string = '/'): void {
@@ -158,6 +172,12 @@ export class AuthenticationService {
   }
 
   private createUIUser(identityUser: oidc.User) {
+    // Geliştirme ortamında debug bilgileri
+    if (!environment.production) {
+      console.log('Identity User Profile:', identityUser.profile);
+      console.log('Locale claim:', identityUser.profile?.locale);
+    }
+
     var user: User = new User();
 
     user.id = identityUser.profile.sid;

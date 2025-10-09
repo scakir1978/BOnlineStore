@@ -11,8 +11,14 @@ namespace BOnlineStore.IdentityServer.Models;
 public class ApplicationUser : IdentityUser
 {
     public Guid TenantId { get; set; }
+
     [StringLength(10)]
     public string Locale { get; set; }
+
+    /*public string Name { get; set; }
+
+    public string Family_Name { get; set; }*/
+
     public virtual Tenant Tenant { get; set; }
     
 }

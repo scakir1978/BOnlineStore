@@ -63,8 +63,7 @@ public static class Config
                     IdentityServerConstants.ApiScopesBFFFullPermission,
                     Duende.IdentityServer.IdentityServerConstants.LocalApi.ScopeName,
                     Duende.IdentityServer.IdentityServerConstants.StandardScopes.OpenId,
-                    Duende.IdentityServer.IdentityServerConstants.StandardScopes.Profile,
-                    Duende.IdentityServer.IdentityServerConstants.StandardScopes.OfflineAccess
+                    Duende.IdentityServer.IdentityServerConstants.StandardScopes.Profile                    
                 },
                 AllowOfflineAccess = true,
                 AccessTokenLifetime = ((60 * 60) * 6), // 6 saat
