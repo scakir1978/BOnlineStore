@@ -90,7 +90,13 @@ public class SeedData
             {
                 UserName = "scakir1978@hotmail.com",
                 Email = "scakir1978@hotmail.com",
-                Locale = IdentityServerConstants.english,
+                Locale = IdentityServerConstants.turkish,
+                Name = "Süleyman",
+                FamilyName = "Çakır",
+                Gender = "E",
+                Birthdate = new DateTime(1978,1,9),
+                Nickname = "scakir1978",
+                PreferredUsername = "scakir1978@hotmail.com",
                 TenantId = tenantDto.Id
             };
 

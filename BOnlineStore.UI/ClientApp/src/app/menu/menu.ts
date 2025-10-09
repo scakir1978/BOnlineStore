@@ -2,11 +2,6 @@ import { MenuItem } from './menu.model';
 
 export const MENU: MenuItem[] = [
   {
-    id: 10010,
-    label: 'DASHBOARD',
-    icon: 'ri-dashboard-2-line',
-  },
-  {
     id: 10020,
     label: 'DEFINITIONS',
     icon: 'ri-apps-2-line',
@@ -234,11 +229,6 @@ export const MENU: MenuItem[] = [
         ],
       },
     ],
-  },
-  {
-    id: 20000,
-    label: 'PRODUCTION',
-    isTitle: true,
   },
   {
     id: 20010,

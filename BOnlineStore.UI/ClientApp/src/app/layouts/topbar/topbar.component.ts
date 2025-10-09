@@ -45,6 +45,9 @@ export class TopbarComponent implements OnInit {
   cookieValue: any;
   userData: any;
 
+  currentTheme: string = 'light';
+  private themeSubscription: any;
+
   constructor(
     @Inject(DOCUMENT) private document: any,
     private eventService: EventService,
@@ -144,6 +147,7 @@ export class TopbarComponent implements OnInit {
   changeMode(mode: string) {
     this.mode = mode;
     this.layoutService.setLayoutModeFromTopbar(mode);
+    this.getLogoPath();
 
     switch (mode) {
       case 'light':
@@ -232,5 +236,14 @@ export class TopbarComponent implements OnInit {
       : ((document.getElementById('empty-cart') as HTMLElement).style.display =
           'block');
     document.getElementById('item_' + id)?.remove();
+  }
+
+  /**
+   * Get logo path based on current theme
+   */
+  getLogoPath(): string {
+    return this.mode === 'dark'
+      ? 'assets/images/logo-console-log-dark.png'
+      : 'assets/images/logo-console-log-light.png';
   }
 }

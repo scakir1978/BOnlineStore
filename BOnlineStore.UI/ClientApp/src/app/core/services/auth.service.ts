@@ -185,6 +185,8 @@ export class AuthenticationService {
     user.email = identityUser.profile.email;
     user.firstName = identityUser.profile.name;
     user.lastName = identityUser.profile.family_name;
+    user.userName = identityUser.profile.preferred_username;
+    user.nickname = identityUser.profile.nickname;
     //user.role = Role.Admin;
     user.token = identityUser.access_token;
     user.language = identityUser.profile.locale ?? 'tr-TR';
