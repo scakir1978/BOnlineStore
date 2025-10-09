@@ -48,9 +48,7 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {
     this.userManager = new oidc.UserManager(this.config);
-    this.currentUserSubject = new BehaviorSubject<User>(
-      JSON.parse(localStorage.getItem('currentUser')!)
-    );
+    this.currentUserSubject = new BehaviorSubject<User>(null!);
     //this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -104,6 +102,13 @@ export class AuthenticationService {
   public currentUser(): User {
     //return getFirebaseBackend()!.getAuthenticatedUser();
     return this.currentUserSubject.value;
+  }
+
+  /**
+   * Returns the current user as Observable
+   */
+  public currentUser$(): Observable<User> {
+    return this.currentUserSubject.asObservable();
   }
 
   /**
@@ -191,7 +196,7 @@ export class AuthenticationService {
     user.token = identityUser.access_token;
     user.language = identityUser.profile.locale ?? 'tr-TR';
 
-    localStorage.setItem('currentUser', JSON.stringify(user));
+    //localStorage.setItem('currentUser', JSON.stringify(user));
 
     this.currentUserSubject.next(user);
   }

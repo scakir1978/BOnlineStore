@@ -1,13 +1,13 @@
 import { LayoutService } from './../../core/services/layout.service';
-import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Inject, OnDestroy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { EventService } from '../../core/services/event.service';
+import { Subscription } from 'rxjs';
 
 //Logout
 import { environment } from '../../../environments/environment';
 import { AuthenticationService } from '../../core/services/auth.service';
 import { AuthfakeauthenticationService } from '../../core/services/authfake.service';
-import { TokenStorageService } from '../../core/services/token-storage.service';
 import { Router } from '@angular/router';
 
 // Language
@@ -30,7 +30,7 @@ themes.current(window.localStorage.getItem('dx-theme') || 'dark');
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.scss'],
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent implements OnInit, OnDestroy {
   element: any;
   mode: string | undefined;
   @Output() mobileMenuButtonClicked = new EventEmitter();
@@ -47,6 +47,7 @@ export class TopbarComponent implements OnInit {
 
   currentTheme: string = 'light';
   private themeSubscription: any;
+  private userSubscription: Subscription = new Subscription();
 
   constructor(
     @Inject(DOCUMENT) private document: any,
@@ -57,7 +58,6 @@ export class TopbarComponent implements OnInit {
     private authService: AuthenticationService,
     private authFackservice: AuthfakeauthenticationService,
     private router: Router,
-    private TokenStorageService: TokenStorageService,
     private layoutService: LayoutService
   ) {
     //devextreme localization
@@ -66,8 +66,12 @@ export class TopbarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userData = this.TokenStorageService.getUser();
     this.element = document.documentElement;
+
+    // User data'yı observable olarak subscribe et
+    this.userSubscription = this.authService.currentUser$().subscribe(user => {
+      this.userData = user;
+    });
 
     // Cookies wise Language set
     this.cookieValue = this._cookiesService.get('lang');
@@ -92,6 +96,13 @@ export class TopbarComponent implements OnInit {
       var item_price = item.quantity * item.price;
       this.total += item_price;
     });
+  }
+
+  ngOnDestroy(): void {
+    // Subscription'ı temizle
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   /**
