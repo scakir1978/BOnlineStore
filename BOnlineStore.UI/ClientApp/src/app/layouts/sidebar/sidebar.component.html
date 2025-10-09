@@ -33,12 +33,56 @@
   <div id="scrollbar">
     <div class="container-fluid">
       <div id="two-column-menu"></div>
+
+      <!-- Menu Search -->
+      <div class="p-3 border-bottom">
+        <div class="position-relative">
+          <input
+            type="text"
+            class="form-control form-control-sm"
+            placeholder="{{ 'MENU.SEARCH_PLACEHOLDER' | translate }}"
+            [value]="searchTerm"
+            (input)="onSearchMenu($any($event.target).value)"
+            style="padding-right: 2.5rem"
+          />
+          <i
+            class="ri-search-line position-absolute"
+            style="
+              right: 0.75rem;
+              top: 50%;
+              transform: translateY(-50%);
+              color: #6c757d;
+              pointer-events: none;
+            "
+          ></i>
+          <button
+            *ngIf="searchTerm"
+            type="button"
+            class="btn btn-sm position-absolute"
+            style="
+              right: 0.25rem;
+              top: 50%;
+              transform: translateY(-50%);
+              padding: 0.125rem 0.25rem;
+              border: none;
+              background: none;
+            "
+            (click)="clearSearch()"
+          >
+            <i
+              class="ri-close-line"
+              style="font-size: 0.875rem; color: #6c757d"
+            ></i>
+          </button>
+        </div>
+      </div>
+
       <ngx-simplebar
         class="sidebar-menu-scroll"
-        style="max-height: calc(100vh - 70px)"
+        style="max-height: calc(100vh - 140px)"
       >
         <ul class="metismenu list-unstyled navbar-nav" id="navbar-nav">
-          <ng-container *ngFor="let item of menuItems">
+          <ng-container *ngFor="let item of filteredMenuItems">
             <li class="menu-title" *ngIf="item.isTitle">
               <span data-key="t-menu">{{ item.label | translate }}</span>
             </li>

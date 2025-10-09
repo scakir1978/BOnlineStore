@@ -2,6 +2,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { SimplebarAngularModule } from 'simplebar-angular';
@@ -37,6 +38,7 @@ import { TwoColumnSidebarComponent } from './two-column-sidebar/two-column-sideb
   imports: [
     CommonModule,
     RouterModule,
+    FormsModule,
     NgbDropdownModule,
     NgbNavModule,
     SimplebarAngularModule,

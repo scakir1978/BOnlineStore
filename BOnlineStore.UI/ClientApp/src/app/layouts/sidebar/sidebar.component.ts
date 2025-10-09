@@ -23,6 +23,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   menu: any;
   toggle: any = true;
   menuItems: MenuItem[] = [];
+  filteredMenuItems: MenuItem[] = [];
+  searchTerm: string = '';
   currentTheme: string = 'light';
   private themeSubscription: any;
   @ViewChild('sideMenu') sideMenu!: ElementRef;
@@ -52,6 +54,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
     // Menu Items
     this.menuItems = MENU;
+    this.filteredMenuItems = [...this.menuItems];
     this.router.events.subscribe((event) => {
       if (document.documentElement.getAttribute('data-layout') != 'twocolumn') {
         if (event instanceof NavigationEnd) {
@@ -290,6 +293,151 @@ export class SidebarComponent implements OnInit, OnDestroy {
     return this.currentTheme === 'dark'
       ? 'assets/images/logo-console-log-dark.png'
       : 'assets/images/logo-console-log-light.png';
+  }
+
+  /**
+   * Search menu items
+   */
+  onSearchMenu(searchTerm: string) {
+    this.searchTerm = searchTerm;
+
+    if (!this.searchTerm.trim()) {
+      this.filteredMenuItems = [...this.menuItems];
+      return;
+    }
+
+    const normalizedSearchTerm = this.normalizeText(this.searchTerm);
+    this.filteredMenuItems = this.filterMenuItems(
+      this.menuItems,
+      normalizedSearchTerm
+    );
+  }
+
+  /**
+   * Normalize text for Turkish character support and case insensitive search
+   */
+  private normalizeText(text: string): string {
+    if (!text) return '';
+
+    // First convert to lowercase for case insensitive search
+    let normalized = text.toLowerCase();
+
+    // Turkish character mappings
+    const turkishCharMap: { [key: string]: string } = {
+      ğ: 'g',
+      Ğ: 'g',
+      ü: 'u',
+      Ü: 'u',
+      ş: 's',
+      Ş: 's',
+      ı: 'i',
+      İ: 'i',
+      î: 'i',
+      í: 'i',
+      ì: 'i',
+      ö: 'o',
+      Ö: 'o',
+      ô: 'o',
+      ó: 'o',
+      ò: 'o',
+      ç: 'c',
+      Ç: 'c',
+      â: 'a',
+      á: 'a',
+      à: 'a',
+      ã: 'a',
+      ê: 'e',
+      é: 'e',
+      è: 'e',
+      û: 'u',
+      ú: 'u',
+      ù: 'u',
+    };
+
+    // Replace Turkish and other accented characters
+    for (const [accented, plain] of Object.entries(turkishCharMap)) {
+      normalized = normalized.replace(new RegExp(accented, 'g'), plain);
+    }
+
+    return normalized.trim();
+  }
+
+  /**
+   * Filter menu items recursively
+   */
+  private filterMenuItems(items: MenuItem[], searchTerm: string): MenuItem[] {
+    const filtered: MenuItem[] = [];
+
+    items.forEach((item) => {
+      if (item.isTitle) {
+        // Keep title items as they are
+        filtered.push(item);
+        return;
+      }
+
+      const itemMatches = this.itemMatches(item, searchTerm);
+      const hasMatchingSubItems =
+        item.subItems && this.hasMatchingSubItems(item.subItems, searchTerm);
+
+      if (itemMatches || hasMatchingSubItems) {
+        const filteredItem: MenuItem = { ...item };
+
+        if (hasMatchingSubItems && item.subItems) {
+          filteredItem.subItems = this.filterMenuItems(
+            item.subItems,
+            searchTerm
+          );
+        }
+
+        filtered.push(filteredItem);
+      }
+    });
+
+    return filtered;
+  }
+
+  /**
+   * Check if menu item matches search term
+   */
+  private itemMatches(item: MenuItem, searchTerm: string): boolean {
+    if (!item.label) return false;
+
+    // Check both the translation key and the translated text
+    const normalizedLabel = this.normalizeText(item.label);
+    const translatedText = this.translate.instant(item.label);
+    const normalizedTranslatedText = this.normalizeText(translatedText);
+
+    // Also check if translated text is different from key (meaning translation exists)
+    const hasTranslation = translatedText && translatedText !== item.label;
+
+    const keyMatches = normalizedLabel.includes(searchTerm);
+    const translationMatches =
+      hasTranslation && normalizedTranslatedText.includes(searchTerm);
+
+    return keyMatches || translationMatches;
+  }
+
+  /**
+   * Check if any sub items match search term
+   */
+  private hasMatchingSubItems(
+    subItems: MenuItem[],
+    searchTerm: string
+  ): boolean {
+    return subItems.some(
+      (subItem) =>
+        this.itemMatches(subItem, searchTerm) ||
+        (subItem.subItems &&
+          this.hasMatchingSubItems(subItem.subItems, searchTerm))
+    );
+  }
+
+  /**
+   * Clear search
+   */
+  clearSearch() {
+    this.searchTerm = '';
+    this.filteredMenuItems = [...this.menuItems];
   }
 
   /**

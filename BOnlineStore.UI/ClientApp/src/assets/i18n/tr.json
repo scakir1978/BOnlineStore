@@ -1,6 +1,9 @@
 {
   "GENERAL": "Genel",
   "DASHBOARD": "Panel",
+  "MENU": {
+    "SEARCH_PLACEHOLDER": "Menü ara..."
+  },
   "CHANGEPASSWORD": "Şifre Değiştir",
   "CODEMAXLENGTH": "Kod alanının uzunluğu 50 karateri geçemez.",
   "NAMEMAXLENGTH": "Adı alanının uzunluğu 250 karateri geçemez.",

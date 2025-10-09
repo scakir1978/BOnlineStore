@@ -1,6 +1,9 @@
 {
   "GENERAL": "General",
   "DASHBOARD": "Dashboard",
+  "MENU": {
+    "SEARCH_PLACEHOLDER": "Search menu..."
+  },
   "CHANGEPASSWORD": "Change Password",
   "CODEMAXLENGTH": "The code field can have a maximum length of 50.",
   "NAMEMAXLENGTH": "The name field can have a maximum length of 250.",
