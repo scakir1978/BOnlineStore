@@ -39,6 +39,36 @@ pipelines:
               caches:
                 - docker-cache
 
+          # Production Service Pipeline
+          - step:
+              name: Build and Deploy Production Service
+              deployment: ProductionProductionDeploy
+              size: 2x
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/Production/**"
+                    - "Shared/**"
+              script:
+                # Login to Docker Hub using environment variables
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Build the Docker image using the specific Dockerfile
+                - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:latest .
+                - docker tag scakir1978/production.bonlinestore.com:latest scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Push both latest and commit-specific tags
+                - docker push scakir1978/production.bonlinestore.com:latest
+                - docker push scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Clean up local images to save space
+                - docker rmi scakir1978/production.bonlinestore.com:latest || true
+                - docker rmi scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
+
           # IdentityServer Pipeline
           - step:
               name: Build and Deploy IdentityServer
@@ -74,7 +104,7 @@ pipelines:
           # Definitions Service Development Pipeline
           - step:
               name: Build and Deploy Definitions Service (Development)
-              deployment: DefinitionsDevelopmentDeploy
+              deployment: DefinitionsServiceDevelopmentDeploy
               condition:
                 changesets:
                   includePaths:
@@ -90,6 +120,30 @@ pipelines:
                 
                 # Clean up
                 - docker rmi scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # Production Service Development Pipeline
+          - step:
+              name: Build and Deploy Production Service (Development)
+              deployment: ProductionServiceDevelopmentDeploy
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/Production/**"
+                    - "Shared/**"
+              script:
+                # Login to Docker Hub
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Build and push development version
+                - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT .
+                - docker push scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT
+                
+                # Clean up
+                - docker rmi scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
               services:
                 - docker
               caches:
@@ -153,6 +207,38 @@ pipelines:
           caches:
             - docker-cache
 
+    # Production Service Manual Deployments
+    production-service-production:
+      - step:
+          name: Manual Production Deploy - Production Service
+          deployment: ProductionServiceProductionDeploy
+          trigger: manual
+          size: 2x
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:latest .
+            - docker tag scakir1978/production.bonlinestore.com:latest scakir1978/production.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker push scakir1978/production.bonlinestore.com:latest
+            - docker push scakir1978/production.bonlinestore.com:prod-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker-cache
+
+    production-service-staging:
+      - step:
+          name: Manual Staging Deploy - Production Service
+          deployment: ProductionServiceStagingDeploy
+          trigger: manual
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:staging-$BITBUCKET_COMMIT .
+            - docker push scakir1978/production.bonlinestore.com:staging-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker-cache
+
     # IdentityServer Manual Deployments
     identityserver-production:
       - step:
@@ -200,6 +286,23 @@ pipelines:
               script:
                 # Only build, don't push for PR validation
                 - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:$BITBUCKET_COMMIT .
+                - echo "Docker image built successfully for pull request validation"
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # Production Service Test Build
+          - step:
+              name: Test Build - Production Service
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/Production/**"
+                    - "Shared/**"
+              script:
+                # Only build, don't push for PR validation
+                - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t production-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
                 - docker
