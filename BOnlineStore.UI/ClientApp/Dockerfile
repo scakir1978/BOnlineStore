@@ -19,7 +19,6 @@ RUN npm install --force
 # Build with memory optimizations and production settings
 RUN npm run build-prod -- --optimization=true --build-optimizer=true --aot=true --source-map=false
 
-
 ### STAGE 2:RUN ###
 # Defining nginx image to be used
 FROM nginx:latest
