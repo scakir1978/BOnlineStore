@@ -1,57 +1,106 @@
-# Template docker-push
-
-# This template allows you to build and push your docker image to a Docker Hub account.
-# The workflow allows running tests, code linting and security scans on feature branches (as well as master).
-# The docker image will be validated and pushed to the docker registry after the code is merged to master.
-
+# Bitbucket Pipelines CI/CD Configuration for BOnlineStore.Services.Definitions.Api
+# This pipeline automatically builds and pushes Docker image when code is pushed to repository
 # Prerequisites: $DOCKERHUB_USERNAME, $DOCKERHUB_PASSWORD setup as deployment variables
 
 image: atlassian/default-image:3
 
 pipelines:
+  # Automatic builds on branch changes
+  branches:
+    main:
+      - step:
+          name: Build and Deploy Definitions Service
+          deployment: DefinitionsProductionDeploy
+          size: 2x
+          script:
+            # Login to Docker Hub using environment variables
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            
+            # Build the Docker image using the specific Dockerfile
+            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:latest .
+            - docker tag scakir1978/definitions.bonlinestore.com:latest scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
+            
+            # Push both latest and commit-specific tags
+            - docker push scakir1978/definitions.bonlinestore.com:latest
+            - docker push scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
+            
+            # Clean up local images to save space
+            - docker rmi scakir1978/definitions.bonlinestore.com:latest || true
+            - docker rmi scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT || true
+          services:
+            - docker
+          caches:
+            - docker
+
+    develop:
+      - step:
+          name: Build and Deploy Definitions Service (Development)
+          deployment: DefinitionsDevelopmentDeploy
+          script:
+            # Login to Docker Hub
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            
+            # Build and push development version
+            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT .
+            - docker push scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT
+            
+            # Clean up
+            - docker rmi scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+          services:
+            - docker
+          caches:
+            - docker
+
+  # Manual deployments for specific environments
   custom:
-    definitons:
-        - step:
-            name: Definitons Service Publish Docker Hub
-            deployment: DefinitionsProductionDeploy
-            script:              
-              - docker login -u scakir1978 -p Scag185489
-              - docker-compose build definitions.bonlinestore.com
-              - docker push scakir1978/definitions.bonlinestore.com:latest
-            services:
-              - docker            
-    identity:
-        - step:
-            name: Identity Service Publish Docker Hub
-            deployment: IdentityProductionDeploy
-            script:              
-              - docker login -u scakir1978 -p Scag185489
-              - docker-compose build identity.bonlinestore.com
-              - docker push scakir1978/identity.bonlinestore.com:latest
-            services:
-              - docker            
-    production:
-        - step:
-            name: Production Service Publish Docker Hub
-            deployment: ProductionProductionDeploy
-            script:              
-              - docker login -u scakir1978 -p Scag185489
-              - docker-compose build production.bonlinestore.com
-              - docker push scakir1978/production.bonlinestore.com:latest
-            services:
-              - docker            
-    ui:
-        - step:
-            size: 2x
-            name: UI Publish Docker Hub
-            deployment: UIProductionDeploy
-            script:              
-              - docker login -u scakir1978 -p Scag185489
-              - docker-compose build ui.bonlinestore.com
-              - docker push scakir1978/ui.bonlinestore.com:latest
-            services:
-              - docker            
+    definitions-production:
+      - step:
+          name: Manual Production Deploy - Definitions Service
+          deployment: DefinitionsProductionDeploy
+          trigger: manual
+          size: 2x
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:latest .
+            - docker tag scakir1978/definitions.bonlinestore.com:latest scakir1978/definitions.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker push scakir1978/definitions.bonlinestore.com:latest
+            - docker push scakir1978/definitions.bonlinestore.com:prod-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker
+
+    definitions-staging:
+      - step:
+          name: Manual Staging Deploy - Definitions Service
+          deployment: DefinitionsStagingDeploy
+          trigger: manual
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT .
+            - docker push scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker
+
+  # Pull request builds for testing
+  pull-requests:
+    '**':
+      - step:
+          name: Test Build - Definitions Service
+          script:
+            # Only build, don't push for PR validation
+            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:$BITBUCKET_COMMIT .
+            - echo "Docker image built successfully for pull request validation"
+          services:
+            - docker
+          caches:
+            - docker
+
 definitions:
   services:
     docker:
-      memory: 3072  # reduce memory for docker-in-docker from 1GB to 512MB
+      memory: 4096  # Increased memory for Docker operations
+  caches:
+    docker: ~/.docker
