@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using BOnlineStore.IdentityServer.Attributes;
 
 namespace BOnlineStore.IdentityServer.Dtos.User
 {
@@ -27,6 +28,7 @@ namespace BOnlineStore.IdentityServer.Dtos.User
         /// Kiracý kimliði
         /// </summary>
         [Required]
+        [NotEmptyGuid]
         public Guid TenantId { get; set; }
 
         /// <summary>

@@ -1,5 +1,6 @@
 using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Dtos.User;
+using BOnlineStore.IdentityServer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -210,42 +211,5 @@ namespace BOnlineStore.IdentityServer.Controllers
 
             return BadRequest(ModelState);
         }
-    }
-
-    /// <summary>
-    /// Þifre deðiþtirme isteði
-    /// </summary>
-    public class ChangePasswordRequest
-    {
-        /// <summary>
-        /// Kullanýcý kimliði
-        /// </summary>
-        public string UserId { get; set; }
-
-        /// <summary>
-        /// Mevcut þifre
-        /// </summary>
-        public string CurrentPassword { get; set; }
-
-        /// <summary>
-        /// Yeni þifre
-        /// </summary>
-        public string NewPassword { get; set; }
-    }
-
-    /// <summary>
-    /// Þifre sýfýrlama isteði
-    /// </summary>
-    public class ResetPasswordRequest
-    {
-        /// <summary>
-        /// Kullanýcý kimliði
-        /// </summary>
-        public string UserId { get; set; }
-
-        /// <summary>
-        /// Yeni þifre
-        /// </summary>
-        public string NewPassword { get; set; }
     }
 }
