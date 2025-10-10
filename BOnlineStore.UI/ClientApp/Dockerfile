@@ -1,4 +1,4 @@
-FROM node:18.15.0 AS build
+FROM node:18.20.5 AS build
 WORKDIR /dist/src/app
 
 # Copy files to virtual directory
@@ -9,7 +9,7 @@ COPY package-lock.json /dist/src/app/package-lock.json
 RUN npm cache clean --force
 # Copy files from local machine to virtual directory in docker image
 COPY . .
-RUN npm install --legacy-peer-deps
+RUN npm install --force
 RUN npm run build-prod
 
 
