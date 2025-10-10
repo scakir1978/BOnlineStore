@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using BOnlineStore.IdentityServer.Dtos;
-using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.IdentityServer.Mappings;
 
 namespace BOnlineStore.IdentityServer
 {
@@ -10,9 +9,8 @@ namespace BOnlineStore.IdentityServer
         {
             var mappingConfig = new MapperConfiguration(config =>
             {
-                config.CreateMap<Tenant, TenantDto>().ReverseMap();
-                config.CreateMap<Tenant, TenantCreateDto>().ReverseMap();
-                config.CreateMap<Tenant, TenantUpdateDto>().ReverseMap();
+                // User ve Tenant mappings için profil kullan
+                config.AddProfile<UserMappingProfile>();
             });
 
             return mappingConfig;

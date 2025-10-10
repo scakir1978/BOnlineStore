@@ -7,6 +7,7 @@ using BOnlineStore.IdentityServer.Business;
 using System.Reflection;
 using AutoMapper;
 using BOnlineStore.IdentityServer.Business.TenantService;
+using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Settings;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography.X509Certificates;
@@ -27,8 +28,10 @@ internal static class HostingExtensions
         });
 
         builder.Services.AddScoped<ITenantService, TenantManager>();
+        builder.Services.AddScoped<IUserService, UserManager>();
 
         builder.Services.AddRazorPages();
+        builder.Services.AddControllers();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -142,6 +145,8 @@ internal static class HostingExtensions
 
         app.MapRazorPages()
             .RequireAuthorization();
+
+        app.MapControllers();
 
         return app;
     }
