@@ -1,16 +1,22 @@
 FROM node:18.20.5 AS build
 WORKDIR /dist/src/app
 
-# Copy files to virtual directory
-COPY package.json /dist/src/app/package.json
-COPY package-lock.json /dist/src/app/package-lock.json
+# Set Node.js memory options for memory-constrained environments
+ENV NODE_OPTIONS="--max_old_space_size=3072"
 
-# Run command in Virtual directory
-RUN npm cache clean --force
-# Copy files from local machine to virtual directory in docker image
+# Copy package files first for better caching
+COPY package.json package-lock.json /dist/src/app/
+
+# Clean npm cache and install dependencies with optimizations
+RUN npm cache clean --force && \
+    npm ci --only=production --no-audit --no-fund && \
+    npm cache clean --force
+
+# Copy source files
 COPY . .
-RUN npm install --force
-RUN npm run build-prod
+
+# Build with memory optimizations and production settings
+RUN npm run build-prod -- --optimization=true --build-optimizer=true --aot=true --source-map=false
 
 
 ### STAGE 2:RUN ###
