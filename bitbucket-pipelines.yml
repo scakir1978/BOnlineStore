@@ -1,5 +1,5 @@
-# Bitbucket Pipelines CI/CD Configuration for BOnlineStore.Services.Definitions.Api
-# This pipeline automatically builds and pushes Docker image when code is pushed to repository
+# Bitbucket Pipelines CI/CD Configuration for Multiple Services
+# This pipeline automatically builds and pushes Docker images when code is pushed to repository
 # Prerequisites: $DOCKERHUB_USERNAME, $DOCKERHUB_PASSWORD setup as deployment variables
 
 image: atlassian/default-image:3
@@ -8,51 +8,120 @@ pipelines:
   # Automatic builds on branch changes
   branches:
     main:
-      - step:
-          name: Build and Deploy Definitions Service
-          deployment: DefinitionsProductionDeploy
-          size: 2x
-          script:
-            # Login to Docker Hub using environment variables
-            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            
-            # Build the Docker image using the specific Dockerfile
-            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:latest .
-            - docker tag scakir1978/definitions.bonlinestore.com:latest scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
-            
-            # Push both latest and commit-specific tags
-            - docker push scakir1978/definitions.bonlinestore.com:latest
-            - docker push scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
-            
-            # Clean up local images to save space
-            - docker rmi scakir1978/definitions.bonlinestore.com:latest || true
-            - docker rmi scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT || true
-          services:
-            - docker
-          caches:
-            - docker-cache
+      - parallel:
+          # Definitions Service Pipeline
+          - step:
+              name: Build and Deploy Definitions Service
+              deployment: DefinitionsProductionDeploy
+              size: 2x
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/Definitions/**"
+                    - "Shared/**"
+              script:
+                # Login to Docker Hub using environment variables
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Build the Docker image using the specific Dockerfile
+                - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:latest .
+                - docker tag scakir1978/definitions.bonlinestore.com:latest scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Push both latest and commit-specific tags
+                - docker push scakir1978/definitions.bonlinestore.com:latest
+                - docker push scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Clean up local images to save space
+                - docker rmi scakir1978/definitions.bonlinestore.com:latest || true
+                - docker rmi scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # IdentityServer Pipeline
+          - step:
+              name: Build and Deploy IdentityServer
+              deployment: IdentityServerProductionDeploy
+              size: 2x
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.IdentityServer/**"
+                    - "Shared/**"
+              script:
+                # Login to Docker Hub using environment variables
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Build the Docker image using the specific Dockerfile
+                - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:latest .
+                - docker tag scakir1978/identityserver.bonlinestore.com:latest scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Push both latest and commit-specific tags
+                - docker push scakir1978/identityserver.bonlinestore.com:latest
+                - docker push scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Clean up local images to save space
+                - docker rmi scakir1978/identityserver.bonlinestore.com:latest || true
+                - docker rmi scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
 
     develop:
-      - step:
-          name: Build and Deploy Definitions Service (Development)
-          deployment: DefinitionsDevelopmentDeploy
-          script:
-            # Login to Docker Hub
-            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            
-            # Build and push development version
-            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT .
-            - docker push scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT
-            
-            # Clean up
-            - docker rmi scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
-          services:
-            - docker
-          caches:
-            - docker-cache
+      - parallel:
+          # Definitions Service Development Pipeline
+          - step:
+              name: Build and Deploy Definitions Service (Development)
+              deployment: DefinitionsDevelopmentDeploy
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/Definitions/**"
+                    - "Shared/**"
+              script:
+                # Login to Docker Hub
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Build and push development version
+                - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT .
+                - docker push scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT
+                
+                # Clean up
+                - docker rmi scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # IdentityServer Development Pipeline
+          - step:
+              name: Build and Deploy IdentityServer (Development)
+              deployment: IdentityServerDevelopmentDeploy
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.IdentityServer/**"
+                    - "Shared/**"
+              script:
+                # Login to Docker Hub
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Build and push development version
+                - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT .
+                - docker push scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT
+                
+                # Clean up
+                - docker rmi scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
 
   # Manual deployments for specific environments
   custom:
+    # Definitions Service Manual Deployments
     definitions-production:
       - step:
           name: Manual Production Deploy - Definitions Service
@@ -84,19 +153,75 @@ pipelines:
           caches:
             - docker-cache
 
-  # Pull request builds for testing
-  pull-requests:
-    '**':
+    # IdentityServer Manual Deployments
+    identityserver-production:
       - step:
-          name: Test Build - Definitions Service
+          name: Manual Production Deploy - IdentityServer
+          deployment: IdentityServerProductionDeploy
+          trigger: manual
+          size: 2x
           script:
-            # Only build, don't push for PR validation
-            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:$BITBUCKET_COMMIT .
-            - echo "Docker image built successfully for pull request validation"
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:latest .
+            - docker tag scakir1978/identityserver.bonlinestore.com:latest scakir1978/identityserver.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker push scakir1978/identityserver.bonlinestore.com:latest
+            - docker push scakir1978/identityserver.bonlinestore.com:prod-$BITBUCKET_COMMIT
           services:
             - docker
           caches:
             - docker-cache
+
+    identityserver-staging:
+      - step:
+          name: Manual Staging Deploy - IdentityServer
+          deployment: IdentityServerStagingDeploy
+          trigger: manual
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT .
+            - docker push scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker-cache
+
+  # Pull request builds for testing
+  pull-requests:
+    '**':
+      - parallel:
+          # Definitions Service Test Build
+          - step:
+              name: Test Build - Definitions Service
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/Definitions/**"
+                    - "Shared/**"
+              script:
+                # Only build, don't push for PR validation
+                - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:$BITBUCKET_COMMIT .
+                - echo "Docker image built successfully for pull request validation"
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # IdentityServer Test Build
+          - step:
+              name: Test Build - IdentityServer
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.IdentityServer/**"
+                    - "Shared/**"
+              script:
+                # Only build, don't push for PR validation
+                - docker build -f BOnlineStore.IdentityServer/Dockerfile -t identityserver-test:$BITBUCKET_COMMIT .
+                - echo "Docker image built successfully for pull request validation"
+              services:
+                - docker
+              caches:
+                - docker-cache
 
 definitions:
   services:
