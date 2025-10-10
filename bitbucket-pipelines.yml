@@ -42,7 +42,7 @@ pipelines:
           # IdentityServer Pipeline
           - step:
               name: Build and Deploy IdentityServer
-              deployment: IdentityServerProductionDeploy
+              deployment: IdentityProductionDeploy
               size: 2x
               condition:
                 changesets:
