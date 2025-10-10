@@ -19,6 +19,9 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -49,6 +52,9 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -64,6 +70,39 @@ pipelines:
                 # Clean up local images to save space
                 - docker rmi scakir1978/production.bonlinestore.com:latest || true
                 - docker rmi scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # BFF Service Pipeline
+          - step:
+              name: Build and Deploy BFF Service
+              deployment: BFFProductionDeploy
+              size: 2x
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/BFF/**"
+                    - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
+              script:
+                # Login to Docker Hub using environment variables
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Build the Docker image using the specific Dockerfile
+                - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:latest .
+                - docker tag scakir1978/bff.bonlinestore.com:latest scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Push both latest and commit-specific tags
+                - docker push scakir1978/bff.bonlinestore.com:latest
+                - docker push scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Clean up local images to save space
+                - docker rmi scakir1978/bff.bonlinestore.com:latest || true
+                - docker rmi scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT || true
               services:
                 - docker
               caches:
@@ -110,6 +149,9 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Login to Docker Hub
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -134,6 +176,9 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Login to Docker Hub
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -144,6 +189,33 @@ pipelines:
                 
                 # Clean up
                 - docker rmi scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # BFF Service Development Pipeline
+          - step:
+              name: Build and Deploy BFF Service (Development)
+              deployment: BFFServiceDevelopmentDeploy
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/BFF/**"
+                    - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
+              script:
+                # Login to Docker Hub
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Build and push development version
+                - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT .
+                - docker push scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT
+                
+                # Clean up
+                - docker rmi scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
               services:
                 - docker
               caches:
@@ -239,6 +311,38 @@ pipelines:
           caches:
             - docker-cache
 
+    # BFF Service Manual Deployments
+    bff-service-production:
+      - step:
+          name: Manual Production Deploy - BFF Service
+          deployment: BFFServiceProductionDeploy
+          trigger: manual
+          size: 2x
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:latest .
+            - docker tag scakir1978/bff.bonlinestore.com:latest scakir1978/bff.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker push scakir1978/bff.bonlinestore.com:latest
+            - docker push scakir1978/bff.bonlinestore.com:prod-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker-cache
+
+    bff-service-staging:
+      - step:
+          name: Manual Staging Deploy - BFF Service
+          deployment: BFFServiceStagingDeploy
+          trigger: manual
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:staging-$BITBUCKET_COMMIT .
+            - docker push scakir1978/bff.bonlinestore.com:staging-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker-cache
+
     # IdentityServer Manual Deployments
     identityserver-production:
       - step:
@@ -283,6 +387,9 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Only build, don't push for PR validation
                 - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:$BITBUCKET_COMMIT .
@@ -300,9 +407,32 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Only build, don't push for PR validation
                 - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t production-test:$BITBUCKET_COMMIT .
+                - echo "Docker image built successfully for pull request validation"
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # BFF Service Test Build
+          - step:
+              name: Test Build - BFF Service
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.Services/BFF/**"
+                    - "Shared/**"
+                    - "Shared/BOnlineStore.Generic.Service/**"
+                    - "Shared/BOnlineStore.Localization/**"
+                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
+              script:
+                # Only build, don't push for PR validation
+                - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t bff-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
                 - docker
