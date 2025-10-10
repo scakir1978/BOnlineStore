@@ -108,6 +108,36 @@ pipelines:
               caches:
                 - docker-cache
 
+          # UI Angular Project Pipeline
+          - step:
+              name: Build and Deploy UI
+              deployment: UIProductionDeploy
+              size: 2x
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.UI/ClientApp/**"
+              script:
+                # Login to Docker Hub using environment variables
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Change to the Angular project directory and build the Docker image
+                - cd BOnlineStore.UI/ClientApp
+                - docker build -f Dockerfile -t scakir1978/ui.bonlinestore.com:latest .
+                - docker tag scakir1978/ui.bonlinestore.com:latest scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Push both latest and commit-specific tags
+                - docker push scakir1978/ui.bonlinestore.com:latest
+                - docker push scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT
+                
+                # Clean up local images to save space
+                - docker rmi scakir1978/ui.bonlinestore.com:latest || true
+                - docker rmi scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
+
           # IdentityServer Pipeline
           - step:
               name: Build and Deploy IdentityServer
@@ -216,6 +246,30 @@ pipelines:
                 
                 # Clean up
                 - docker rmi scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # UI Angular Project Development Pipeline
+          - step:
+              name: Build and Deploy UI (Development)
+              deployment: UIDevelopmentDeploy
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.UI/ClientApp/**"
+              script:
+                # Login to Docker Hub
+                - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                
+                # Change to the Angular project directory and build development version
+                - cd BOnlineStore.UI/ClientApp
+                - docker build -f Dockerfile -t scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT .
+                - docker push scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT
+                
+                # Clean up
+                - docker rmi scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
               services:
                 - docker
               caches:
@@ -343,6 +397,40 @@ pipelines:
           caches:
             - docker-cache
 
+    # UI Angular Project Manual Deployments
+    ui-production:
+      - step:
+          name: Manual Production Deploy - UI
+          deployment: UIProductionDeploy
+          trigger: manual
+          size: 2x
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - cd BOnlineStore.UI/ClientApp
+            - docker build -f Dockerfile -t scakir1978/ui.bonlinestore.com:latest .
+            - docker tag scakir1978/ui.bonlinestore.com:latest scakir1978/ui.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker push scakir1978/ui.bonlinestore.com:latest
+            - docker push scakir1978/ui.bonlinestore.com:prod-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker-cache
+
+    ui-staging:
+      - step:
+          name: Manual Staging Deploy - UI
+          deployment: UIStagingDeploy
+          trigger: manual
+          script:
+            - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - cd BOnlineStore.UI/ClientApp
+            - docker build -f Dockerfile -t scakir1978/ui.bonlinestore.com:staging-$BITBUCKET_COMMIT .
+            - docker push scakir1978/ui.bonlinestore.com:staging-$BITBUCKET_COMMIT
+          services:
+            - docker
+          caches:
+            - docker-cache
+
     # IdentityServer Manual Deployments
     identityserver-production:
       - step:
@@ -433,6 +521,23 @@ pipelines:
               script:
                 # Only build, don't push for PR validation
                 - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t bff-test:$BITBUCKET_COMMIT .
+                - echo "Docker image built successfully for pull request validation"
+              services:
+                - docker
+              caches:
+                - docker-cache
+
+          # UI Angular Project Test Build
+          - step:
+              name: Test Build - UI
+              condition:
+                changesets:
+                  includePaths:
+                    - "BOnlineStore.UI/ClientApp/**"
+              script:
+                # Only build, don't push for PR validation
+                - cd BOnlineStore.UI/ClientApp
+                - docker build -f Dockerfile -t ui-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
                 - docker
