@@ -30,7 +30,7 @@ pipelines:
           services:
             - docker
           caches:
-            - docker
+            - docker-cache
 
     develop:
       - step:
@@ -49,7 +49,7 @@ pipelines:
           services:
             - docker
           caches:
-            - docker
+            - docker-cache
 
   # Manual deployments for specific environments
   custom:
@@ -68,7 +68,7 @@ pipelines:
           services:
             - docker
           caches:
-            - docker
+            - docker-cache
 
     definitions-staging:
       - step:
@@ -82,7 +82,7 @@ pipelines:
           services:
             - docker
           caches:
-            - docker
+            - docker-cache
 
   # Pull request builds for testing
   pull-requests:
@@ -96,11 +96,11 @@ pipelines:
           services:
             - docker
           caches:
-            - docker
+            - docker-cache
 
 definitions:
   services:
     docker:
       memory: 4096  # Increased memory for Docker operations
   caches:
-    docker: ~/.docker
+    docker-cache: ~/.docker
