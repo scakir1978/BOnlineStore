@@ -8,12 +8,13 @@ ENV NODE_OPTIONS="--max_old_space_size=3072"
 COPY package.json package-lock.json /dist/src/app/
 
 # Clean npm cache and install dependencies with optimizations
-RUN npm cache clean --force && \
-    npm ci --only=production --no-audit --no-fund && \
-    npm cache clean --force
+# Run command in Virtual directory
+RUN npm cache clean --force
 
-# Copy source files
+# Copy files from local machine to virtual directory in docker image
 COPY . .
+
+RUN npm install --force
 
 # Build with memory optimizations and production settings
 RUN npm run build-prod -- --optimization=true --build-optimizer=true --aot=true --source-map=false
