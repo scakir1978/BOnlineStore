@@ -3,7 +3,9 @@ using BOnlineStore.Services.Definitions.Api.Controllers;
 using BOnlineStore.Services.Definitions.Api.Dtos;
 using BOnlineStore.Services.Definitions.Api.Entities;
 using BOnlineStore.Services.Definitions.Api.Services;
+using BOnlineStore.Shared.Dtos;
 using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -53,6 +55,17 @@ namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
             // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ObjectResult>();
+            
+            var objectResult = result.As<ObjectResult>();
+            objectResult.Value.Should().NotBeNull();
+            
+            // The controller wraps the LoadResult in a Response<LoadResult>
+            objectResult.Value.Should().BeOfType<Response<LoadResult>>();
+            
+            var response = objectResult.Value.As<Response<LoadResult>>();
+            response.Result.Should().BeOfType<LoadResult>();
+            response.IsSucceed.Should().BeTrue();
+            
             loadOptions.StringToLower.Should().BeTrue();
         }
 
@@ -74,6 +87,17 @@ namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
             // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ObjectResult>();
+
+            var objectResult = result.As<ObjectResult>();
+            objectResult.Value.Should().NotBeNull();
+
+            // The controller wraps the LoadResult in a Response<LoadResult>
+            objectResult.Value.Should().BeOfType<Response<List<AssemblerDto>>>();
+
+            var response = objectResult.Value.As<Response<List<AssemblerDto>>>();
+            response.Result.Should().BeOfType<List<AssemblerDto>>();
+            response.IsSucceed.Should().BeTrue();
+
             _mockAssemblerService.Verify(x => x.GetAsync(), Times.Once);
         }
 
@@ -92,6 +116,17 @@ namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
             // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ObjectResult>();
+            
+            var objectResult = result.As<ObjectResult>();
+            objectResult.Value.Should().NotBeNull();
+            
+            // The controller wraps the result in a Response<AssemblerDto>
+            objectResult.Value.Should().BeOfType<Response<AssemblerDto>>();
+            
+            var response = objectResult.Value.As<Response<AssemblerDto>>();
+            response.Result.Should().BeOfType<AssemblerDto>();
+            response.IsSucceed.Should().BeTrue();
+            
             _mockAssemblerService.Verify(x => x.GetByIdAsync(assemblerId), Times.Once);
         }
 
@@ -110,6 +145,17 @@ namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
             // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ObjectResult>();
+            
+            var objectResult = result.As<ObjectResult>();
+            objectResult.Value.Should().NotBeNull();
+            
+            // The controller wraps the result in a Response<AssemblerDto>
+            objectResult.Value.Should().BeOfType<Response<AssemblerDto>>();
+            
+            var response = objectResult.Value.As<Response<AssemblerDto>>();
+            response.Result.Should().BeOfType<AssemblerDto>();
+            response.IsSucceed.Should().BeTrue();
+            
             _mockAssemblerService.Verify(x => x.AddAsync(createDto), Times.Once);
         }
 
@@ -129,6 +175,17 @@ namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
             // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ObjectResult>();
+            
+            var objectResult = result.As<ObjectResult>();
+            objectResult.Value.Should().NotBeNull();
+            
+            // The controller wraps the result in a Response<AssemblerDto>
+            objectResult.Value.Should().BeOfType<Response<AssemblerDto>>();
+            
+            var response = objectResult.Value.As<Response<AssemblerDto>>();
+            response.Result.Should().BeOfType<AssemblerDto>();
+            response.IsSucceed.Should().BeTrue();
+            
             _mockAssemblerService.Verify(x => x.UpdateAsync(assemblerId, updateDto), Times.Once);
         }
 
@@ -147,6 +204,17 @@ namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
             // Assert
             result.Should().NotBeNull();
             result.Should().BeOfType<ObjectResult>();
+            
+            var objectResult = result.As<ObjectResult>();
+            objectResult.Value.Should().NotBeNull();
+            
+            // The controller wraps the result in a Response<AssemblerDto>
+            objectResult.Value.Should().BeOfType<Response<AssemblerDto>>();
+            
+            var response = objectResult.Value.As<Response<AssemblerDto>>();
+            response.Result.Should().BeOfType<AssemblerDto>();
+            response.IsSucceed.Should().BeTrue();
+            
             _mockAssemblerService.Verify(x => x.DeleteAsync(assemblerId), Times.Once);
         }
     }
