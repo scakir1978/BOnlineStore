@@ -39,6 +39,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./production/production.module').then((m) => m.ProductionModule),
   },
+  {
+    path: 'settings',
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./settings/settings.module').then((m) => m.SettingsModule),
+  },
 ];
 
 @NgModule({
