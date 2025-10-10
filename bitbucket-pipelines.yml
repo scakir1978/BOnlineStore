@@ -112,7 +112,7 @@ pipelines:
           - step:
               name: Build and Deploy UI
               deployment: UIProductionDeploy
-              size: 4x  # Increased from 2x to 4x for better memory allocation
+              size: 2x
               condition:
                 changesets:
                   includePaths:
