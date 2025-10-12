@@ -23,6 +23,12 @@ pipelines:
                     - "Shared/BOnlineStore.Localization/**"
                     - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
+                # Run unit tests for Definitions Service first
+                - echo "Running unit tests for Definitions Service..."
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-test-results.trx" --no-restore
+                - echo "Unit tests passed successfully!"
+                
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
@@ -41,6 +47,9 @@ pipelines:
                 - docker
               caches:
                 - docker-cache
+                - dotnetcore
+              artifacts:
+                - BOnlineStore.UnitTests/TestResults/*.trx
 
           # Production Service Pipeline
           - step:
@@ -188,6 +197,12 @@ pipelines:
                     - "Shared/BOnlineStore.Localization/**"
                     - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
+                # Run unit tests for Definitions Service first
+                - echo "Running unit tests for Definitions Service..."
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-dev-test-results.trx" --no-restore
+                - echo "Unit tests passed successfully!"
+                
                 # Login to Docker Hub
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
@@ -201,6 +216,9 @@ pipelines:
                 - docker
               caches:
                 - docker-cache
+                - dotnetcore
+              artifacts:
+                - BOnlineStore.UnitTests/TestResults/*.trx
 
           # Production Service Development Pipeline
           - step:
@@ -320,6 +338,12 @@ pipelines:
           trigger: manual
           size: 2x
           script:
+            # Run unit tests for Definitions Service first
+            - echo "Running unit tests for Definitions Service..."
+            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+            - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-manual-test-results.trx" --no-restore
+            - echo "Unit tests passed successfully!"
+            
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:latest .
             - docker tag scakir1978/definitions.bonlinestore.com:latest scakir1978/definitions.bonlinestore.com:prod-$BITBUCKET_COMMIT
@@ -329,6 +353,9 @@ pipelines:
             - docker
           caches:
             - docker-cache
+            - dotnetcore
+          artifacts:
+            - BOnlineStore.UnitTests/TestResults/*.trx
 
     definitions-staging:
       - step:
@@ -336,6 +363,12 @@ pipelines:
           deployment: DefinitionsStagingDeploy
           trigger: manual
           script:
+            # Run unit tests for Definitions Service first
+            - echo "Running unit tests for Definitions Service..."
+            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+            - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-staging-test-results.trx" --no-restore
+            - echo "Unit tests passed successfully!"
+            
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT .
             - docker push scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT
@@ -343,6 +376,9 @@ pipelines:
             - docker
           caches:
             - docker-cache
+            - dotnetcore
+          artifacts:
+            - BOnlineStore.UnitTests/TestResults/*.trx
 
     # Production Service Manual Deployments
     production-service-production:
@@ -501,6 +537,12 @@ pipelines:
                     - "Shared/BOnlineStore.Localization/**"
                     - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
+                # Run unit tests for Definitions Service first
+                - echo "Running unit tests for Definitions Service..."
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-pr-test-results.trx" --no-restore
+                - echo "Unit tests passed successfully!"
+                
                 # Only build, don't push for PR validation
                 - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
@@ -508,6 +550,9 @@ pipelines:
                 - docker
               caches:
                 - docker-cache
+                - dotnetcore
+              artifacts:
+                - BOnlineStore.UnitTests/TestResults/*.trx
 
           # Production Service Test Build
           - step:
@@ -596,3 +641,4 @@ definitions:
   caches:
     docker-cache: ~/.docker
     node: node_modules
+    dotnetcore: ~/.nuget/packages
