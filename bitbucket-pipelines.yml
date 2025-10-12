@@ -163,6 +163,12 @@ pipelines:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
               script:
+                # Run unit tests for IdentityServer first
+                - echo "Running unit tests for IdentityServer..."
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-test-results.trx" --no-restore
+                - echo "Unit tests passed successfully!"
+                
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
@@ -181,6 +187,9 @@ pipelines:
                 - docker
               caches:
                 - docker-cache
+                - dotnetcore
+              artifacts:
+                - BOnlineStore.UnitTests/TestResults/*.trx
 
     develop:
       - parallel:
@@ -314,6 +323,12 @@ pipelines:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
               script:
+                # Run unit tests for IdentityServer first
+                - echo "Running unit tests for IdentityServer..."
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-dev-test-results.trx" --no-restore
+                - echo "Unit tests passed successfully!"
+                
                 # Login to Docker Hub
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
@@ -497,6 +512,12 @@ pipelines:
           trigger: manual
           size: 2x
           script:
+            # Run unit tests for IdentityServer first
+            - echo "Running unit tests for IdentityServer..."
+            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+            - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-manual-test-results.trx" --no-restore
+            - echo "Unit tests passed successfully!"
+            
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:latest .
             - docker tag scakir1978/identityserver.bonlinestore.com:latest scakir1978/identityserver.bonlinestore.com:prod-$BITBUCKET_COMMIT
@@ -506,6 +527,9 @@ pipelines:
             - docker
           caches:
             - docker-cache
+            - dotnetcore
+          artifacts:
+            - BOnlineStore.UnitTests/TestResults/*.trx
 
     identityserver-staging:
       - step:
@@ -513,6 +537,12 @@ pipelines:
           deployment: IdentityServerStagingDeploy
           trigger: manual
           script:
+            # Run unit tests for IdentityServer first
+            - echo "Running unit tests for IdentityServer..."
+            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+            - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-staging-test-results.trx" --no-restore
+            - echo "Unit tests passed successfully!"
+            
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT .
             - docker push scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT
@@ -520,6 +550,9 @@ pipelines:
             - docker
           caches:
             - docker-cache
+            - dotnetcore
+          artifacts:
+            - BOnlineStore.UnitTests/TestResults/*.trx
 
   # Pull request builds for testing
   pull-requests:
@@ -626,6 +659,12 @@ pipelines:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
               script:
+                # Run unit tests for IdentityServer first
+                - echo "Running unit tests for IdentityServer..."
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-pr-test-results.trx" --no-restore
+                - echo "Unit tests passed successfully!"
+                
                 # Only build, don't push for PR validation
                 - docker build -f BOnlineStore.IdentityServer/Dockerfile -t identityserver-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
@@ -633,6 +672,9 @@ pipelines:
                 - docker
               caches:
                 - docker-cache
+                - dotnetcore
+              artifacts:
+                - BOnlineStore.UnitTests/TestResults/*.trx
 
 definitions:
   services:
