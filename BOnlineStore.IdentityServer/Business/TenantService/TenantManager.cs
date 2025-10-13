@@ -31,11 +31,11 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var existingTenant = FindById(id);
+            var existingTenant = _context.Tenant.FirstOrDefault(x => x.Id == id);
             if (existingTenant == null)
                 throw new Exception("Silinecek şirket sistemde bulunamadı.");
 
-            var tenant = _context.Tenant.Remove(_mapper.Map<Tenant>(existingTenant));
+            _context.Tenant.Remove(existingTenant);
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -61,13 +61,16 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
 
         public async Task<TenantDto> UpdateAsync(TenantUpdateDto tenantDto)
         {
-            var existingTenant = FindById(tenantDto.Id);
+            var existingTenant = _context.Tenant.FirstOrDefault(x => x.Id == tenantDto.Id);
             if (existingTenant == null)
                 throw new Exception("Güncellenecek şirket sistemde bulunamadı");
 
-            var result = _context.Tenant.Update(_mapper.Map<Tenant>(tenantDto));
+            // Map the update values to the existing tracked entity
+            _mapper.Map(tenantDto, existingTenant);
+            existingTenant.UpdateDateTime = DateTime.Now;
+            
             await _context.SaveChangesAsync();
-            return _mapper.Map<TenantDto>(result.Entity);
+            return _mapper.Map<TenantDto>(existingTenant);
         }
     }
 }
