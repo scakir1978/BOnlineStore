@@ -342,7 +342,7 @@ pipelines:
                 - docker
               caches:
                 - docker-cache
-
+               
   # Manual deployments for specific environments
   custom:
     # Definitions Service Manual Deployments
