@@ -2,7 +2,7 @@ using BOnlineStore.Services.Definitions.Api.Dtos;
 using FluentAssertions;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
+namespace BOnlineStore.Services.Definitions.Api.UnitTests.AssemblerUnitTests
 {
     public class AssemblerDtoTests
     {

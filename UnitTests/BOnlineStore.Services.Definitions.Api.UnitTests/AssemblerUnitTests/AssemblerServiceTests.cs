@@ -17,7 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
+namespace BOnlineStore.Services.Definitions.Api.UnitTests.AssemblerUnitTests
 {
     public class AssemblerServiceTests
     {

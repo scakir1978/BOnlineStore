@@ -12,7 +12,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.IdentityService.TenantUnitTests
+namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
 {
     public class TenantControllerIntegrationTests : IDisposable
     {

@@ -13,26 +13,25 @@ pipelines:
           - step:
               name: Build and Deploy Definitions Service
               deployment: DefinitionsProductionDeploy
+              image: mcr.microsoft.com/dotnet/sdk:8.0
               size: 2x
               condition:
                 changesets:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
+                    - "UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
-                # Run unit tests for Definitions Service first
+                # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
-                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-test-results.trx" --no-restore
+                - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+                - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
-                # Build the Docker image using the specific Dockerfile
+                # Build the Docker image
                 - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:latest .
                 - docker tag scakir1978/definitions.bonlinestore.com:latest scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
                 
@@ -49,7 +48,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - BOnlineStore.UnitTests/TestResults/*.trx
+                - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
           # Production Service Pipeline
           - step:
@@ -61,14 +60,11 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
-                # Build the Docker image using the specific Dockerfile
+                # Build the Docker image
                 - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:latest .
                 - docker tag scakir1978/production.bonlinestore.com:latest scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT
                 
@@ -94,14 +90,11 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/BFF/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
-                # Build the Docker image using the specific Dockerfile
+                # Build the Docker image
                 - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:latest .
                 - docker tag scakir1978/bff.bonlinestore.com:latest scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT
                 
@@ -117,7 +110,7 @@ pipelines:
               caches:
                 - docker-cache
 
-          # UI Angular Project Pipeline - Enhanced with larger memory and build optimizations
+          # UI Angular Project Pipeline
           - step:
               name: Build and Deploy UI
               deployment: UIProductionDeploy
@@ -134,7 +127,7 @@ pipelines:
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
-                # Change to the Angular project directory and build the Docker image with memory optimizations
+                # Change to the Angular project directory and build the Docker image
                 - cd BOnlineStore.UI/ClientApp
                 - docker build --memory=6g --memory-swap=8g -f Dockerfile -t scakir1978/ui.bonlinestore.com:latest .
                 - docker tag scakir1978/ui.bonlinestore.com:latest scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT
@@ -156,23 +149,25 @@ pipelines:
           - step:
               name: Build and Deploy IdentityServer
               deployment: IdentityProductionDeploy
+              image: mcr.microsoft.com/dotnet/sdk:8.0
               size: 2x
               condition:
                 changesets:
                   includePaths:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
+                    - "UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
-                # Run unit tests for IdentityServer first
+                # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
-                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-test-results.trx" --no-restore
+                - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+                - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Login to Docker Hub using environment variables
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 
-                # Build the Docker image using the specific Dockerfile
+                # Build the Docker image
                 - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:latest .
                 - docker tag scakir1978/identityserver.bonlinestore.com:latest scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT
                 
@@ -189,7 +184,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - BOnlineStore.UnitTests/TestResults/*.trx
+                - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
 
     develop:
       - parallel:
@@ -197,19 +192,18 @@ pipelines:
           - step:
               name: Build and Deploy Definitions Service (Development)
               deployment: DefinitionsServiceDevelopmentDeploy
+              image: mcr.microsoft.com/dotnet/sdk:8.0
               condition:
                 changesets:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
+                    - "UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
-                # Run unit tests for Definitions Service first
+                # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
-                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-dev-test-results.trx" --no-restore
+                - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+                - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-dev-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Login to Docker Hub
@@ -227,7 +221,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - BOnlineStore.UnitTests/TestResults/*.trx
+                - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
           # Production Service Development Pipeline
           - step:
@@ -238,9 +232,6 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Login to Docker Hub
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -265,9 +256,6 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/BFF/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
                 # Login to Docker Hub
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -283,11 +271,11 @@ pipelines:
               caches:
                 - docker-cache
 
-          # UI Angular Project Development Pipeline - Enhanced with larger memory
+          # UI Angular Project Development Pipeline
           - step:
               name: Build and Deploy UI (Development)
               deployment: UIDevelopmentDeploy
-              size: 4x  # Increased memory allocation for UI builds
+              size: 4x
               condition:
                 changesets:
                   includePaths:
@@ -317,16 +305,18 @@ pipelines:
           - step:
               name: Build and Deploy IdentityServer (Development)
               deployment: IdentityServerDevelopmentDeploy
+              image: mcr.microsoft.com/dotnet/sdk:8.0
               condition:
                 changesets:
                   includePaths:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
+                    - "UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
-                # Run unit tests for IdentityServer first
+                # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
-                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-dev-test-results.trx" --no-restore
+                - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+                - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-dev-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Login to Docker Hub
@@ -342,6 +332,9 @@ pipelines:
                 - docker
               caches:
                 - docker-cache
+                - dotnetcore
+              artifacts:
+                - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
                
   # Manual deployments for specific environments
   custom:
@@ -350,13 +343,14 @@ pipelines:
       - step:
           name: Manual Production Deploy - Definitions Service
           deployment: DefinitionsProductionDeploy
+          image: mcr.microsoft.com/dotnet/sdk:8.0
           trigger: manual
           size: 2x
           script:
-            # Run unit tests for Definitions Service first
+            # Run unit tests first
             - echo "Running unit tests for Definitions Service..."
-            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-            - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-manual-test-results.trx" --no-restore
+            - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+            - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-manual-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -370,18 +364,19 @@ pipelines:
             - docker-cache
             - dotnetcore
           artifacts:
-            - BOnlineStore.UnitTests/TestResults/*.trx
+            - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
     definitions-staging:
       - step:
           name: Manual Staging Deploy - Definitions Service
           deployment: DefinitionsStagingDeploy
+          image: mcr.microsoft.com/dotnet/sdk:8.0
           trigger: manual
           script:
-            # Run unit tests for Definitions Service first
+            # Run unit tests first
             - echo "Running unit tests for Definitions Service..."
-            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-            - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-staging-test-results.trx" --no-restore
+            - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+            - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-staging-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -393,7 +388,7 @@ pipelines:
             - docker-cache
             - dotnetcore
           artifacts:
-            - BOnlineStore.UnitTests/TestResults/*.trx
+            - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
     # Production Service Manual Deployments
     production-service-production:
@@ -459,13 +454,13 @@ pipelines:
           caches:
             - docker-cache
 
-    # UI Angular Project Manual Deployments - Enhanced with larger memory
+    # UI Angular Project Manual Deployments
     ui-production:
       - step:
           name: Manual Production Deploy - UI
           deployment: UIProductionDeploy
           trigger: manual
-          size: 4x  # Increased memory allocation
+          size: 4x
           script:
             # Set memory optimization environment variables
             - export NODE_OPTIONS="--max_old_space_size=3072"
@@ -488,7 +483,7 @@ pipelines:
           name: Manual Staging Deploy - UI
           deployment: UIStagingDeploy
           trigger: manual
-          size: 4x  # Increased memory allocation
+          size: 4x
           script:
             # Set memory optimization environment variables
             - export NODE_OPTIONS="--max_old_space_size=3072"
@@ -509,13 +504,14 @@ pipelines:
       - step:
           name: Manual Production Deploy - IdentityServer
           deployment: IdentityServerProductionDeploy
+          image: mcr.microsoft.com/dotnet/sdk:8.0
           trigger: manual
           size: 2x
           script:
-            # Run unit tests for IdentityServer first
+            # Run unit tests first
             - echo "Running unit tests for IdentityServer..."
-            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-            - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-manual-test-results.trx" --no-restore
+            - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+            - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-manual-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -529,18 +525,19 @@ pipelines:
             - docker-cache
             - dotnetcore
           artifacts:
-            - BOnlineStore.UnitTests/TestResults/*.trx
+            - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
 
     identityserver-staging:
       - step:
           name: Manual Staging Deploy - IdentityServer
           deployment: IdentityServerStagingDeploy
+          image: mcr.microsoft.com/dotnet/sdk:8.0
           trigger: manual
           script:
-            # Run unit tests for IdentityServer first
+            # Run unit tests first
             - echo "Running unit tests for IdentityServer..."
-            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-            - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-staging-test-results.trx" --no-restore
+            - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+            - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-staging-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -552,7 +549,7 @@ pipelines:
             - docker-cache
             - dotnetcore
           artifacts:
-            - BOnlineStore.UnitTests/TestResults/*.trx
+            - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
 
   # Pull request builds for testing
   pull-requests:
@@ -561,22 +558,21 @@ pipelines:
           # Definitions Service Test Build
           - step:
               name: Test Build - Definitions Service
+              image: mcr.microsoft.com/dotnet/sdk:8.0
               condition:
                 changesets:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
+                    - "UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
-                # Run unit tests for Definitions Service first
+                # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
-                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~DefinitionsService" --logger "trx;LogFileName=definitions-pr-test-results.trx" --no-restore
+                - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+                - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-pr-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Only build, don't push for PR validation
+                # Build Docker image
                 - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
@@ -585,7 +581,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - BOnlineStore.UnitTests/TestResults/*.trx
+                - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
           # Production Service Test Build
           - step:
@@ -595,11 +591,8 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
-                # Only build, don't push for PR validation
+                # Build Docker image
                 - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t production-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
@@ -615,11 +608,8 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/BFF/**"
                     - "Shared/**"
-                    - "Shared/BOnlineStore.Generic.Service/**"
-                    - "Shared/BOnlineStore.Localization/**"
-                    - "Shared/BOnlineStore.MongoDb.GenericRepository/**"
               script:
-                # Only build, don't push for PR validation
+                # Build Docker image
                 - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t bff-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
@@ -627,10 +617,10 @@ pipelines:
               caches:
                 - docker-cache
 
-          # UI Angular Project Test Build - Enhanced with larger memory
+          # UI Angular Project Test Build
           - step:
               name: Test Build - UI
-              size: 4x  # Increased memory allocation
+              size: 4x
               condition:
                 changesets:
                   includePaths:
@@ -640,7 +630,7 @@ pipelines:
                 - export NODE_OPTIONS="--max_old_space_size=3072"
                 - export DOCKER_BUILDKIT=1
                 
-                # Only build, don't push for PR validation
+                # Build Docker image
                 - cd BOnlineStore.UI/ClientApp
                 - docker build --memory=6g --memory-swap=8g -f Dockerfile -t ui-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
@@ -653,19 +643,21 @@ pipelines:
           # IdentityServer Test Build
           - step:
               name: Test Build - IdentityServer
+              image: mcr.microsoft.com/dotnet/sdk:8.0
               condition:
                 changesets:
                   includePaths:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
+                    - "UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
-                # Run unit tests for IdentityServer first
+                # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
-                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj
-                - dotnet test BOnlineStore.UnitTests/BOnlineStore.UnitTests.csproj --filter "FullyQualifiedName~IdentityService" --logger "trx;LogFileName=identity-pr-test-results.trx" --no-restore
+                - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+                - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-pr-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Only build, don't push for PR validation
+                # Build Docker image
                 - docker build -f BOnlineStore.IdentityServer/Dockerfile -t identityserver-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
@@ -674,12 +666,12 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - BOnlineStore.UnitTests/TestResults/*.trx
+                - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
 
 definitions:
   services:
     docker:
-      memory: 7168  # Reduced from 8192 to 7168MB (7GB) to leave 1GB for step scripts
+      memory: 7168
   caches:
     docker-cache: ~/.docker
     node: node_modules

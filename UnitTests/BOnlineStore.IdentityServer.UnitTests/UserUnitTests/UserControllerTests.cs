@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.IdentityService.UserUnitTests
+namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
 {
     public class UserControllerTests
     {

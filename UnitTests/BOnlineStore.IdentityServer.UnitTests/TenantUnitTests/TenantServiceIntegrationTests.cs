@@ -7,7 +7,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.IdentityService.TenantUnitTests
+namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
 {
     public class TenantServiceIntegrationTests : IDisposable
     {

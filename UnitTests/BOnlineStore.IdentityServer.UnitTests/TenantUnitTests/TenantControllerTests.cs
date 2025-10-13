@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.IdentityService.TenantUnitTests
+namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
 {
     public class TenantControllerTests
     {

@@ -4,7 +4,7 @@ using FluentAssertions;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.IdentityService.TenantUnitTests
+namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
 {
     public class TenantDtoValidationTests
     {

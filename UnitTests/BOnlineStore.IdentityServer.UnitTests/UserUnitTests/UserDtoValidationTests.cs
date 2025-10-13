@@ -4,7 +4,7 @@ using FluentAssertions;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.IdentityService.UserUnitTests
+namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
 {
     public class UserDtoValidationTests
     {

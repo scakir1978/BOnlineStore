@@ -3,7 +3,7 @@ using FluentAssertions;
 using System;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.DefinitionsService.AssemblerUnitTests
+namespace BOnlineStore.Services.Definitions.Api.UnitTests.AssemblerUnitTests
 {
     public class AssemblerEntityTests
     {

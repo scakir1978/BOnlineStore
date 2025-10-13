@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using Xunit;
 
-namespace BOnlineStore.UnitTests.IdentityService.UserUnitTests
+namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
 {
     /// <summary>
     /// UserController için temel integration testleri
