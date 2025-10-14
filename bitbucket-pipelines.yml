@@ -342,7 +342,7 @@ pipelines:
     definitions-production:
       - step:
           name: Manual Production Deploy - Definitions Service
-          deployment: DefinitionsProductionDeploy
+          deployment: ManualDefinitionsProductionDeploy
           image: mcr.microsoft.com/dotnet/sdk:8.0
           trigger: manual
           size: 2x
@@ -369,7 +369,7 @@ pipelines:
     definitions-staging:
       - step:
           name: Manual Staging Deploy - Definitions Service
-          deployment: DefinitionsStagingDeploy
+          deployment: ManualDefinitionsStagingDeploy
           image: mcr.microsoft.com/dotnet/sdk:8.0
           trigger: manual
           script:
@@ -394,7 +394,7 @@ pipelines:
     production-service-production:
       - step:
           name: Manual Production Deploy - Production Service
-          deployment: ProductionServiceProductionDeploy
+          deployment: ManualProductionServiceProductionDeploy
           trigger: manual
           size: 2x
           script:
@@ -411,7 +411,7 @@ pipelines:
     production-service-staging:
       - step:
           name: Manual Staging Deploy - Production Service
-          deployment: ProductionServiceStagingDeploy
+          deployment: ManualProductionServiceStagingDeploy
           trigger: manual
           script:
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -426,7 +426,7 @@ pipelines:
     bff-service-production:
       - step:
           name: Manual Production Deploy - BFF Service
-          deployment: BFFServiceProductionDeploy
+          deployment: ManualBFFServiceProductionDeploy
           trigger: manual
           size: 2x
           script:
@@ -443,7 +443,7 @@ pipelines:
     bff-service-staging:
       - step:
           name: Manual Staging Deploy - BFF Service
-          deployment: BFFServiceStagingDeploy
+          deployment: ManualBFFServiceStagingDeploy
           trigger: manual
           script:
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -458,7 +458,7 @@ pipelines:
     ui-production:
       - step:
           name: Manual Production Deploy - UI
-          deployment: UIProductionDeploy
+          deployment: ManualUIProductionDeploy
           trigger: manual
           size: 4x
           script:
@@ -481,7 +481,7 @@ pipelines:
     ui-staging:
       - step:
           name: Manual Staging Deploy - UI
-          deployment: UIStagingDeploy
+          deployment: ManualUIStagingDeploy
           trigger: manual
           size: 4x
           script:
@@ -503,7 +503,7 @@ pipelines:
     identityserver-production:
       - step:
           name: Manual Production Deploy - IdentityServer
-          deployment: ManuelIdentityProductionDeploy
+          deployment: ManualIdentityServerProductionDeploy
           image: mcr.microsoft.com/dotnet/sdk:8.0
           trigger: manual
           size: 2x
@@ -530,7 +530,7 @@ pipelines:
     identityserver-staging:
       - step:
           name: Manual Staging Deploy - IdentityServer
-          deployment: IdentityServerStagingDeploy
+          deployment: ManualIdentityServerStagingDeploy
           image: mcr.microsoft.com/dotnet/sdk:8.0
           trigger: manual
           script:
