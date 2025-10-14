@@ -22,6 +22,10 @@ pipelines:
                     - "Shared/**"
                     - "BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
+                # Set UTF-8 encoding for Turkish characters
+                - export LANG=tr_TR.UTF-8
+                - export LC_ALL=tr_TR.UTF-8
+                
                 # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
                 - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
@@ -158,6 +162,10 @@ pipelines:
                     - "Shared/**"
                     - "BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
+                # Set UTF-8 encoding for Turkish characters
+                - export LANG=tr_TR.UTF-8
+                - export LC_ALL=tr_TR.UTF-8
+                
                 # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
                 - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
@@ -200,6 +208,10 @@ pipelines:
                     - "Shared/**"
                     - "BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
+                # Set UTF-8 encoding for Turkish characters
+                - export LANG=tr_TR.UTF-8
+                - export LC_ALL=tr_TR.UTF-8
+                
                 # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
                 - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
@@ -313,6 +325,10 @@ pipelines:
                     - "Shared/**"
                     - "BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
+                # Set UTF-8 encoding for Turkish characters
+                - export LANG=tr_TR.UTF-8
+                - export LC_ALL=tr_TR.UTF-8
+                
                 # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
                 - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
@@ -346,6 +362,10 @@ pipelines:
           image: mcr.microsoft.com/dotnet/sdk:8.0
           size: 2x
           script:
+            # Set UTF-8 encoding for Turkish characters
+            - export LANG=tr_TR.UTF-8
+            - export LC_ALL=tr_TR.UTF-8
+            
             # Run unit tests first
             - echo "Running unit tests for Definitions Service..."
             - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
@@ -371,6 +391,10 @@ pipelines:
           deployment: DefStagingManual
           image: mcr.microsoft.com/dotnet/sdk:8.0
           script:
+            # Set UTF-8 encoding for Turkish characters
+            - export LANG=tr_TR.UTF-8
+            - export LC_ALL=tr_TR.UTF-8
+            
             # Run unit tests first
             - echo "Running unit tests for Definitions Service..."
             - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
@@ -499,6 +523,10 @@ pipelines:
           image: mcr.microsoft.com/dotnet/sdk:8.0
           size: 2x
           script:
+            # Set UTF-8 encoding for Turkish characters
+            - export LANG=tr_TR.UTF-8
+            - export LC_ALL=tr_TR.UTF-8
+            
             # Run unit tests first
             - echo "Running unit tests for IdentityServer..."
             - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
@@ -524,6 +552,10 @@ pipelines:
           deployment: IdSrvStagingManual
           image: mcr.microsoft.com/dotnet/sdk:8.0
           script:
+            # Set UTF-8 encoding for Turkish characters
+            - export LANG=tr_TR.UTF-8
+            - export LC_ALL=tr_TR.UTF-8
+            
             # Run unit tests first
             - echo "Running unit tests for IdentityServer..."
             - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
@@ -556,6 +588,10 @@ pipelines:
                     - "Shared/**"
                     - "BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
+                # Set UTF-8 encoding for Turkish characters
+                - export LANG=tr_TR.UTF-8
+                - export LC_ALL=tr_TR.UTF-8
+                
                 # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
                 - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
@@ -641,6 +677,10 @@ pipelines:
                     - "Shared/**"
                     - "BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
+                # Set UTF-8 encoding for Turkish characters
+                - export LANG=tr_TR.UTF-8
+                - export LC_ALL=tr_TR.UTF-8
+                
                 # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
                 - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
