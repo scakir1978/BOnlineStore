@@ -344,7 +344,6 @@ pipelines:
           name: Manual Production Deploy - Definitions Service
           deployment: DefProdManual
           image: mcr.microsoft.com/dotnet/sdk:8.0
-          trigger: manual
           size: 2x
           script:
             # Run unit tests first
@@ -371,7 +370,6 @@ pipelines:
           name: Manual Staging Deploy - Definitions Service
           deployment: DefStagingManual
           image: mcr.microsoft.com/dotnet/sdk:8.0
-          trigger: manual
           script:
             # Run unit tests first
             - echo "Running unit tests for Definitions Service..."
@@ -395,7 +393,6 @@ pipelines:
       - step:
           name: Manual Production Deploy - Production Service
           deployment: ProdSvcProdManual
-          trigger: manual
           size: 2x
           script:
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -412,7 +409,6 @@ pipelines:
       - step:
           name: Manual Staging Deploy - Production Service
           deployment: ProdSvcStagingManual
-          trigger: manual
           script:
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:staging-$BITBUCKET_COMMIT .
@@ -427,7 +423,6 @@ pipelines:
       - step:
           name: Manual Production Deploy - BFF Service
           deployment: BFFProdManual
-          trigger: manual
           size: 2x
           script:
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -444,7 +439,6 @@ pipelines:
       - step:
           name: Manual Staging Deploy - BFF Service
           deployment: BFFStagingManual
-          trigger: manual
           script:
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:staging-$BITBUCKET_COMMIT .
@@ -459,7 +453,6 @@ pipelines:
       - step:
           name: Manual Production Deploy - UI
           deployment: UIProdManual
-          trigger: manual
           size: 4x
           script:
             # Set memory optimization environment variables
@@ -482,7 +475,6 @@ pipelines:
       - step:
           name: Manual Staging Deploy - UI
           deployment: UIStagingManual
-          trigger: manual
           size: 4x
           script:
             # Set memory optimization environment variables
@@ -505,7 +497,6 @@ pipelines:
           name: Manual Production Deploy - IdentityServer
           deployment: IdSrvProdManual
           image: mcr.microsoft.com/dotnet/sdk:8.0
-          trigger: manual
           size: 2x
           script:
             # Run unit tests first
@@ -532,7 +523,6 @@ pipelines:
           name: Manual Staging Deploy - IdentityServer
           deployment: IdSrvStagingManual
           image: mcr.microsoft.com/dotnet/sdk:8.0
-          trigger: manual
           script:
             # Run unit tests first
             - echo "Running unit tests for IdentityServer..."
