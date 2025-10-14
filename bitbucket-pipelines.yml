@@ -20,12 +20,12 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
-                    - "UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
+                    - "BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
                 # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
-                - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
-                - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-test-results.trx" --no-restore
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Login to Docker Hub using environment variables
@@ -48,7 +48,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+                - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
           # Production Service Pipeline
           - step:
@@ -156,12 +156,12 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
-                    - "UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
+                    - "BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
                 # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
-                - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
-                - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-test-results.trx" --no-restore
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Login to Docker Hub using environment variables
@@ -184,7 +184,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
+                - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
 
     develop:
       - parallel:
@@ -198,12 +198,12 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
-                    - "UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
+                    - "BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
                 # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
-                - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
-                - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-dev-test-results.trx" --no-restore
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-dev-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Login to Docker Hub
@@ -221,7 +221,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+                - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
           # Production Service Development Pipeline
           - step:
@@ -311,12 +311,12 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
-                    - "UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
+                    - "BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
                 # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
-                - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
-                - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-dev-test-results.trx" --no-restore
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-dev-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Login to Docker Hub
@@ -334,7 +334,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
+                - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
                
   # Manual deployments for specific environments
   custom:
@@ -349,8 +349,8 @@ pipelines:
           script:
             # Run unit tests first
             - echo "Running unit tests for Definitions Service..."
-            - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
-            - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-manual-test-results.trx" --no-restore
+            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+            - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-manual-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -364,7 +364,7 @@ pipelines:
             - docker-cache
             - dotnetcore
           artifacts:
-            - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+            - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
     definitions-staging:
       - step:
@@ -375,8 +375,8 @@ pipelines:
           script:
             # Run unit tests first
             - echo "Running unit tests for Definitions Service..."
-            - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
-            - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-staging-test-results.trx" --no-restore
+            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+            - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-staging-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -388,7 +388,7 @@ pipelines:
             - docker-cache
             - dotnetcore
           artifacts:
-            - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+            - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
     # Production Service Manual Deployments
     production-service-production:
@@ -510,8 +510,8 @@ pipelines:
           script:
             # Run unit tests first
             - echo "Running unit tests for IdentityServer..."
-            - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
-            - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-manual-test-results.trx" --no-restore
+            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+            - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-manual-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -525,7 +525,7 @@ pipelines:
             - docker-cache
             - dotnetcore
           artifacts:
-            - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
+            - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
 
     identityserver-staging:
       - step:
@@ -536,8 +536,8 @@ pipelines:
           script:
             # Run unit tests first
             - echo "Running unit tests for IdentityServer..."
-            - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
-            - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-staging-test-results.trx" --no-restore
+            - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+            - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-staging-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -549,7 +549,7 @@ pipelines:
             - docker-cache
             - dotnetcore
           artifacts:
-            - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
+            - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
 
   # Pull request builds for testing
   pull-requests:
@@ -564,12 +564,12 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.Services/Definitions/**"
                     - "Shared/**"
-                    - "UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
+                    - "BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**"
               script:
                 # Run unit tests first
                 - echo "Running unit tests for Definitions Service..."
-                - dotnet restore UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
-                - dotnet test UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-pr-test-results.trx" --no-restore
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-pr-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Build Docker image
@@ -581,7 +581,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+                - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
 
           # Production Service Test Build
           - step:
@@ -649,12 +649,12 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.IdentityServer/**"
                     - "Shared/**"
-                    - "UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
+                    - "BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**"
               script:
                 # Run unit tests first
                 - echo "Running unit tests for IdentityServer..."
-                - dotnet restore UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
-                - dotnet test UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-pr-test-results.trx" --no-restore
+                - dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+                - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-pr-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
                 # Build Docker image
@@ -666,7 +666,7 @@ pipelines:
                 - docker-cache
                 - dotnetcore
               artifacts:
-                - UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
+                - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
 
 definitions:
   services:
