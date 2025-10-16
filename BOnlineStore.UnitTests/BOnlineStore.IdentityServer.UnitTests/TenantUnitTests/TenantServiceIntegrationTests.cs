@@ -3,8 +3,12 @@ using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.Localization;
+using BOnlineStore.Localization.Constants;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Moq;
 using Xunit;
 
 namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
@@ -13,6 +17,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly Mock<IStringLocalizer<Language>> _mockStringLocalizer;
         private readonly TenantManager _tenantService;
 
         public TenantServiceIntegrationTests()
@@ -49,7 +54,28 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             });
             
             _mapper = mapperConfig.CreateMapper();
-            _tenantService = new TenantManager(_context, _mapper);
+            
+            _mockStringLocalizer = new Mock<IStringLocalizer<Language>>();
+            
+            // Setup default localizer behavior
+            _mockStringLocalizer
+                .Setup(x => x[It.IsAny<string>()])
+                .Returns((string key) => new LocalizedString(key, key));
+            
+            // Setup specific localization keys
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantAlreadyExists])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantAlreadyExists, "Girilen þirket sistemde mevcut"));
+            
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantNotFoundForDelete])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantNotFoundForDelete, "Silinecek þirket sistemde bulunamadý"));
+            
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantNotFoundForUpdate])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantNotFoundForUpdate, "Güncellenecek þirket sistemde bulunamadý"));
+
+            _tenantService = new TenantManager(_context, _mapper, _mockStringLocalizer.Object);
         }
 
         [Fact]
@@ -119,7 +145,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             var exception = await Assert.ThrowsAsync<Exception>(
                 () => _tenantService.CreateAsync(tenant2));
             
-            exception.Message.Should().Be("Girilen þirket sistemde mevcut");
+            exception.Message.Should().Contain("Girilen þirket sistemde mevcut");
         }
 
         [Fact]

@@ -134,12 +134,17 @@ public class SeedData
                 }
             };
 
-            var tenant = tenantManager.CreateAsync(tenantCreateDto).Result;
-
-            Log.Debug("Default tenant created");
-
-            return tenant;
-
+            try
+            {
+                var tenant = tenantManager.CreateAsync(tenantCreateDto).Result;
+                Log.Debug("Default tenant created");
+                return tenant;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error creating default tenant");
+                throw;
+            }
         }
         else
         {

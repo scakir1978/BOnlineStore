@@ -645,4 +645,40 @@
   <value>Bank code must be unique.</value>
   <comment>Banka kodu daha önce girilmiş.</comment>
 </data>
+<data name="TenantsFetchError" xml:space="preserve">
+    <value>An error occurred while fetching tenants: {0}</value>
+    <comment>Firmalar getirilirken hata oluştu: {0}</comment>
+  </data>
+  <data name="TenantFetchError" xml:space="preserve">
+    <value>An error occurred while fetching tenant: {0}</value>
+    <comment>Firma getirilirken hata oluştu: {0}</comment>
+  </data>
+  <data name="TenantNotFound" xml:space="preserve">
+    <value>Tenant not found</value>
+    <comment>Firma bulunamadı</comment>
+  </data>
+  <data name="TenantIdMismatch" xml:space="preserve">
+    <value>The ID in the URL does not match the ID sent</value>
+    <comment>URL'deki ID ile gönderilen ID eşleşmiyor</comment>
+  </data>
+  <data name="TenantDeleteFailed" xml:space="preserve">
+    <value>Tenant could not be deleted</value>
+    <comment>Firma silinemedi</comment>
+  </data>
+  <data name="TenantExistenceCheckError" xml:space="preserve">
+    <value>An error occurred while checking tenant existence: {0}</value>
+    <comment>Firma varlık kontrolü yapılırken hata oluştu: {0}</comment>
+  </data>
+  <data name="TenantAlreadyExists" xml:space="preserve">
+    <value>The entered company already exists in the system</value>
+    <comment>Girilen şirket sistemde mevcut</comment>
+  </data>
+  <data name="TenantNotFoundForDelete" xml:space="preserve">
+    <value>The company to be deleted could not be found in the system</value>
+    <comment>Silinecek şirket sistemde bulunamadı</comment>
+  </data>
+  <data name="TenantNotFoundForUpdate" xml:space="preserve">
+    <value>The company to be updated could not be found in the system</value>
+    <comment>Güncellenecek şirket sistemde bulunamadı</comment>
+  </data>
 </root>

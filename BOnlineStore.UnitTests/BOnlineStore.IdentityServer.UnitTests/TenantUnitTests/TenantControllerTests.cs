@@ -2,8 +2,11 @@ using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Controllers;
 using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.Localization;
+using BOnlineStore.Localization.Constants;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Moq;
 using Xunit;
 
@@ -12,12 +15,20 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
     public class TenantControllerTests
     {
         private readonly Mock<ITenantService> _mockTenantService;
+        private readonly Mock<IStringLocalizer<Language>> _mockStringLocalizer;
         private readonly TenantController _controller;
 
         public TenantControllerTests()
         {
             _mockTenantService = new Mock<ITenantService>();
-            _controller = new TenantController(_mockTenantService.Object);
+            _mockStringLocalizer = new Mock<IStringLocalizer<Language>>();
+            
+            // Setup default localizer behavior
+            _mockStringLocalizer
+                .Setup(x => x[It.IsAny<string>()])
+                .Returns((string key) => new LocalizedString(key, key));
+
+            _controller = new TenantController(_mockTenantService.Object, _mockStringLocalizer.Object);
         }
 
         #region GetAllTenants Tests
@@ -83,9 +94,14 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         public void GetAllTenants_ServiceThrowsException_ReturnsInternalServerError()
         {
             // Arrange
+            var errorMessage = "Database baðlantý hatasý";
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantsFetchError])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantsFetchError, "Firmalar getirilirken hata oluþtu: {0}"));
+            
             _mockTenantService
                 .Setup(x => x.Tenants())
-                .Throws(new Exception("Database baðlantý hatasý"));
+                .Throws(new Exception(errorMessage));
 
             // Act
             var result = _controller.GetAllTenants();
@@ -94,7 +110,8 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             result.Should().NotBeNull();
             var statusResult = result.Result.Should().BeOfType<ObjectResult>().Subject;
             statusResult.StatusCode.Should().Be(500);
-            statusResult.Value.Should().Be("Firmalar getirilirken hata oluþtu: Database baðlantý hatasý");
+            var valueAsString = statusResult.Value.ToString();
+            valueAsString.Should().Contain(errorMessage);
         }
 
         #endregion
@@ -143,6 +160,9 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         {
             // Arrange
             var tenantId = Guid.NewGuid();
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantNotFound])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantNotFound, "Firma bulunamadý"));
 
             _mockTenantService
                 .Setup(x => x.FindById(tenantId))
@@ -154,7 +174,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             // Assert
             result.Should().NotBeNull();
             var notFoundResult = result.Result.Should().BeOfType<NotFoundObjectResult>().Subject;
-            notFoundResult.Value.Should().Be("Firma bulunamadý");
+            notFoundResult.Value.Should().BeOfType<LocalizedString>();
         }
 
         [Fact]
@@ -162,10 +182,14 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         {
             // Arrange
             var tenantId = Guid.NewGuid();
+            var errorMessage = "Database eriþim hatasý";
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantFetchError])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantFetchError, "Firma getirilirken hata oluþtu: {0}"));
 
             _mockTenantService
                 .Setup(x => x.FindById(tenantId))
-                .Throws(new Exception("Database eriþim hatasý"));
+                .Throws(new Exception(errorMessage));
 
             // Act
             var result = _controller.GetTenantById(tenantId);
@@ -174,7 +198,8 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             result.Should().NotBeNull();
             var statusResult = result.Result.Should().BeOfType<ObjectResult>().Subject;
             statusResult.StatusCode.Should().Be(500);
-            statusResult.Value.Should().Be("Firma getirilirken hata oluþtu: Database eriþim hatasý");
+            var valueAsString = statusResult.Value.ToString();
+            valueAsString.Should().Contain(errorMessage);
         }
 
         #endregion
@@ -212,6 +237,9 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         {
             // Arrange
             var tenantName = "Olmayan Firma";
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantNotFound])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantNotFound, "Firma bulunamadý"));
 
             _mockTenantService
                 .Setup(x => x.FindByName(tenantName))
@@ -223,7 +251,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             // Assert
             result.Should().NotBeNull();
             var notFoundResult = result.Result.Should().BeOfType<NotFoundObjectResult>().Subject;
-            notFoundResult.Value.Should().Be("Firma bulunamadý");
+            notFoundResult.Value.Should().BeOfType<LocalizedString>();
         }
 
         [Fact]
@@ -231,10 +259,14 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         {
             // Arrange
             var tenantName = "Test Firma";
+            var errorMessage = "Arama hatasý";
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantFetchError])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantFetchError, "Firma getirilirken hata oluþtu: {0}"));
 
             _mockTenantService
                 .Setup(x => x.FindByName(tenantName))
-                .Throws(new Exception("Arama hatasý"));
+                .Throws(new Exception(errorMessage));
 
             // Act
             var result = _controller.GetTenantByName(tenantName);
@@ -243,7 +275,8 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             result.Should().NotBeNull();
             var statusResult = result.Result.Should().BeOfType<ObjectResult>().Subject;
             statusResult.StatusCode.Should().Be(500);
-            statusResult.Value.Should().Be("Firma getirilirken hata oluþtu: Arama hatasý");
+            var valueAsString = statusResult.Value.ToString();
+            valueAsString.Should().Contain(errorMessage);
         }
 
         #endregion
@@ -414,13 +447,17 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 Name = "Test Firma"
             };
 
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantIdMismatch])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantIdMismatch, "URL'deki ID ile gönderilen ID eþleþmiyor"));
+
             // Act
             var result = await _controller.UpdateTenant(tenantId, tenantUpdateDto);
 
             // Assert
             result.Should().NotBeNull();
             var badRequestResult = result.Result.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be("URL'deki ID ile gönderilen ID eþleþmiyor");
+            badRequestResult.Value.Should().BeOfType<LocalizedString>();
         }
 
         [Fact]
@@ -474,6 +511,9 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         {
             // Arrange
             var tenantId = Guid.NewGuid();
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantDeleteFailed])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantDeleteFailed, "Firma silinemedi"));
 
             _mockTenantService
                 .Setup(x => x.DeleteAsync(tenantId))
@@ -485,7 +525,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             // Assert
             result.Should().NotBeNull();
             var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be("Firma silinemedi");
+            badRequestResult.Value.Should().BeOfType<LocalizedString>();
         }
 
         [Fact]
@@ -549,9 +589,14 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         public void IsAnyTenantExist_ServiceThrowsException_ReturnsInternalServerError()
         {
             // Arrange
+            var errorMessage = "Database baðlantý hatasý";
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantExistenceCheckError])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantExistenceCheckError, "Firma varlýk kontrolü yapýlýrken hata oluþtu: {0}"));
+            
             _mockTenantService
                 .Setup(x => x.IsAnyTenantExist())
-                .Throws(new Exception("Database baðlantý hatasý"));
+                .Throws(new Exception(errorMessage));
 
             // Act
             var result = _controller.IsAnyTenantExist();
@@ -560,7 +605,8 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             result.Should().NotBeNull();
             var statusResult = result.Result.Should().BeOfType<ObjectResult>().Subject;
             statusResult.StatusCode.Should().Be(500);
-            statusResult.Value.Should().Be("Firma varlýk kontrolü yapýlýrken hata oluþtu: Database baðlantý hatasý");
+            var valueAsString = statusResult.Value.ToString();
+            valueAsString.Should().Contain(errorMessage);
         }
 
         #endregion

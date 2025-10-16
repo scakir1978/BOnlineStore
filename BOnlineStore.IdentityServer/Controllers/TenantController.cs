@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using BOnlineStore.Localization;
+using BOnlineStore.Localization.Constants;
+using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.IdentityServer.Controllers
 {
@@ -12,10 +15,12 @@ namespace BOnlineStore.IdentityServer.Controllers
     public class TenantController : ControllerBase
     {
         private readonly ITenantService _tenantService;
+        private readonly IStringLocalizer<Language> _stringLocalizer;
 
-        public TenantController(ITenantService tenantService)
+        public TenantController(ITenantService tenantService, IStringLocalizer<Language> stringLocalizer)
         {
             _tenantService = tenantService;
+            _stringLocalizer = stringLocalizer;
         }
 
         /// <summary>
@@ -32,7 +37,7 @@ namespace BOnlineStore.IdentityServer.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Firmalar getirilirken hata oluştu: {ex.Message}");
+                return StatusCode(500, string.Format(_stringLocalizer[IdentityServerKeys.TenantsFetchError], ex.Message));
             }
         }
 
@@ -49,13 +54,13 @@ namespace BOnlineStore.IdentityServer.Controllers
                 var tenant = _tenantService.FindById(id);
                 if (tenant == null)
                 {
-                    return NotFound("Firma bulunamadı");
+                    return NotFound(_stringLocalizer[IdentityServerKeys.TenantNotFound]);
                 }
                 return Ok(tenant);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Firma getirilirken hata oluştu: {ex.Message}");
+                return StatusCode(500, string.Format(_stringLocalizer[IdentityServerKeys.TenantFetchError], ex.Message));
             }
         }
 
@@ -72,13 +77,13 @@ namespace BOnlineStore.IdentityServer.Controllers
                 var tenant = _tenantService.FindByName(name);
                 if (tenant == null)
                 {
-                    return NotFound("Firma bulunamadı");
+                    return NotFound(_stringLocalizer[IdentityServerKeys.TenantNotFound]);
                 }
                 return Ok(tenant);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Firma getirilirken hata oluştu: {ex.Message}");
+                return StatusCode(500, string.Format(_stringLocalizer[IdentityServerKeys.TenantFetchError], ex.Message));
             }
         }
 
@@ -122,7 +127,7 @@ namespace BOnlineStore.IdentityServer.Controllers
 
             if (id != tenantUpdateDto.Id)
             {
-                return BadRequest("URL'deki ID ile gönderilen ID eşleşmiyor");
+                return BadRequest(_stringLocalizer[IdentityServerKeys.TenantIdMismatch]);
             }
 
             try
@@ -151,7 +156,7 @@ namespace BOnlineStore.IdentityServer.Controllers
                 {
                     return NoContent();
                 }
-                return BadRequest("Firma silinemedi");
+                return BadRequest(_stringLocalizer[IdentityServerKeys.TenantDeleteFailed]);
             }
             catch (Exception ex)
             {
@@ -173,7 +178,7 @@ namespace BOnlineStore.IdentityServer.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Firma varlık kontrolü yapılırken hata oluştu: {ex.Message}");
+                return StatusCode(500, string.Format(_stringLocalizer[IdentityServerKeys.TenantExistenceCheckError], ex.Message));
             }
         }
     }

@@ -11,8 +11,10 @@ using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Settings;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography.X509Certificates;
-
 using Microsoft.AspNetCore.HttpOverrides;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using BOnlineStore.Shared.Constansts;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -29,6 +31,30 @@ internal static class HostingExtensions
 
         builder.Services.AddScoped<ITenantService, TenantManager>();
         builder.Services.AddScoped<IUserService, UserManager>();
+
+        // Localization configuration
+        builder.Services.AddLocalization(options => options.ResourcesPath = "");
+        
+        builder.Services.Configure<RequestLocalizationOptions>(options =>
+        {
+            var supportedCultures = new[]
+            {
+                new CultureInfo(GlobalConstants.turkish),
+                new CultureInfo(GlobalConstants.english)
+            };
+
+            options.DefaultRequestCulture = new RequestCulture(GlobalConstants.turkish);
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
+            
+            // Accept language from Accept-Language header, query string, or cookie
+            options.RequestCultureProviders = new List<IRequestCultureProvider>
+            {
+                new QueryStringRequestCultureProvider(),
+                new CookieRequestCultureProvider(),
+                new AcceptLanguageHeaderRequestCultureProvider()
+            };
+        });
 
         builder.Services.AddRazorPages();
         builder.Services.AddControllers();
@@ -122,7 +148,6 @@ internal static class HostingExtensions
             options.KnownProxies.Clear();
         });
 
-
         return builder.Build();
     }
 
@@ -136,6 +161,9 @@ internal static class HostingExtensions
         }
 
         app.UseForwardedHeaders();
+
+        // Add request localization middleware
+        app.UseRequestLocalization();
 
         app.UseStaticFiles();
         app.UseRouting();

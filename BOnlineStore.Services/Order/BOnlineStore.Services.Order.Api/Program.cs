@@ -5,6 +5,7 @@ using BOnlineStore.Shared;
 using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Exceptions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -69,6 +70,14 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedCultures = cultures;
     options.SupportedUICultures = cultures;
 
+    // Accept language from Accept-Language header, query string, or cookie
+    options.RequestCultureProviders = new List<IRequestCultureProvider>
+    {
+        new QueryStringRequestCultureProvider(),
+        new CookieRequestCultureProvider(),
+        new AcceptLanguageHeaderRequestCultureProvider()
+    };
+
 });
 
 // Add services to the container.
@@ -129,8 +138,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseRequestLocalization();
-
 app.ConfigureExeptionHandler();
 
 app.UseHttpsRedirection();
@@ -138,6 +145,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseRouting();
+
+app.UseRequestLocalization();
 
 app.UseAuthorization();
 

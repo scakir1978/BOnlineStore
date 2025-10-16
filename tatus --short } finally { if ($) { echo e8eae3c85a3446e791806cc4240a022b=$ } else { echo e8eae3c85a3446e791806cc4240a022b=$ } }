@@ -1,0 +1,71 @@
+[1mdiff --git a/BOnlineStore.IdentityServer/BOnlineStore.IdentityServer.csproj b/BOnlineStore.IdentityServer/BOnlineStore.IdentityServer.csproj[m
+[1mindex 0647b7b..65882f8 100644[m
+[1m--- a/BOnlineStore.IdentityServer/BOnlineStore.IdentityServer.csproj[m
+[1m+++ b/BOnlineStore.IdentityServer/BOnlineStore.IdentityServer.csproj[m
+[36m@@ -29,4 +29,9 @@[m
+ 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>[m
+ 		</PackageReference>[m
+ 	</ItemGroup>[m
+[32m+[m
+[32m+[m	[32m<ItemGroup>[m
+[32m+[m		[32m<ProjectReference Include="..\Shared\BOnlineStore.Localization\BOnlineStore.Localization.csproj" />[m
+[32m+[m		[32m<ProjectReference Include="..\Shared\BOnlineStore.Shared\BOnlineStore.Shared.csproj" />[m
+[32m+[m	[32m</ItemGroup>[m
+ </Project>[m
+\ No newline at end of file[m
+[1mdiff --git a/BOnlineStore.IdentityServer/Business/TenantService/TenantManager.cs b/BOnlineStore.IdentityServer/Business/TenantService/TenantManager.cs[m
+[1mindex b91e1b9..bade138 100644[m
+[1m--- a/BOnlineStore.IdentityServer/Business/TenantService/TenantManager.cs[m
+[1m+++ b/BOnlineStore.IdentityServer/Business/TenantService/TenantManager.cs[m
+[36m@@ -2,6 +2,9 @@[m
+ using BOnlineStore.IdentityServer.Data;[m
+ using BOnlineStore.IdentityServer.Dtos;[m
+ using BOnlineStore.IdentityServer.Models;[m
+[32m+[m[32musing BOnlineStore.Localization;[m
+[32m+[m[32musing BOnlineStore.Localization.Constants;[m
+[32m+[m[32musing Microsoft.Extensions.Localization;[m
+ [m
+ namespace BOnlineStore.IdentityServer.Business.TenantService[m
+ {[m
+[36m@@ -9,18 +12,20 @@[m [mnamespace BOnlineStore.IdentityServer.Business.TenantService[m
+     {[m
+         protected readonly ApplicationDbContext _context;[m
+         protected readonly IMapper _mapper;[m
+[32m+[m[32m        private readonly IStringLocalizer<Language> _stringLocalizer;[m
+ [m
+[31m-        public TenantManager(ApplicationDbContext context, IMapper mapper)[m
+[32m+[m[32m        public TenantManager(ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer)[m
+         {[m
+             _context = context;[m
+             _mapper = mapper;[m
+[32m+[m[32m            _stringLocalizer = stringLocalizer;[m
+         }[m
+ [m
+         public async Task<TenantDto> CreateAsync(TenantCreateDto tenantDto)[m
+         {[m
+             var existingTenant = FindByName(tenantDto.Name);[m
+             if (existingTenant != null)[m
+[31m-                throw new Exception("Girilen şirket sistemde mevcut");[m
+[32m+[m[32m                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantAlreadyExists]);[m
+ [m
+             var result = await _context.Tenant.AddAsync(_mapper.Map<Tenant>(tenantDto));[m
+ [m
+[36m@@ -33,7 +38,7 @@[m [mnamespace BOnlineStore.IdentityServer.Business.TenantService[m
+         {[m
+             var existingTenant = _context.Tenant.FirstOrDefault(x => x.Id == id);[m
+             if (existingTenant == null)[m
+[31m-                throw new Exception("Silinecek şirket sistemde bulunamadı.");[m
+[32m+[m[32m                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantNotFoundForDelete]);[m
+ [m
+             _context.Tenant.Remove(existingTenant);[m
+             return await _context.SaveChangesAsync() > 0;[m
+[36m@@ -63,7 +68,7 @@[m [mnamespace BOnlineStore.IdentityServer.Business.TenantService[m
+         {[m
+             var existingTenant = _context.Tenant.FirstOrDefault(x => x.Id == tenantDto.Id);[m
+             if (existingTenant == null)[m
+[31m-                throw new Exception("Güncellenecek şirket sistemde bulunamadı");[m
+[32m+[m[32m                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantNotFoundForUpdate]);[m
+ [m
+             // Map the update values to the existing tracked entity[m
+             _mapper.Map(tenantDto, existingTenant);[m
+[1mdiff --git a/BOnlineStore.IdentityServer/Controllers/TenantController.cs b/BOnlineStore.IdentityServer/Controllers/TenantController.c

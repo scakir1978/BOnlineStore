@@ -2,6 +2,9 @@
 using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.Localization;
+using BOnlineStore.Localization.Constants;
+using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.IdentityServer.Business.TenantService
 {
@@ -9,18 +12,20 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
     {
         protected readonly ApplicationDbContext _context;
         protected readonly IMapper _mapper;
+        private readonly IStringLocalizer<Language> _stringLocalizer;
 
-        public TenantManager(ApplicationDbContext context, IMapper mapper)
+        public TenantManager(ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer)
         {
             _context = context;
             _mapper = mapper;
+            _stringLocalizer = stringLocalizer;
         }
 
         public async Task<TenantDto> CreateAsync(TenantCreateDto tenantDto)
         {
             var existingTenant = FindByName(tenantDto.Name);
             if (existingTenant != null)
-                throw new Exception("Girilen şirket sistemde mevcut");
+                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantAlreadyExists]);
 
             var result = await _context.Tenant.AddAsync(_mapper.Map<Tenant>(tenantDto));
 
@@ -33,7 +38,7 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
         {
             var existingTenant = _context.Tenant.FirstOrDefault(x => x.Id == id);
             if (existingTenant == null)
-                throw new Exception("Silinecek şirket sistemde bulunamadı.");
+                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantNotFoundForDelete]);
 
             _context.Tenant.Remove(existingTenant);
             return await _context.SaveChangesAsync() > 0;
@@ -63,7 +68,7 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
         {
             var existingTenant = _context.Tenant.FirstOrDefault(x => x.Id == tenantDto.Id);
             if (existingTenant == null)
-                throw new Exception("Güncellenecek şirket sistemde bulunamadı");
+                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantNotFoundForUpdate]);
 
             // Map the update values to the existing tracked entity
             _mapper.Map(tenantDto, existingTenant);

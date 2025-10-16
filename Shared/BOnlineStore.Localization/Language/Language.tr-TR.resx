@@ -513,5 +513,32 @@
 <data name="BankCodeMustBeUnique" xml:space="preserve">
   <value>Banka kodu daha önce girilmiş.</value>
 </data>
+<data name="TenantsFetchError" xml:space="preserve">
+    <value>Firmalar getirilirken hata oluştu: {0}</value>
+  </data>
+  <data name="TenantFetchError" xml:space="preserve">
+    <value>Firma getirilirken hata oluştu: {0}</value>
+  </data>
+  <data name="TenantNotFound" xml:space="preserve">
+    <value>Firma bulunamadı</value>
+  </data>
+  <data name="TenantIdMismatch" xml:space="preserve">
+    <value>URL'deki ID ile gönderilen ID eşleşmiyor</value>
+  </data>
+  <data name="TenantDeleteFailed" xml:space="preserve">
+    <value>Firma silinemedi</value>
+  </data>
+  <data name="TenantExistenceCheckError" xml:space="preserve">
+    <value>Firma varlık kontrolü yapılırken hata oluştu: {0}</value>
+  </data>
+  <data name="TenantAlreadyExists" xml:space="preserve">
+    <value>Girilen şirket sistemde mevcut</value>
+  </data>
+  <data name="TenantNotFoundForDelete" xml:space="preserve">
+    <value>Silinecek şirket sistemde bulunamadı</value>
+  </data>
+  <data name="TenantNotFoundForUpdate" xml:space="preserve">
+    <value>Güncellenecek şirket sistemde bulunamadı</value>
+  </data>
 
 </root>

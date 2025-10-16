@@ -29,4 +29,9 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Shared\BOnlineStore.Localization\BOnlineStore.Localization.csproj" />
+		<ProjectReference Include="..\Shared\BOnlineStore.Shared\BOnlineStore.Shared.csproj" />
+	</ItemGroup>
 </Project>

@@ -3,10 +3,13 @@ using BOnlineStore.IdentityServer.Controllers;
 using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.Localization;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
+using Moq;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -19,6 +22,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         private readonly ApplicationDbContext _context;
         private readonly TenantController _controller;
         private readonly ITenantService _tenantService;
+        private readonly Mock<IStringLocalizer<Language>> _mockStringLocalizer;
 
         public TenantControllerIntegrationTests()
         {
@@ -54,8 +58,15 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             });
             var mapper = mapperConfig.CreateMapper();
 
-            _tenantService = new TenantManager(_context, mapper);
-            _controller = new TenantController(_tenantService);
+            _mockStringLocalizer = new Mock<IStringLocalizer<Language>>();
+            
+            // Setup default localizer behavior
+            _mockStringLocalizer
+                .Setup(x => x[It.IsAny<string>()])
+                .Returns((string key) => new LocalizedString(key, key));
+
+            _tenantService = new TenantManager(_context, mapper, _mockStringLocalizer.Object);
+            _controller = new TenantController(_tenantService, _mockStringLocalizer.Object);
         }
 
         private async Task SeedTestDataAsync()
