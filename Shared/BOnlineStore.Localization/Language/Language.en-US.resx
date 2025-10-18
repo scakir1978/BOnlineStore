@@ -681,4 +681,44 @@
     <value>The company to be updated could not be found in the system</value>
     <comment>Güncellenecek şirket sistemde bulunamadı</comment>
   </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User not found</value>
+    <comment>Kullanıcı bulunamadı</comment>
+  </data>
+  <data name="CreateUserError" xml:space="preserve">
+    <value>An error occurred while creating user: {0}</value>
+    <comment>Kullanıcı oluşturulurken hata oluştu: {0}</comment>
+  </data>
+  <data name="UpdateUserError" xml:space="preserve">
+    <value>An error occurred while updating user: {0}</value>
+    <comment>Kullanıcı güncellenirken hata oluştu: {0}</comment>
+  </data>
+  <data name="DeleteUserError" xml:space="preserve">
+    <value>An error occurred while deleting user: {0}</value>
+    <comment>Kullanıcı silinirken hata oluştu: {0}</comment>
+  </data>
+  <data name="ChangePasswordError" xml:space="preserve">
+    <value>An error occurred while changing password: {0}</value>
+    <comment>Şifre değiştirilirken hata oluştu: {0}</comment>
+  </data>
+  <data name="ResetPasswordError" xml:space="preserve">
+    <value>An error occurred while resetting password: {0}</value>
+    <comment>Şifre sıfırlanırken hata oluştu: {0}</comment>
+  </data>
+  <data name="UserNotFoundById" xml:space="preserve">
+    <value>User with ID {0} not found</value>
+    <comment>ID'si {0} olan kullanıcı bulunamadı</comment>
+  </data>
+  <data name="UserNotFoundByEmail" xml:space="preserve">
+    <value>User with email {0} not found</value>
+    <comment>Email adresi {0} olan kullanıcı bulunamadı</comment>
+  </data>
+  <data name="PasswordChangedSuccessfully" xml:space="preserve">
+    <value>Password changed successfully</value>
+    <comment>Şifre başarıyla değiştirildi</comment>
+  </data>
+  <data name="PasswordResetSuccessfully" xml:space="preserve">
+    <value>Password reset successfully</value>
+    <comment>Şifre başarıyla sıfırlandı</comment>
+  </data>
 </root>

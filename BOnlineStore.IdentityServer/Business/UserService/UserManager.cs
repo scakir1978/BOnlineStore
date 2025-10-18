@@ -4,8 +4,11 @@ using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Extensions;
 using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.Localization;
+using BOnlineStore.Localization.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.IdentityServer.Business.UserService
 {
@@ -14,12 +17,14 @@ namespace BOnlineStore.IdentityServer.Business.UserService
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<Language> _stringLocalizer;
 
-        public UserManager(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IMapper mapper)
+        public UserManager(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
+            _stringLocalizer = stringLocalizer;
         }
 
         public async Task<(UserDto User, IdentityResult Result)> CreateAsync(UserCreateDto userCreateDto)
@@ -33,7 +38,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                     var error = IdentityResult.Failed(new IdentityError 
                     { 
                         Code = "TenantNotFound", 
-                        Description = "Belirtilen kiracý bulunamadý." 
+                        Description = _stringLocalizer[IdentityServerKeys.TenantNotFound]
                     });
                     return (null, error);
                 }
@@ -57,7 +62,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                 var error = IdentityResult.Failed(new IdentityError 
                 { 
                     Code = "CreateUserError", 
-                    Description = $"Kullanýcý oluþturulurken hata oluþtu: {ex.Message}" 
+                    Description = string.Format(_stringLocalizer[IdentityServerKeys.CreateUserError], ex.Message)
                 });
                 return (null, error);
             }
@@ -99,7 +104,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                     var error = IdentityResult.Failed(new IdentityError 
                     { 
                         Code = "UserNotFound", 
-                        Description = "Kullanýcý bulunamadý." 
+                        Description = _stringLocalizer[IdentityServerKeys.UserNotFound]
                     });
                     return (null, error);
                 }
@@ -122,7 +127,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                 var error = IdentityResult.Failed(new IdentityError 
                 { 
                     Code = "UpdateUserError", 
-                    Description = $"Kullanýcý güncellenirken hata oluþtu: {ex.Message}" 
+                    Description = string.Format(_stringLocalizer[IdentityServerKeys.UpdateUserError], ex.Message)
                 });
                 return (null, error);
             }
@@ -138,7 +143,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                     return IdentityResult.Failed(new IdentityError 
                     { 
                         Code = "UserNotFound", 
-                        Description = "Kullanýcý bulunamadý." 
+                        Description = _stringLocalizer[IdentityServerKeys.UserNotFound]
                     });
                 }
 
@@ -149,7 +154,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                 return IdentityResult.Failed(new IdentityError 
                 { 
                     Code = "DeleteUserError", 
-                    Description = $"Kullanýcý silinirken hata oluþtu: {ex.Message}" 
+                    Description = string.Format(_stringLocalizer[IdentityServerKeys.DeleteUserError], ex.Message)
                 });
             }
         }
@@ -193,7 +198,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                     return IdentityResult.Failed(new IdentityError 
                     { 
                         Code = "UserNotFound", 
-                        Description = "Kullanýcý bulunamadý." 
+                        Description = _stringLocalizer[IdentityServerKeys.UserNotFound]
                     });
                 }
 
@@ -204,7 +209,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                 return IdentityResult.Failed(new IdentityError 
                 { 
                     Code = "ChangePasswordError", 
-                    Description = $"Þifre deðiþtirilirken hata oluþtu: {ex.Message}" 
+                    Description = string.Format(_stringLocalizer[IdentityServerKeys.ChangePasswordError], ex.Message)
                 });
             }
         }
@@ -219,7 +224,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                     return IdentityResult.Failed(new IdentityError 
                     { 
                         Code = "UserNotFound", 
-                        Description = "Kullanýcý bulunamadý." 
+                        Description = _stringLocalizer[IdentityServerKeys.UserNotFound]
                     });
                 }
 
@@ -232,7 +237,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                 return IdentityResult.Failed(new IdentityError 
                 { 
                     Code = "ResetPasswordError", 
-                    Description = $"Þifre sýfýrlanýrken hata oluþtu: {ex.Message}" 
+                    Description = string.Format(_stringLocalizer[IdentityServerKeys.ResetPasswordError], ex.Message)
                 });
             }
         }

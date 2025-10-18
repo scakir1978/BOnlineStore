@@ -3,9 +3,11 @@ using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Controllers;
 using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.Localization;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Moq;
 using Xunit;
 
@@ -14,12 +16,20 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
     public class UserControllerTests
     {
         private readonly Mock<IUserService> _mockUserService;
+        private readonly Mock<IStringLocalizer<Language>> _mockStringLocalizer;
         private readonly UserController _controller;
 
         public UserControllerTests()
         {
             _mockUserService = new Mock<IUserService>();
-            _controller = new UserController(_mockUserService.Object);
+            _mockStringLocalizer = new Mock<IStringLocalizer<Language>>();
+            
+            // Setup default string localizer behavior
+            _mockStringLocalizer
+                .Setup(x => x[It.IsAny<string>()])
+                .Returns((string key) => new LocalizedString(key, key));
+            
+            _controller = new UserController(_mockUserService.Object, _mockStringLocalizer.Object);
         }
 
         #region CreateUser Tests

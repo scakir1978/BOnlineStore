@@ -1,8 +1,11 @@
 using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.Localization;
+using BOnlineStore.Localization.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace BOnlineStore.IdentityServer.Controllers
 {
@@ -12,10 +15,12 @@ namespace BOnlineStore.IdentityServer.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IStringLocalizer<Language> _stringLocalizer;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IStringLocalizer<Language> stringLocalizer)
         {
             _userService = userService;
+            _stringLocalizer = stringLocalizer;
         }
 
         /// <summary>
@@ -86,7 +91,7 @@ namespace BOnlineStore.IdentityServer.Controllers
 
             if (user == null)
             {
-                return NotFound($"ID'si {id} olan kullanýcý bulunamadý.");
+                return NotFound(string.Format(_stringLocalizer[IdentityServerKeys.UserNotFoundById], id));
             }
 
             return Ok(user);
@@ -104,7 +109,7 @@ namespace BOnlineStore.IdentityServer.Controllers
 
             if (user == null)
             {
-                return NotFound($"Email adresi {email} olan kullanýcý bulunamadý.");
+                return NotFound(string.Format(_stringLocalizer[IdentityServerKeys.UserNotFoundByEmail], email));
             }
 
             return Ok(user);
@@ -173,7 +178,7 @@ namespace BOnlineStore.IdentityServer.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(new { message = "Þifre baþarýyla deðiþtirildi." });
+                return Ok(new { message = _stringLocalizer[IdentityServerKeys.PasswordChangedSuccessfully].Value });
             }
 
             foreach (var error in result.Errors)
@@ -201,7 +206,7 @@ namespace BOnlineStore.IdentityServer.Controllers
 
             if (result.Succeeded)
             {
-                return Ok(new { message = "Þifre baþarýyla sýfýrlandý." });
+                return Ok(new { message = _stringLocalizer[IdentityServerKeys.PasswordResetSuccessfully].Value });
             }
 
             foreach (var error in result.Errors)

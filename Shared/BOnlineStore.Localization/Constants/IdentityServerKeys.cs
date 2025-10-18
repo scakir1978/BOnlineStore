@@ -17,5 +17,17 @@ namespace BOnlineStore.Localization.Constants
         public const string TenantAlreadyExists = "TenantAlreadyExists";
         public const string TenantNotFoundForDelete = "TenantNotFoundForDelete";
         public const string TenantNotFoundForUpdate = "TenantNotFoundForUpdate";
+        
+        // User Management Keys
+        public const string UserNotFound = "UserNotFound";
+        public const string CreateUserError = "CreateUserError";
+        public const string UpdateUserError = "UpdateUserError";
+        public const string DeleteUserError = "DeleteUserError";
+        public const string ChangePasswordError = "ChangePasswordError";
+        public const string ResetPasswordError = "ResetPasswordError";
+        public const string UserNotFoundById = "UserNotFoundById";
+        public const string UserNotFoundByEmail = "UserNotFoundByEmail";
+        public const string PasswordChangedSuccessfully = "PasswordChangedSuccessfully";
+        public const string PasswordResetSuccessfully = "PasswordResetSuccessfully";
     }
 }
