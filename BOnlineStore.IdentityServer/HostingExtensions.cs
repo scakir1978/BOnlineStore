@@ -131,13 +131,13 @@ internal static class HostingExtensions
         IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
         builder.Services.AddSingleton(mapper);
 
-        builder.Services.AddCors(options =>
+        /*builder.Services.AddCors(options =>
         {
             options.AddPolicy("MyCorsPolicy", policy =>
             {
                 policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
             });
-        });
+        });*/
 
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
         {

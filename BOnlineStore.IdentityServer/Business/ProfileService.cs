@@ -26,7 +26,9 @@ namespace BOnlineStore.IdentityServer.Business
             var claims = new List<Claim>
             {
                 new Claim(IdentityServerConstants.ProfilClaimTypeTenantId, user.TenantId.ToString()),
-                new Claim(IdentityServerConstants.ProfilClaimTypeLocale, user.Locale.Trim())
+                new Claim(IdentityServerConstants.ProfilClaimTypeLocale, user.Locale.Trim()),
+                new Claim(IdentityServerConstants.ProfilClaimTypeEmail, user.Email.Trim()),
+                new Claim(IdentityServerConstants.ProfilClaimTypeNormalizedEmail, user.NormalizedEmail.Trim())
             };
 
             // Profile scope için OpenID Connect standart claim'lerini ekle

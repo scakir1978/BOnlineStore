@@ -1,4 +1,244 @@
 <div class="user-profile">
-  <h2>User Profile</h2>
-  <!-- User profile content will go here -->
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title mb-0">
+        <i class="ri-user-settings-line me-2"></i>
+        {{ "USER_PROFILE.TITLE" | translate }}
+      </h4>
+    </div>
+    <div class="card-body">
+      <!-- Loading Indicator -->
+      <dx-load-panel
+        [visible]="isLoading"
+        [showIndicator]="true"
+        [showPane]="true"
+        [shading]="true"
+        shadingColor="rgba(0,0,0,0.4)"
+        [message]="'LOADING' | translate"
+      >
+      </dx-load-panel>
+
+      <!-- User Profile Form -->
+      <div *ngIf="userProfile && !isLoading" class="profile-form">
+        <dx-form
+          [formData]="userProfile"
+          [colCount]="2"
+          [labelLocation]="'top'"
+        >
+          <!-- Kişisel Bilgiler -->
+          <dxi-item
+            itemType="group"
+            [caption]="'USER_PROFILE.PERSONAL_INFO' | translate"
+            [colCount]="2"
+            [colSpan]="2"
+          >
+            <dxi-item
+              dataField="givenName"
+              [label]="{ text: ('USER_PROFILE.FIRST_NAME' | translate) }"
+            >
+              <dxi-validation-rule
+                type="required"
+                [message]="'USER_PROFILE.REQUIRED_FIRST_NAME' | translate"
+              ></dxi-validation-rule>
+            </dxi-item>
+
+            <dxi-item
+              dataField="familyName"
+              [label]="{ text: ('USER_PROFILE.LAST_NAME' | translate) }"
+            >
+              <dxi-validation-rule
+                type="required"
+                [message]="'USER_PROFILE.REQUIRED_LAST_NAME' | translate"
+              ></dxi-validation-rule>
+            </dxi-item>
+
+            <dxi-item
+              dataField="middleName"
+              [label]="{ text: ('USER_PROFILE.MIDDLE_NAME' | translate) }"
+            >
+            </dxi-item>
+
+            <dxi-item
+              dataField="name"
+              [label]="{ text: ('USER_PROFILE.FULL_NAME' | translate) }"
+            >
+            </dxi-item>
+
+            <dxi-item
+              dataField="nickname"
+              [label]="{ text: ('USER_PROFILE.NICKNAME' | translate) }"
+            >
+            </dxi-item>
+
+            <dxi-item
+              dataField="preferredUsername"
+              [label]="{
+                text: ('USER_PROFILE.PREFERRED_USERNAME' | translate)
+              }"
+            >
+            </dxi-item>
+          </dxi-item>
+
+          <!-- İletişim Bilgileri -->
+          <dxi-item
+            itemType="group"
+            [caption]="'USER_PROFILE.CONTACT_INFO' | translate"
+            [colCount]="2"
+            [colSpan]="2"
+          >
+            <dxi-item
+              dataField="email"
+              [label]="{ text: ('USER_PROFILE.EMAIL' | translate) }"
+              [editorOptions]="{ disabled: true }"
+            >
+              <dxi-validation-rule
+                type="required"
+                [message]="'USER_PROFILE.EMAIL_REQUIRED' | translate"
+              ></dxi-validation-rule>
+              <dxi-validation-rule
+                type="email"
+                [message]="'USER_PROFILE.EMAIL_INVALID' | translate"
+              ></dxi-validation-rule>
+            </dxi-item>
+
+            <dxi-item
+              dataField="phoneNumber"
+              [label]="{ text: ('USER_PROFILE.PHONE_NUMBER' | translate) }"
+            >
+            </dxi-item>
+
+            <dxi-item
+              dataField="website"
+              [label]="{ text: ('USER_PROFILE.WEBSITE' | translate) }"
+              [colSpan]="2"
+            >
+            </dxi-item>
+          </dxi-item>
+
+          <!-- Profil Bilgileri -->
+          <dxi-item
+            itemType="group"
+            [caption]="'USER_PROFILE.PROFILE_INFO' | translate"
+            [colCount]="2"
+            [colSpan]="2"
+          >
+            <dxi-item
+              dataField="profile"
+              [label]="{ text: ('USER_PROFILE.PROFILE_URL' | translate) }"
+            >
+            </dxi-item>
+
+            <dxi-item
+              dataField="picture"
+              [label]="{ text: ('USER_PROFILE.PICTURE_URL' | translate) }"
+            >
+            </dxi-item>
+          </dxi-item>
+
+          <!-- Kişisel Detaylar -->
+          <dxi-item
+            itemType="group"
+            [caption]="'USER_PROFILE.PERSONAL_DETAILS' | translate"
+            [colCount]="2"
+            [colSpan]="2"
+          >
+            <dxi-item
+              dataField="gender"
+              editorType="dxSelectBox"
+              [label]="{ text: ('USER_PROFILE.GENDER' | translate) }"
+              [editorOptions]="{
+                items: genderOptions,
+                displayExpr: 'text',
+                valueExpr: 'value',
+                searchEnabled: true,
+                placeholder: ('USER_PROFILE.SELECT_GENDER' | translate)
+              }"
+            >
+            </dxi-item>
+
+            <dxi-item
+              dataField="birthdate"
+              editorType="dxDateBox"
+              [label]="{ text: ('USER_PROFILE.BIRTHDATE' | translate) }"
+              [editorOptions]="{
+                type: 'date',
+                displayFormat: 'dd.MM.yyyy',
+                placeholder: ('USER_PROFILE.SELECT_BIRTHDATE' | translate),
+                max: maxBirthDate
+              }"
+            >
+            </dxi-item>
+          </dxi-item>
+
+          <!-- Yerelleştirme Ayarları -->
+          <dxi-item
+            itemType="group"
+            [caption]="'USER_PROFILE.LOCALIZATION_SETTINGS' | translate"
+            [colCount]="2"
+            [colSpan]="2"
+          >
+            <dxi-item
+              dataField="locale"
+              editorType="dxSelectBox"
+              [label]="{ text: ('USER_PROFILE.LOCALE' | translate) }"
+              [editorOptions]="{
+                items: localeOptions,
+                displayExpr: 'text',
+                valueExpr: 'value',
+                searchEnabled: true,
+                placeholder: ('USER_PROFILE.SELECT_LOCALE' | translate)
+              }"
+            >
+            </dxi-item>
+
+            <dxi-item
+              dataField="zoneInfo"
+              [label]="{ text: ('USER_PROFILE.ZONE_INFO' | translate) }"
+            >
+            </dxi-item>
+          </dxi-item>
+
+          <!-- Buttons -->
+          <dxi-item itemType="group" [colSpan]="2">
+            <dxi-item
+              itemType="button"
+              [buttonOptions]="{
+                text: ('SAVE' | translate),
+                type: 'success',
+                icon: 'save',
+                disabled: isSaving,
+                onClick: saveUserProfile.bind(this),
+                width: '150px'
+              }"
+            >
+            </dxi-item>
+
+            <dxi-item
+              itemType="button"
+              [buttonOptions]="{
+                text: ('CANCEL' | translate),
+                type: 'normal',
+                icon: 'refresh',
+                disabled: isSaving,
+                onClick: cancelEdit.bind(this),
+                width: '150px'
+              }"
+            >
+            </dxi-item>
+          </dxi-item>
+        </dx-form>
+      </div>
+
+      <!-- No Data Message -->
+      <div *ngIf="!userProfile && !isLoading" class="no-data">
+        <div class="text-center p-5">
+          <i class="ri-user-search-line display-1 text-muted"></i>
+          <h5 class="mt-3">{{ "USER_PROFILE.NO_DATA_TITLE" | translate }}</h5>
+          <p class="text-muted">
+            {{ "USER_PROFILE.NO_DATA_DESC" | translate }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

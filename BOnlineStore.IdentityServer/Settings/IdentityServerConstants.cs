@@ -44,6 +44,8 @@
         public const string ProfilClaimTypeZoneInfo = "zoneinfo";
         public const string ProfilClaimTypeLocale = "locale";
         public const string ProfilClaimTypeUpdatedAt = "updated_at";
+        public const string ProfilClaimTypeEmail = "email";
+        public const string ProfilClaimTypeNormalizedEmail = "normalized_email";
 
         #endregion
     }

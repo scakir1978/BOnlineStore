@@ -196,7 +196,7 @@ export class AuthenticationService {
     user.token = identityUser.access_token;
     user.language = identityUser.profile.locale ?? 'tr-TR';
 
-    //localStorage.setItem('currentUser', JSON.stringify(user));
+    localStorage.setItem('currentUser', JSON.stringify(user));
 
     this.currentUserSubject.next(user);
   }

@@ -137,7 +137,10 @@
             <h6 class="dropdown-header">
               Hoş geldin {{ userData?.firstName }}!
             </h6>
-            <a class="dropdown-item" routerLink="/"
+            <a
+              class="dropdown-item"
+              routerLink="/settings/user-profile"
+              [queryParams]="{ email: userData?.email }"
               ><i
                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"
               ></i>

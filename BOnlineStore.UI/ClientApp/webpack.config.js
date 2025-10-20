@@ -1,7 +1,7 @@
 module.exports = {
     experiments: {
         topLevelAwait: true
-    },
+      },
     resolve: {
         fallback: { 
             url: require.resolve('url'),
@@ -18,32 +18,5 @@ module.exports = {
             path: require.resolve('path-browserify'),
             zlib: require.resolve('browserify-zlib')
         }
-    },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-            maxInitialRequests: 20,
-            maxAsyncRequests: 20,
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all',
-                    priority: 10
-                },
-                common: {
-                    name: 'common',
-                    chunks: 'all',
-                    priority: 5,
-                    minChunks: 2,
-                    reuseExistingChunk: true
-                }
-            }
-        }
-    },
-    performance: {
-        maxEntrypointSize: 15000000,  // 8MB
-        maxAssetSize: 15000000,      // 8MB
-        hints: false
-    }
+    }    
 }
