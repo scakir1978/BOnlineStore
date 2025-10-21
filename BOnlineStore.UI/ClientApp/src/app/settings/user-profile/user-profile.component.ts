@@ -5,6 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from 'app/core/services/auth.service';
 import { UserProfileService } from 'app/settings/user-profile/user-profile.service';
 import {
+  TimezoneService,
+  TimeZoneOption,
+} from 'app/core/services/timezone.service';
+import {
   UserProfileDto,
   UserProfileUpdateDto,
 } from 'app/dtos/settings/user-profile.dto';
@@ -27,13 +31,20 @@ export class UserProfileComponent implements OnInit {
   // Locale options
   localeOptions: Array<{ value: string; text: string }> = [];
 
+  // Timezone options
+  timeZoneOptions: TimeZoneOption[] = [];
+
   maxBirthDate = new Date();
+
+  // bread crumb items
+  breadCrumbItems!: Array<{}>;
 
   constructor(
     private route: ActivatedRoute,
     private authService: AuthenticationService,
     private userProfileService: UserProfileService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private timezoneService: TimezoneService
   ) {}
 
   private t(key: string): string {
@@ -51,6 +62,11 @@ export class UserProfileComponent implements OnInit {
       { value: 'tr-TR', text: this.t('USER_PROFILE.LOCALE_TR') },
       { value: 'en-US', text: this.t('USER_PROFILE.LOCALE_EN') },
       { value: 'de-DE', text: this.t('USER_PROFILE.LOCALE_DE') },
+    ];
+
+    this.breadCrumbItems = [
+      { label: this.t('SETTINGS') },
+      { label: this.t('USER_PROFILE.TITLE'), active: true },
     ];
   }
 
@@ -82,6 +98,11 @@ export class UserProfileComponent implements OnInit {
     } else {
       notify(this.t('USER_PROFILE.USER_NOT_FOUND'), 'error', 3000);
     }
+
+    // Load timezone options in background
+    this.timezoneService.getTimeZones().subscribe((zones) => {
+      this.timeZoneOptions = zones;
+    });
   }
 
   loadUserProfile(): void {
@@ -91,6 +112,14 @@ export class UserProfileComponent implements OnInit {
         this.userProfile = data;
         if (this.userProfile?.birthdate) {
           this.userProfile.birthdate = new Date(this.userProfile.birthdate);
+        }
+        if (this.userProfile && !this.userProfile.zoneInfo) {
+          try {
+            const sysTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            if (sysTz) {
+              this.userProfile.zoneInfo = sysTz;
+            }
+          } catch {}
         }
         this.isLoading = false;
       },
@@ -102,7 +131,7 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  saveUserProfile(): void {
+  saveUserProfile(e: SubmitEvent): void {
     if (!this.userProfile) return;
     this.isSaving = true;
 
@@ -140,9 +169,7 @@ export class UserProfileComponent implements OnInit {
         this.isSaving = false;
       },
     });
-  }
 
-  cancelEdit(): void {
-    this.loadUserProfile();
+    e.preventDefault();
   }
 }

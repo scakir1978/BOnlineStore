@@ -290,6 +290,7 @@
   "ONE": "One",
   "TWO": "Two",
   "THREE": "Three",
+  "SETTINGS": "Settings",
   "USER_PROFILE": {
     "TITLE": "Edit User Profile",
     "PERSONAL_INFO": "Personal Information",
@@ -312,6 +313,7 @@
     "BIRTHDATE": "Birthdate",
     "LOCALE": "Language / Region",
     "ZONE_INFO": "Time Zone",
+    "SELECT_TIMEZONE": "Select time zone",
     "SELECT_GENDER": "Select gender",
     "SELECT_LOCALE": "Select language",
     "SELECT_BIRTHDATE": "Select birthdate",

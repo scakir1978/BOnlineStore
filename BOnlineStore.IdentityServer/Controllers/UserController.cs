@@ -6,12 +6,13 @@ using BOnlineStore.Localization.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace BOnlineStore.IdentityServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(LocalApi.PolicyName)]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

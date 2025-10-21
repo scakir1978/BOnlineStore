@@ -319,6 +319,7 @@
   "ONE": "Bir",
   "TWO": "İki",
   "THREE": "Üç",
+  "SETTINGS": "Ayarlar",
   "USER_PROFILE": {
     "TITLE": "Kullanıcı Profilini Düzenle",
     "PERSONAL_INFO": "Kişisel Bilgiler",
@@ -341,6 +342,7 @@
     "BIRTHDATE": "Doğum Tarihi",
     "LOCALE": "Dil / Bölge",
     "ZONE_INFO": "Zaman Dilimi",
+    "SELECT_TIMEZONE": "Zaman dilimi seçiniz",
     "SELECT_GENDER": "Cinsiyet seçiniz",
     "SELECT_LOCALE": "Dil seçiniz",
     "SELECT_BIRTHDATE": "Doğum tarihi seçiniz",

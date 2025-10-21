@@ -34,33 +34,33 @@ internal static class HostingExtensions
 
         // Localization configuration
         builder.Services.AddLocalization(options => options.ResourcesPath = "");
-        
-        builder.Services.Configure<RequestLocalizationOptions>(options =>
-        {
-            var supportedCultures = new[]
-            {
-                new CultureInfo(GlobalConstants.turkish),
-                new CultureInfo(GlobalConstants.english)
-            };
 
-            options.DefaultRequestCulture = new RequestCulture(GlobalConstants.turkish);
-            options.SupportedCultures = supportedCultures;
-            options.SupportedUICultures = supportedCultures;
-            
-            // Accept language from Accept-Language header, query string, or cookie
-            options.RequestCultureProviders = new List<IRequestCultureProvider>
-            {
-                new QueryStringRequestCultureProvider(),
-                new CookieRequestCultureProvider(),
-                new AcceptLanguageHeaderRequestCultureProvider()
-            };
-        });
+        builder.Services.Configure<RequestLocalizationOptions>(options =>
+   {
+       var supportedCultures = new[]
+ {
+   new CultureInfo(GlobalConstants.turkish),
+     new CultureInfo(GlobalConstants.english)
+     };
+
+       options.DefaultRequestCulture = new RequestCulture(GlobalConstants.turkish);
+       options.SupportedCultures = supportedCultures;
+       options.SupportedUICultures = supportedCultures;
+
+       // Accept language from Accept-Language header, query string, or cookie
+       options.RequestCultureProviders = new List<IRequestCultureProvider>
+  {
+       new QueryStringRequestCultureProvider(),
+       new CookieRequestCultureProvider(),
+ new AcceptLanguageHeaderRequestCultureProvider()
+   };
+   });
 
         builder.Services.AddRazorPages();
         builder.Services.AddControllers();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -80,30 +80,30 @@ internal static class HostingExtensions
                 options.EmitStaticAudienceClaim = true;
             })
             .AddConfigurationStore(options =>
+      {
+          options.ConfigureDbContext = c =>
+   {
+       c.UseSqlServer
+(
+builder.Configuration.GetConnectionString("DefaultConnection"),
+sqloptions => sqloptions.MigrationsAssembly(assemblyName)
+);
+   };
+
+      })
+      .AddOperationalStore(options =>
             {
                 options.ConfigureDbContext = c =>
-                {
-                    c.UseSqlServer
-                    (
-                        builder.Configuration.GetConnectionString("DefaultConnection"),
-                        sqloptions => sqloptions.MigrationsAssembly(assemblyName)
-                    );
-                };
+                    {
+                        c.UseSqlServer
+                  (
+                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                               sqloptions => sqloptions.MigrationsAssembly(assemblyName)
+            );
+                    };
 
             })
-            .AddOperationalStore(options =>
-            {
-                options.ConfigureDbContext = c =>
-                {
-                    c.UseSqlServer
-                    (
-                        builder.Configuration.GetConnectionString("DefaultConnection"),
-                        sqloptions => sqloptions.MigrationsAssembly(assemblyName)
-                    );
-                };
-
-            })
-            .AddAspNetIdentity<ApplicationUser>()
+       .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<ProfileService>();
 
         if (builder.Configuration[IdentityServerConstants.IdentityRunningMode] == "docker")
@@ -117,36 +117,31 @@ internal static class HostingExtensions
             {
                 options.ListenAnyIP(80);
                 options.ListenAnyIP(443, listenOptions =>
-                {
-                    listenOptions.UseConnectionLogging();
-                    listenOptions.UseHttps(certName, "Scag185489");
-                });
+              {
+                  listenOptions.UseConnectionLogging();
+                  listenOptions.UseHttps(certName, "Scag185489");
+              });
             });
         }
         else
             builderIdentity.AddDeveloperSigningCredential();
 
+        // Add LocalApi authentication - this allows IdentityServer to protect its own API endpoints
+        builder.Services.AddLocalApiAuthentication();
+
         builder.Services.AddAuthentication();
 
         IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
-        builder.Services.AddSingleton(mapper);
-
-        /*builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("MyCorsPolicy", policy =>
-            {
-                policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-            });
-        });*/
+        builder.Services.AddSingleton(mapper);        
 
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
-        {
-            options.ForwardedHeaders =
-                ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+          {
+              options.ForwardedHeaders =
+                  ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 
-            options.KnownNetworks.Clear();
-            options.KnownProxies.Clear();
-        });
+              options.KnownNetworks.Clear();
+              options.KnownProxies.Clear();
+          });
 
         return builder.Build();
     }
@@ -169,6 +164,9 @@ internal static class HostingExtensions
         app.UseRouting();
         app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
         app.UseIdentityServer();
+
+        // Important: Add authentication before authorization
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapRazorPages()

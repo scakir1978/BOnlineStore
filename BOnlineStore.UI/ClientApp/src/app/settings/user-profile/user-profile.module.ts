@@ -5,6 +5,8 @@ import { DevExtremeModule } from 'devextreme-angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserProfileComponent } from './user-profile.component';
 import { AuthGuard } from '../../core/guards/auth.guard';
+import { SharedModule } from '../../shared/shared.module';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 const routes: Routes = [
   // /settings/user-profile
@@ -22,6 +24,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     DevExtremeModule,
     TranslateModule,
+    SharedModule,
+    LeafletModule,
   ],
   exports: [RouterModule],
 })
