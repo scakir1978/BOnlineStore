@@ -21,6 +21,7 @@ spec:
   tls:
     - hosts:
         - ui.b-online-store.com
+        - bff.b-online-store.com
         - identity.b-online-store.com
         - definitions.b-online-store.com
         - production.b-online-store.com
@@ -84,6 +85,6 @@ spec:
             path: /(.*)
             backend:
               service:
-                name: seq-bonlinestore-com
+                name: seq
                 port:
                   number: 443

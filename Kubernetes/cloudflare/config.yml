@@ -1,0 +1,61 @@
+tunnel: 70111fbb-abb5-4592-9d16-e6eefda961bc
+credentials-file: /etc/cloudflared/70111fbb-abb5-4592-9d16-e6eefda961bc.json
+
+ingress:
+  # UI Service
+  - hostname: ui.b-online-store.com
+    service: https://192.168.204.132:443
+    originRequest:
+      noTLSVerify: true
+      originServerName: ui.b-online-store.com
+  
+  # BFF Service
+  - hostname: bff.b-online-store.com
+    service: https://192.168.204.132:443
+    originRequest:
+      noTLSVerify: true
+      originServerName: bff.b-online-store.com
+  
+  # Definitions Service
+  - hostname: definitions.b-online-store.com
+    service: https://192.168.204.132:443
+    originRequest:
+      noTLSVerify: true
+      originServerName: definitions.b-online-store.com
+  
+  # Production Service
+  - hostname: production.b-online-store.com
+    service: https://192.168.204.132:443
+    originRequest:
+      noTLSVerify: true
+      originServerName: production.b-online-store.com
+  
+  # Identity Service
+  - hostname: identity.b-online-store.com
+    service: https://192.168.204.132:443
+    originRequest:
+      noTLSVerify: true
+      originServerName: identity.b-online-store.com
+  
+  # Seq Service
+  - hostname: seq.b-online-store.com
+    service: https://192.168.204.132:443
+    originRequest:
+      noTLSVerify: true
+      originServerName: seq.b-online-store.com
+  
+  # Ana domain
+  - hostname: b-online-store.com
+    service: https://192.168.204.132:443
+    originRequest:
+      noTLSVerify: true
+      originServerName: ui.b-online-store.com
+  
+  # Wildcard subdomain
+  - hostname: "*.b-online-store.com"
+    service: https://192.168.204.132:443
+    originRequest:
+      noTLSVerify: true
+  
+  # Catch-all rule (her zaman son sırada olmalı)
+  - service: http_status:404
