@@ -78,7 +78,7 @@ metadata:
   name: identity-bonlinestore-com
   namespace: default
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "identity.bonlinestore.com"
+    service.beta.kubernetes.io/do-loadbalancer-name: "identity.b-online-store.com"
 spec:
   selector:
     app: identity.bonlinestore.com

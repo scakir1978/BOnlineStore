@@ -38,7 +38,7 @@ metadata:
   name: ui-bonlinestore-com
   namespace: default
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "ui.bonlinestore.com"
+    service.beta.kubernetes.io/do-loadbalancer-name: "ui.b-online-store.com"
 spec:
   selector:
     app: ui.bonlinestore.com

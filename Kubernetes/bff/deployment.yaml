@@ -68,7 +68,7 @@ metadata:
   name: bff-bonlinestore-com
   namespace: default
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "bff.bonlinestore.com"
+    service.beta.kubernetes.io/do-loadbalancer-name: "bff.b-online-store.com"
 spec:
   selector:
     app: bff.bonlinestore.com

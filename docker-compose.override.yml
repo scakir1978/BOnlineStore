@@ -47,13 +47,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - "IdentityServerUrl=https://identity.bonlinestore.com"
+      - "IdentityServerUrl=https://identity.b-online-store.com"
       - "ConnectionStrings:DefaultConnection=Server=identitydbdocker,1433;Database=IdentityDB; User=sa; Password=Scag18548912345*"
-      - "IdentityConfigSettings:RedirectUri=https://ui.bonlinestore.com/pages/callback"
-      - "IdentityConfigSettings:AllowedCorsOrigin1=https://ui.bonlinestore.com"
-      - "IdentityConfigSettings:AllowedCorsOrigin2=https://gateway.bonlinestore.com"
-      - "IdentityConfigSettings:PostLogoutRedirectUri=https://ui.bonlinestore.com/pages/callout"
-      - "IdentityConfigSettings:FrontChannelLogoutUri=https://ui.bonlinestore.com/pages/callout"
+      - "IdentityConfigSettings:RedirectUri=https://ui.b-online-store.com/pages/callback"
+      - "IdentityConfigSettings:AllowedCorsOrigin1=https://ui.b-online-store.com"
+      - "IdentityConfigSettings:AllowedCorsOrigin2=https://gateway.b-online-store.com"
+      - "IdentityConfigSettings:PostLogoutRedirectUri=https://ui.b-online-store.com/pages/callout"
+      - "IdentityConfigSettings:FrontChannelLogoutUri=https://ui.b-online-store.com/pages/callout"
       - "IdentityRunningMode=docker"
     depends_on:
       - "identitydbdocker"    
@@ -64,7 +64,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80      
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
-      - "IdentityServerUrl=https://identity.bonlinestore.com"
+      - "IdentityServerUrl=https://identity.b-online-store.com"
       - "SeqServerUrl=http://seq:5341"
       - "DefinitionsRunningMode=docker"
     depends_on:
@@ -78,7 +78,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development      
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
-      - "IdentityServerUrl=https://identity.bonlinestore.com"
+      - "IdentityServerUrl=https://identity.b-online-store.com"
       - "SeqServerUrl=http://seq:5341"
       - "ProductionRunningMode=docker"
     depends_on:
@@ -92,7 +92,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
-      - "IdentityServerUrl=https://identity.bonlinestore.com"
+      - "IdentityServerUrl=https://identity.b-online-store.com"
       - "SeqServerUrl=http://seq:5341"
       - "OrderRunningMode=docker"
     depends_on:
@@ -105,7 +105,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80      
-      - "IdentityServerUrl=https://identity.bonlinestore.com"
+      - "IdentityServerUrl=https://identity.b-online-store.com"
       - "GatewayRunningMode=docker"
     depends_on:
       - "identity.bonlinestore.com"    
@@ -125,10 +125,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80      
       - "DatabaseSettings:ConnectionString=mongodb://mongodb:27017"
-      - "IdentityServerUrl=https://identity.bonlinestore.com"
-      - "DefinitionsApiUrl=https://definitions.bonlinestore.com"
-      - "ProductionApiUrl=https://production.bonlinestore.com"
-      - "OrderApiUrl=https://order.bonlinestore.com"
+      - "IdentityServerUrl=https://identity.b-online-store.com"
+      - "DefinitionsApiUrl=https://definitions.b-online-store.com"
+      - "ProductionApiUrl=https://production.b-online-store.com"
+      - "OrderApiUrl=https://order.b-online-store.com"
       - "SeqServerUrl=http://seq:5341"
       - "BFFRunningMode=docker" 
     depends_on:

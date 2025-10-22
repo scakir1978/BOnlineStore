@@ -63,7 +63,7 @@ metadata:
   name: production-bonlinestore-com
   namespace: default
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "production.bonlinestore.com"
+    service.beta.kubernetes.io/do-loadbalancer-name: "production.b-online-store.com"
 spec:
   selector:
     app: production.bonlinestore.com

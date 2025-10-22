@@ -1,5 +1,5 @@
 #****** Bu yaml dosyasý kullanýlarak tls yapýlamadý. Aþaðýdaki komt ile gerçekleþtirildi. ******
-#kubectl create secret tls bonlinestore-com-certificate --cert=./bonlinestore.crt --key=./bonlinetore-decrypted.key 
+#kubectl create secret tls b-online-store-com-certificate --cert=./bonlinestore.crt --key=./bonlinetore-decrypted.key 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -20,14 +20,14 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - ui.bonlinestore.com
-        - identity.bonlinestore.com
-        - definitions.bonlinestore.com
-        - production.bonlinestore.com
-        - seq.bonlinestore.com
+        - ui.b-online-store.com
+        - identity.b-online-store.com
+        - definitions.b-online-store.com
+        - production.b-online-store.com
+        - seq.b-online-store.com
       secretName: bonlinestore-com-certificate
   rules:
-    - host: ui.bonlinestore.com
+    - host: ui.b-online-store.com
       http:
         paths:
           - pathType: Prefix
@@ -37,7 +37,7 @@ spec:
                 name: ui-bonlinestore-com
                 port:
                   number: 443
-    - host: bff.bonlinestore.com
+    - host: bff.b-online-store.com
       http:
         paths:
           - pathType: Prefix
@@ -47,7 +47,7 @@ spec:
                 name: bff-bonlinestore-com
                 port:
                   number: 443
-    - host: definitions.bonlinestore.com
+    - host: definitions.b-online-store.com
       http:
         paths:
           - pathType: Prefix
@@ -57,7 +57,7 @@ spec:
                 name: definitions-bonlinestore-com
                 port:
                   number: 443
-    - host: production.bonlinestore.com
+    - host: production.b-online-store.com
       http:
         paths:
           - pathType: Prefix
@@ -67,7 +67,7 @@ spec:
                 name: production-bonlinestore-com
                 port:
                   number: 443
-    - host: identity.bonlinestore.com
+    - host: identity.b-online-store.com
       http:
         paths:
           - pathType: Prefix
@@ -77,7 +77,7 @@ spec:
                 name: identity-bonlinestore-com
                 port:
                   number: 443
-    - host: seq.bonlinestore.com
+    - host: seq.b-online-store.com
       http:
         paths:
           - pathType: Prefix

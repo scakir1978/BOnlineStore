@@ -58,7 +58,7 @@ metadata:
   name: definitions-bonlinestore-com
   namespace: default
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-name: "definitions.bonlinestore.com"
+    service.beta.kubernetes.io/do-loadbalancer-name: "definitions.b-online-store.com"
 spec:
   selector:
     app: definitions.bonlinestore.com

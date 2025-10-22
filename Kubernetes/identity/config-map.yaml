@@ -6,10 +6,10 @@ metadata:
 data:
   aspnetcore-environment: Development
   aspnetcore-urls: https://+:443;http://+:80
-  identity-server-url: https://identity.bonlinestore.com
-  redirect-uri: https://ui.bonlinestore.com/identity/callback
-  allowed-cors-origin1: https://ui.bonlinestore.com
-  allowed-cors-origin2: https://gateway.bonlinestore.com
-  post-logout-redirect-uri: https://ui.bonlinestore.com/identity/callout
-  front-channel-logout-uri: https://ui.bonlinestore.com/identity/callout
+  identity-server-url: https://identity.b-online-store.com
+  redirect-uri: https://ui.b-online-store.com/identity/callback
+  allowed-cors-origin1: https://ui.b-online-store.com
+  allowed-cors-origin2: https://gateway.b-online-store.com
+  post-logout-redirect-uri: https://ui.b-online-store.com/identity/callout
+  front-channel-logout-uri: https://ui.b-online-store.com/identity/callout
   identity-running-mode: docker
