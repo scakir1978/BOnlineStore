@@ -9,8 +9,6 @@
     <DockerServiceName>bonlinestore.services.definitions.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="BOnlineStore.IdentityServer.UnitTests\BOnlineStore.IdentityServer.UnitTests.csproj" />
-    <None Include="BOnlineStore.Services\Definitions\BOnlineStore.Services.Definitions.Api.UnitTests\BOnlineStore.Services.Definitions.Api.UnitTests.csproj" />
     <None Include="docker-compose.override.yml">
       <DependentUpon>docker-compose.yml</DependentUpon>
     </None>
