@@ -1,5 +1,5 @@
 import { CallbackModule } from './callback/callback.module';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 // search module
@@ -12,13 +12,19 @@ import { LayoutsModule } from './layouts/layouts.module';
 import { PagesModule } from './pages/pages.module';
 
 // Auth
-import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  HttpClient,
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { initFirebaseBackend } from './authUtils';
 import { FakeBackendInterceptor } from './core/helpers/fake-backend';
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
+import { AuthenticationService } from './core/services/auth.service';
 
 // Language
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -34,24 +40,37 @@ export function createTranslateLoader(http: HttpClient): any {
   FakeBackendInterceptor;
 }*/
 
-@NgModule({ declarations: [AppComponent],
-    bootstrap: [AppComponent], imports: [TranslateModule.forRoot({
-            defaultLanguage: 'tr',
-            loader: {
-                provide: TranslateLoader,
-                useFactory: createTranslateLoader,
-                deps: [HttpClient],
-            },
-        }),
-        BrowserAnimationsModule,
-        BrowserModule,
-        AppRoutingModule,
-        LayoutsModule,
-        PagesModule,
-        //Ng2SearchPipeModule,
-        CallbackModule], providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
+@NgModule({
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+  imports: [
+    TranslateModule.forRoot({
+      defaultLanguage: 'tr',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
+    BrowserAnimationsModule,
+    BrowserModule,
+    AppRoutingModule,
+    LayoutsModule,
+    PagesModule,
+    //Ng2SearchPipeModule,
+    CallbackModule,
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (auth: AuthenticationService) => () =>
+        auth.initAuthPersistence(),
+      deps: [AuthenticationService],
+      multi: true,
+    },
+  ],
+})
 export class AppModule {}

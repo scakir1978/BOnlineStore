@@ -35,6 +35,8 @@ export class AuthenticationService {
     automaticSilentRenew: true,
     response_mode: 'query',
     loadUserInfo: true, // UserInfo endpoint'inden claim'leri çek
+    // Token ve kullanıcı bilgisini tarayıcı kapatıldığında temizlenen sessionStorage'da tutar
+    userStore: new oidc.WebStorageStateStore({ store: window.sessionStorage }),
   };
 
   private identityUser: oidc.User | null | undefined = null;
@@ -117,8 +119,6 @@ export class AuthenticationService {
   logout() {
     // logout the user
     // return getFirebaseBackend()!.logout();
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('token');
     this.currentUserSubject.next(null!);
   }
 
@@ -188,7 +188,7 @@ export class AuthenticationService {
     user.id = identityUser.profile.sid;
     //user.avatar = 'avatar-s-11.jpg';
     user.email = identityUser.profile.email;
-    user.firstName = identityUser.profile.name;
+    user.firstName = identityUser.profile.given_name;
     user.lastName = identityUser.profile.family_name;
     user.userName = identityUser.profile.preferred_username;
     user.nickname = identityUser.profile.nickname;
@@ -196,8 +196,32 @@ export class AuthenticationService {
     user.token = identityUser.access_token;
     user.language = identityUser.profile.locale ?? 'tr-TR';
 
-    localStorage.setItem('currentUser', JSON.stringify(user));
-
     this.currentUserSubject.next(user);
+  }
+
+  /**
+   * Uygulama ilk açıldığında, mevcut bir oturum varsa (IdP tarafında cookie ile),
+   * kullanıcıyı sessizce (redirect olmadan) tekrar oturum açmış hale getirir.
+   * Böylece localStorage'da token tutmadan "hatırla" davranışı sağlanır.
+   */
+  async initAuthPersistence(): Promise<void> {
+    try {
+      const existing = await this.userManager.getUser();
+      if (existing && !existing.expired) {
+        this.createUIUser(existing);
+        return;
+      }
+    } catch {
+      /* ignore */
+    }
+
+    // Eğer sessionStorage boşsa, IdP oturumu varsa sessiz giriş dener
+    try {
+      const silentUser = await this.userManager.signinSilent();
+      this.createUIUser(silentUser);
+    } catch (err) {
+      // Üçüncü taraf cookie engelleri veya IdP oturumu yoksa buraya düşebilir
+      this.currentUserSubject.next(null!);
+    }
   }
 }
