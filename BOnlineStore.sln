@@ -175,23 +175,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOnlineStore.IdentityServer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BOnlineStore.Services.Definitions.Api.UnitTests", "BOnlineStore.UnitTests\BOnlineStore.Services.Definitions.Api.UnitTests\BOnlineStore.Services.Definitions.Api.UnitTests.csproj", "{30D2496A-0D57-32CB-67EE-448A72DFB932}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CloudFlare", "CloudFlare", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		Kubernetes\cloudflare-tunnel\config.yml = Kubernetes\cloudflare-tunnel\config.yml
-		Kubernetes\cloudflare-tunnel\INDEX.md = Kubernetes\cloudflare-tunnel\INDEX.md
-		Kubernetes\cloudflare-tunnel\install-cloudflared.sh = Kubernetes\cloudflare-tunnel\install-cloudflared.sh
-		Kubernetes\cloudflare-tunnel\install-service.sh = Kubernetes\cloudflare-tunnel\install-service.sh
-		Kubernetes\cloudflare-tunnel\list-files.sh = Kubernetes\cloudflare-tunnel\list-files.sh
-		Kubernetes\cloudflare-tunnel\make-executable.sh = Kubernetes\cloudflare-tunnel\make-executable.sh
-		Kubernetes\cloudflare-tunnel\QUICK-REFERENCE.md = Kubernetes\cloudflare-tunnel\QUICK-REFERENCE.md
-		Kubernetes\cloudflare-tunnel\quick-setup.sh = Kubernetes\cloudflare-tunnel\quick-setup.sh
-		Kubernetes\cloudflare-tunnel\README.md = Kubernetes\cloudflare-tunnel\README.md
-		Kubernetes\cloudflare-tunnel\setup-dns-routes.sh = Kubernetes\cloudflare-tunnel\setup-dns-routes.sh
-		Kubernetes\cloudflare-tunnel\SUMMARY.md = Kubernetes\cloudflare-tunnel\SUMMARY.md
-		Kubernetes\cloudflare-tunnel\test-tunnel.sh = Kubernetes\cloudflare-tunnel\test-tunnel.sh
-		Kubernetes\cloudflare-tunnel\UPDATES.md = Kubernetes\cloudflare-tunnel\UPDATES.md
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -399,7 +382,6 @@ Global
 		{EB108F52-68ED-4E92-BEDE-50F03F19B996} = {749EF661-EB48-4264-8785-5637B9A62C78}
 		{6BB0F3AF-334E-2986-2617-C7606D73BFB0} = {2F646680-91A4-F107-74F4-9BF3126A0F16}
 		{30D2496A-0D57-32CB-67EE-448A72DFB932} = {2F646680-91A4-F107-74F4-9BF3126A0F16}
-		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {749EF661-EB48-4264-8785-5637B9A62C78}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A12FA703-13AF-486D-90AA-45AC95F5C81E}
