@@ -33,28 +33,31 @@ internal static class HostingExtensions
         builder.Services.AddScoped<IUserService, UserManager>();
 
         // Localization configuration
-        builder.Services.AddLocalization(options => options.ResourcesPath = "");
+        builder.Services.AddLocalization();
 
         builder.Services.Configure<RequestLocalizationOptions>(options =>
-   {
-       var supportedCultures = new[]
- {
-   new CultureInfo(GlobalConstants.turkish),
-     new CultureInfo(GlobalConstants.english)
-     };
+        {
+            var supportedCultures = new[]
+            {
+                new CultureInfo(GlobalConstants.turkish),
+                new CultureInfo(GlobalConstants.english)
+           };
 
-       options.DefaultRequestCulture = new RequestCulture(GlobalConstants.turkish);
-       options.SupportedCultures = supportedCultures;
-       options.SupportedUICultures = supportedCultures;
+            options.DefaultRequestCulture = new RequestCulture(GlobalConstants.turkish);
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
 
-       // Accept language from Accept-Language header, query string, or cookie
-       options.RequestCultureProviders = new List<IRequestCultureProvider>
-  {
-       new QueryStringRequestCultureProvider(),
-       new CookieRequestCultureProvider(),
- new AcceptLanguageHeaderRequestCultureProvider()
-   };
-   });
+            // Accept language from Accept-Language header, query string, or cookie
+            options.RequestCultureProviders = new List<IRequestCultureProvider>
+           {
+               new QueryStringRequestCultureProvider{
+                   QueryStringKey = "culture",
+                   UIQueryStringKey = "ui-culture"
+               },
+               new CookieRequestCultureProvider{ CookieName = "locale" },
+               new AcceptLanguageHeaderRequestCultureProvider()
+           };
+        });
 
         builder.Services.AddRazorPages();
         builder.Services.AddControllers();
@@ -132,7 +135,7 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
         builder.Services.AddAuthentication();
 
         IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
-        builder.Services.AddSingleton(mapper);        
+        builder.Services.AddSingleton(mapper);
 
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
           {

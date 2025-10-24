@@ -10,4 +10,10 @@ if (environment.production) {
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
+  .then(() => {
+    const splash = document.getElementById('app-splash');
+    if (splash && splash.parentElement) {
+      splash.parentElement.removeChild(splash);
+    }
+  })
   .catch((err) => console.error(err));

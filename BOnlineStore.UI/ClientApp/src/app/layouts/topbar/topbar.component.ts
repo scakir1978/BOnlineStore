@@ -1,5 +1,12 @@
 import { LayoutService } from './../../core/services/layout.service';
-import { Component, OnInit, EventEmitter, Output, Inject, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  EventEmitter,
+  Output,
+  Inject,
+  OnDestroy,
+} from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { EventService } from '../../core/services/event.service';
 import { Subscription } from 'rxjs';
@@ -42,7 +49,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   flagvalue: any;
   valueset: any;
   countryName: any;
-  cookieValue: any;
+  defaultLanguage: any;
   userData: any;
 
   currentTheme: string = 'light';
@@ -69,13 +76,15 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.element = document.documentElement;
 
     // User data'yı observable olarak subscribe et
-    this.userSubscription = this.authService.currentUser$().subscribe(user => {
-      this.userData = user;
-    });
+    this.userSubscription = this.authService
+      .currentUser$()
+      .subscribe((user) => {
+        this.userData = user;
+      });
 
     // Cookies wise Language set
-    this.cookieValue = this._cookiesService.get('lang');
-    const val = this.listLang.filter((x) => x.lang === this.cookieValue);
+    this.defaultLanguage = this._cookiesService.get('locale');
+    const val = this.listLang.filter((x) => x.lang === this.defaultLanguage);
     this.countryName = val.map((element) => element.text);
     if (val.length === 0) {
       if (this.flagvalue === undefined) {
@@ -85,9 +94,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
       this.flagvalue = val.map((element) => element.flag);
     }
 
+    this.languageService.setLanguage(this.defaultLanguage || 'tr');
+
     //devextreme localization
-    locale(this.cookieValue || 'tr');
-    sessionStorage.setItem('locale', this.cookieValue || 'tr');
+    locale(this.defaultLanguage || 'tr');
 
     //  Fetch Data
     this.cartData = cartData;
@@ -195,11 +205,12 @@ export class TopbarComponent implements OnInit, OnDestroy {
   setLanguage(text: string, lang: string, flag: string) {
     this.countryName = text;
     this.flagvalue = flag;
-    this.cookieValue = lang;
+    this.defaultLanguage = lang;
 
-    sessionStorage.setItem('locale', lang);
     this.languageService.setLanguage(lang);
     locale(lang);
+
+    this._cookiesService.set('locale', lang);
 
     window.location.reload();
   }

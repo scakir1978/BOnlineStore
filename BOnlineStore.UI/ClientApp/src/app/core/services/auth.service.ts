@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalComponent } from '../../global-component';
+import { CookieService } from 'ngx-cookie-service';
 
 import * as oidc from 'oidc-client-ts';
 import { AuthenticationScopesEnum } from 'app/base-classes/base-enums/authentication-scopes.enum';
@@ -35,8 +36,6 @@ export class AuthenticationService {
     automaticSilentRenew: true,
     response_mode: 'query',
     loadUserInfo: true, // UserInfo endpoint'inden claim'leri çek
-    // Token ve kullanıcı bilgisini tarayıcı kapatıldığında temizlenen sessionStorage'da tutar
-    userStore: new oidc.WebStorageStateStore({ store: window.sessionStorage }),
   };
 
   private identityUser: oidc.User | null | undefined = null;
@@ -48,7 +47,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   // public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public _cookiesService: CookieService) {
     this.userManager = new oidc.UserManager(this.config);
     this.currentUserSubject = new BehaviorSubject<User>(null!);
     //this.currentUser = this.currentUserSubject.asObservable();
@@ -161,11 +160,16 @@ export class AuthenticationService {
   }
 
   logoutIndetity(): void {
-    localStorage.removeItem('currentUser');
-    // notify
     this.currentUserSubject.next(null!);
-
-    this.userManager.signoutRedirect();
+    // Pass locale to IdentityServer using OIDC ui_locales and ASP.NET Core culture params
+    const locale = this.getPreferredLocale();
+    this.userManager.signoutRedirect({
+      extraQueryParams: {
+        ui_locales: locale,
+        culture: locale,
+        'ui-culture': locale,
+      },
+    });
   }
 
   silentRefresh(): Promise<void> {
@@ -174,6 +178,27 @@ export class AuthenticationService {
 
   signoutRedirectCallback() {
     return this.userManager.signoutRedirectCallback();
+  }
+
+  /**
+   * Determines the preferred UI locale to send to IdentityServer.
+   * Priority: current user language -> cookie 'locale' -> environment default ('tr-TR').
+   * Ensures format like 'tr-TR' when only language code (e.g., 'tr') is available.
+   */
+  private getPreferredLocale(): string {
+    const fromUser = this.currentUserSubject?.value?.language;
+    if (fromUser && fromUser.length >= 2) return fromUser;
+
+    const cookieLang = this._cookiesService?.get?.('locale'); // e.g., 'tr' or 'en'
+    if (cookieLang) {
+      // If already like 'tr-TR', return as is; if 'tr', normalize to 'tr-TR'
+      if (cookieLang.includes('-')) return cookieLang;
+      const lang = cookieLang.toLowerCase();
+      const region = lang.length === 2 ? lang.toUpperCase() : 'US';
+      return `${lang}-${region}`;
+    }
+
+    return 'tr-TR';
   }
 
   private createUIUser(identityUser: oidc.User) {
@@ -195,6 +220,9 @@ export class AuthenticationService {
     //user.role = Role.Admin;
     user.token = identityUser.access_token;
     user.language = identityUser.profile.locale ?? 'tr-TR';
+
+    if (localStorage.getItem('locale') == null)
+      this._cookiesService.set('locale', user.language.split('-')[0]);
 
     this.currentUserSubject.next(user);
   }
