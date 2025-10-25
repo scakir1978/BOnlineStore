@@ -29,5 +29,10 @@ namespace BOnlineStore.Localization.Constants
         public const string UserNotFoundByEmail = "UserNotFoundByEmail";
         public const string PasswordChangedSuccessfully = "PasswordChangedSuccessfully";
         public const string PasswordResetSuccessfully = "PasswordResetSuccessfully";
+
+        // Logout Page Keys
+        public const string LoggedOutTitle = "LoggedOutTitle";
+        public const string LoggedOutThanks = "LoggedOutThanks";
+        public const string LoginAgain = "LoginAgain";
     }
 }

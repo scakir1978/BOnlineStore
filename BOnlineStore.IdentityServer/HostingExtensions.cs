@@ -54,7 +54,7 @@ internal static class HostingExtensions
                    QueryStringKey = "culture",
                    UIQueryStringKey = "ui-culture"
                },
-               new CookieRequestCultureProvider{ CookieName = "locale" },
+               new CookieRequestCultureProvider{ CookieName = "localeserver" },
                new AcceptLanguageHeaderRequestCultureProvider()
            };
         });
@@ -159,6 +159,33 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
         }
 
         app.UseForwardedHeaders();
+
+        // Persist culture from query (culture, ui-culture, ui_locales) into the localization cookie as early as possible
+        app.Use(async (context, next) =>
+        {
+            var cultureFromQuery = context.Request.Query["culture"].FirstOrDefault()
+                ?? context.Request.Query["ui-culture"].FirstOrDefault()
+                ?? context.Request.Query["ui_locales"].FirstOrDefault();
+
+            if (!string.IsNullOrWhiteSpace(cultureFromQuery))
+            {
+                try
+                {
+                    var culture = new CultureInfo(cultureFromQuery);
+                    var requestCulture = new RequestCulture(culture, culture);
+                    context.Response.Cookies.Append(
+                         "localeserver",
+                         CookieRequestCultureProvider.MakeCookieValue(requestCulture),
+                         new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+                    );
+                }
+                catch (CultureNotFoundException)
+                {
+                    // ignore invalid culture
+                }
+            }
+            await next();
+        });
 
         // Add request localization middleware
         app.UseRequestLocalization();

@@ -1,5 +1,6 @@
 using Duende.IdentityServer.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace BOnlineStore.IdentityServer.Pages.Logout;
@@ -18,6 +19,9 @@ public class LoggedOut : PageModel
 
     public async Task OnGet(string logoutId)
     {
+        // ensure the current request culture is respected (especially if UI client sent ui_locales)
+        // nothing to do here other than relying on UseRequestLocalization middleware
+
         // get context information (client name, post logout redirect URI and iframe for federated signout)
         var logout = await _interactionService.GetLogoutContextAsync(logoutId);
 

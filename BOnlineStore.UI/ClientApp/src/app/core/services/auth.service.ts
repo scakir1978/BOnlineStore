@@ -186,19 +186,18 @@ export class AuthenticationService {
    * Ensures format like 'tr-TR' when only language code (e.g., 'tr') is available.
    */
   private getPreferredLocale(): string {
-    const fromUser = this.currentUserSubject?.value?.language;
-    if (fromUser && fromUser.length >= 2) return fromUser;
+    let serverLanguages = [
+      { code: 'tr', serverCode: 'tr-TR' },
+      { code: 'en', serverCode: 'en-US' },
+    ];
 
-    const cookieLang = this._cookiesService?.get?.('locale'); // e.g., 'tr' or 'en'
-    if (cookieLang) {
-      // If already like 'tr-TR', return as is; if 'tr', normalize to 'tr-TR'
-      if (cookieLang.includes('-')) return cookieLang;
-      const lang = cookieLang.toLowerCase();
-      const region = lang.length === 2 ? lang.toUpperCase() : 'US';
-      return `${lang}-${region}`;
-    }
+    const userLanguage = this._cookiesService.get('locale') || 'tr';
 
-    return 'tr-TR';
+    const serverLanguageCode = serverLanguages.find(
+      (serverLanguage) => serverLanguage.code === userLanguage
+    )?.serverCode;
+
+    return serverLanguageCode ?? 'tr-TR';
   }
 
   private createUIUser(identityUser: oidc.User) {

@@ -580,5 +580,16 @@
     <value>Şifre başarıyla sıfırlandı</value>
     <comment>Password reset successfully</comment>
   </data>
-
+  <data name="LoggedOutTitle" xml:space="preserve">
+    <value>Oturumu kapattınız</value>
+    <comment>You have signed out</comment>
+  </data>
+  <data name="LoggedOutThanks" xml:space="preserve">
+    <value><span class="fw-semibold">{0}</span> uygulamasını kullandığınız için teşekkür ederiz.</value>
+    <comment>Thank you for using the {0} application.</comment>
+  </data>
+  <data name="LoginAgain" xml:space="preserve">
+    <value>Tekrar Oturum Aç</value>
+    <comment>Sign in again</comment>
+  </data>
 </root>
