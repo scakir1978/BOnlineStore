@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using BOnlineStore.Shared.Constansts;
+using BOnlineStore.IdentityServer.Extensions;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -51,10 +52,10 @@ internal static class HostingExtensions
             options.RequestCultureProviders = new List<IRequestCultureProvider>
            {
                new QueryStringRequestCultureProvider{
-                   QueryStringKey = "culture",
-                   UIQueryStringKey = "ui-culture"
+                   QueryStringKey = IdentityServerConstants.CultureQueryStringKey,
+                   UIQueryStringKey = IdentityServerConstants.UICultureQueryStringKey
                },
-               new CookieRequestCultureProvider{ CookieName = "localeserver" },
+               new CookieRequestCultureProvider{ CookieName = IdentityServerConstants.LocalizationCookieName },
                new AcceptLanguageHeaderRequestCultureProvider()
            };
         });
@@ -63,7 +64,7 @@ internal static class HostingExtensions
         builder.Services.AddControllers();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+         options.UseSqlServer(builder.Configuration.GetConnectionString(IdentityServerConstants.DefaultConnectionStringName)));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -73,7 +74,7 @@ internal static class HostingExtensions
         var builderIdentity = builder.Services
             .AddIdentityServer(options =>
             {
-                options.IssuerUri = builder.Configuration.GetValue<string>("IdentityServerUrl");
+                options.IssuerUri = builder.Configuration.GetValue<string>(IdentityServerConstants.ConfigKeyIdentityServerUrl);
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
@@ -85,13 +86,13 @@ internal static class HostingExtensions
             .AddConfigurationStore(options =>
       {
           options.ConfigureDbContext = c =>
-   {
-       c.UseSqlServer
-(
-builder.Configuration.GetConnectionString("DefaultConnection"),
-sqloptions => sqloptions.MigrationsAssembly(assemblyName)
-);
-   };
+        {
+            c.UseSqlServer
+                (
+                    builder.Configuration.GetConnectionString(IdentityServerConstants.DefaultConnectionStringName),
+                    sqloptions => sqloptions.MigrationsAssembly(assemblyName)
+                );
+        };
 
       })
       .AddOperationalStore(options =>
@@ -100,7 +101,7 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
                     {
                         c.UseSqlServer
                   (
-                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                    builder.Configuration.GetConnectionString(IdentityServerConstants.DefaultConnectionStringName),
                                sqloptions => sqloptions.MigrationsAssembly(assemblyName)
             );
                     };
@@ -109,12 +110,12 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
        .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<ProfileService>();
 
-        if (builder.Configuration[IdentityServerConstants.IdentityRunningMode] == "docker")
+        if (builder.Configuration[IdentityServerConstants.IdentityRunningMode] == IdentityServerConstants.RunningModeDocker)
         {
-            var certName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/bonlinestore.pfx";
-            Log.Information(File.Exists(certName) == true ? $"Certificate status: {certName} found." : $"Certificate status: {certName} NOT FOUND!!!");
+            var certName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + IdentityServerConstants.SigningCertificateFile;
+            Log.Information(File.Exists(certName) == true ? string.Format(IdentityServerConstants.CertFoundLogTemplate, certName) : string.Format(IdentityServerConstants.CertNotFoundLogTemplate, certName));
 
-            builderIdentity.AddSigningCredential(new X509Certificate2(certName, "Scag185489"));
+            builderIdentity.AddSigningCredential(new X509Certificate2(certName, IdentityServerConstants.SigningCertificatePassword));
 
             builder.WebHost.ConfigureKestrel(options =>
             {
@@ -122,7 +123,7 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
                 options.ListenAnyIP(443, listenOptions =>
               {
                   listenOptions.UseConnectionLogging();
-                  listenOptions.UseHttps(certName, "Scag185489");
+                  listenOptions.UseHttps(certName, IdentityServerConstants.SigningCertificatePassword);
               });
             });
         }
@@ -138,13 +139,13 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
         builder.Services.AddSingleton(mapper);
 
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
-          {
-              options.ForwardedHeaders =
-                  ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        {
+            options.ForwardedHeaders =
+                ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 
-              options.KnownNetworks.Clear();
-              options.KnownProxies.Clear();
-          });
+            options.KnownNetworks.Clear();
+            options.KnownProxies.Clear();
+        });
 
         return builder.Build();
     }
@@ -160,32 +161,8 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
 
         app.UseForwardedHeaders();
 
-        // Persist culture from query (culture, ui-culture, ui_locales) into the localization cookie as early as possible
-        app.Use(async (context, next) =>
-        {
-            var cultureFromQuery = context.Request.Query["culture"].FirstOrDefault()
-                ?? context.Request.Query["ui-culture"].FirstOrDefault()
-                ?? context.Request.Query["ui_locales"].FirstOrDefault();
-
-            if (!string.IsNullOrWhiteSpace(cultureFromQuery))
-            {
-                try
-                {
-                    var culture = new CultureInfo(cultureFromQuery);
-                    var requestCulture = new RequestCulture(culture, culture);
-                    context.Response.Cookies.Append(
-                         "localeserver",
-                         CookieRequestCultureProvider.MakeCookieValue(requestCulture),
-                         new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
-                    );
-                }
-                catch (CultureNotFoundException)
-                {
-                    // ignore invalid culture
-                }
-            }
-            await next();
-        });
+        // Persist culture from query params into cookie early
+        app.UsePersistCultureFromQuery();
 
         // Add request localization middleware
         app.UseRequestLocalization();
