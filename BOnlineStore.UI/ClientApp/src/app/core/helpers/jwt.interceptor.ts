@@ -1,4 +1,3 @@
-import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -14,10 +13,7 @@ import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(
-    private authenticationService: AuthenticationService,
-    public _cookiesService: CookieService
-  ) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   private serverLanguages = [
     { code: 'tr', serverCode: 'tr-TR' },
@@ -29,7 +25,7 @@ export class JwtInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const currentUser = this.authenticationService.currentUser();
-    const userLanguage = this._cookiesService.get('locale') || 'tr';
+    const userLanguage = localStorage.getItem('locale') || 'tr';
     const isLoggedIn = currentUser && currentUser.token;
 
     const serverLanguageCode = this.serverLanguages.find(

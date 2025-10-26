@@ -72,31 +72,34 @@
     <script>
       (function () {
         try {
-          cookieStore.get("locale").then(function (cookie) {
-            var storedLang = cookie ? cookie.value : null;
+          console.log(
+            "Index cookie language from localStorage:",
+            localStorage.getItem("locale")
+          );
 
-            var lang = (storedLang || "tr").toLowerCase();
-            var primary = lang.split("-")[0];
+          var storedLang = localStorage.getItem("locale") || "tr";
 
-            var messages = {
-              tr: "Lütfen bekleyiniz…",
-              en: "Please wait…",
-              de: "Bitte warten…",
-              fr: "Veuillez patienter…",
-              es: "Por favor, espere…",
-              it: "Attendere prego…",
-              ru: "Пожалуйста, подождите…",
-              ar: "يرجى الانتظار…",
-            };
+          var lang = (storedLang || "tr").toLowerCase();
+          var primary = lang.split("-")[0];
 
-            var msg = messages[lang] || messages[primary] || messages.tr;
-            var splash = document.getElementById("app-splash");
-            if (splash) {
-              var el = splash.querySelector(".message");
-              if (el) el.textContent = msg;
-              splash.setAttribute("aria-label", msg);
-            }
-          });
+          var messages = {
+            tr: "Lütfen bekleyiniz…",
+            en: "Please wait…",
+            de: "Bitte warten…",
+            fr: "Veuillez patienter…",
+            es: "Por favor, espere…",
+            it: "Attendere prego…",
+            ru: "Пожалуйста, подождите…",
+            ar: "يرجى الانتظار…",
+          };
+
+          var msg = messages[lang] || messages[primary] || messages.tr;
+          var splash = document.getElementById("app-splash");
+          if (splash) {
+            var el = splash.querySelector(".message");
+            if (el) el.textContent = msg;
+            splash.setAttribute("aria-label", msg);
+          }
         } catch (e) {
           // ignore
         }

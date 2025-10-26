@@ -1,5 +1,9 @@
 ﻿@page
 @model BOnlineStore.IdentityServer.Pages.Login.Index
+@using Microsoft.Extensions.Localization
+@using BOnlineStore.Localization
+@using BOnlineStore.Localization.Constants
+@inject IStringLocalizer<Language> L
 
 <div class="auth-page-wrapper pt-5">
     <!-- auth page content -->
@@ -25,8 +29,8 @@
 
                         <div class="card-body p-4">
                             <div class="text-center mt-2">
-                                <h5 class="text-primary">Hoş Geldiniz...</h5>
-                                <p class="text-muted">B-Online-Store adresine devam etmek için oturum açın.</p>
+                                <h5 class="text-primary">@L[IdentityServerKeys.LoginWelcomeTitle]</h5>
+                                <p class="text-muted">@L[IdentityServerKeys.LoginSubtitle]</p>
                             </div>
                             <div class="p-2 mt-4">
 
@@ -35,23 +39,23 @@
                                     <form asp-page="/Account/Login/Index" class="needs-validation" novalidate>
                                         <input type="hidden" asp-for="Input.ReturnUrl" />
                                         <div class="mb-3 position-relative">
-                                            <label asp-for="Input.Username" class="form-label">E-Mail</label>
-                                            <input asp-for="Input.Username" type="text" class="form-control" id="username" placeholder="Mail adresinizi girin" aria-describedby="username" tabindex="1" required>
+                                            <label asp-for="Input.Username" class="form-label">@L[IdentityServerKeys.LoginEmailLabel]</label>
+                                            <input asp-for="Input.Username" type="text" class="form-control" id="username" placeholder="@L[IdentityServerKeys.LoginEmailPlaceholder]" aria-describedby="username" tabindex="1" required>
                                             <div class="invalid-tooltip">
-                                                Lütfen e-mail adresinizi giriniz.
+                                                @L[IdentityServerKeys.LoginEmailInvalid]
                                             </div>
                                         </div>
 
                                         <div class="mb-3">
                                             <div class="float-end">
-                                                <a href="#" class="text-muted">Şifrenizimi unuttunuz?</a>
+                                                <a href="#" class="text-muted">@L[IdentityServerKeys.LoginForgotPassword]</a>
                                             </div>
-                                            <label asp-for="Input.Password" class="form-label">Şifre</label>
+                                            <label asp-for="Input.Password" class="form-label">@L[IdentityServerKeys.LoginPasswordLabel]</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
-                                                <input asp-for="Input.Password" type="password" class="form-control pe-5 password-input" id="password-input" tabindex="2" placeholder="Şifrenizi girin" required>
+                                                <input asp-for="Input.Password" type="password" class="form-control pe-5 password-input" id="password-input" tabindex="2" placeholder="@L[IdentityServerKeys.LoginPasswordPlaceholder]" required>
                                                 <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                                 <div class="invalid-tooltip">
-                                                    Lütfen şifrenizi giriniz.                    
+                                                    @L[IdentityServerKeys.LoginPasswordInvalid] 
                                                 </div>
                                             </div>
                                         </div>
@@ -60,19 +64,19 @@
                                         {
                                             <div class="form-check">
                                                 <input asp-for="Input.RememberLogin" class="form-check-input" type="checkbox" id="auth-remember-check" tabindex="3">
-                                                <label asp-for="Input.RememberLogin" class="form-check-label" for="auth-remember-check">Beni hatırla</label>
+                                                <label asp-for="Input.RememberLogin" class="form-check-label" for="auth-remember-check">@L[IdentityServerKeys.LoginRememberMe]</label>
                                             </div>
                                         }
 
                                         <div class="mt-4">
-                                            <button name="Input.Button" value="login" class="btn btn-primary w-100" type="submit" tabindex="4">Oturum Aç</button>
+                                            <button name="Input.Button" value="login" class="btn btn-primary w-100" type="submit" tabindex="4">@L[IdentityServerKeys.LoginButtonText]</button>
                                         </div>
 
                                         @if (Model.View.VisibleExternalProviders.Any())
                                         {
                                             <div class="mt-4 text-center">
                                                 <div class="signin-other-title">
-                                                    <h5 class="fs-13 mb-4 title">Sign In with</h5>
+                                                    <h5 class="fs-13 mb-4 title">@L[IdentityServerKeys.LoginExternalTitle]</h5>
                                                 </div>
                                                 <div>
                                                     <button type="button" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-facebook-fill fs-16"></i></button>
@@ -93,7 +97,7 @@
                     <!-- end card -->
 
                     <div class="mt-4 text-center">
-                        <p class="mb-0">Hesabınız mı yok ? <a href="#" class="fw-bold text-primary text-decoration-underline"> Hesap oluştur </a> </p>
+                        <p class="mb-0">@L[IdentityServerKeys.LoginNoAccountQuestion] <a href="#" class="fw-bold text-primary text-decoration-underline"> @L[IdentityServerKeys.LoginCreateAccount] </a> </p>
                     </div>
 
                     <partial name="_ValidationSummary" />

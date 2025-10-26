@@ -34,5 +34,21 @@ namespace BOnlineStore.Localization.Constants
         public const string LoggedOutTitle = "LoggedOutTitle";
         public const string LoggedOutThanks = "LoggedOutThanks";
         public const string LoginAgain = "LoginAgain";
+
+        // Login Page Keys
+        public const string LoginWelcomeTitle = "LoginWelcomeTitle";
+        public const string LoginSubtitle = "LoginSubtitle";
+        public const string LoginEmailLabel = "LoginEmailLabel";
+        public const string LoginEmailPlaceholder = "LoginEmailPlaceholder";
+        public const string LoginEmailInvalid = "LoginEmailInvalid";
+        public const string LoginForgotPassword = "LoginForgotPassword";
+        public const string LoginPasswordLabel = "LoginPasswordLabel";
+        public const string LoginPasswordPlaceholder = "LoginPasswordPlaceholder";
+        public const string LoginPasswordInvalid = "LoginPasswordInvalid";
+        public const string LoginRememberMe = "LoginRememberMe";
+        public const string LoginButtonText = "LoginButtonText";
+        public const string LoginNoAccountQuestion = "LoginNoAccountQuestion";
+        public const string LoginCreateAccount = "LoginCreateAccount";
+        public const string LoginExternalTitle = "LoginExternalTitle";
     }
 }

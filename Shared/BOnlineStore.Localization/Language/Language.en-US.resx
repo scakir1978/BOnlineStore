@@ -733,4 +733,60 @@
     <value>Sign in again</value>
     <comment>Tekrar Oturum Aç</comment>
   </data>
+  <data name="LoginWelcomeTitle" xml:space="preserve">
+    <value>Welcome...</value>
+    <comment>Hoş Geldiniz...</comment>
+  </data>
+  <data name="LoginSubtitle" xml:space="preserve">
+    <value>Sign in to continue to B-Online-Store.</value>
+    <comment>B-Online-Store adresine devam etmek için oturum açın.</comment>
+  </data>
+  <data name="LoginEmailLabel" xml:space="preserve">
+    <value>E-Mail</value>
+    <comment>E-Posta</comment>
+  </data>
+  <data name="LoginEmailPlaceholder" xml:space="preserve">
+    <value>Enter your email address</value>
+    <comment>Mail adresinizi girin</comment>
+  </data>
+  <data name="LoginEmailInvalid" xml:space="preserve">
+    <value>Please enter your email address.</value>
+    <comment>Lütfen e-posta adresinizi giriniz.</comment>
+  </data>
+  <data name="LoginForgotPassword" xml:space="preserve">
+    <value>Forgot your password?</value>
+    <comment>Şifrenizi mi unuttunuz?</comment>
+  </data>
+  <data name="LoginPasswordLabel" xml:space="preserve">
+    <value>Password</value>
+    <comment>Şifre</comment>
+  </data>
+  <data name="LoginPasswordPlaceholder" xml:space="preserve">
+    <value>Enter your password</value>
+    <comment>Şifrenizi girin</comment>
+  </data>
+  <data name="LoginPasswordInvalid" xml:space="preserve">
+    <value>Please enter your password.</value>
+    <comment>Lütfen şifrenizi giriniz.</comment>
+  </data>
+  <data name="LoginRememberMe" xml:space="preserve">
+    <value>Remember me</value>
+    <comment>Beni hatırla</comment>
+  </data>
+  <data name="LoginButtonText" xml:space="preserve">
+    <value>Sign In</value>
+    <comment>Oturum Aç</comment>
+  </data>
+  <data name="LoginNoAccountQuestion" xml:space="preserve">
+    <value>Don't have an account?</value>
+    <comment>Hesabınız mı yok?</comment>
+  </data>
+  <data name="LoginCreateAccount" xml:space="preserve">
+    <value>Create account</value>
+    <comment>Hesap oluştur</comment>
+  </data>
+  <data name="LoginExternalTitle" xml:space="preserve">
+    <value>Sign in with</value>
+    <comment>Şununla oturum aç</comment>
+  </data>
 </root>

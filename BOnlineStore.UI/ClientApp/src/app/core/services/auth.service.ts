@@ -6,7 +6,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { GlobalComponent } from '../../global-component';
-import { CookieService } from 'ngx-cookie-service';
 
 import * as oidc from 'oidc-client-ts';
 import { AuthenticationScopesEnum } from 'app/base-classes/base-enums/authentication-scopes.enum';
@@ -47,7 +46,7 @@ export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   // public currentUser: Observable<User>;
 
-  constructor(private http: HttpClient, public _cookiesService: CookieService) {
+  constructor(private http: HttpClient) {
     this.userManager = new oidc.UserManager(this.config);
     this.currentUserSubject = new BehaviorSubject<User>(null!);
     //this.currentUser = this.currentUserSubject.asObservable();
@@ -191,7 +190,7 @@ export class AuthenticationService {
       { code: 'en', serverCode: 'en-US' },
     ];
 
-    const userLanguage = this._cookiesService.get('locale') || 'tr';
+    const userLanguage = localStorage.getItem('locale') || 'tr';
 
     const serverLanguageCode = serverLanguages.find(
       (serverLanguage) => serverLanguage.code === userLanguage
@@ -220,17 +219,19 @@ export class AuthenticationService {
     user.token = identityUser.access_token;
     user.language = identityUser.profile.locale ?? 'tr-TR';
 
-    if (localStorage.getItem('locale') == null)
-      this._cookiesService.set('locale', user.language.split('-')[0]);
+    if (!localStorage.getItem('locale')) {
+      localStorage.setItem('locale', user.language.split('-')[0]);
+    }
 
     this.currentUserSubject.next(user);
   }
 
-  /**
-   * Uygulama ilk açıldığında, mevcut bir oturum varsa (IdP tarafında cookie ile),
-   * kullanıcıyı sessizce (redirect olmadan) tekrar oturum açmış hale getirir.
-   * Böylece localStorage'da token tutmadan "hatırla" davranışı sağlanır.
-   */
+  /***
+   * Dil değişikliği sonrası web sayfası tekrar yüklendiğinden
+   * oturum devamlılığı sağlanması için bu kod eklenmiştir.
+   * Burada user bilgisini identityServer'dan almaya çalışır.
+   * Eğer oturum geçerliyse kullanıcı bilgilerini alır.
+   * */
   async initAuthPersistence(): Promise<void> {
     try {
       const existing = await this.userManager.getUser();
@@ -239,16 +240,7 @@ export class AuthenticationService {
         return;
       }
     } catch {
-      /* ignore */
-    }
-
-    // Eğer sessionStorage boşsa, IdP oturumu varsa sessiz giriş dener
-    try {
-      const silentUser = await this.userManager.signinSilent();
-      this.createUIUser(silentUser);
-    } catch (err) {
-      // Üçüncü taraf cookie engelleri veya IdP oturumu yoksa buraya düşebilir
-      this.currentUserSubject.next(null!);
+      // Hata alırsa herhangi bir işlem yapma
     }
   }
 }

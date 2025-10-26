@@ -18,7 +18,6 @@ import { AuthfakeauthenticationService } from '../../core/services/authfake.serv
 import { Router } from '@angular/router';
 
 // Language
-import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -60,7 +59,6 @@ export class TopbarComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT) private document: any,
     private eventService: EventService,
     public languageService: LanguageService,
-    public _cookiesService: CookieService,
     public translate: TranslateService,
     private authService: AuthenticationService,
     private authFackservice: AuthfakeauthenticationService,
@@ -83,7 +81,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
       });
 
     // Cookies wise Language set
-    this.defaultLanguage = this._cookiesService.get('locale');
+    this.defaultLanguage = localStorage.getItem('locale');
     const val = this.listLang.filter((x) => x.lang === this.defaultLanguage);
     this.countryName = val.map((element) => element.text);
     if (val.length === 0) {
@@ -210,7 +208,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
     this.languageService.setLanguage(lang);
     locale(lang);
 
-    this._cookiesService.set('locale', lang);
+    localStorage.setItem('locale', lang);
 
     window.location.reload();
   }
