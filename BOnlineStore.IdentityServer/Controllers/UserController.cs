@@ -41,7 +41,7 @@ namespace BOnlineStore.IdentityServer.Controllers
 
             if (result.Succeeded)
             {
-                return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+                return CreatedAtAction("GetRoleById", new { id = user.Id }, user);
             }
 
             foreach (var error in result.Errors)
@@ -85,7 +85,7 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// </summary>
         /// <param name="id">Kullanýcý kimliði</param>
         /// <returns>Kullanýcý bilgileri</returns>
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetUserById")]
         public async Task<ActionResult<UserDto>> GetUserById(string id)
         {
             var user = await _userService.GetByIdAsync(id);

@@ -24,7 +24,7 @@ namespace BOnlineStore.IdentityServer.Controllers
             return Ok(await _roleService.GetAllAsync());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetRoleById")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
             var role = await _roleService.GetByIdAsync(id);
@@ -45,7 +45,9 @@ namespace BOnlineStore.IdentityServer.Controllers
         {
             var (role, result) = await _roleService.CreateAsync(input);
             if (result.Succeeded)
-                return CreatedAtAction(nameof(GetByIdAsync), new { id = role.Id }, role);
+            {
+                return CreatedAtRoute("GetRoleById", new { id = role.Id }, role);
+            }
             return BadRequest(result.Errors);
         }
 
