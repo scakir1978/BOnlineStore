@@ -204,6 +204,7 @@ export class AuthenticationService {
     if (!environment.production) {
       console.log('Identity User Profile:', identityUser.profile);
       console.log('Locale claim:', identityUser.profile?.locale);
+      console.log('Token claim:', identityUser.access_token);
     }
 
     var user: User = new User();
