@@ -31,6 +31,9 @@ internal static class HostingExtensions
             return sp.GetRequiredService<IOptions<IdentityConfigSettings>>().Value;
         });
 
+        // HttpContextAccessor ekle
+        builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddScoped<ITenantService, TenantManager>();
         builder.Services.AddScoped<IUserService, UserManager>();
         builder.Services.AddScoped<IRoleService, RoleManager>();

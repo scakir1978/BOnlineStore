@@ -256,4 +256,18 @@ export const MENU: MenuItem[] = [
       },
     ],
   },
+  {
+    id: 90010,
+    label: 'SETTINGS',
+    icon: 'ri-settings-3-line',
+    collapseid: 'sidebarSettings',
+    subItems: [
+      {
+        id: 90020,
+        label: 'ROLE',
+        link: '/settings/role',
+        parentId: 90010,
+      },
+    ],
+  },
 ];

@@ -1,10 +1,13 @@
 using AutoMapper;
 using BOnlineStore.IdentityServer.Dtos.Role;
+using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Data;
+using System.Security.Claims;
 
 namespace BOnlineStore.IdentityServer.Business.RoleService
 {
@@ -16,12 +19,16 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<Language> _stringLocalizer;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RoleManager(RoleManager<IdentityRole> roleManager, IMapper mapper, IStringLocalizer<Language> stringLocalizer)
+        public RoleManager(RoleManager<IdentityRole> roleManager, IMapper mapper, IStringLocalizer<Language> stringLocalizer, UserManager<ApplicationUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _roleManager = roleManager;
             _mapper = mapper;
             _stringLocalizer = stringLocalizer;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -75,11 +82,11 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleUpdateDto">Güncellenecek rol bilgileri</param>
         /// <returns>Güncellenen rol ve iþlem sonucu</returns>
-        public async Task<(RoleDto Role, IdentityResult Result)> UpdateAsync(RoleUpdateDto roleUpdateDto)
+        public async Task<(RoleDto Role, IdentityResult Result)> UpdateAsync(string roleId, RoleUpdateDto roleUpdateDto)
         {
             try
             {
-                var role = await _roleManager.FindByIdAsync(roleUpdateDto.Id);
+                var role = await _roleManager.FindByIdAsync(roleId);
 
                 if (role == null)
                 {
@@ -116,28 +123,38 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleId">Silinecek rol kimliði</param>
         /// <returns>Ýþlem sonucu</returns>
-        public async Task<IdentityResult> DeleteAsync(string roleId)
+        public async Task<(RoleDto Role, IdentityResult Result)> DeleteAsync(string roleId)
         {
             try
             {
                 var role = await _roleManager.FindByIdAsync(roleId);
+
                 if (role == null)
                 {
-                    return IdentityResult.Failed(new IdentityError
+                    return (null, IdentityResult.Failed(new IdentityError
                     {
                         Code = nameof(IdentityServerKeys.RoleNotFound),
                         Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
-                    });
+                    }));
                 }
-                return await _roleManager.DeleteAsync(role);
+
+                var result = await _roleManager.DeleteAsync(role);
+
+                if (result.Succeeded)
+                {
+                    return (_mapper.Map<RoleDto>(role), result);
+                }
+
+                return (null, result);
+
             }
             catch (Exception ex)
             {
-                return IdentityResult.Failed(new IdentityError
+                return (null, IdentityResult.Failed(new IdentityError
                 {
                     Code = nameof(IdentityServerKeys.DeleteRoleError),
                     Description = string.Format(_stringLocalizer[IdentityServerKeys.DeleteRoleError], ex.Message)
-                });
+                }));
             }
         }
 
@@ -146,10 +163,20 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleId">Rol kimliði</param>
         /// <returns>Rol bilgileri</returns>
-        public async Task<RoleDto> GetByIdAsync(string roleId)
+        public async Task<(RoleDto Role, IdentityResult Result)> GetByIdAsync(string roleId)
         {
             var role = await _roleManager.FindByIdAsync(roleId);
-            return _mapper.Map<RoleDto>(role);
+
+            if (role == null)
+            {
+                return (null, IdentityResult.Failed(new IdentityError
+                {
+                    Code = nameof(IdentityServerKeys.RoleNotFound),
+                    Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
+                }));
+            }
+
+            return (_mapper.Map<RoleDto>(role), IdentityResult.Success);
         }
 
         /// <summary>
@@ -157,10 +184,18 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleName">Rol adý</param>
         /// <returns>Rol bilgileri</returns>
-        public async Task<RoleDto> GetByNameAsync(string roleName)
+        public async Task<(RoleDto Role, IdentityResult Result)> GetByNameAsync(string roleName)
         {
             var role = await _roleManager.FindByNameAsync(roleName);
-            return _mapper.Map<RoleDto>(role);
+            if (role == null)
+            {
+                return (null, IdentityResult.Failed(new IdentityError
+                {
+                    Code = nameof(IdentityServerKeys.RoleNotFound),
+                    Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
+                }));
+            }
+            return (_mapper.Map<RoleDto>(role), IdentityResult.Success);
         }
 
         /// <summary>
@@ -169,7 +204,49 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// <returns>Rol listesi</returns>
         public async Task<List<RoleDto>> GetAllAsync()
         {
+            // Mevcut kullanýcýnýn ID'sini al
+            var userId = _httpContextAccessor.HttpContext?.User?.FindFirst("sub")?.Value;
+
+            // Kullanýcý bulunamadýysa tüm rolleri döndür (güvenlik için)
+            if (string.IsNullOrEmpty(userId))
+            {
+                var allRoles = await _roleManager.Roles.ToListAsync();
+                return _mapper.Map<List<RoleDto>>(allRoles);
+            }
+
+            // Kullanýcýnýn bilgilerini al
+            var user = await _userManager.FindByIdAsync(userId);
+
+            // Kullanýcý bulunamadýysa tüm rolleri döndür
+            if (user == null)
+            {
+                var allRoles = await _roleManager.Roles.ToListAsync();
+                return _mapper.Map<List<RoleDto>>(allRoles);
+            }
+
+            // Kullanýcýnýn rollerini al
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            // Kullanýcý SuperUser rolünde mi kontrol et
+            var isSuperUser = userRoles.Contains("SuperUser");
+
+            // Kullanýcý Admin rolünde mi kontrol et
+            var isAdminUser = userRoles.Contains("Admin");
+
+            // SuperUser deðilse, SuperUser rolünü filtrele
             var roles = await _roleManager.Roles.ToListAsync();
+
+            if (!isSuperUser)
+            {
+                roles = roles.Where(r => r.Name != "SuperUser").ToList();
+            }
+
+            //Admin deðilse, SuperUser rolünü filtrele
+            if (!isAdminUser)
+            {
+                roles = roles.Where(r => r.Name != "Admin").ToList();
+            }
+
             return _mapper.Map<List<RoleDto>>(roles);
         }
     }

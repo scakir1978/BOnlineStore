@@ -1,5 +1,8 @@
+using AutoMapper;
 using BOnlineStore.IdentityServer.Business.RoleService;
 using BOnlineStore.IdentityServer.Dtos.Role;
+using BOnlineStore.Shared.Controllers;
+using DevExtreme.AspNet.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Duende.IdentityServer.IdentityServerConstants;
@@ -9,64 +12,85 @@ namespace BOnlineStore.IdentityServer.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(LocalApi.PolicyName)]
-    public class RoleController : ControllerBase
+    public class RoleController : ControllerShared
     {
         private readonly IRoleService _roleService;
+        private readonly IMapper _mapper;
 
-        public RoleController(IRoleService roleService)
+        public RoleController(IRoleService roleService, IMapper mapper)
         {
             _roleService = roleService;
+            _mapper = mapper;
         }
 
-        [HttpGet]        
+        [HttpPost("Load")]
+        public async Task<IActionResult> Load(DataSourceLoadOptionsBase loadOptions)
+        {
+            loadOptions.StringToLower = true;
+            var roles = await _roleService.GetAllAsync();
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(roles, loadOptions));
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _roleService.GetAllAsync());
+            return CreateSuccessActionResultInstance(await _roleService.GetAllAsync());
         }
 
         [HttpGet("{id}", Name = "GetRoleById")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            var role = await _roleService.GetByIdAsync(id);
-            if (role == null) return NotFound();
-            return Ok(role);
+            var (role, result) = await _roleService.GetByIdAsync(id);
+
+            if (result.Succeeded)
+                return CreateSuccessActionResultInstance(role);
+
+            return BadRequest(result.Errors);
         }
 
         [HttpGet("by-name/{name}")]
         public async Task<IActionResult> GetByNameAsync(string name)
         {
-            var role = await _roleService.GetByNameAsync(name);
-            if (role == null) return NotFound();
-            return Ok(role);
+            var (role, result) = await _roleService.GetByNameAsync(name);
+
+            if (result.Succeeded)
+                return CreateSuccessActionResultInstance(role);
+
+            return BadRequest(result.Errors);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] RoleCreateDto input)
         {
             var (role, result) = await _roleService.CreateAsync(input);
+
             if (result.Succeeded)
             {
-                return CreatedAtRoute("GetRoleById", new { id = role.Id }, role);
+                return CreateSuccessActionResultInstance(role);
             }
+
             return BadRequest(result.Errors);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(string id, [FromBody] RoleUpdateDto input)
+        public async Task<IActionResult> UpdateAsync(string id, RoleUpdateDto input)
         {
-            if (id != input.Id) return BadRequest();
-            var (role, result) = await _roleService.UpdateAsync(input);
+            var (role, result) = await _roleService.UpdateAsync(id, input);
+
             if (result.Succeeded)
-                return Ok(role);
+                return CreateSuccessActionResultInstance(role);
+
             return BadRequest(result.Errors);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            var result = await _roleService.DeleteAsync(id);
+            var (role, result) = await _roleService.DeleteAsync(id);
+
             if (result.Succeeded)
-                return NoContent();
+                return CreateSuccessActionResultInstance(role);
+
             return BadRequest(result.Errors);
         }
     }

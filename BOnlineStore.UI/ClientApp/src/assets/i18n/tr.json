@@ -367,5 +367,6 @@
     "LOCALE_TR": "Türkçe",
     "LOCALE_EN": "İngilizce",
     "LOCALE_DE": "Almanca"
-  }
+  },
+  "ROLE": "Rol Tanımlama"
 }
