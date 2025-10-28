@@ -50,5 +50,12 @@ namespace BOnlineStore.Localization.Constants
         public const string LoginNoAccountQuestion = "LoginNoAccountQuestion";
         public const string LoginCreateAccount = "LoginCreateAccount";
         public const string LoginExternalTitle = "LoginExternalTitle";
+
+        // Role Management Keys
+        public const string RoleNotFound = "RoleNotFound";
+        public const string CreateRoleError = "CreateRoleError";
+        public const string UpdateRoleError = "UpdateRoleError";
+        public const string DeleteRoleError = "DeleteRoleError";
+        public const string RoleAlreadyExists = "RoleAlreadyExists";
     }
 }

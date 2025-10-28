@@ -52,6 +52,7 @@
         public const string ProfilClaimTypeUpdatedAt = "updated_at";
         public const string ProfilClaimTypeEmail = "email";
         public const string ProfilClaimTypeNormalizedEmail = "normalized_email";
+        public const string ProfilClaimTypeRoles = "roles";
 
         #endregion
 

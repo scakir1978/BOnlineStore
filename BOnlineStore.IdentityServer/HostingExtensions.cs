@@ -16,6 +16,7 @@ using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using BOnlineStore.Shared.Constansts;
 using BOnlineStore.IdentityServer.Extensions;
+using BOnlineStore.IdentityServer.Business.RoleService;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -30,8 +31,12 @@ internal static class HostingExtensions
             return sp.GetRequiredService<IOptions<IdentityConfigSettings>>().Value;
         });
 
+        // HttpContextAccessor ekle
+        builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddScoped<ITenantService, TenantManager>();
         builder.Services.AddScoped<IUserService, UserManager>();
+        builder.Services.AddScoped<IRoleService, RoleManager>();
 
         // Localization configuration
         builder.Services.AddLocalization();

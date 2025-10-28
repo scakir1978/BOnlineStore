@@ -31,6 +31,12 @@ namespace BOnlineStore.IdentityServer.Business
                 new Claim(IdentityServerConstants.ProfilClaimTypeNormalizedEmail, user.NormalizedEmail.Trim())
             };
 
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles != null && roles.Count > 0)
+            {
+                claims.Add(new Claim(IdentityServerConstants.ProfilClaimTypeRoles, string.Join(",", roles.ToArray())));
+            }
+
             // Profile scope için OpenID Connect standart claim'lerini ekle
             if (!string.IsNullOrWhiteSpace(user.Name))
                 claims.Add(new Claim(IdentityServerConstants.ProfilClaimTypeName, user.Name));
