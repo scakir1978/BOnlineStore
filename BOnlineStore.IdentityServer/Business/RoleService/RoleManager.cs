@@ -241,8 +241,8 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
                 roles = roles.Where(r => r.Name != "SuperUser").ToList();
             }
 
-            //Admin deðilse, SuperUser rolünü filtrele
-            if (!isAdminUser)
+            //Admin deðilse ve superUser deðilse Admin rolünü filtrele
+            if (!isAdminUser && !isSuperUser)
             {
                 roles = roles.Where(r => r.Name != "Admin").ToList();
             }

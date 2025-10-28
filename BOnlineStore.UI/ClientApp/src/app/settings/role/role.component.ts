@@ -1,13 +1,15 @@
-import { BaseDefinitionsOnGridComponent } from "../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component";
-import { RoleService } from "./role.service";
-import { Component } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
-import DataSource from "devextreme/data/data_source";
+import { BaseDefinitionsOnGridComponent } from '../../base-classes/base-definitions-on-grid/base-definitions-on-grid.component';
+import { RoleService } from './role.service';
+import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import DataSource from 'devextreme/data/data_source';
+import { DxDataGridTypes } from 'devextreme-angular/ui/data-grid';
+import { SettingsGeneralNamesEnum } from '../../base-classes/base-enums/settings-general-names.enum';
 
 @Component({
-  selector: "role",
-  templateUrl: "./role.component.html",
-  styleUrls: ["./role.component.scss"],
+  selector: 'role',
+  templateUrl: './role.component.html',
+  styleUrls: ['./role.component.scss'],
 })
 export class RoleComponent extends BaseDefinitionsOnGridComponent {
   public roleDataSource: DataSource;
@@ -18,10 +20,24 @@ export class RoleComponent extends BaseDefinitionsOnGridComponent {
   ) {
     super(
       _translate,
-      "ROLE", //Pdf, excel dosya adı
-      "ROLE", //breadCrump için kullanılacak componenet keyi
-      "SETTINGS" //breadCrump için kullanılacak componenetin bağlı olduğu parent menü
+      'ROLE', //Pdf, excel dosya adı
+      'ROLE', //breadCrump için kullanılacak componenet keyi
+      'SETTINGS' //breadCrump için kullanılacak componenetin bağlı olduğu parent menü
     );
     this.roleDataSource = _roleService.getDataSource();
+  }
+
+  onEditingStart(e: DxDataGridTypes.EditingStartEvent) {
+    e.cancel =
+      e.data.name === SettingsGeneralNamesEnum.ADMIN ||
+      e.data.name === SettingsGeneralNamesEnum.SUPERUSER;
+  }
+
+  isDeleteIconVisible(e: { row: DxDataGridTypes.Row }) {
+    const roleName = e.row.data?.name;
+    return (
+      roleName !== SettingsGeneralNamesEnum.ADMIN &&
+      roleName !== SettingsGeneralNamesEnum.SUPERUSER
+    );
   }
 }

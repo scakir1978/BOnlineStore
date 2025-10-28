@@ -7,6 +7,6 @@ export class User {
   token?: string;
   email?: string;
   language?: string;
-  role?: string;
+  role?: string | any;
   nickname?: string;
 }

@@ -41,7 +41,7 @@ namespace BOnlineStore.IdentityServer.Controllers
 
             if (result.Succeeded)
             {
-                return CreatedAtAction("GetRoleById", new { id = user.Id }, user);
+                return CreatedAtAction("GetUserById", new { id = user.Id }, user);
             }
 
             foreach (var error in result.Errors)

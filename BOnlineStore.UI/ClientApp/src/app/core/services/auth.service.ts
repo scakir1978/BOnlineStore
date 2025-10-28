@@ -205,6 +205,7 @@ export class AuthenticationService {
       console.log('Identity User Profile:', identityUser.profile);
       console.log('Locale claim:', identityUser.profile?.locale);
       console.log('Token claim:', identityUser.access_token);
+      console.log('All Identity User Claims:', identityUser);
     }
 
     var user: User = new User();
@@ -216,7 +217,7 @@ export class AuthenticationService {
     user.lastName = identityUser.profile.family_name;
     user.userName = identityUser.profile.preferred_username;
     user.nickname = identityUser.profile.nickname;
-    //user.role = Role.Admin;
+    user.role = identityUser.profile.roles;
     user.token = identityUser.access_token;
     user.language = identityUser.profile.locale ?? 'tr-TR';
 

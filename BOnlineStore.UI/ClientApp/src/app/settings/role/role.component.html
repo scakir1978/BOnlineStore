@@ -13,6 +13,7 @@
   [showRowLines]="true"
   [rowAlternationEnabled]="true"
   (onExporting)="onExporting($event)"
+  (onEditingStart)="onEditingStart($event)"
 >
   <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
   <dxo-filter-row [visible]="true"> </dxo-filter-row>
@@ -20,7 +21,7 @@
   <dxo-editing
     mode="batch"
     [allowAdding]="true"
-    [allowDeleting]="true"
+    [allowDeleting]="isDeleteIconVisible"
     [allowUpdating]="true"
     [useIcons]="true"
     [refreshMode]="'full'"
