@@ -3,7 +3,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
 import * as ExcelJS from 'exceljs';
-import { EventEmitter } from '@angular/core';
 import { saveAs } from 'file-saver';
 import { exportDataGrid as exportDataGridExcel } from 'devextreme/excel_exporter';
 
@@ -54,7 +53,7 @@ export class BaseDefinitionsOnGridComponent implements OnInit, OnDestroy {
 
   onExporting(e: any) {
     e.fileName = this.fileName;
-    if (e.format === 'xslx') {
+    if (e.format === 'xlsx') {
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet(this.fileName);
 

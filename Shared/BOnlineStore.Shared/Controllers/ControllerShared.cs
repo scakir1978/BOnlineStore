@@ -40,5 +40,16 @@ namespace BOnlineStore.Shared.Controllers
             };
         }
 
+        public IActionResult CreateErrorActionResultInstance<T>(T data, List<Error> errors )
+        {
+            var response = Response<T>.Fail(errors, HttpStatusCode.InternalServerError);
+
+            return new ObjectResult(response)
+            {
+                StatusCode = (int)HttpStatusCode.InternalServerError
+
+            };
+        }
+
     }
 }

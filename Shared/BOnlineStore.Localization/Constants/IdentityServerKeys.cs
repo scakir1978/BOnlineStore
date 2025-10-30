@@ -64,5 +64,7 @@ namespace BOnlineStore.Localization.Constants
         public const string UserRoleNotFound = "UserRoleNotFound";
         public const string UserAlreadyHasRole = "UserAlreadyHasRole";
         public const string GetUserRolesError = "GetUserRolesError";
+        public const string SuperUser = "SuperUser";
+        public const string Admin = "Admin";
     }
 }

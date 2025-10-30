@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Localization;
 using BOnlineStore.Shared.Constansts;
 using BOnlineStore.IdentityServer.Extensions;
 using BOnlineStore.IdentityServer.Business.RoleService;
+using BOnlineStore.IdentityServer.Business.UserRoleService;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -37,6 +38,7 @@ internal static class HostingExtensions
         builder.Services.AddScoped<ITenantService, TenantManager>();
         builder.Services.AddScoped<IUserService, UserManager>();
         builder.Services.AddScoped<IRoleService, RoleManager>();
+        builder.Services.AddScoped<IUserRoleService, UserRoleManager>();
 
         // Localization configuration
         builder.Services.AddLocalization();

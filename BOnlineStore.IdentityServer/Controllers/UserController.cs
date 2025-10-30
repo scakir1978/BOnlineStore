@@ -1,8 +1,11 @@
+using BOnlineStore.IdentityServer.Business.RoleService;
 using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Controllers;
+using DevExtreme.AspNet.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -13,7 +16,7 @@ namespace BOnlineStore.IdentityServer.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(LocalApi.PolicyName)]
-    public class UserController : ControllerBase
+    public class UserController : ControllerShared
     {
         private readonly IUserService _userService;
         private readonly IStringLocalizer<Language> _stringLocalizer;
@@ -22,6 +25,15 @@ namespace BOnlineStore.IdentityServer.Controllers
         {
             _userService = userService;
             _stringLocalizer = stringLocalizer;
+        }
+
+
+        [HttpPost("Load")]
+        public async Task<IActionResult> Load(DataSourceLoadOptionsBase loadOptions)
+        {
+            loadOptions.StringToLower = true;
+            var users = await _userService.GetAllUsersAsync();
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(users, loadOptions));
         }
 
         /// <summary>

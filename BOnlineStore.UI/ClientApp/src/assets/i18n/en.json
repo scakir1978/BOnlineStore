@@ -338,6 +338,9 @@
     "LOCALE_TR": "Turkish",
     "LOCALE_EN": "English",
     "LOCALE_DE": "German"
-  },
-  "ROLE": "Roles Definitions"
+  },
+  "ROLE": "Roles Definitions",
+  "USERROLE": "Assing Role To User",
+  "USER": "User",
+  "ROLEUSER": "Role"
 }

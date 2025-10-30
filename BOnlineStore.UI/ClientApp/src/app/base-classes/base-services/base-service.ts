@@ -59,7 +59,7 @@ export abstract class BaseService {
           ),
       }),
       ...(addUpdateFunction == DatasourceFunctionsEnum.GETUPDATE && {
-        update: (key: string, values: any) =>
+        update: (key: any, values: any) =>
           this.sendRequest(
             serviceUrl + controllerName,
             HttpRequestMethodsEnum.UPDATE,
@@ -68,7 +68,7 @@ export abstract class BaseService {
           ),
       }),
       ...(addRemoveFunction == DatasourceFunctionsEnum.GETREMOVE && {
-        remove: (key: string) =>
+        remove: (key: any) =>
           this.sendRequest(
             serviceUrl + controllerName,
             HttpRequestMethodsEnum.DELETE,
@@ -103,7 +103,7 @@ export abstract class BaseService {
   sendRequest(
     url: string,
     method: HttpRequestMethodsEnum = HttpRequestMethodsEnum.LOADPOST,
-    key: string = '',
+    key: any = '',
     data: any = {}
   ): any {
     let result;
@@ -125,16 +125,46 @@ export abstract class BaseService {
         result = this._http.post(url, data);
         break;
       case HttpRequestMethodsEnum.UPDATE:
-        result = this._http.put(url + '/' + key, data);
+        if (typeof key === 'string') {
+          // URL'e key ekleyerek güncelleme işlemi
+          result = this._http.put(url + '/' + key, data);
+        }
+        // 2. Güvenilir Obje Kontrolü
+        else if (this.isPlainObject(key)) {
+          //Birden fazla alan içeren objelerde URL'e ekleme yapılmaz, body ile gönderilir
+          result = this._http.put(url, { ...key, ...data });
+        }
         break;
       case HttpRequestMethodsEnum.DELETE:
-        result = this._http.delete(url + '/' + key);
+        // 1. String Kontrolü
+        if (typeof key === 'string') {
+          // URL'e key ekleyerek silme işlemi
+          result = this._http.delete(url + '/' + key);
+        }
+        // 2. Güvenilir Obje Kontrolü
+        else if (this.isPlainObject(key)) {
+          //Birden fazla alan içeren objelerde URL'e ekleme yapılmaz, body ile gönderilir
+          result = this._http.delete(url, { body: key });
+        }
+
         break;
     }
 
     return lastValueFrom(result).then((response: any) =>
-      method === 'LOAD' ? response.result.data : response.result
+      method === HttpRequestMethodsEnum.LOAD
+        ? response.result.data
+        : response.result
     );
+  }
+
+  /**
+   * Değişkenin 'düz' bir obje (plain object) olup olmadığını kontrol eder.
+   * (null veya Array olmayan)
+   * @param item Kontrol edilecek değişken
+   * @returns {boolean}
+   */
+  isPlainObject(item: any): boolean {
+    return typeof item === 'object' && item !== null && !Array.isArray(item);
   }
 
   httpPostRequest(

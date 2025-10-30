@@ -43,7 +43,7 @@ namespace BOnlineStore.IdentityServer.Controllers
             return CreateSuccessActionResultInstance(userRoles);
         }
 
-        [HttpPost("assign")]
+        [HttpPost]
         public async Task<IActionResult> AssignRoleToUserAsync([FromBody] UserRoleAssignDto input)
         {
             var (userRole, result) = await _userRoleService.AssignRoleToUserAsync(input);
@@ -53,13 +53,15 @@ namespace BOnlineStore.IdentityServer.Controllers
                 return CreateSuccessActionResultInstance(userRole);
             }
 
+            //var x = CreateErrorActionResultInstance(userRole, result.Errors);
+
             return BadRequest(result.Errors);
         }
 
-        [HttpDelete("user/{userId}/role/{roleId}")]
-        public async Task<IActionResult> RemoveRoleFromUserAsync(string userId, string roleId)
+        [HttpDelete]
+        public async Task<IActionResult> RemoveRoleFromUserAsync([FromBody] UserRoleAssignDto input)
         {
-            var (userRole, result) = await _userRoleService.RemoveRoleFromUserAsync(userId, roleId);
+            var (userRole, result) = await _userRoleService.RemoveRoleFromUserAsync(input.UserId, input.RoleId);
 
             if (result.Succeeded)
                 return CreateSuccessActionResultInstance(userRole);
