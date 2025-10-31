@@ -341,7 +341,19 @@
   },
   "ROLE": "Roles Definitions",
   "USERROLE": "Assing Role To User",
-  "USER": "User",
-  "ROLEUSER": "Role",
+  "USER": {
+    "FORM_TITLE": "User Information",
+    "PASSWORD_SECURITY": "Password and Security",
+    "PASSWORD": "Password",
+    "PASSWORD_CONFIRMATION": "Password Confirmation",
+    "ENTER_PASSWORD": "Enter password (Min 8 chars, upper/lowercase)",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_CONFIRMATION_REQUIRED": "Password confirmation is required",
+    "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
+    "PASSWORD_VALIDATION_MEDIUM": "Password must be at least 8 characters and contain at least 1 uppercase, 1 lowercase letter"
+  },
+  "ROLEUSERROLE": "Role",
+  "ROLEUSERUSER": "User",
   "USERS": "Users"
 }

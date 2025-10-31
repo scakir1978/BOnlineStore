@@ -5,11 +5,14 @@ using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Constansts;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Moq;
+using System.Security.Claims;
 using Xunit;
 
 namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
@@ -20,7 +23,9 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
         private readonly Mock<UserManager<ApplicationUser>> _mockUserManager;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IStringLocalizer<Language>> _mockStringLocalizer;
+        private readonly Mock<IHttpContextAccessor> _mockHttpContextAccessor;
         private readonly UserManager _userManager;
+        private readonly Guid _testTenantId = Guid.NewGuid();
 
         public UserManagerTests()
         {
@@ -31,11 +36,22 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
             _context = new ApplicationDbContext(options);
             _mockMapper = new Mock<IMapper>();
             _mockStringLocalizer = new Mock<IStringLocalizer<Language>>();
+            _mockHttpContextAccessor = new Mock<IHttpContextAccessor>();
 
             // Mock UserManager
             var store = new Mock<IUserStore<ApplicationUser>>();
             _mockUserManager = new Mock<UserManager<ApplicationUser>>(
                 store.Object, null, null, null, null, null, null, null, null);
+
+            // Setup HttpContext with TenantId claim
+            var claims = new List<Claim>
+            {
+                new Claim(GlobalConstants.tenantId, _testTenantId.ToString())
+            };
+            var identity = new ClaimsIdentity(claims, "TestAuthType");
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+            var httpContext = new DefaultHttpContext { User = claimsPrincipal };
+            _mockHttpContextAccessor.Setup(x => x.HttpContext).Returns(httpContext);
 
             // Setup default localizer behavior
             _mockStringLocalizer
@@ -49,7 +65,8 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 _mockUserManager.Object, 
                 _context, 
                 _mockMapper.Object, 
-                _mockStringLocalizer.Object);
+                _mockStringLocalizer.Object,
+                _mockHttpContextAccessor.Object);
         }
 
         private void SetupLocalizationKeys()
@@ -89,8 +106,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
         public async Task CreateAsync_ValidUserCreateDto_ReturnsUserDtoAndSuccess()
         {
             // Arrange
-            var tenantId = Guid.NewGuid();
-            var tenant = new Tenant { Id = tenantId, Name = "Test Tenant" };
+            var tenant = new Tenant { Id = _testTenantId, Name = "Test Tenant" };
             _context.Tenant.Add(tenant);
             await _context.SaveChangesAsync();
 
@@ -98,8 +114,8 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
             {
                 Email = "test@example.com",
                 Password = "Test123!",
-                TenantId = tenantId,
                 Name = "Test User"
+                // TenantId HttpContext'ten otomatik alýnacak
             };
 
             var applicationUser = new ApplicationUser
@@ -107,7 +123,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 Id = Guid.NewGuid().ToString(),
                 Email = userCreateDto.Email,
                 UserName = userCreateDto.Email,
-                TenantId = tenantId,
+                TenantId = _testTenantId,
                 Name = userCreateDto.Name
             };
 
@@ -116,11 +132,11 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 Id = applicationUser.Id,
                 Email = applicationUser.Email,
                 Name = applicationUser.Name,
-                TenantId = tenantId
+                TenantId = _testTenantId
             };
 
             _mockMapper.Setup(m => m.Map<ApplicationUser>(userCreateDto)).Returns(applicationUser);
-            _mockMapper.Setup(m => m.Map<UserDto>(applicationUser)).Returns(expectedUserDto);
+            _mockMapper.Setup(m => m.Map<UserDto>(It.IsAny<ApplicationUser>())).Returns(expectedUserDto);
             _mockUserManager.Setup(um => um.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success);
 
@@ -131,77 +147,76 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
             response.Should().NotBeNull();
             response.IsSucceed.Should().BeTrue();
             response.Result.Should().NotBeNull();
-response.Result.Email.Should().Be(userCreateDto.Email);
+            response.Result.Email.Should().Be(userCreateDto.Email);
             response.Result.Name.Should().Be(userCreateDto.Name);
+            response.Result.TenantId.Should().Be(_testTenantId);
         }
 
         [Fact]
         public async Task CreateAsync_NonExistentTenant_ReturnsFailure()
         {
             // Arrange
+         // Tenant eklenmediði için baþarýsýz olmalý
             var userCreateDto = new UserCreateDto
             {
-                Email = "test@example.com",
-                Password = "Test123!",
-                TenantId = Guid.NewGuid(), // Non-existent tenant
-                Name = "Test User"
+       Email = "test@example.com",
+             Password = "Test123!",
+      Name = "Test User"
             };
 
-            // Act
+ // Act
             var response = await _userManager.CreateAsync(userCreateDto);
 
-            // Assert
-            response.Should().NotBeNull();
+    // Assert
+   response.Should().NotBeNull();
             response.IsSucceed.Should().BeFalse();
-            response.Result.Should().BeNull();
+        response.Result.Should().BeNull();
             response.Errors.Should().ContainSingle(e => e.ErrorCode == "TenantNotFound");
-    response.Errors.First().Message.Should().Contain("Kiracý bulunamadý");
-  }
+            response.Errors.First().Message.Should().Contain("Kiracý bulunamadý");
+     }
 
-    [Fact]
-        public async Task CreateAsync_UserManagerFailure_ReturnsFailure()
-{
-    // Arrange
-            var tenantId = Guid.NewGuid();
-            var tenant = new Tenant { Id = tenantId, Name = "Test Tenant" };
-     _context.Tenant.Add(tenant);
+        [Fact]
+      public async Task CreateAsync_UserManagerFailure_ReturnsFailure()
+        {
+      // Arrange
+     var tenant = new Tenant { Id = _testTenantId, Name = "Test Tenant" };
+       _context.Tenant.Add(tenant);
             await _context.SaveChangesAsync();
 
-        var userCreateDto = new UserCreateDto
-     {
- Email = "test@example.com",
-          Password = "Test123!",
-      TenantId = tenantId
+         var userCreateDto = new UserCreateDto
+            {
+      Email = "test@example.com",
+    Password = "Test123!",
+    };
+
+   var applicationUser = new ApplicationUser
+    {
+    Email = userCreateDto.Email,
+        UserName = userCreateDto.Email,
+   TenantId = _testTenantId
             };
 
-            var applicationUser = new ApplicationUser
-            {
-      Email = userCreateDto.Email,
-      UserName = userCreateDto.Email,
-                TenantId = tenantId
-     };
-
             var identityError = new IdentityError
-      {
-                Code = "DuplicateUserName",
-                Description = "User name already exists"
-          };
+       {
+ Code = "DuplicateUserName",
+   Description = "User name already exists"
+        };
 
-            _mockMapper.Setup(m => m.Map<ApplicationUser>(userCreateDto)).Returns(applicationUser);
+    _mockMapper.Setup(m => m.Map<ApplicationUser>(userCreateDto)).Returns(applicationUser);
             _mockUserManager.Setup(um => um.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
     .ReturnsAsync(IdentityResult.Failed(identityError));
 
- // Act
-  var response = await _userManager.CreateAsync(userCreateDto);
+            // Act
+       var response = await _userManager.CreateAsync(userCreateDto);
 
-       // Assert
-        response.Should().NotBeNull();
- response.IsSucceed.Should().BeFalse();
-            response.Result.Should().BeNull();
-         response.Errors.Should().Contain(e => e.ErrorCode == "DuplicateUserName");
-      }
+      // Assert
+            response.Should().NotBeNull();
+            response.IsSucceed.Should().BeFalse();
+     response.Result.Should().BeNull();
+            response.Errors.Should().Contain(e => e.ErrorCode == "DuplicateUserName");
+        }
 
- #endregion
+    #endregion
 
         #region UpdateAsync Tests
 

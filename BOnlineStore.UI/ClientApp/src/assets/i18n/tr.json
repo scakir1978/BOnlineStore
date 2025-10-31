@@ -370,7 +370,19 @@
   },
   "ROLE": "Rol Tanımlama",
   "USERROLE": "Kullanıcıya Rol Atama",
-  "USER": "Kullanıcı",
-  "ROLEUSER": "Rol",
+  "USER": {
+    "FORM_TITLE": "Kullanıcı Bilgileri",
+    "PASSWORD_SECURITY": "Şifre ve Güvenlik",
+    "PASSWORD": "Şifre",
+    "PASSWORD_CONFIRMATION": "Şifre Onayı",
+    "ENTER_PASSWORD": "Şifre giriniz (Min 8 karakter, büyük/küçük harf)",
+    "CONFIRM_PASSWORD": "Şifreyi tekrar giriniz",
+    "PASSWORD_REQUIRED": "Şifre zorunludur",
+    "PASSWORD_CONFIRMATION_REQUIRED": "Şifre onayı zorunludur",
+    "PASSWORDS_DO_NOT_MATCH": "Şifreler eşleşmiyor",
+    "PASSWORD_VALIDATION_MEDIUM": "Şifre en az 8 karakter olmalı ve en az 1 büyük harf, 1 küçük harf içermelidir"
+  },
+  "ROLEUSERROLE": "Rol",
+  "ROLEUSERUSER": "Kullanıcı",
   "USERS": "Kullanıcı Tanımlamaları"
 }

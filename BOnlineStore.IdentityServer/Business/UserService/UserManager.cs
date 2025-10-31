@@ -6,11 +6,13 @@ using BOnlineStore.IdentityServer.Extensions;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace BOnlineStore.IdentityServer.Business.UserService
 {
@@ -20,26 +22,40 @@ namespace BOnlineStore.IdentityServer.Business.UserService
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStringLocalizer<Language> _stringLocalizer;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserManager(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer)
+        public UserManager(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _context = context;
             _mapper = mapper;
             _stringLocalizer = stringLocalizer;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private Guid GetTenantId()
+        {
+            var tenantId = _httpContextAccessor.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == GlobalConstants.tenantId)?.Value ?? "";
+            return new Guid(tenantId);
         }
 
         public async Task<Response<UserDto>> CreateAsync(UserCreateDto userCreateDto)
         {
             try
             {
+                // TenantId'yi HttpContext'ten al
+                var tenantId = GetTenantId();
+
                 // Tenant kontrolü
-                var tenantExists = await _context.Tenant.AnyAsync(t => t.Id == userCreateDto.TenantId);
+                var tenantExists = await _context.Tenant.AnyAsync(t => t.Id == tenantId);
                 if (!tenantExists)
                 {
                     return Response<UserDto>.Fail(
-                        new Error { ErrorCode = nameof(IdentityServerKeys.TenantNotFound), Message = _stringLocalizer[IdentityServerKeys.TenantNotFound] },
-                        HttpStatusCode.NotFound);
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.TenantNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.TenantNotFound]
+                        }, HttpStatusCode.NotFound);
                 }
 
                 // Email kontrolü
@@ -47,12 +63,16 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                 if (existingUser != null)
                 {
                     return Response<UserDto>.Fail(
-                        new Error { ErrorCode = "EmailAlreadyExists", Message = "Email address is already in use." },
-                        HttpStatusCode.BadRequest);
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.EmailAlreadyExists),
+                            Message = _stringLocalizer[IdentityServerKeys.EmailAlreadyExists]
+                        }, HttpStatusCode.BadRequest);
                 }
 
                 var user = _mapper.Map<ApplicationUser>(userCreateDto);
                 user.UserName = userCreateDto.Email;
+                user.TenantId = tenantId; // HttpContext'ten alýnan TenantId'yi ata
                 user.UpdatedAt = DateTime.UtcNow;
 
                 var result = await _userManager.CreateAsync(user, userCreateDto.Password);
@@ -110,7 +130,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                     if (existingUser != null && existingUser.Id != user.Id)
                     {
                         return Response<UserDto>.Fail(
-                            new Error { ErrorCode = "EmailAlreadyExists", Message = "Email address is already in use." },
+                            new Error { ErrorCode = nameof(IdentityServerKeys.EmailAlreadyExists), Message = _stringLocalizer[IdentityServerKeys.EmailAlreadyExists] },
                             HttpStatusCode.BadRequest);
                     }
                 }

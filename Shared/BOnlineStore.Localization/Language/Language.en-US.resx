@@ -681,6 +681,10 @@
     <value>User not found</value>
     <comment>Kullanıcı bulunamadı</comment>
   </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>Email address is already in use</value>
+    <comment>Bu e-posta adresi zaten kullanılıyor</comment>
+  </data>
   <data name="CreateUserError" xml:space="preserve">
     <value>An error occurred while creating user: {0}</value>
     <comment>Kullanıcı oluşturulurken hata oluştu: {0}</comment>

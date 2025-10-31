@@ -20,6 +20,7 @@ namespace BOnlineStore.Localization.Constants
 
         // User Management Keys
         public const string UserNotFound = "UserNotFound";
+        public const string EmailAlreadyExists = "EmailAlreadyExists";
         public const string CreateUserError = "CreateUserError";
         public const string UpdateUserError = "UpdateUserError";
         public const string DeleteUserError = "DeleteUserError";
