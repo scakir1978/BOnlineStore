@@ -4,9 +4,11 @@ using BOnlineStore.IdentityServer.Dtos.UserRole;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Net;
 
 namespace BOnlineStore.IdentityServer.Business.UserRoleService
 {
@@ -21,7 +23,7 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
         private readonly IStringLocalizer<Language> _stringLocalizer;
 
         public UserRoleManager(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager,
-            ApplicationDbContext context, IStringLocalizer<Language> stringLocalizer)
+  ApplicationDbContext context, IStringLocalizer<Language> stringLocalizer)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -34,7 +36,7 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
         /// </summary>
         /// <param name="userRoleAssignDto">Atanacak kullanýcý-rol bilgileri</param>
         /// <returns>Atanan rol ve iþlem sonucu</returns>
-        public async Task<(UserRoleDto UserRole, IdentityResult Result)> AssignRoleToUserAsync(UserRoleAssignDto userRoleAssignDto)
+        public async Task<Response<UserRoleDto>> AssignRoleToUserAsync(UserRoleAssignDto userRoleAssignDto)
         {
             try
             {
@@ -42,33 +44,27 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
                 var user = await _userManager.FindByIdAsync(userRoleAssignDto.UserId);
                 if (user == null)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
-                    {
-                        Code = nameof(IdentityServerKeys.UserNotFound),
-                        Description = _stringLocalizer[IdentityServerKeys.UserNotFound]
-                    }));
+                    return Response<UserRoleDto>.Fail(
+                        new Error { ErrorCode = nameof(IdentityServerKeys.UserNotFound), Message = _stringLocalizer[IdentityServerKeys.UserNotFound] },
+                       HttpStatusCode.NotFound);
                 }
 
                 // Rolü kontrol et
                 var role = await _roleManager.FindByIdAsync(userRoleAssignDto.RoleId);
                 if (role == null)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
-                    {
-                        Code = nameof(IdentityServerKeys.RoleNotFound),
-                        Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
-                    }));
+                    return Response<UserRoleDto>.Fail(
+                        new Error { ErrorCode = nameof(IdentityServerKeys.RoleNotFound), Message = _stringLocalizer[IdentityServerKeys.RoleNotFound] },
+                 HttpStatusCode.NotFound);
                 }
 
                 // Kullanýcýnýn zaten bu role sahip olup olmadýðýný kontrol et
                 var isInRole = await _userManager.IsInRoleAsync(user, role.Name);
                 if (isInRole)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
-                    {
-                        Code = nameof(IdentityServerKeys.UserAlreadyHasRole),
-                        Description = _stringLocalizer[IdentityServerKeys.UserAlreadyHasRole]
-                    }));
+                    return Response<UserRoleDto>.Fail(
+                            new Error { ErrorCode = nameof(IdentityServerKeys.UserAlreadyHasRole), Message = _stringLocalizer[IdentityServerKeys.UserAlreadyHasRole] },
+                            HttpStatusCode.BadRequest);
                 }
 
                 // Rolü kullanýcýya ata
@@ -83,18 +79,17 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
                         UserName = user.UserName,
                         RoleName = role.Name
                     };
-                    return (userRoleDto, result);
+                    return Response<UserRoleDto>.Success(userRoleDto, HttpStatusCode.OK);
                 }
 
-                return (null, result);
+                var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
+                return Response<UserRoleDto>.Fail(errors, HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
-                return (null, IdentityResult.Failed(new IdentityError
-                {
-                    Code = nameof(IdentityServerKeys.AssignRoleToUserError),
-                    Description = string.Format(_stringLocalizer[IdentityServerKeys.AssignRoleToUserError], ex.Message)
-                }));
+                return Response<UserRoleDto>.Fail(
+                       new Error { ErrorCode = nameof(IdentityServerKeys.AssignRoleToUserError), Message = string.Format(_stringLocalizer[IdentityServerKeys.AssignRoleToUserError], ex.Message) },
+                 HttpStatusCode.InternalServerError);
             }
         }
 
@@ -104,7 +99,7 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
         /// <param name="userId">Kullanýcý ID</param>
         /// <param name="roleId">Rol ID</param>
         /// <returns>Kaldýrýlan rol ve iþlem sonucu</returns>
-        public async Task<(UserRoleDto UserRole, IdentityResult Result)> RemoveRoleFromUserAsync(string userId, string roleId)
+        public async Task<Response<UserRoleDto>> RemoveRoleFromUserAsync(string userId, string roleId)
         {
             try
             {
@@ -112,33 +107,36 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
                 var user = await _userManager.FindByIdAsync(userId);
                 if (user == null)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
-                    {
-                        Code = nameof(IdentityServerKeys.UserNotFound),
-                        Description = _stringLocalizer[IdentityServerKeys.UserNotFound]
-                    }));
+                    return Response<UserRoleDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.UserNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.UserNotFound]
+                        }, HttpStatusCode.NotFound);
                 }
 
                 // Rolü kontrol et
                 var role = await _roleManager.FindByIdAsync(roleId);
                 if (role == null)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
-                    {
-                        Code = nameof(IdentityServerKeys.RoleNotFound),
-                        Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
-                    }));
+                    return Response<UserRoleDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.RoleNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.RoleNotFound]
+                        }, HttpStatusCode.NotFound);
                 }
 
                 // Kullanýcýnýn bu role sahip olup olmadýðýný kontrol et
                 var isInRole = await _userManager.IsInRoleAsync(user, role.Name);
                 if (!isInRole)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
-                    {
-                        Code = nameof(IdentityServerKeys.UserRoleNotFound),
-                        Description = _stringLocalizer[IdentityServerKeys.UserRoleNotFound]
-                    }));
+                    return Response<UserRoleDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.UserRoleNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.UserRoleNotFound]
+                        }, HttpStatusCode.NotFound);
                 }
 
                 // Rolü kullanýcýdan kaldýr
@@ -153,18 +151,23 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
                         UserName = user.UserName,
                         RoleName = role.Name
                     };
-                    return (userRoleDto, result);
+                    return Response<UserRoleDto>.Success(userRoleDto, HttpStatusCode.OK);
                 }
 
-                return (null, result);
+                var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
+                return Response<UserRoleDto>.Fail(errors, HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
-                return (null, IdentityResult.Failed(new IdentityError
-                {
-                    Code = nameof(IdentityServerKeys.RemoveRoleFromUserError),
-                    Description = string.Format(_stringLocalizer[IdentityServerKeys.RemoveRoleFromUserError], ex.Message)
-                }));
+                return Response<UserRoleDto>.Fail(
+                    new Error
+                    {
+                        ErrorCode = nameof(IdentityServerKeys.RemoveRoleFromUserError),
+                        Message = string.Format(_stringLocalizer[IdentityServerKeys.RemoveRoleFromUserError],
+                        ex.Message),
+                        StackTrace = ex.StackTrace
+                    },
+                        HttpStatusCode.InternalServerError);
             }
         }
 
@@ -173,14 +176,19 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
         /// </summary>
         /// <param name="userId">Kullanýcý ID</param>
         /// <returns>Kullanýcý-rol listesi</returns>
-        public async Task<List<UserRoleDto>> GetUserRolesAsync(string userId)
+        public async Task<Response<List<UserRoleDto>>> GetUserRolesAsync(string userId)
         {
             try
             {
                 var user = await _userManager.FindByIdAsync(userId);
                 if (user == null)
                 {
-                    return new List<UserRoleDto>();
+                    return Response<List<UserRoleDto>>.Fail(
+                       new Error
+                       {
+                           ErrorCode = nameof(IdentityServerKeys.UserNotFound),
+                           Message = _stringLocalizer[IdentityServerKeys.UserNotFound]
+                       }, HttpStatusCode.NotFound);
                 }
 
                 var roleNames = await _userManager.GetRolesAsync(user);
@@ -201,11 +209,17 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
                     }
                 }
 
-                return userRoles;
+                return Response<List<UserRoleDto>>.Success(userRoles, HttpStatusCode.OK);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<UserRoleDto>();
+                return Response<List<UserRoleDto>>.Fail(
+                   new Error
+                   {
+                       ErrorCode = nameof(IdentityServerKeys.GetUserRolesError),
+                       Message = string.Format(_stringLocalizer[IdentityServerKeys.GetUserRolesError], ex.Message),
+                       StackTrace = ex.StackTrace
+                   }, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -213,7 +227,7 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
         /// Tüm kullanýcý-rol iliþkilerini getirir.
         /// </summary>
         /// <returns>Tüm kullanýcý-rol listesi</returns>
-        public async Task<List<UserRoleDto>> GetAllUserRolesAsync()
+        public async Task<Response<List<UserRoleDto>>> GetAllUserRolesAsync()
         {
             try
             {
@@ -237,11 +251,18 @@ namespace BOnlineStore.IdentityServer.Business.UserRoleService
                     }
                 }
 
-                return result;
+                return Response<List<UserRoleDto>>.Success(result, HttpStatusCode.OK);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new List<UserRoleDto>();
+                return Response<List<UserRoleDto>>.Fail(
+                    new Error
+                    {
+                        ErrorCode = nameof(IdentityServerKeys.GetUserRolesError),
+                        Message = string.Format(_stringLocalizer[IdentityServerKeys.GetUserRolesError], ex.Message),
+                        StackTrace = ex.StackTrace
+                    },
+                    HttpStatusCode.InternalServerError);
             }
         }
     }

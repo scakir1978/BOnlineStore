@@ -15,58 +15,69 @@ namespace BOnlineStore.IdentityServer.Controllers
     [Authorize(LocalApi.PolicyName)]
     public class UserRoleController : ControllerShared
     {
-        private readonly IUserRoleService _userRoleService;        
+        private readonly IUserRoleService _userRoleService;
 
         public UserRoleController(IUserRoleService userRoleService)
         {
-            _userRoleService = userRoleService;            
+            _userRoleService = userRoleService;
         }
 
         [HttpPost("Load")]
         public async Task<IActionResult> Load(DataSourceLoadOptionsBase loadOptions)
         {
             loadOptions.StringToLower = true;
-            var userRoles = await _userRoleService.GetAllUserRolesAsync();
-            return CreateSuccessActionResultInstance(DataSourceLoader.Load(userRoles, loadOptions));
+            var response = await _userRoleService.GetAllUserRolesAsync();
+            if (response.IsSucceed)
+            {
+                return CreateSuccessActionResultInstance(DataSourceLoader.Load(response.Result, loadOptions));
+            }
+            return CreateErrorActionResultInstance(response.Result, response.Errors);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return CreateSuccessActionResultInstance(await _userRoleService.GetAllUserRolesAsync());
+            var response = await _userRoleService.GetAllUserRolesAsync();
+            if (response.IsSucceed)
+            {
+                return CreateSuccessActionResultInstance(response.Result);
+            }
+            return CreateErrorActionResultInstance(response.Result, response.Errors);
         }
 
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetUserRolesAsync(string userId)
         {
-            var userRoles = await _userRoleService.GetUserRolesAsync(userId);
-            return CreateSuccessActionResultInstance(userRoles);
+            var response = await _userRoleService.GetUserRolesAsync(userId);
+            if (response.IsSucceed)
+            {
+                return CreateSuccessActionResultInstance(response.Result);
+            }
+            return CreateErrorActionResultInstance(response.Result, response.Errors);
         }
 
         [HttpPost]
         public async Task<IActionResult> AssignRoleToUserAsync([FromBody] UserRoleAssignDto input)
         {
-            var (userRole, result) = await _userRoleService.AssignRoleToUserAsync(input);
+            var response = await _userRoleService.AssignRoleToUserAsync(input);
 
-            if (result.Succeeded)
+            if (response.IsSucceed)
             {
-                return CreateSuccessActionResultInstance(userRole);
+                return CreateSuccessActionResultInstance(response.Result);
             }
 
-            //var x = CreateErrorActionResultInstance(userRole, result.Errors);
-
-            return BadRequest(result.Errors);
+            return CreateErrorActionResultInstance(response.Result, response.Errors);
         }
 
         [HttpDelete]
         public async Task<IActionResult> RemoveRoleFromUserAsync([FromBody] UserRoleAssignDto input)
         {
-            var (userRole, result) = await _userRoleService.RemoveRoleFromUserAsync(input.UserId, input.RoleId);
+            var response = await _userRoleService.RemoveRoleFromUserAsync(input.UserId, input.RoleId);
 
-            if (result.Succeeded)
-                return CreateSuccessActionResultInstance(userRole);
+            if (response.IsSucceed)
+                return CreateSuccessActionResultInstance(response.Result);
 
-            return BadRequest(result.Errors);
+            return CreateErrorActionResultInstance(response.Result, response.Errors);
         }
     }
 }

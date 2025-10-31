@@ -1,13 +1,14 @@
 using BOnlineStore.IdentityServer.Dtos.UserRole;
+using BOnlineStore.Shared.Dtos;
 using Microsoft.AspNetCore.Identity;
 
 namespace BOnlineStore.IdentityServer.Business.UserRoleService
 {
     public interface IUserRoleService
     {
-        Task<(UserRoleDto UserRole, IdentityResult Result)> AssignRoleToUserAsync(UserRoleAssignDto userRoleAssignDto);
-        Task<(UserRoleDto UserRole, IdentityResult Result)> RemoveRoleFromUserAsync(string userId, string roleId);
-        Task<List<UserRoleDto>> GetUserRolesAsync(string userId);
-        Task<List<UserRoleDto>> GetAllUserRolesAsync();
+        Task<Response<UserRoleDto>> AssignRoleToUserAsync(UserRoleAssignDto userRoleAssignDto);
+        Task<Response<UserRoleDto>> RemoveRoleFromUserAsync(string userId, string roleId);
+        Task<Response<List<UserRoleDto>>> GetUserRolesAsync(string userId);
+        Task<Response<List<UserRoleDto>>> GetAllUserRolesAsync();
     }
 }
