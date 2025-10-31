@@ -1,3 +1,4 @@
+import { UserModule } from './user/user.module';
 import { UserRoleModule } from './user-role/user-role.module';
 import { RoleModule } from './role/role.module';
 import { NgModule } from '@angular/core';
@@ -6,6 +7,12 @@ import { UserProfileModule } from './user-profile/user-profile.module';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, UserProfileModule, RoleModule, UserRoleModule],
+  imports: [
+    CommonModule,
+    UserProfileModule,
+    RoleModule,
+    UserRoleModule,
+    UserModule,
+  ],
 })
 export class SettingsModule {}

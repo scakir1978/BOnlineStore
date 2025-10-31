@@ -1,13 +1,13 @@
 using AutoMapper;
 using BOnlineStore.IdentityServer.Dtos.Role;
-using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.Shared.Dtos;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
-using System.Data;
-using System.Security.Claims;
+using System.Net;
 
 namespace BOnlineStore.IdentityServer.Business.RoleService
 {
@@ -36,7 +36,7 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleCreateDto">Oluþturulacak rol bilgileri</param>
         /// <returns>Oluþturulan rol ve iþlem sonucu</returns>
-        public async Task<(RoleDto Role, IdentityResult Result)> CreateAsync(RoleCreateDto roleCreateDto)
+        public async Task<Response<RoleDto>> CreateAsync(RoleCreateDto roleCreateDto)
         {
             try
             {
@@ -44,36 +44,39 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
                 var existingRole = await _roleManager.FindByNameAsync(roleCreateDto.Name);
                 if (existingRole != null)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
+                    return Response<RoleDto>.Fail(new Error
                     {
-                        Code = nameof(IdentityServerKeys.RoleAlreadyExists),
-                        Description = _stringLocalizer[IdentityServerKeys.RoleAlreadyExists]
-                    }));
+                        ErrorCode = nameof(IdentityServerKeys.RoleAlreadyExists),
+                        Message = _stringLocalizer[IdentityServerKeys.RoleAlreadyExists]
+                    }, HttpStatusCode.BadRequest);
                 }
 
                 var role = new IdentityRole
                 {
                     Name = roleCreateDto.Name,
                     NormalizedName = roleCreateDto.Name?.ToUpperInvariant()
-                    // ConcurrencyStamp otomatik olarak _roleManager tarafýndan ayarlanýr
                 };
 
                 var result = await _roleManager.CreateAsync(role);
+
                 if (result.Succeeded)
                 {
-                    return (_mapper.Map<RoleDto>(role), result);
+                    var roleDto = _mapper.Map<RoleDto>(role);
+                    return Response<RoleDto>.Success(roleDto, HttpStatusCode.Created);
                 }
 
-                return (null, result);
+                var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
+                return Response<RoleDto>.Fail(errors, HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
-                var error = IdentityResult.Failed(new IdentityError
-                {
-                    Code = nameof(IdentityServerKeys.CreateRoleError),
-                    Description = string.Format(_stringLocalizer[IdentityServerKeys.CreateRoleError], ex.Message)
-                });
-                return (null, error);
+                return Response<RoleDto>.Fail(
+                   new Error
+                   {
+                       ErrorCode = nameof(IdentityServerKeys.CreateRoleError),
+                       Message = string.Format(_stringLocalizer[IdentityServerKeys.CreateRoleError], ex.Message),
+                       StackTrace = ex.StackTrace
+                   }, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -82,7 +85,7 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleUpdateDto">Güncellenecek rol bilgileri</param>
         /// <returns>Güncellenen rol ve iþlem sonucu</returns>
-        public async Task<(RoleDto Role, IdentityResult Result)> UpdateAsync(string roleId, RoleUpdateDto roleUpdateDto)
+        public async Task<Response<RoleDto>> UpdateAsync(string roleId, RoleUpdateDto roleUpdateDto)
         {
             try
             {
@@ -90,11 +93,12 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
 
                 if (role == null)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
-                    {
-                        Code = nameof(IdentityServerKeys.RoleNotFound),
-                        Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
-                    }));
+                    return Response<RoleDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.RoleNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.RoleNotFound]
+                        }, HttpStatusCode.NotFound);
                 }
 
                 role.Name = roleUpdateDto.Name;
@@ -103,18 +107,22 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
 
                 if (result.Succeeded)
                 {
-                    return (_mapper.Map<RoleDto>(role), result);
+                    var roleDto = _mapper.Map<RoleDto>(role);
+                    return Response<RoleDto>.Success(roleDto, HttpStatusCode.OK);
                 }
-                return (null, result);
+
+                var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
+                return Response<RoleDto>.Fail(errors, HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
-                var error = IdentityResult.Failed(new IdentityError
-                {
-                    Code = nameof(IdentityServerKeys.UpdateRoleError),
-                    Description = string.Format(_stringLocalizer[IdentityServerKeys.UpdateRoleError], ex.Message)
-                });
-                return (null, error);
+                return Response<RoleDto>.Fail(
+                    new Error
+                    {
+                        ErrorCode = nameof(IdentityServerKeys.UpdateRoleError),
+                        Message = string.Format(_stringLocalizer[IdentityServerKeys.UpdateRoleError], ex.Message),
+                        StackTrace = ex.StackTrace
+                    }, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -123,7 +131,7 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleId">Silinecek rol kimliði</param>
         /// <returns>Ýþlem sonucu</returns>
-        public async Task<(RoleDto Role, IdentityResult Result)> DeleteAsync(string roleId)
+        public async Task<Response<RoleDto>> DeleteAsync(string roleId)
         {
             try
             {
@@ -131,30 +139,36 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
 
                 if (role == null)
                 {
-                    return (null, IdentityResult.Failed(new IdentityError
-                    {
-                        Code = nameof(IdentityServerKeys.RoleNotFound),
-                        Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
-                    }));
+                    return Response<RoleDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.RoleNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.RoleNotFound]
+                        }, HttpStatusCode.NotFound);
                 }
+
+                // Rolü silmeden önce DTO'ya dönüþtür
+                var roleDto = _mapper.Map<RoleDto>(role);
 
                 var result = await _roleManager.DeleteAsync(role);
 
                 if (result.Succeeded)
                 {
-                    return (_mapper.Map<RoleDto>(role), result);
+                    return Response<RoleDto>.Success(roleDto, HttpStatusCode.OK);
                 }
 
-                return (null, result);
-
+                var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
+                return Response<RoleDto>.Fail(errors, HttpStatusCode.BadRequest);
             }
             catch (Exception ex)
             {
-                return (null, IdentityResult.Failed(new IdentityError
-                {
-                    Code = nameof(IdentityServerKeys.DeleteRoleError),
-                    Description = string.Format(_stringLocalizer[IdentityServerKeys.DeleteRoleError], ex.Message)
-                }));
+                return Response<RoleDto>.Fail(
+                 new Error
+                 {
+                     ErrorCode = nameof(IdentityServerKeys.DeleteRoleError),
+                     Message = string.Format(_stringLocalizer[IdentityServerKeys.DeleteRoleError], ex.Message),
+                     StackTrace = ex.StackTrace
+                 }, HttpStatusCode.InternalServerError);
             }
         }
 
@@ -163,20 +177,35 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleId">Rol kimliði</param>
         /// <returns>Rol bilgileri</returns>
-        public async Task<(RoleDto Role, IdentityResult Result)> GetByIdAsync(string roleId)
+        public async Task<Response<RoleDto>> GetByIdAsync(string roleId)
         {
-            var role = await _roleManager.FindByIdAsync(roleId);
-
-            if (role == null)
+            try
             {
-                return (null, IdentityResult.Failed(new IdentityError
-                {
-                    Code = nameof(IdentityServerKeys.RoleNotFound),
-                    Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
-                }));
-            }
+                var role = await _roleManager.FindByIdAsync(roleId);
 
-            return (_mapper.Map<RoleDto>(role), IdentityResult.Success);
+                if (role == null)
+                {
+                    return Response<RoleDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.RoleNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.RoleNotFound]
+                        }, HttpStatusCode.NotFound);
+                }
+
+                var roleDto = _mapper.Map<RoleDto>(role);
+                return Response<RoleDto>.Success(roleDto, HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Response<RoleDto>.Fail(
+                       new Error
+                       {
+                           ErrorCode = "GetRoleByIdError",
+                           Message = $"Error getting role by ID: {ex.Message}",
+                           StackTrace = ex.StackTrace
+                       }, HttpStatusCode.InternalServerError);
+            }
         }
 
         /// <summary>
@@ -184,18 +213,34 @@ namespace BOnlineStore.IdentityServer.Business.RoleService
         /// </summary>
         /// <param name="roleName">Rol adý</param>
         /// <returns>Rol bilgileri</returns>
-        public async Task<(RoleDto Role, IdentityResult Result)> GetByNameAsync(string roleName)
+        public async Task<Response<RoleDto>> GetByNameAsync(string roleName)
         {
-            var role = await _roleManager.FindByNameAsync(roleName);
-            if (role == null)
+            try
             {
-                return (null, IdentityResult.Failed(new IdentityError
+                var role = await _roleManager.FindByNameAsync(roleName);
+                if (role == null)
                 {
-                    Code = nameof(IdentityServerKeys.RoleNotFound),
-                    Description = _stringLocalizer[IdentityServerKeys.RoleNotFound]
-                }));
+                    return Response<RoleDto>.Fail(
+                          new Error
+                          {
+                              ErrorCode = nameof(IdentityServerKeys.RoleNotFound),
+                              Message = _stringLocalizer[IdentityServerKeys.RoleNotFound]
+                          }, HttpStatusCode.NotFound);
+                }
+
+                var roleDto = _mapper.Map<RoleDto>(role);
+                return Response<RoleDto>.Success(roleDto, HttpStatusCode.OK);
             }
-            return (_mapper.Map<RoleDto>(role), IdentityResult.Success);
+            catch (Exception ex)
+            {
+                return Response<RoleDto>.Fail(
+                   new Error
+                   {
+                       ErrorCode = "GetRoleByNameError",
+                       Message = $"Error getting role by name: {ex.Message}",
+                       StackTrace = ex.StackTrace
+                   }, HttpStatusCode.InternalServerError);
+            }
         }
 
         /// <summary>

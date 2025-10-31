@@ -371,5 +371,6 @@
   "ROLE": "Rol Tanımlama",
   "USERROLE": "Kullanıcıya Rol Atama",
   "USER": "Kullanıcı",
-  "ROLEUSER": "Rol"
+  "ROLEUSER": "Rol",
+  "USERS": "Kullanıcı Tanımlamaları"
 }
