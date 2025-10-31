@@ -1,4 +1,5 @@
 using BOnlineStore.IdentityServer.Dtos.User;
+using BOnlineStore.Shared.Dtos;
 using Microsoft.AspNetCore.Identity;
 
 namespace BOnlineStore.IdentityServer.Business.UserService
@@ -10,14 +11,14 @@ namespace BOnlineStore.IdentityServer.Business.UserService
         /// </summary>
         /// <param name="userCreateDto">Oluþturulacak kullanýcý bilgileri</param>
         /// <returns>Oluþturulan kullanýcý bilgileri ve iþlem sonucu</returns>
-        Task<(UserDto User, IdentityResult Result)> CreateAsync(UserCreateDto userCreateDto);
+        Task<Response<UserDto>> CreateAsync(UserCreateDto userCreateDto);
 
         /// <summary>
         /// Kullanýcý bilgilerini günceller
         /// </summary>
         /// <param name="userUpdateDto">Güncellenecek kullanýcý bilgileri</param>
         /// <returns>Güncellenmiþ kullanýcý bilgileri ve iþlem sonucu</returns>
-        Task<(UserDto User, IdentityResult Result)> UpdateAsync(UserUpdateDto userUpdateDto);
+        Task<Response<UserDto>> UpdateAsync(UserUpdateDto userUpdateDto);
 
         /// <summary>
         /// Kullanýcýyý ID ile getirir
@@ -38,7 +39,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
         /// </summary>
         /// <param name="userId">Silinecek kullanýcý kimliði</param>
         /// <returns>Ýþlem sonucu</returns>
-        Task<IdentityResult> DeleteAsync(string userId);
+        Task<Response<UserDto>> DeleteAsync(string userId);
 
         /// <summary>
         /// Belirli bir kiracýya ait kullanýcýlarý getirir

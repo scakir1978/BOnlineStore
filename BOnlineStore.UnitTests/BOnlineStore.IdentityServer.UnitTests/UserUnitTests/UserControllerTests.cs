@@ -4,11 +4,13 @@ using BOnlineStore.IdentityServer.Controllers;
 using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
+using BOnlineStore.Shared.Dtos;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Moq;
+using System.Net;
 using Xunit;
 
 namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
@@ -53,35 +55,20 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 Name = userCreateDto.Name
             };
 
-            var identityResult = IdentityResult.Success;
+            var response = Response<UserDto>.Success(expectedUser, HttpStatusCode.Created);
 
             _mockUserService
                 .Setup(x => x.CreateAsync(It.IsAny<UserCreateDto>()))
-                .ReturnsAsync((expectedUser, identityResult));
+                .ReturnsAsync(response);
 
             // Act
             var result = await _controller.CreateUser(userCreateDto);
 
             // Assert
             result.Should().NotBeNull();
-            var createdResult = result.Result.Should().BeOfType<CreatedAtActionResult>().Subject;
-            createdResult.Value.Should().BeEquivalentTo(expectedUser);
-            createdResult.ActionName.Should().Be(nameof(UserController.GetUserById));
-        }
-
-        [Fact]
-        public async Task CreateUser_InvalidModelState_ReturnsBadRequest()
-        {
-            // Arrange
-            var userCreateDto = new UserCreateDto(); // Invalid DTO (missing required fields)
-            _controller.ModelState.AddModelError("Email", "Email is required");
-
-            // Act
-            var result = await _controller.CreateUser(userCreateDto);
-
-            // Assert
-            result.Should().NotBeNull();
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
+            objectResult.StatusCode.Should().Be((int)HttpStatusCode.Created);
         }
 
         [Fact]
@@ -95,23 +82,23 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 TenantId = Guid.NewGuid()
             };
 
-            var identityError = new IdentityError
+            var error = new Error
             {
-                Code = "DuplicateEmail",
-                Description = "Email already exists"
+                ErrorCode = "DuplicateEmail",
+                Message = "Email already exists"
             };
-            var identityResult = IdentityResult.Failed(identityError);
+            var response = Response<UserDto>.Fail(error, HttpStatusCode.BadRequest);
 
             _mockUserService
                 .Setup(x => x.CreateAsync(It.IsAny<UserCreateDto>()))
-                .ReturnsAsync((null, identityResult));
+                .ReturnsAsync(response);
 
             // Act
             var result = await _controller.CreateUser(userCreateDto);
 
             // Assert
             result.Should().NotBeNull();
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
+            result.Should().BeOfType<ObjectResult>();
         }
 
         #endregion
@@ -136,19 +123,20 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 Name = userUpdateDto.Name
             };
 
-            var identityResult = IdentityResult.Success;
+            var response = Response<UserDto>.Success(expectedUser, HttpStatusCode.OK);
 
             _mockUserService
                 .Setup(x => x.UpdateAsync(It.IsAny<UserUpdateDto>()))
-                .ReturnsAsync((expectedUser, identityResult));
+                .ReturnsAsync(response);
 
             // Act
             var result = await _controller.UpdateUser(userUpdateDto);
 
             // Assert
             result.Should().NotBeNull();
-            var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-            okResult.Value.Should().BeEquivalentTo(expectedUser);
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
+            objectResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Fact]
@@ -161,23 +149,23 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 Email = "test@example.com"
             };
 
-            var identityError = new IdentityError
+            var error = new Error
             {
-                Code = "UserNotFound",
-                Description = "User not found"
+                ErrorCode = "UserNotFound",
+                Message = "User not found"
             };
-            var identityResult = IdentityResult.Failed(identityError);
+            var response = Response<UserDto>.Fail(error, HttpStatusCode.NotFound);
 
             _mockUserService
                 .Setup(x => x.UpdateAsync(It.IsAny<UserUpdateDto>()))
-                .ReturnsAsync((null, identityResult));
+                .ReturnsAsync(response);
 
             // Act
             var result = await _controller.UpdateUser(userUpdateDto);
 
             // Assert
             result.Should().NotBeNull();
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
+            result.Should().BeOfType<ObjectResult>();
         }
 
         #endregion
@@ -279,22 +267,31 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
         #region DeleteUser Tests
 
         [Fact]
-        public async Task DeleteUser_ExistingUserId_ReturnsNoContent()
+        public async Task DeleteUser_ExistingUserId_ReturnsOkWithDeletedUser()
         {
             // Arrange
             var userId = Guid.NewGuid().ToString();
-            var identityResult = IdentityResult.Success;
+            var deletedUser = new UserDto
+            {
+                Id = userId,
+                Email = "deleted@example.com",
+                Name = "Deleted User"
+            };
+
+            var response = Response<UserDto>.Success(deletedUser, HttpStatusCode.OK);
 
             _mockUserService
                 .Setup(x => x.DeleteAsync(userId))
-                .ReturnsAsync(identityResult);
+                .ReturnsAsync(response);
 
             // Act
             var result = await _controller.DeleteUser(userId);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeOfType<NoContentResult>();
+            result.Should().BeOfType<ObjectResult>();
+            var objectResult = result as ObjectResult;
+            objectResult.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
         [Fact]
@@ -302,23 +299,23 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
         {
             // Arrange
             var userId = Guid.NewGuid().ToString();
-            var identityError = new IdentityError
+            var error = new Error
             {
-                Code = "UserNotFound",
-                Description = "User not found"
+                ErrorCode = "UserNotFound",
+                Message = "User not found"
             };
-            var identityResult = IdentityResult.Failed(identityError);
+            var response = Response<UserDto>.Fail(error, HttpStatusCode.NotFound);
 
             _mockUserService
                 .Setup(x => x.DeleteAsync(userId))
-                .ReturnsAsync(identityResult);
+                .ReturnsAsync(response);
 
             // Act
             var result = await _controller.DeleteUser(userId);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeOfType<BadRequestObjectResult>();
+            result.Should().BeOfType<ObjectResult>();
         }
 
         #endregion

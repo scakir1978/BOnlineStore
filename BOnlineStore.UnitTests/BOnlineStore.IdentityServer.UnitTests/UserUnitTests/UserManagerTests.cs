@@ -125,14 +125,14 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 .ReturnsAsync(IdentityResult.Success);
 
             // Act
-            var (user, result) = await _userManager.CreateAsync(userCreateDto);
+            var response = await _userManager.CreateAsync(userCreateDto);
 
             // Assert
-            result.Should().NotBeNull();
-            result.Succeeded.Should().BeTrue();
-            user.Should().NotBeNull();
-            user.Email.Should().Be(userCreateDto.Email);
-            user.Name.Should().Be(userCreateDto.Name);
+            response.Should().NotBeNull();
+            response.IsSucceed.Should().BeTrue();
+            response.Result.Should().NotBeNull();
+response.Result.Email.Should().Be(userCreateDto.Email);
+            response.Result.Name.Should().Be(userCreateDto.Name);
         }
 
         [Fact]
@@ -148,130 +148,130 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
             };
 
             // Act
-            var (user, result) = await _userManager.CreateAsync(userCreateDto);
+            var response = await _userManager.CreateAsync(userCreateDto);
 
             // Assert
-            result.Should().NotBeNull();
-            result.Succeeded.Should().BeFalse();
-            user.Should().BeNull();
-            result.Errors.Should().ContainSingle(e => e.Code == "TenantNotFound");
-            result.Errors.First().Description.Should().Contain("Kiracý bulunamadý");
-        }
+            response.Should().NotBeNull();
+            response.IsSucceed.Should().BeFalse();
+            response.Result.Should().BeNull();
+            response.Errors.Should().ContainSingle(e => e.ErrorCode == "TenantNotFound");
+    response.Errors.First().Message.Should().Contain("Kiracý bulunamadý");
+  }
 
-        [Fact]
+    [Fact]
         public async Task CreateAsync_UserManagerFailure_ReturnsFailure()
-        {
-            // Arrange
+{
+    // Arrange
             var tenantId = Guid.NewGuid();
             var tenant = new Tenant { Id = tenantId, Name = "Test Tenant" };
-            _context.Tenant.Add(tenant);
+     _context.Tenant.Add(tenant);
             await _context.SaveChangesAsync();
 
-            var userCreateDto = new UserCreateDto
-            {
-                Email = "test@example.com",
-                Password = "Test123!",
-                TenantId = tenantId
+        var userCreateDto = new UserCreateDto
+     {
+ Email = "test@example.com",
+          Password = "Test123!",
+      TenantId = tenantId
             };
 
             var applicationUser = new ApplicationUser
             {
-                Email = userCreateDto.Email,
-                UserName = userCreateDto.Email,
+      Email = userCreateDto.Email,
+      UserName = userCreateDto.Email,
                 TenantId = tenantId
-            };
+     };
 
             var identityError = new IdentityError
-            {
+      {
                 Code = "DuplicateUserName",
                 Description = "User name already exists"
-            };
+          };
 
             _mockMapper.Setup(m => m.Map<ApplicationUser>(userCreateDto)).Returns(applicationUser);
             _mockUserManager.Setup(um => um.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>()))
-                .ReturnsAsync(IdentityResult.Failed(identityError));
+    .ReturnsAsync(IdentityResult.Failed(identityError));
 
-            // Act
-            var (user, result) = await _userManager.CreateAsync(userCreateDto);
+ // Act
+  var response = await _userManager.CreateAsync(userCreateDto);
 
-            // Assert
-            result.Should().NotBeNull();
-            result.Succeeded.Should().BeFalse();
-            user.Should().BeNull();
-            result.Errors.Should().Contain(e => e.Code == "DuplicateUserName");
-        }
+       // Assert
+        response.Should().NotBeNull();
+ response.IsSucceed.Should().BeFalse();
+            response.Result.Should().BeNull();
+         response.Errors.Should().Contain(e => e.ErrorCode == "DuplicateUserName");
+      }
 
-        #endregion
+ #endregion
 
         #region UpdateAsync Tests
 
         [Fact]
         public async Task UpdateAsync_ValidUserUpdateDto_ReturnsUserDtoAndSuccess()
         {
-            // Arrange
-            var userId = Guid.NewGuid().ToString();
+        // Arrange
+         var userId = Guid.NewGuid().ToString();
             var existingUser = new ApplicationUser
-            {
-                Id = userId,
-                Email = "old@example.com",
-                UserName = "old@example.com",
-                TenantId = Guid.NewGuid(),
-                Name = "Old Name"
-            };
+   {
+       Id = userId,
+    Email = "old@example.com",
+    UserName = "old@example.com",
+      TenantId = Guid.NewGuid(),
+          Name = "Old Name"
+       };
 
             var userUpdateDto = new UserUpdateDto
-            {
-                Id = userId,
-                Email = "new@example.com",
-                Name = "New Name"
-            };
+   {
+     Id = userId,
+       Email = "new@example.com",
+       Name = "New Name"
+    };
 
-            var expectedUserDto = new UserDto
-            {
-                Id = userId,
-                Email = userUpdateDto.Email,
-                Name = userUpdateDto.Name
-            };
+       var expectedUserDto = new UserDto
+       {
+     Id = userId,
+Email = userUpdateDto.Email,
+       Name = userUpdateDto.Name
+       };
 
-            _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(existingUser);
-            _mockUserManager.Setup(um => um.UpdateAsync(It.IsAny<ApplicationUser>()))
-                .ReturnsAsync(IdentityResult.Success);
-            _mockMapper.Setup(m => m.Map<UserDto>(It.IsAny<ApplicationUser>())).Returns(expectedUserDto);
+_mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(existingUser);
+  _mockUserManager.Setup(um => um.UpdateAsync(It.IsAny<ApplicationUser>()))
+ .ReturnsAsync(IdentityResult.Success);
+    _mockMapper.Setup(m => m.Map<UserDto>(It.IsAny<ApplicationUser>())).Returns(expectedUserDto);
 
-            // Act
-            var (user, result) = await _userManager.UpdateAsync(userUpdateDto);
+        // Act
+     var response = await _userManager.UpdateAsync(userUpdateDto);
 
-            // Assert
-            result.Should().NotBeNull();
-            result.Succeeded.Should().BeTrue();
-            user.Should().NotBeNull();
-            user.Email.Should().Be(userUpdateDto.Email);
-            user.Name.Should().Be(userUpdateDto.Name);
-        }
+       // Assert
+       response.Should().NotBeNull();
+response.IsSucceed.Should().BeTrue();
+    response.Result.Should().NotBeNull();
+     response.Result.Email.Should().Be(userUpdateDto.Email);
+      response.Result.Name.Should().Be(userUpdateDto.Name);
+}
 
-        [Fact]
+ [Fact]
         public async Task UpdateAsync_NonExistentUser_ReturnsFailure()
         {
-            // Arrange
-            var userUpdateDto = new UserUpdateDto
-            {
-                Id = Guid.NewGuid().ToString(),
-                Email = "test@example.com"
+       // Arrange
+    var userUpdateDto = new UserUpdateDto
+      {
+       Id = Guid.NewGuid().ToString(),
+      Email = "test@example.com"
             };
 
-            _mockUserManager.Setup(um => um.FindByIdAsync(It.IsAny<string>()))
-                .ReturnsAsync((ApplicationUser)null);
+   _mockUserManager.Setup(um => um.FindByIdAsync(It.IsAny<string>()))
+     .ReturnsAsync((ApplicationUser)null);
 
-            // Act
-            var (user, result) = await _userManager.UpdateAsync(userUpdateDto);
+ // Act
+    var response = await _userManager.UpdateAsync(userUpdateDto);
 
-            // Assert
-            result.Should().NotBeNull();
-            result.Succeeded.Should().BeFalse();
-            user.Should().BeNull();
-            result.Errors.Should().ContainSingle(e => e.Code == "UserNotFound");
-            result.Errors.First().Description.Should().Contain("Kullanýcý bulunamadý");
-        }
+     // Assert
+       response.Should().NotBeNull();
+     response.IsSucceed.Should().BeFalse();
+    response.Result.Should().BeNull();
+     response.Errors.Should().ContainSingle(e => e.ErrorCode == "UserNotFound");
+   response.Errors.First().Message.Should().Contain("Kullanýcý bulunamadý");
+ }
 
         #endregion
 
@@ -290,16 +290,27 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 TenantId = Guid.NewGuid()
             };
 
+            var expectedUserDto = new UserDto
+            {
+                Id = userId,
+                Email = existingUser.Email,
+                UserName = existingUser.UserName,
+                TenantId = existingUser.TenantId
+            };
+
             _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(existingUser);
+            _mockMapper.Setup(m => m.Map<UserDto>(existingUser)).Returns(expectedUserDto);
             _mockUserManager.Setup(um => um.DeleteAsync(existingUser))
                 .ReturnsAsync(IdentityResult.Success);
 
             // Act
-            var result = await _userManager.DeleteAsync(userId);
+            var response = await _userManager.DeleteAsync(userId);
 
             // Assert
-            result.Should().NotBeNull();
-            result.Succeeded.Should().BeTrue();
+            response.Should().NotBeNull();
+            response.IsSucceed.Should().BeTrue();
+            response.Result.Should().NotBeNull();
+            response.Result.Id.Should().Be(userId);
         }
 
         [Fact]
@@ -311,13 +322,14 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
                 .ReturnsAsync((ApplicationUser)null);
 
             // Act
-            var result = await _userManager.DeleteAsync(userId);
+            var response = await _userManager.DeleteAsync(userId);
 
             // Assert
-            result.Should().NotBeNull();
-            result.Succeeded.Should().BeFalse();
-            result.Errors.Should().ContainSingle(e => e.Code == "UserNotFound");
-            result.Errors.First().Description.Should().Contain("Kullanýcý bulunamadý");
+            response.Should().NotBeNull();
+            response.IsSucceed.Should().BeFalse();
+            response.Result.Should().BeNull();
+            response.Errors.Should().ContainSingle(e => e.ErrorCode == "UserNotFound");
+            response.Errors.First().Message.Should().Contain("Kullanýcý bulunamadý");
         }
 
         #endregion
