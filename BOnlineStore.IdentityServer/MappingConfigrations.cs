@@ -11,6 +11,8 @@ namespace BOnlineStore.IdentityServer
             {
                 // User ve Tenant mappings için profil kullan
                 config.AddProfile<UserMappingProfile>();
+                config.AddProfile<RoleMappingProfile>();
+                config.AddProfile<UserRoleMappingProfile>();
             });
 
             return mappingConfig;

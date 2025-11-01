@@ -9,4 +9,5 @@ export interface MenuItem {
   parentId?: number;
   isLayout?: boolean;
   collapseid?: string;
+  allowedRoles?: string[]; // Menüye erişebilecek roller
 }

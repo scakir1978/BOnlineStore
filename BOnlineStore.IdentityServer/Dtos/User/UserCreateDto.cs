@@ -26,9 +26,7 @@ namespace BOnlineStore.IdentityServer.Dtos.User
 
         /// <summary>
         /// Kiracý kimliði
-        /// </summary>
-        [Required]
-        [NotEmptyGuid]
+        /// </summary>        
         public Guid TenantId { get; set; }
 
         /// <summary>

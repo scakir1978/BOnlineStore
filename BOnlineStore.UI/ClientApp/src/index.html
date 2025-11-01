@@ -24,9 +24,87 @@
 
     <!-- icon scss -->
     <link rel="stylesheet" href="assets/scss/icons.scss" />
+
+    <!-- Inline splash styles so it's visible before Angular bootstraps -->
+    <style>
+      #app-splash {
+        position: fixed;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.96);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      #app-splash .splash-box {
+        text-align: center;
+      }
+      #app-splash .spinner {
+        width: 48px;
+        height: 48px;
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top-color: #3f51b5;
+        border-radius: 50%;
+        animation: app-splash-spin 0.9s linear infinite;
+        margin: 0 auto;
+      }
+      #app-splash .message {
+        margin-top: 12px;
+        font-size: 16px;
+        color: #333;
+      }
+      @keyframes app-splash-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
 
   <body>
+    <!-- Initial splash screen shown during APP_INITIALIZER / bootstrap -->
+    <div id="app-splash" aria-label="Uygulama yükleniyor">
+      <div class="splash-box">
+        <div class="spinner" aria-hidden="true"></div>
+        <div class="message">Lütfen bekleyiniz…</div>
+      </div>
+    </div>
+    <script>
+      (function () {
+        try {
+          console.log(
+            "Index cookie language from localStorage:",
+            localStorage.getItem("locale")
+          );
+
+          var storedLang = localStorage.getItem("locale") || "tr";
+
+          var lang = (storedLang || "tr").toLowerCase();
+          var primary = lang.split("-")[0];
+
+          var messages = {
+            tr: "Lütfen bekleyiniz…",
+            en: "Please wait…",
+            de: "Bitte warten…",
+            fr: "Veuillez patienter…",
+            es: "Por favor, espere…",
+            it: "Attendere prego…",
+            ru: "Пожалуйста, подождите…",
+            ar: "يرجى الانتظار…",
+          };
+
+          var msg = messages[lang] || messages[primary] || messages.tr;
+          var splash = document.getElementById("app-splash");
+          if (splash) {
+            var el = splash.querySelector(".message");
+            if (el) el.textContent = msg;
+            splash.setAttribute("aria-label", msg);
+          }
+        } catch (e) {
+          // ignore
+        }
+      })();
+    </script>
     <app-root></app-root>
   </body>
 </html>

@@ -17,9 +17,10 @@ namespace BOnlineStore.Localization.Constants
         public const string TenantAlreadyExists = "TenantAlreadyExists";
         public const string TenantNotFoundForDelete = "TenantNotFoundForDelete";
         public const string TenantNotFoundForUpdate = "TenantNotFoundForUpdate";
-        
+
         // User Management Keys
         public const string UserNotFound = "UserNotFound";
+        public const string EmailAlreadyExists = "EmailAlreadyExists";
         public const string CreateUserError = "CreateUserError";
         public const string UpdateUserError = "UpdateUserError";
         public const string DeleteUserError = "DeleteUserError";
@@ -29,5 +30,42 @@ namespace BOnlineStore.Localization.Constants
         public const string UserNotFoundByEmail = "UserNotFoundByEmail";
         public const string PasswordChangedSuccessfully = "PasswordChangedSuccessfully";
         public const string PasswordResetSuccessfully = "PasswordResetSuccessfully";
+
+        // Logout Page Keys
+        public const string LoggedOutTitle = "LoggedOutTitle";
+        public const string LoggedOutThanks = "LoggedOutThanks";
+        public const string LoginAgain = "LoginAgain";
+
+        // Login Page Keys
+        public const string LoginWelcomeTitle = "LoginWelcomeTitle";
+        public const string LoginSubtitle = "LoginSubtitle";
+        public const string LoginEmailLabel = "LoginEmailLabel";
+        public const string LoginEmailPlaceholder = "LoginEmailPlaceholder";
+        public const string LoginEmailInvalid = "LoginEmailInvalid";
+        public const string LoginForgotPassword = "LoginForgotPassword";
+        public const string LoginPasswordLabel = "LoginPasswordLabel";
+        public const string LoginPasswordPlaceholder = "LoginPasswordPlaceholder";
+        public const string LoginPasswordInvalid = "LoginPasswordInvalid";
+        public const string LoginRememberMe = "LoginRememberMe";
+        public const string LoginButtonText = "LoginButtonText";
+        public const string LoginNoAccountQuestion = "LoginNoAccountQuestion";
+        public const string LoginCreateAccount = "LoginCreateAccount";
+        public const string LoginExternalTitle = "LoginExternalTitle";
+
+        // Role Management Keys
+        public const string RoleNotFound = "RoleNotFound";
+        public const string CreateRoleError = "CreateRoleError";
+        public const string UpdateRoleError = "UpdateRoleError";
+        public const string DeleteRoleError = "DeleteRoleError";
+        public const string RoleAlreadyExists = "RoleAlreadyExists";
+
+        // User-Role Management Keys
+        public const string AssignRoleToUserError = "AssignRoleToUserError";
+        public const string RemoveRoleFromUserError = "RemoveRoleFromUserError";
+        public const string UserRoleNotFound = "UserRoleNotFound";
+        public const string UserAlreadyHasRole = "UserAlreadyHasRole";
+        public const string GetUserRolesError = "GetUserRolesError";
+        public const string SuperUser = "SuperUser";
+        public const string Admin = "Admin";
     }
 }

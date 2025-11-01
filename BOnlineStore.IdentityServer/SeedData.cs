@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using IdentityModel;
-using BOnlineStore.IdentityServer.Data;
+﻿using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

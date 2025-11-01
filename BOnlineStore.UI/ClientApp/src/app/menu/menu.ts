@@ -1,4 +1,6 @@
+import { DxoAppointmentDraggingModule } from 'devextreme-angular/ui/nested';
 import { MenuItem } from './menu.model';
+import { SettingsGeneralNamesEnum } from '../base-classes/base-enums/settings-general-names.enum';
 
 export const MENU: MenuItem[] = [
   {
@@ -253,6 +255,36 @@ export const MENU: MenuItem[] = [
         label: 'WORKORDER',
         link: '/production/work-order',
         parentId: 20010,
+      },
+    ],
+  },
+  {
+    id: 90010,
+    label: 'SETTINGS',
+    icon: 'ri-settings-3-line',
+    collapseid: 'sidebarSettings',
+    allowedRoles: [
+      SettingsGeneralNamesEnum.ADMIN,
+      SettingsGeneralNamesEnum.SUPERUSER,
+    ], // Sadece Admin ve SuperUser rollerinin görebileceği menü
+    subItems: [
+      {
+        id: 90020,
+        label: 'ROLE',
+        link: '/settings/role',
+        parentId: 90010,
+      },
+      {
+        id: 90030,
+        label: 'USERROLE',
+        link: '/settings/user-role',
+        parentId: 90010,
+      },
+      {
+        id: 90040,
+        label: 'USERS',
+        link: '/settings/user',
+        parentId: 90010,
       },
     ],
   },

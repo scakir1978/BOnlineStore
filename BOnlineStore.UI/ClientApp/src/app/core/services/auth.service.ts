@@ -35,8 +35,6 @@ export class AuthenticationService {
     automaticSilentRenew: true,
     response_mode: 'query',
     loadUserInfo: true, // UserInfo endpoint'inden claim'leri çek
-    // Token ve kullanıcı bilgisini tarayıcı kapatıldığında temizlenen sessionStorage'da tutar
-    userStore: new oidc.WebStorageStateStore({ store: window.sessionStorage }),
   };
 
   private identityUser: oidc.User | null | undefined = null;
@@ -161,11 +159,16 @@ export class AuthenticationService {
   }
 
   logoutIndetity(): void {
-    localStorage.removeItem('currentUser');
-    // notify
     this.currentUserSubject.next(null!);
-
-    this.userManager.signoutRedirect();
+    // Pass locale to IdentityServer using OIDC ui_locales and ASP.NET Core culture params
+    const locale = this.getPreferredLocale();
+    this.userManager.signoutRedirect({
+      extraQueryParams: {
+        ui_locales: locale,
+        culture: locale,
+        'ui-culture': locale,
+      },
+    });
   }
 
   silentRefresh(): Promise<void> {
@@ -176,11 +179,33 @@ export class AuthenticationService {
     return this.userManager.signoutRedirectCallback();
   }
 
+  /**
+   * Determines the preferred UI locale to send to IdentityServer.
+   * Priority: current user language -> cookie 'locale' -> environment default ('tr-TR').
+   * Ensures format like 'tr-TR' when only language code (e.g., 'tr') is available.
+   */
+  private getPreferredLocale(): string {
+    let serverLanguages = [
+      { code: 'tr', serverCode: 'tr-TR' },
+      { code: 'en', serverCode: 'en-US' },
+    ];
+
+    const userLanguage = localStorage.getItem('locale') || 'tr';
+
+    const serverLanguageCode = serverLanguages.find(
+      (serverLanguage) => serverLanguage.code === userLanguage
+    )?.serverCode;
+
+    return serverLanguageCode ?? 'tr-TR';
+  }
+
   private createUIUser(identityUser: oidc.User) {
     // Geliştirme ortamında debug bilgileri
     if (!environment.production) {
       console.log('Identity User Profile:', identityUser.profile);
       console.log('Locale claim:', identityUser.profile?.locale);
+      console.log('Token claim:', identityUser.access_token);
+      console.log('All Identity User Claims:', identityUser);
     }
 
     var user: User = new User();
@@ -192,18 +217,23 @@ export class AuthenticationService {
     user.lastName = identityUser.profile.family_name;
     user.userName = identityUser.profile.preferred_username;
     user.nickname = identityUser.profile.nickname;
-    //user.role = Role.Admin;
+    user.role = identityUser.profile.roles;
     user.token = identityUser.access_token;
     user.language = identityUser.profile.locale ?? 'tr-TR';
+
+    if (!localStorage.getItem('locale')) {
+      localStorage.setItem('locale', user.language.split('-')[0]);
+    }
 
     this.currentUserSubject.next(user);
   }
 
-  /**
-   * Uygulama ilk açıldığında, mevcut bir oturum varsa (IdP tarafında cookie ile),
-   * kullanıcıyı sessizce (redirect olmadan) tekrar oturum açmış hale getirir.
-   * Böylece localStorage'da token tutmadan "hatırla" davranışı sağlanır.
-   */
+  /***
+   * Dil değişikliği sonrası web sayfası tekrar yüklendiğinden
+   * oturum devamlılığı sağlanması için bu kod eklenmiştir.
+   * Burada user bilgisini identityServer'dan almaya çalışır.
+   * Eğer oturum geçerliyse kullanıcı bilgilerini alır.
+   * */
   async initAuthPersistence(): Promise<void> {
     try {
       const existing = await this.userManager.getUser();
@@ -212,16 +242,7 @@ export class AuthenticationService {
         return;
       }
     } catch {
-      /* ignore */
-    }
-
-    // Eğer sessionStorage boşsa, IdP oturumu varsa sessiz giriş dener
-    try {
-      const silentUser = await this.userManager.signinSilent();
-      this.createUIUser(silentUser);
-    } catch (err) {
-      // Üçüncü taraf cookie engelleri veya IdP oturumu yoksa buraya düşebilir
-      this.currentUserSubject.next(null!);
+      // Hata alırsa herhangi bir işlem yapma
     }
   }
 }

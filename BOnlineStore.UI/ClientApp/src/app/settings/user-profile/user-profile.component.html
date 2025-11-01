@@ -196,17 +196,28 @@
       </dxi-item>
 
       <!-- Buttons -->
-      <dxi-item itemType="group" [colSpan]="3">
-        <dxi-item
-          itemType="button"
-          [buttonOptions]="{
-            text: ('SAVE' | translate),
-            type: 'normal',
-            icon: 'save',
-            disabled: isSaving,
-            useSubmitBehavior: true
-          }"
-        >
+      <dxi-item itemType="group" [colSpan]="1">
+        <dxi-item itemType="simple">
+          <div class="button-container">
+            <dx-button
+              [text]="'USER_PROFILE.CHANGE_PASSWORD.BUTTON' | translate"
+              type="normal"
+              icon="key"
+              [disabled]="isSaving"
+              (onClick)="openChangePasswordPopup()"
+              stylingMode="contained"
+            >
+            </dx-button>
+            <dx-button
+              [text]="'SAVE' | translate"
+              type="normal"
+              icon="save"
+              [disabled]="isSaving"
+              [useSubmitBehavior]="true"
+              stylingMode="contained"
+            >
+            </dx-button>
+          </div>
         </dxi-item>
       </dxi-item>
     </dx-form>
@@ -223,3 +234,153 @@
     </p>
   </div>
 </div>
+
+<!-- Change Password Popup -->
+<dx-popup
+  [visible]="isChangePasswordPopupVisible"
+  [dragEnabled]="false"
+  [closeOnOutsideClick]="false"
+  [showTitle]="true"
+  [title]="'USER_PROFILE.CHANGE_PASSWORD.TITLE' | translate"
+  [width]="500"
+  [height]="'auto'"
+  (onHiding)="closeChangePasswordPopup()"
+>
+  <div *dxTemplate="let data of 'content'">
+    <form (submit)="submitChangePassword($event)">
+      <dx-form
+        [formData]="changePasswordData"
+        [labelLocation]="'top'"
+        [showValidationSummary]="true"
+      >
+        <!-- Current Password -->
+        <dxi-item
+          dataField="currentPassword"
+          editorType="dxTextBox"
+          [label]="{
+            text: ('USER_PROFILE.CHANGE_PASSWORD.CURRENT_PASSWORD' | translate)
+          }"
+          [editorOptions]="{
+            mode: 'password',
+            placeholder:
+              ('USER_PROFILE.CHANGE_PASSWORD.ENTER_CURRENT_PASSWORD'
+              | translate),
+            buttons: [
+              {
+                name: 'passwordcurrent',
+                location: 'after',
+                options: currentPasswordButtonOptions
+              }
+            ]
+          }"
+        >
+          <dxi-validation-rule
+            type="required"
+            [message]="
+              'USER_PROFILE.CHANGE_PASSWORD.CURRENT_PASSWORD_REQUIRED'
+                | translate
+            "
+          ></dxi-validation-rule>
+        </dxi-item>
+
+        <!-- New Password -->
+        <dxi-item
+          dataField="newPassword"
+          editorType="dxTextBox"
+          [label]="{
+            text: ('USER_PROFILE.CHANGE_PASSWORD.NEW_PASSWORD' | translate)
+          }"
+          [editorOptions]="{
+            mode: 'password',
+            placeholder:
+              ('USER_PROFILE.CHANGE_PASSWORD.ENTER_NEW_PASSWORD' | translate),
+            buttons: [
+              {
+                name: 'password',
+                location: 'after',
+                options: newPasswordButtonOptions
+              }
+            ]
+          }"
+        >
+          <dxi-validation-rule
+            type="required"
+            [message]="
+              'USER_PROFILE.CHANGE_PASSWORD.NEW_PASSWORD_REQUIRED' | translate
+            "
+          ></dxi-validation-rule>
+          <dxi-validation-rule
+            type="custom"
+            [validationCallback]="validatePassword"
+            [message]="
+              'USER_PROFILE.CHANGE_PASSWORD.PASSWORD_COMPLEXITY' | translate
+            "
+          ></dxi-validation-rule>
+        </dxi-item>
+
+        <!-- Confirm Password -->
+        <dxi-item
+          dataField="confirmPassword"
+          editorType="dxTextBox"
+          [label]="{
+            text: ('USER_PROFILE.CHANGE_PASSWORD.CONFIRM_PASSWORD' | translate)
+          }"
+          [editorOptions]="{
+            mode: 'password',
+            placeholder:
+              ('USER_PROFILE.CHANGE_PASSWORD.ENTER_CONFIRM_PASSWORD'
+              | translate),
+            buttons: [
+              {
+                name: 'password',
+                location: 'after',
+                options: confirmPasswordButtonOptions
+              }
+            ]
+          }"
+        >
+          <dxi-validation-rule
+            type="required"
+            [message]="
+              'USER_PROFILE.CHANGE_PASSWORD.CONFIRM_PASSWORD_REQUIRED'
+                | translate
+            "
+          ></dxi-validation-rule>
+          <dxi-validation-rule
+            type="custom"
+            [validationCallback]="validatePasswordConfirmation"
+            [message]="
+              'USER_PROFILE.CHANGE_PASSWORD.PASSWORD_MISMATCH' | translate
+            "
+          ></dxi-validation-rule>
+        </dxi-item>
+
+        <!-- Buttons -->
+        <dxi-item itemType="group" [colCount]="2">
+          <dxi-item
+            itemType="button"
+            [buttonOptions]="{
+              text: ('USER_PROFILE.CHANGE_PASSWORD.SUBMIT' | translate),
+              type: 'normal',
+              icon: 'check',
+              disabled: isChangingPassword,
+              useSubmitBehavior: true
+            }"
+          >
+          </dxi-item>
+          <dxi-item
+            itemType="button"
+            [buttonOptions]="{
+              text: ('CANCEL' | translate),
+              type: 'normal',
+              icon: 'close',
+              disabled: isChangingPassword,
+              onClick: closeChangePasswordPopup.bind(this)
+            }"
+          >
+          </dxi-item>
+        </dxi-item>
+      </dx-form>
+    </form>
+  </div>
+</dx-popup>

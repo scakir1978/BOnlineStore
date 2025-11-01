@@ -278,6 +278,11 @@
   "FORMNO4": "Dördüncü Form",
   "PRINT": "Yazdır",
   "CLOSE": "Kapat",
+  "PROFILE": "Profil",
+  "MESSAGES": "Mesajlar",
+  "HELP": "Yardım",
+  "LOGOUT": "Oturumu Kapat",
+  "WELCOME": "Hoş geldin {{name}}!",
   "DELIVERYADRESS": "Sevk Adresleri",
   "CUSTOMERNAME": "Müşteri Adı",
   "ERROR": "Hata",
@@ -361,6 +366,41 @@
     "GENDER_OTHER": "Diğer",
     "LOCALE_TR": "Türkçe",
     "LOCALE_EN": "İngilizce",
-    "LOCALE_DE": "Almanca"
-  }
+    "LOCALE_DE": "Almanca",
+    "CHANGE_PASSWORD": {
+      "TITLE": "Şifre Değiştir",
+      "BUTTON": "Şifre Değiştir",
+      "CURRENT_PASSWORD": "Mevcut Şifre",
+      "NEW_PASSWORD": "Yeni Şifre",
+      "CONFIRM_PASSWORD": "Yeni Şifre (Tekrar)",
+      "ENTER_CURRENT_PASSWORD": "Mevcut şifrenizi giriniz",
+      "ENTER_NEW_PASSWORD": "Yeni şifrenizi giriniz",
+      "ENTER_CONFIRM_PASSWORD": "Yeni şifrenizi tekrar giriniz",
+      "CURRENT_PASSWORD_REQUIRED": "Mevcut şifre alanı zorunludur",
+      "NEW_PASSWORD_REQUIRED": "Yeni şifre alanı zorunludur",
+      "CONFIRM_PASSWORD_REQUIRED": "Şifre tekrarı alanı zorunludur",
+      "PASSWORD_COMPLEXITY": "Şifre en az 8 karakter olmalı, en az 1 büyük harf, 1 küçük harf, 1 rakam ve 1 özel karakter içermelidir",
+      "PASSWORD_MISMATCH": "Şifreler eşleşmiyor",
+      "SUBMIT": "Şifremi Güncelle",
+      "SUCCESS": "Şifre başarıyla değiştirildi",
+      "ERROR": "Şifre değiştirilirken bir hata oluştu"
+    }
+  },
+  "ROLE": "Rol Tanımlama",
+  "USERROLE": "Kullanıcıya Rol Atama",
+  "USER": {
+    "FORM_TITLE": "Kullanıcı Bilgileri",
+    "PASSWORD_SECURITY": "Şifre ve Güvenlik",
+    "PASSWORD": "Şifre",
+    "PASSWORD_CONFIRMATION": "Şifre Onayı",
+    "ENTER_PASSWORD": "Şifre giriniz (Min 8 karakter, büyük/küçük harf, rakam, özel karakter)",
+    "CONFIRM_PASSWORD": "Şifreyi tekrar giriniz",
+    "PASSWORD_REQUIRED": "Şifre zorunludur",
+    "PASSWORD_CONFIRMATION_REQUIRED": "Şifre onayı zorunludur",
+    "PASSWORDS_DO_NOT_MATCH": "Şifreler eşleşmiyor",
+    "PASSWORD_VALIDATION_MEDIUM": "Şifre en az 8 karakter olmalı ve en az 1 büyük harf, 1 küçük harf, 1 rakam, 1 özel karakter (!@#$%...) içermelidir"
+  },
+  "ROLEUSERROLE": "Rol",
+  "ROLEUSERUSER": "Kullanıcı",
+  "USERS": "Kullanıcı Tanımlamaları"
 }

@@ -337,315 +337,311 @@
   <data name="RegionCodeNotEmpty" xml:space="preserve">
     <value>Region code cannot be empty.</value>
   </data>
-    <data name="GlassCodeNotEmpty" xml:space="preserve">
+  <data name="GlassCodeNotEmpty" xml:space="preserve">
     <value>Glass type code cannot be empty.</value>
     <comment>Cam türü kodu boş olamaz.</comment>
   </data>
   <data name="RawMaterialGroupNameNotEmpty" xml:space="preserve">
-  <value>Raw material group name cannot be empty.</value>
-  <comment>Hammadde grup adı boş olamaz.</comment>
-</data>
-<data name="RawMaterialGroupCodeNotEmpty" xml:space="preserve">
-  <value>Raw material group code cannot be empty.</value>
-  <comment>Hammadde grup kodu boş olamaz.</comment>
-</data>
-<data name="RawMaterialGroupCodeMustBeUnique" xml:space="preserve">
-  <value>Raw material group code must be unique.</value>
-  <comment>Hammadde grup kodu daha önce girilmiş.</comment>
-</data>
-<data name="UnitNameNotEmpty" xml:space="preserve">
-  <value>Unit name cannot be empty.</value>
-  <comment>Birim adı boş olamaz.</comment>
-</data>
-<data name="UnitCodeNotEmpty" xml:space="preserve">
-  <value>Unit code cannot be empty.</value>
-  <comment>Birim kodu boş olamaz.</comment>
-</data>
-<data name="UnitCodeMustBeUnique" xml:space="preserve">
-  <value>Unit code must be unique.</value>
-  <comment>Birim kodu daha önce girilmiş.</comment>
-</data>
-<data name="TemplateNameNotEmpty" xml:space="preserve">
-  <value>Template name cannot be empty.</value>
-  <comment>Şablon adı boş olamaz.</comment>
-</data>
-<data name="TemplateCodeNotEmpty" xml:space="preserve">
-  <value>Template code cannot be empty.</value>
-  <comment>Şablon kodu boş olamaz.</comment>
-</data>
-<data name="TemplateCodeMustBeUnique" xml:space="preserve">
-  <value>Template code must be unique.</value>
-  <comment>Şablon kodu daha önce girilmiş.</comment>
-</data>
-<data name="RegionNameNotEmpty" xml:space="preserve">
-  <value>Region name cannot be empty.</value>
-  <comment>Bölge adı boş olamaz.</comment>
-</data>
-<data name="RegionNameNotEmpty" xml:space="preserve">
-  <value>Region name cannot be empty.</value>
-  <comment>Bölge adı boş olamaz.</comment>
-</data>
-<data name="RegionCodeMustBeUnique" xml:space="preserve">
-  <value>Region code must be unique.</value>
-  <comment>Bölge kodu daha önce girilmiş.</comment>
-</data>
-<data name="RecipeTypeNameNotEmpty" xml:space="preserve">
-  <value>Recipe type name cannot be empty.</value>
-  <comment>Reçete tip adı boş olamaz.</comment>
-</data>
-<data name="RecipeTypeCodeNotEmpty" xml:space="preserve">
-  <value>Recipe type code cannot be empty.</value>
-  <comment>Reçete tip kodu boş olamaz.</comment>
-</data>
-<data name="RecipeTypeCodeMustBeUnique" xml:space="preserve">
-  <value>Recipe type code must be unique.</value>
-  <comment>Reçete tip kodu daha önce girilmiş.</comment>
-</data>
-<data name="RawMaterialNameNotEmpty" xml:space="preserve">
-  <value>Raw material name cannot be empty.</value>
-  <comment>Hammadde adı boş olamaz.</comment>
-</data>
-<data name="RawMaterialCodeNotEmpty" xml:space="preserve">
-  <value>Raw material code cannot be empty.</value>
-  <comment>Hammadde kodu boş olamaz.</comment>
-</data>
-<data name="RawMaterialCodeMustBeUnique" xml:space="preserve">
-  <value>Raw material code must be unique.</value>
-  <comment>Hammadde kodu daha önce girilmiş.</comment>
-</data>
-<data name="GlassGroupNameNotEmpty" xml:space="preserve">
-  <value>Glass group name cannot be empty.</value>
-  <comment>Cam grup adı boş olamaz.</comment>
-</data>
-<data name="GlassGroupCodeNotEmpty" xml:space="preserve">
-  <value>Glass group code cannot be empty.</value>
-  <comment>Cam grup kodu boş olamaz.</comment>
-</data>
-<data name="GlassGroupCodeMustBeUnique" xml:space="preserve">
-  <value>Glass group code must be unique.</value>
-  <comment>Cam grup kodu daha önce girilmiş.</comment>
-</data>
-<data name="PanelNameNotEmpty" xml:space="preserve">
-  <value>Panel name cannot be empty.</value>
-  <comment>Panel adı boş olamaz.</comment>
-</data>
-<data name="PanelCodeNotEmpty" xml:space="preserve">
-  <value>Panel code cannot be empty.</value>
-  <comment>Panel kodu boş olamaz.</comment>
-</data>
-<data name="PanelCodeMustBeUnique" xml:space="preserve">
-  <value>Panel code must be unique.</value>
-  <comment>Panel kodu daha önce girilmiş.</comment>
-</data>
-<data name="ModelCodeMustBeUnique" xml:space="preserve">
-  <value>Model code must be unique.</value>
-  <comment>Model kodu daha önce girilmiş.</comment>
-</data>
-<data name="MeasurementAssemblyLimitsDayNotEmpty" xml:space="preserve">
-  <value>Day cannot be empty.</value>
-  <comment>Gün boş olamaz.</comment>
-</data>
-<data name="MeasurementAssemblyLimitsAssemblerNotEmpty" xml:space="preserve">
-  <value>Assembler cannot be empty.</value>
-  <comment>Montör boş olamaz.</comment>
-</data>
-<data name="MeasurementAssemblyLimitsQuantitiesNotEmpty" xml:space="preserve">
-  <value>At least one of assembly or measurement quantity must be specified.</value>
-  <comment>Montaj veya ölçüm miktarlarından en az biri belirtilmelidir.</comment>
-</data>
-<data name="MeasurementAssemblyLimitsRegionsNotEmpty" xml:space="preserve">
-  <value>At least one region must be selected.</value>
-  <comment>En az bir bölge seçilmelidir.</comment>
-</data>
-<data name="LengthNameNotEmpty" xml:space="preserve">
-  <value>Length name cannot be empty.</value>
-  <comment>Uzunluk adı boş olamaz.</comment>
-</data>
-<data name="LengthCodeNotEmpty" xml:space="preserve">
-  <value>Length code cannot be empty.</value>
-  <comment>Uzunluk kodu boş olamaz.</comment>
-</data>
-<data name="LengthCodeMustBeUnique" xml:space="preserve">
-  <value>Length code must be unique.</value>
-  <comment>Uzunluk kodu daha önce girilmiş.</comment>
-</data>
-<data name="GlassNameNotEmpty" xml:space="preserve">
-  <value>Glass name cannot be empty.</value>
-  <comment>Cam adı boş olamaz.</comment>
-</data>
-<data name="GlassGroupNotEmpty" xml:space="preserve">
-  <value>Glass group cannot be empty.</value>
-  <comment>Cam grubu boş olamaz.</comment>
-</data>
-<data name="GlassCodeMustBeUnique" xml:space="preserve">
-  <value>Glass code must be unique.</value>
-  <comment>Cam kodu daha önce girilmiş.</comment>
-</data>
-<data name="PriceListMasterCodeNotEmpty" xml:space="preserve">
-  <value>Price list code cannot be empty.</value>
-  <comment>Fiyat listesi kodu boş olamaz.</comment>
-</data>
-<data name="PriceListMasterCodeMaxLength" xml:space="preserve">
-  <value>The maximum length of price list code can be 50.</value>
-  <comment>Fiyat listesi kodu en fazla 50 karakter olabilir.</comment>
-</data>
-<data name="PriceListMasterNameMaxLength" xml:space="preserve">
-  <value>The maximum length of price list name can be 250.</value>
-  <comment>Fiyat listesi adı en fazla 250 karakter olabilir.</comment>
-</data>
-<data name="PriceListMasterCodeMustBeUnique" xml:space="preserve">
-  <value>Price list code must be unique.</value>
-  <comment>Fiyat listesi kodu daha önce girilmiş.</comment>
-</data>
-<data name="FirmTypeNameNotEmpty" xml:space="preserve">
-  <value>Firm type name cannot be empty.</value>
-  <comment>Firma tipi adı boş olamaz.</comment>
-</data>
-<data name="FirmTypeCodeNotEmpty" xml:space="preserve">
-  <value>Firm type code cannot be empty.</value>
-  <comment>Firma tipi kodu boş olamaz.</comment>
-</data>
-<data name="FirmTypeCodeMustBeUnique" xml:space="preserve">
-  <value>Firm type code must be unique.</value>
-  <comment>Firma tipi kodu daha önce girilmiş.</comment>
-</data>
-<data name="ExpenseNameNotEmpty" xml:space="preserve">
-  <value>Expense name cannot be empty.</value>
-  <comment>Gider adı boş olamaz.</comment>
-</data>
-<data name="ExpenseCodeNotEmpty" xml:space="preserve">
-  <value>Expense code cannot be empty.</value>
-  <comment>Gider kodu boş olamaz.</comment>
-</data>
-<data name="ExpenseCodeMustBeUnique" xml:space="preserve">
-  <value>Expense code must be unique.</value>
-  <comment>Gider kodu daha önce girilmiş.</comment>
-</data>
-<data name="ExchangeRateDateNotEmpty" xml:space="preserve">
-  <value>Exchange rate date cannot be empty.</value>
-  <comment>Döviz kuru tarihi boş olamaz.</comment>
-</data>
-<data name="CurrencyIdNotEmpty" xml:space="preserve">
-  <value>Currency cannot be empty.</value>
-  <comment>Para birimi boş olamaz.</comment>
-</data>
-<data name="DeliveryAdressNameNotEmpty" xml:space="preserve">
-  <value>Delivery address name cannot be empty.</value>
-  <comment>Teslimat adresi adı boş olamaz.</comment>
-</data>
-<data name="DeliveryAdressNameMaxLength" xml:space="preserve">
-  <value>The maximum length of delivery address name can be 250.</value>
-  <comment>Teslimat adresi adı en fazla 250 karakter olabilir.</comment>
-</data>
-<data name="DeliveryAdressCodeNotEmpty" xml:space="preserve">
-  <value>Delivery address code cannot be empty.</value>
-  <comment>Teslimat adresi kodu boş olamaz.</comment>
-</data>
-<data name="DeliveryAdressCodeMaxLength" xml:space="preserve">
-  <value>The maximum length of delivery address code can be 50.</value>
-  <comment>Teslimat adresi kodu en fazla 50 karakter olabilir.</comment>
-</data>
-<data name="DeliveryAdressCodeMustBeUnique" xml:space="preserve">
-  <value>Delivery address code must be unique.</value>
-  <comment>Teslimat adresi kodu daha önce girilmiş.</comment>
-</data>
-<data name="CurrencyNameNotEmpty" xml:space="preserve">
-  <value>Currency name cannot be empty.</value>
-  <comment>Para birimi adı boş olamaz.</comment>
-</data>
-<data name="CurrencyCodeNotEmpty" xml:space="preserve">
-  <value>Currency code cannot be empty.</value>
-  <comment>Para birimi kodu boş olamaz.</comment>
-</data>
-<data name="CurrencyCodeMustBeUnique" xml:space="preserve">
-  <value>Currency code must be unique.</value>
-  <comment>Para birimi kodu daha önce girilmiş.</comment>
-</data>
-<data name="CountyNameNotEmpty" xml:space="preserve">
-  <value>County name cannot be empty.</value>
-  <comment>İlçe adı boş olamaz.</comment>
-</data>
-<data name="CountyCodeNotEmpty" xml:space="preserve">
-  <value>County code cannot be empty.</value>
-  <comment>İlçe kodu boş olamaz.</comment>
-</data>
-<data name="CountyCodeMustBeUnique" xml:space="preserve">
-  <value>County code must be unique.</value>
-  <comment>İlçe kodu daha önce girilmiş.</comment>
-</data>
-<data name="CountryNameNotEmpty" xml:space="preserve">
-  <value>Country name cannot be empty.</value>
-  <comment>Ülke adı boş olamaz.</comment>
-</data>
-<data name="CountryNameMaxLength" xml:space="preserve">
-  <value>The maximum length of country name can be 250.</value>
-  <comment>Ülke adı en fazla 250 karakter olabilir.</comment>
-</data>
-<data name="CountryCodeNotEmpty" xml:space="preserve">
-  <value>Country code cannot be empty.</value>
-  <comment>Ülke kodu boş olamaz.</comment>
-</data>
-<data name="CountryCodeMaxLength" xml:space="preserve">
-  <value>The maximum length of country code can be 50.</value>
-  <comment>Ülke kodu en fazla 50 karakter olabilir.</comment>
-</data>
-<data name="CountryCodeMustBeUnique" xml:space="preserve">
-  <value>Country code must be unique.</value>
-  <comment>Ülke kodu daha önce girilmiş.</comment>
-</data>
-<data name="DistrictNameNotEmpty" xml:space="preserve">
-  <value>District name cannot be empty.</value>
-  <comment>Semt adı boş olamaz.</comment>
-</data>
-<data name="DistrictNameMaxLength" xml:space="preserve">
-  <value>The maximum length of district name can be 250.</value>
-  <comment>Semt adı en fazla 250 karakter olabilir.</comment>
-</data>
-<data name="DistrictCodeNotEmpty" xml:space="preserve">
-  <value>District code cannot be empty.</value>
-  <comment>Semt kodu boş olamaz.</comment>
-</data>
-<data name="DistrictCodeMaxLength" xml:space="preserve">
-  <value>The maximum length of district code can be 50.</value>
-  <comment>Semt kodu en fazla 50 karakter olabilir.</comment>
-</data>
-<data name="DistrictCodeMustBeUnique" xml:space="preserve">
-  <value>District code must be unique.</value>
-  <comment>Semt kodu daha önce girilmiş.</comment>
-</data>
-<data name="ColorCodeMustBeUnique" xml:space="preserve">
-  <value>Color code must be unique.</value>
-  <comment>Renk kodu daha önce girilmiş.</comment>
-</data>
-<data name="ColorGroupCodeMustBeUnique" xml:space="preserve">
-  <value>Color group code must be unique.</value>
-  <comment>Renk grup kodu daha önce girilmiş.</comment>
-</data>
-<data name="CityNameNotEmpty" xml:space="preserve">
-  <value>City name cannot be empty.</value>
-  <comment>Şehir adı boş olamaz.</comment>
-</data>
-<data name="CityCodeNotEmpty" xml:space="preserve">
-  <value>City code cannot be empty.</value>
-  <comment>Şehir kodu boş olamaz.</comment>
-</data>
-<data name="CityCodeMustBeUnique" xml:space="preserve">
-  <value>City code must be unique.</value>
-  <comment>Şehir kodu daha önce girilmiş.</comment>
-</data>
-<data name="BankNameNotEmpty" xml:space="preserve">
-  <value>Bank name cannot be empty.</value>
-  <comment>Banka adı boş olamaz.</comment>
-</data>
-<data name="BankCodeNotEmpty" xml:space="preserve">
-  <value>Bank code cannot be empty.</value>
-  <comment>Banka kodu boş olamaz.</comment>
-</data>
-<data name="BankCodeMustBeUnique" xml:space="preserve">
-  <value>Bank code must be unique.</value>
-  <comment>Banka kodu daha önce girilmiş.</comment>
-</data>
-<data name="TenantsFetchError" xml:space="preserve">
+    <value>Raw material group name cannot be empty.</value>
+    <comment>Hammadde grup adı boş olamaz.</comment>
+  </data>
+  <data name="RawMaterialGroupCodeNotEmpty" xml:space="preserve">
+    <value>Raw material group code cannot be empty.</value>
+    <comment>Hammadde grup kodu boş olamaz.</comment>
+  </data>
+  <data name="RawMaterialGroupCodeMustBeUnique" xml:space="preserve">
+    <value>Raw material group code must be unique.</value>
+    <comment>Hammadde grup kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="UnitNameNotEmpty" xml:space="preserve">
+    <value>Unit name cannot be empty.</value>
+    <comment>Birim adı boş olamaz.</comment>
+  </data>
+  <data name="UnitCodeNotEmpty" xml:space="preserve">
+    <value>Unit code cannot be empty.</value>
+    <comment>Birim kodu boş olamaz.</comment>
+  </data>
+  <data name="UnitCodeMustBeUnique" xml:space="preserve">
+    <value>Unit code must be unique.</value>
+    <comment>Birim kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="TemplateNameNotEmpty" xml:space="preserve">
+    <value>Template name cannot be empty.</value>
+    <comment>Şablon adı boş olamaz.</comment>
+  </data>
+  <data name="TemplateCodeNotEmpty" xml:space="preserve">
+    <value>Template code cannot be empty.</value>
+    <comment>Şablon kodu boş olamaz.</comment>
+  </data>
+  <data name="TemplateCodeMustBeUnique" xml:space="preserve">
+    <value>Template code must be unique.</value>
+    <comment>Şablon kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="RegionNameNotEmpty" xml:space="preserve">
+    <value>Region name cannot be empty.</value>
+    <comment>Bölge adı boş olamaz.</comment>
+  </data>
+  <data name="RegionCodeMustBeUnique" xml:space="preserve">
+    <value>Region code must be unique.</value>
+    <comment>Bölge kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="RecipeTypeNameNotEmpty" xml:space="preserve">
+    <value>Recipe type name cannot be empty.</value>
+    <comment>Reçete tip adı boş olamaz.</comment>
+  </data>
+  <data name="RecipeTypeCodeNotEmpty" xml:space="preserve">
+    <value>Recipe type code cannot be empty.</value>
+    <comment>Reçete tip kodu boş olamaz.</comment>
+  </data>
+  <data name="RecipeTypeCodeMustBeUnique" xml:space="preserve">
+    <value>Recipe type code must be unique.</value>
+    <comment>Reçete tip kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="RawMaterialNameNotEmpty" xml:space="preserve">
+    <value>Raw material name cannot be empty.</value>
+    <comment>Hammadde adı boş olamaz.</comment>
+  </data>
+  <data name="RawMaterialCodeNotEmpty" xml:space="preserve">
+    <value>Raw material code cannot be empty.</value>
+    <comment>Hammadde kodu boş olamaz.</comment>
+  </data>
+  <data name="RawMaterialCodeMustBeUnique" xml:space="preserve">
+    <value>Raw material code must be unique.</value>
+    <comment>Hammadde kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="GlassGroupNameNotEmpty" xml:space="preserve">
+    <value>Glass group name cannot be empty.</value>
+    <comment>Cam grup adı boş olamaz.</comment>
+  </data>
+  <data name="GlassGroupCodeNotEmpty" xml:space="preserve">
+    <value>Glass group code cannot be empty.</value>
+    <comment>Cam grup kodu boş olamaz.</comment>
+  </data>
+  <data name="GlassGroupCodeMustBeUnique" xml:space="preserve">
+    <value>Glass group code must be unique.</value>
+    <comment>Cam grup kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="PanelNameNotEmpty" xml:space="preserve">
+    <value>Panel name cannot be empty.</value>
+    <comment>Panel adı boş olamaz.</comment>
+  </data>
+  <data name="PanelCodeNotEmpty" xml:space="preserve">
+    <value>Panel code cannot be empty.</value>
+    <comment>Panel kodu boş olamaz.</comment>
+  </data>
+  <data name="PanelCodeMustBeUnique" xml:space="preserve">
+    <value>Panel code must be unique.</value>
+    <comment>Panel kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="ModelCodeMustBeUnique" xml:space="preserve">
+    <value>Model code must be unique.</value>
+    <comment>Model kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="MeasurementAssemblyLimitsDayNotEmpty" xml:space="preserve">
+    <value>Day cannot be empty.</value>
+    <comment>Gün boş olamaz.</comment>
+  </data>
+  <data name="MeasurementAssemblyLimitsAssemblerNotEmpty" xml:space="preserve">
+    <value>Assembler cannot be empty.</value>
+    <comment>Montör boş olamaz.</comment>
+  </data>
+  <data name="MeasurementAssemblyLimitsQuantitiesNotEmpty" xml:space="preserve">
+    <value>At least one of assembly or measurement quantity must be specified.</value>
+    <comment>Montaj veya ölçüm miktarlarından en az biri belirtilmelidir.</comment>
+  </data>
+  <data name="MeasurementAssemblyLimitsRegionsNotEmpty" xml:space="preserve">
+    <value>At least one region must be selected.</value>
+    <comment>En az bir bölge seçilmelidir.</comment>
+  </data>
+  <data name="LengthNameNotEmpty" xml:space="preserve">
+    <value>Length name cannot be empty.</value>
+    <comment>Uzunluk adı boş olamaz.</comment>
+  </data>
+  <data name="LengthCodeNotEmpty" xml:space="preserve">
+    <value>Length code cannot be empty.</value>
+    <comment>Uzunluk kodu boş olamaz.</comment>
+  </data>
+  <data name="LengthCodeMustBeUnique" xml:space="preserve">
+    <value>Length code must be unique.</value>
+    <comment>Uzunluk kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="GlassNameNotEmpty" xml:space="preserve">
+    <value>Glass name cannot be empty.</value>
+    <comment>Cam adı boş olamaz.</comment>
+  </data>
+  <data name="GlassGroupNotEmpty" xml:space="preserve">
+    <value>Glass group cannot be empty.</value>
+    <comment>Cam grubu boş olamaz.</comment>
+  </data>
+  <data name="GlassCodeMustBeUnique" xml:space="preserve">
+    <value>Glass code must be unique.</value>
+    <comment>Cam kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="PriceListMasterCodeNotEmpty" xml:space="preserve">
+    <value>Price list code cannot be empty.</value>
+    <comment>Fiyat listesi kodu boş olamaz.</comment>
+  </data>
+  <data name="PriceListMasterCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of price list code can be 50.</value>
+    <comment>Fiyat listesi kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="PriceListMasterNameMaxLength" xml:space="preserve">
+    <value>The maximum length of price list name can be 250.</value>
+    <comment>Fiyat listesi adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="PriceListMasterCodeMustBeUnique" xml:space="preserve">
+    <value>Price list code must be unique.</value>
+    <comment>Fiyat listesi kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="FirmTypeNameNotEmpty" xml:space="preserve">
+    <value>Firm type name cannot be empty.</value>
+    <comment>Firma tipi adı boş olamaz.</comment>
+  </data>
+  <data name="FirmTypeCodeNotEmpty" xml:space="preserve">
+    <value>Firm type code cannot be empty.</value>
+    <comment>Firma tipi kodu boş olamaz.</comment>
+  </data>
+  <data name="FirmTypeCodeMustBeUnique" xml:space="preserve">
+    <value>Firm type code must be unique.</value>
+    <comment>Firma tipi kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="ExpenseNameNotEmpty" xml:space="preserve">
+    <value>Expense name cannot be empty.</value>
+    <comment>Gider adı boş olamaz.</comment>
+  </data>
+  <data name="ExpenseCodeNotEmpty" xml:space="preserve">
+    <value>Expense code cannot be empty.</value>
+    <comment>Gider kodu boş olamaz.</comment>
+  </data>
+  <data name="ExpenseCodeMustBeUnique" xml:space="preserve">
+    <value>Expense code must be unique.</value>
+    <comment>Gider kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="ExchangeRateDateNotEmpty" xml:space="preserve">
+    <value>Exchange rate date cannot be empty.</value>
+    <comment>Döviz kuru tarihi boş olamaz.</comment>
+  </data>
+  <data name="CurrencyIdNotEmpty" xml:space="preserve">
+    <value>Currency cannot be empty.</value>
+    <comment>Para birimi boş olamaz.</comment>
+  </data>
+  <data name="DeliveryAdressNameNotEmpty" xml:space="preserve">
+    <value>Delivery address name cannot be empty.</value>
+    <comment>Teslimat adresi adı boş olamaz.</comment>
+  </data>
+  <data name="DeliveryAdressNameMaxLength" xml:space="preserve">
+    <value>The maximum length of delivery address name can be 250.</value>
+    <comment>Teslimat adresi adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="DeliveryAdressCodeNotEmpty" xml:space="preserve">
+    <value>Delivery address code cannot be empty.</value>
+    <comment>Teslimat adresi kodu boş olamaz.</comment>
+  </data>
+  <data name="DeliveryAdressCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of delivery address code can be 50.</value>
+    <comment>Teslimat adresi kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="DeliveryAdressCodeMustBeUnique" xml:space="preserve">
+    <value>Delivery address code must be unique.</value>
+    <comment>Teslimat adresi kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="CurrencyNameNotEmpty" xml:space="preserve">
+    <value>Currency name cannot be empty.</value>
+    <comment>Para birimi adı boş olamaz.</comment>
+  </data>
+  <data name="CurrencyCodeNotEmpty" xml:space="preserve">
+    <value>Currency code cannot be empty.</value>
+    <comment>Para birimi kodu boş olamaz.</comment>
+  </data>
+  <data name="CurrencyCodeMustBeUnique" xml:space="preserve">
+    <value>Currency code must be unique.</value>
+    <comment>Para birimi kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="CountyNameNotEmpty" xml:space="preserve">
+    <value>County name cannot be empty.</value>
+    <comment>İlçe adı boş olamaz.</comment>
+  </data>
+  <data name="CountyCodeNotEmpty" xml:space="preserve">
+    <value>County code cannot be empty.</value>
+    <comment>İlçe kodu boş olamaz.</comment>
+  </data>
+  <data name="CountyCodeMustBeUnique" xml:space="preserve">
+    <value>County code must be unique.</value>
+    <comment>İlçe kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="CountryNameNotEmpty" xml:space="preserve">
+    <value>Country name cannot be empty.</value>
+    <comment>Ülke adı boş olamaz.</comment>
+  </data>
+  <data name="CountryNameMaxLength" xml:space="preserve">
+    <value>The maximum length of country name can be 250.</value>
+    <comment>Ülke adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="CountryCodeNotEmpty" xml:space="preserve">
+    <value>Country code cannot be empty.</value>
+    <comment>Ülke kodu boş olamaz.</comment>
+  </data>
+  <data name="CountryCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of country code can be 50.</value>
+    <comment>Ülke kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="CountryCodeMustBeUnique" xml:space="preserve">
+    <value>Country code must be unique.</value>
+    <comment>Ülke kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="DistrictNameNotEmpty" xml:space="preserve">
+    <value>District name cannot be empty.</value>
+    <comment>Semt adı boş olamaz.</comment>
+  </data>
+  <data name="DistrictNameMaxLength" xml:space="preserve">
+    <value>The maximum length of district name can be 250.</value>
+    <comment>Semt adı en fazla 250 karakter olabilir.</comment>
+  </data>
+  <data name="DistrictCodeNotEmpty" xml:space="preserve">
+    <value>District code cannot be empty.</value>
+    <comment>Semt kodu boş olamaz.</comment>
+  </data>
+  <data name="DistrictCodeMaxLength" xml:space="preserve">
+    <value>The maximum length of district code can be 50.</value>
+    <comment>Semt kodu en fazla 50 karakter olabilir.</comment>
+  </data>
+  <data name="DistrictCodeMustBeUnique" xml:space="preserve">
+    <value>District code must be unique.</value>
+    <comment>Semt kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="ColorCodeMustBeUnique" xml:space="preserve">
+    <value>Color code must be unique.</value>
+    <comment>Renk kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="ColorGroupCodeMustBeUnique" xml:space="preserve">
+    <value>Color group code must be unique.</value>
+    <comment>Renk grup kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="CityNameNotEmpty" xml:space="preserve">
+    <value>City name cannot be empty.</value>
+    <comment>Şehir adı boş olamaz.</comment>
+  </data>
+  <data name="CityCodeNotEmpty" xml:space="preserve">
+    <value>City code cannot be empty.</value>
+    <comment>Şehir kodu boş olamaz.</comment>
+  </data>
+  <data name="CityCodeMustBeUnique" xml:space="preserve">
+    <value>City code must be unique.</value>
+    <comment>Şehir kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="BankNameNotEmpty" xml:space="preserve">
+    <value>Bank name cannot be empty.</value>
+    <comment>Banka adı boş olamaz.</comment>
+  </data>
+  <data name="BankCodeNotEmpty" xml:space="preserve">
+    <value>Bank code cannot be empty.</value>
+    <comment>Banka kodu boş olamaz.</comment>
+  </data>
+  <data name="BankCodeMustBeUnique" xml:space="preserve">
+    <value>Bank code must be unique.</value>
+    <comment>Banka kodu daha önce girilmiş.</comment>
+  </data>
+  <data name="TenantsFetchError" xml:space="preserve">
     <value>An error occurred while fetching tenants: {0}</value>
     <comment>Firmalar getirilirken hata oluştu: {0}</comment>
   </data>
@@ -685,6 +681,10 @@
     <value>User not found</value>
     <comment>Kullanıcı bulunamadı</comment>
   </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>Email address is already in use</value>
+    <comment>Bu e-posta adresi zaten kullanılıyor</comment>
+  </data>
   <data name="CreateUserError" xml:space="preserve">
     <value>An error occurred while creating user: {0}</value>
     <comment>Kullanıcı oluşturulurken hata oluştu: {0}</comment>
@@ -720,5 +720,113 @@
   <data name="PasswordResetSuccessfully" xml:space="preserve">
     <value>Password reset successfully</value>
     <comment>Şifre başarıyla sıfırlandı</comment>
+  </data>
+  <data name="LoggedOutTitle" xml:space="preserve">
+    <value>You have signed out</value>
+    <comment>Oturumu kapattınız</comment>
+  </data>
+  <data name="LoggedOutThanks" xml:space="preserve">
+    <value>Thank you for using the {0} application.</value>
+    <comment>{0} uygulamasını kullandığınız için teşekkür ederiz.</comment>
+  </data>
+  <data name="LoginAgain" xml:space="preserve">
+    <value>Sign in again</value>
+    <comment>Tekrar Oturum Aç</comment>
+  </data>
+  <data name="LoginWelcomeTitle" xml:space="preserve">
+    <value>Welcome...</value>
+    <comment>Hoş Geldiniz...</comment>
+  </data>
+  <data name="LoginSubtitle" xml:space="preserve">
+    <value>Sign in to continue to B-Online-Store.</value>
+    <comment>B-Online-Store adresine devam etmek için oturum açın.</comment>
+  </data>
+  <data name="LoginEmailLabel" xml:space="preserve">
+    <value>E-Mail</value>
+    <comment>E-Posta</comment>
+  </data>
+  <data name="LoginEmailPlaceholder" xml:space="preserve">
+    <value>Enter your email address</value>
+    <comment>Mail adresinizi girin</comment>
+  </data>
+  <data name="LoginEmailInvalid" xml:space="preserve">
+    <value>Please enter your email address.</value>
+    <comment>Lütfen e-posta adresinizi giriniz.</comment>
+  </data>
+  <data name="LoginForgotPassword" xml:space="preserve">
+    <value>Forgot your password?</value>
+    <comment>Şifrenizi mi unuttunuz?</comment>
+  </data>
+  <data name="LoginPasswordLabel" xml:space="preserve">
+    <value>Password</value>
+    <comment>Şifre</comment>
+  </data>
+  <data name="LoginPasswordPlaceholder" xml:space="preserve">
+    <value>Enter your password</value>
+    <comment>Şifrenizi girin</comment>
+  </data>
+  <data name="LoginPasswordInvalid" xml:space="preserve">
+    <value>Please enter your password.</value>
+    <comment>Lütfen şifrenizi giriniz.</comment>
+  </data>
+  <data name="LoginRememberMe" xml:space="preserve">
+    <value>Remember me</value>
+    <comment>Beni hatırla</comment>
+  </data>
+  <data name="LoginButtonText" xml:space="preserve">
+    <value>Sign In</value>
+    <comment>Oturum Aç</comment>
+  </data>
+  <data name="LoginNoAccountQuestion" xml:space="preserve">
+    <value>Don't have an account?</value>
+    <comment>Hesabınız mı yok?</comment>
+  </data>
+  <data name="LoginCreateAccount" xml:space="preserve">
+    <value>Create account</value>
+    <comment>Hesap oluştur</comment>
+  </data>
+  <data name="LoginExternalTitle" xml:space="preserve">
+    <value>Sign in with</value>
+    <comment>Şununla oturum aç</comment>
+  </data>
+  <data name="RoleNotFound" xml:space="preserve">
+    <value>Role not found</value>
+    <comment>Rol bulunamadı</comment>
+  </data>
+  <data name="CreateRoleError" xml:space="preserve">
+    <value>An error occurred while creating role: {0}</value>
+    <comment>Rol oluşturulurken hata oluştu: {0}</comment>
+  </data>
+  <data name="UpdateRoleError" xml:space="preserve">
+    <value>An error occurred while updating role: {0}</value>
+    <comment>Rol güncellenirken hata oluştu: {0}</comment>
+  </data>
+  <data name="DeleteRoleError" xml:space="preserve">
+    <value>An error occurred while deleting role: {0}</value>
+    <comment>Rol silinirken hata oluştu: {0}</comment>
+  </data>
+  <data name="RoleAlreadyExists" xml:space="preserve">
+    <value>A role with this name already exists</value>
+    <comment>Bu isimde bir rol zaten mevcut</comment>
+  </data>
+  <data name="AssignRoleToUserError" xml:space="preserve">
+    <value>An error occurred while assigning role to user: {0}</value>
+    <comment>Kullanıcıya rol atanırken hata oluştu: {0}</comment>
+  </data>
+  <data name="RemoveRoleFromUserError" xml:space="preserve">
+    <value>An error occurred while removing role from user: {0}</value>
+    <comment>Kullanıcıdan rol kaldırılırken hata oluştu: {0}</comment>
+  </data>
+  <data name="UserRoleNotFound" xml:space="preserve">
+    <value>User role not found</value>
+    <comment>Kullanıcı-rol ilişkisi bulunamadı</comment>
+  </data>
+  <data name="UserAlreadyHasRole" xml:space="preserve">
+  <value>User already has this role</value>
+    <comment>Kullanıcı zaten bu role sahip</comment>
+  </data>
+  <data name="GetUserRolesError" xml:space="preserve">
+    <value>An error occurred while getting user roles: {0}</value>
+    <comment>Kullanıcı rolleri getirilirken hata oluştu: {0}</comment>
   </data>
 </root>

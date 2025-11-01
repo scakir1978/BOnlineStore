@@ -12,6 +12,7 @@ import {
   UserProfileDto,
   UserProfileUpdateDto,
 } from 'app/dtos/settings/user-profile.dto';
+import { ChangePasswordDto } from 'app/dtos/settings/change-password.dto';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,6 +25,16 @@ export class UserProfileComponent implements OnInit {
   userProfile: UserProfileDto | null = null;
   isLoading = false;
   isSaving = false;
+
+  // Change Password popup
+  isChangePasswordPopupVisible = false;
+  changePasswordData: ChangePasswordDto = {
+    userId: '',
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  };
+  isChangingPassword = false;
 
   // Gender options (labels localized)
   genderOptions: Array<{ value: string; text: string }> = [];
@@ -38,6 +49,11 @@ export class UserProfileComponent implements OnInit {
 
   // bread crumb items
   breadCrumbItems!: Array<{}>;
+
+  // Password visibility button options
+  currentPasswordButtonOptions: any;
+  newPasswordButtonOptions: any;
+  confirmPasswordButtonOptions: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,6 +90,9 @@ export class UserProfileComponent implements OnInit {
     // initialize localized option labels and react to language changes
     this.updateLocalizedOptions();
     this.translate.onLangChange.subscribe(() => this.updateLocalizedOptions());
+
+    // Initialize password visibility button options
+    this.initializePasswordButtons();
 
     // Öncelik: query param -> route param -> @Input -> authenticated user
     const queryEmail = this.route.snapshot.queryParamMap.get('email');
@@ -167,6 +186,138 @@ export class UserProfileComponent implements OnInit {
         console.error('Kullanıcı profili güncellenirken hata:', err);
         notify(this.t('USER_PROFILE.UPDATE_ERROR'), 'error', 3000);
         this.isSaving = false;
+      },
+    });
+
+    e.preventDefault();
+  }
+
+  // Initialize password visibility button options
+  initializePasswordButtons(): void {
+    this.currentPasswordButtonOptions = {
+      icon: 'eyeclose',
+      type: 'default',
+      stylingMode: 'text',
+      onClick: (e: any) => {
+        this.togglePasswordVisibility(e, 'currentPassword');
+      },
+    };
+
+    this.newPasswordButtonOptions = {
+      icon: 'eyeclose',
+      type: 'default',
+      stylingMode: 'text',
+      onClick: (e: any) => {
+        this.togglePasswordVisibility(e, 'newPassword');
+      },
+    };
+
+    this.confirmPasswordButtonOptions = {
+      icon: 'eyeclose',
+      type: 'default',
+      stylingMode: 'text',
+      onClick: (e: any) => {
+        this.togglePasswordVisibility(e, 'confirmPassword');
+      },
+    };
+  }
+
+  // Toggle password visibility
+  togglePasswordVisibility(buttonEvent: any, fieldName: string): void {
+    const textBox = buttonEvent.component.element().closest('.dx-textbox');
+    const input = textBox?.querySelector('input');
+
+    if (input) {
+      if (input.type === 'password') {
+        input.type = 'text';
+        buttonEvent.component.option('icon', 'eyeopen');
+      } else {
+        input.type = 'password';
+        buttonEvent.component.option('icon', 'eyeclose');
+      }
+    }
+  }
+
+  // Open change password popup
+  openChangePasswordPopup(): void {
+    if (!this.userProfile?.id) {
+      notify(this.t('USER_PROFILE.USER_NOT_FOUND'), 'error', 3000);
+      return;
+    }
+
+    this.changePasswordData = {
+      userId: this.userProfile.id,
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    };
+
+    // Reinitialize password buttons to reset their state
+    this.initializePasswordButtons();
+
+    this.isChangePasswordPopupVisible = true;
+  }
+
+  // Close change password popup
+  closeChangePasswordPopup(): void {
+    this.isChangePasswordPopupVisible = false;
+    this.changePasswordData = {
+      userId: '',
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    };
+  }
+
+  // Validate password with medium complexity
+  // Min 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, 1 special character
+  validatePassword = (options: any) => {
+    const password = options.value;
+
+    if (!password) {
+      return false;
+    }
+
+    // Medium complexity: Min 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, 1 special character
+    return (
+      password.length >= 8 &&
+      /[a-z]/.test(password) &&
+      /[A-Z]/.test(password) &&
+      /[0-9]/.test(password) &&
+      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+    );
+  };
+
+  // Validate password confirmation
+  validatePasswordConfirmation = (options: any) => {
+    if (!options.value) {
+      return false;
+    }
+
+    return options.value === options.data.newPassword;
+  };
+
+  // Submit change password
+  submitChangePassword(e: SubmitEvent): void {
+    if (!this.changePasswordData.userId) {
+      notify(this.t('USER_PROFILE.CHANGE_PASSWORD.ERROR'), 'error', 3000);
+      return;
+    }
+
+    this.isChangingPassword = true;
+
+    this.userProfileService.changePassword(this.changePasswordData).subscribe({
+      next: () => {
+        notify(this.t('USER_PROFILE.CHANGE_PASSWORD.SUCCESS'), 'success', 3000);
+        this.closeChangePasswordPopup();
+        this.isChangingPassword = false;
+      },
+      error: (err) => {
+        console.error('Şifre değiştirme hatası:', err);
+        const errorMessage =
+          err?.error?.message || this.t('USER_PROFILE.CHANGE_PASSWORD.ERROR');
+        notify(errorMessage, 'error', 5000);
+        this.isChangingPassword = false;
       },
     });
 

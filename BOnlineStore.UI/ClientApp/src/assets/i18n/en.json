@@ -249,6 +249,11 @@
   "WORKORDERINFORMATION": "Work Order Information",
   "PRINT": "Print",
   "CLOSE": "Close",
+  "PROFILE": "Profile",
+  "MESSAGES": "Messages",
+  "HELP": "Help",
+  "LOGOUT": "Logout",
+  "WELCOME": "Welcome {{name}}!",
   "DELIVERYADRESS": "Delivery Adresses",
   "CUSTOMERNAME": "Customer Name",
   "ERROR": "Error",
@@ -332,6 +337,41 @@
     "GENDER_OTHER": "Other",
     "LOCALE_TR": "Turkish",
     "LOCALE_EN": "English",
-    "LOCALE_DE": "German"
-  }
+    "LOCALE_DE": "German",
+    "CHANGE_PASSWORD": {
+      "TITLE": "Change Password",
+      "BUTTON": "Change Password",
+      "CURRENT_PASSWORD": "Current Password",
+      "NEW_PASSWORD": "New Password",
+      "CONFIRM_PASSWORD": "Confirm New Password",
+      "ENTER_CURRENT_PASSWORD": "Enter your current password",
+      "ENTER_NEW_PASSWORD": "Enter your new password",
+      "ENTER_CONFIRM_PASSWORD": "Re-enter your new password",
+      "CURRENT_PASSWORD_REQUIRED": "Current password is required",
+      "NEW_PASSWORD_REQUIRED": "New password is required",
+      "CONFIRM_PASSWORD_REQUIRED": "Password confirmation is required",
+      "PASSWORD_COMPLEXITY": "Password must be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 digit and 1 special character",
+      "PASSWORD_MISMATCH": "Passwords do not match",
+      "SUBMIT": "Update Password",
+      "SUCCESS": "Password changed successfully",
+      "ERROR": "An error occurred while changing the password"
+    }
+  },
+  "ROLE": "Roles Definitions",
+  "USERROLE": "Assing Role To User",
+  "USER": {
+    "FORM_TITLE": "User Information",
+    "PASSWORD_SECURITY": "Password and Security",
+    "PASSWORD": "Password",
+    "PASSWORD_CONFIRMATION": "Password Confirmation",
+    "ENTER_PASSWORD": "Enter password (Min 8 characters, uppercase/lowercase, digit, special character)",
+    "CONFIRM_PASSWORD": "Re-enter password",
+    "PASSWORD_REQUIRED": "Password is required",
+    "PASSWORD_CONFIRMATION_REQUIRED": "Password confirmation is required",
+    "PASSWORDS_DO_NOT_MATCH": "Passwords do not match",
+    "PASSWORD_VALIDATION_MEDIUM": "Password must be at least 8 characters and contain at least 1 uppercase, 1 lowercase, 1 digit, 1 special character (!@#$%...)"
+  },
+  "ROLEUSERROLE": "Role",
+  "ROLEUSERUSER": "User",
+  "USERS": "Users"
 }

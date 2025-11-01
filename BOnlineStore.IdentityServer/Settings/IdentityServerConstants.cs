@@ -6,6 +6,12 @@
         public const string english = "en-US";
         public const string turkish = "tr-TR";
 
+        // Localization constants
+        public const string CultureQueryStringKey = "culture";
+        public const string UICultureQueryStringKey = "ui-culture";
+        public const string UILocalesQueryStringKey = "ui_locales";
+        public const string LocalizationCookieName = "localeserver";
+
         #region Api Resources Constants
 
         public const string ApiResourcesDefinitions = "definitions";
@@ -46,6 +52,29 @@
         public const string ProfilClaimTypeUpdatedAt = "updated_at";
         public const string ProfilClaimTypeEmail = "email";
         public const string ProfilClaimTypeNormalizedEmail = "normalized_email";
+        public const string ProfilClaimTypeRoles = "roles";
+
+        #endregion
+
+        #region Configuration keys and common literals
+
+        public const string ConfigKeyIdentityServerUrl = "IdentityServerUrl";
+        public const string DefaultConnectionStringName = "DefaultConnection";
+        public const string RunningModeDocker = "docker";
+
+        #endregion
+
+        #region Certificate settings
+
+        public const string SigningCertificateFile = "bonlinestore.pfx";
+        public const string SigningCertificatePassword = "Scag185489";
+
+        #endregion
+
+        #region Log message templates (Serilog message templates)
+
+        public const string CertFoundLogTemplate = "Certificate status: {CertName} found.";
+        public const string CertNotFoundLogTemplate = "Certificate status: {CertName} NOT FOUND!!!";
 
         #endregion
     }

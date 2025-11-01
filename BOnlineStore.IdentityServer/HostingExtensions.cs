@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.HttpOverrides;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using BOnlineStore.Shared.Constansts;
+using BOnlineStore.IdentityServer.Extensions;
+using BOnlineStore.IdentityServer.Business.RoleService;
+using BOnlineStore.IdentityServer.Business.UserRoleService;
 
 namespace BOnlineStore.IdentityServer;
 
@@ -29,38 +32,46 @@ internal static class HostingExtensions
             return sp.GetRequiredService<IOptions<IdentityConfigSettings>>().Value;
         });
 
+        // HttpContextAccessor ekle
+        builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddScoped<ITenantService, TenantManager>();
         builder.Services.AddScoped<IUserService, UserManager>();
+        builder.Services.AddScoped<IRoleService, RoleManager>();
+        builder.Services.AddScoped<IUserRoleService, UserRoleManager>();
 
         // Localization configuration
-        builder.Services.AddLocalization(options => options.ResourcesPath = "");
+        builder.Services.AddLocalization();
 
         builder.Services.Configure<RequestLocalizationOptions>(options =>
-   {
-       var supportedCultures = new[]
- {
-   new CultureInfo(GlobalConstants.turkish),
-     new CultureInfo(GlobalConstants.english)
-     };
+        {
+            var supportedCultures = new[]
+            {
+                new CultureInfo(GlobalConstants.turkish),
+                new CultureInfo(GlobalConstants.english)
+           };
 
-       options.DefaultRequestCulture = new RequestCulture(GlobalConstants.turkish);
-       options.SupportedCultures = supportedCultures;
-       options.SupportedUICultures = supportedCultures;
+            options.DefaultRequestCulture = new RequestCulture(GlobalConstants.turkish);
+            options.SupportedCultures = supportedCultures;
+            options.SupportedUICultures = supportedCultures;
 
-       // Accept language from Accept-Language header, query string, or cookie
-       options.RequestCultureProviders = new List<IRequestCultureProvider>
-  {
-       new QueryStringRequestCultureProvider(),
-       new CookieRequestCultureProvider(),
- new AcceptLanguageHeaderRequestCultureProvider()
-   };
-   });
+            // Accept language from Accept-Language header, query string, or cookie
+            options.RequestCultureProviders = new List<IRequestCultureProvider>
+           {
+               new QueryStringRequestCultureProvider{
+                   QueryStringKey = IdentityServerConstants.CultureQueryStringKey,
+                   UIQueryStringKey = IdentityServerConstants.UICultureQueryStringKey
+               },
+               new CookieRequestCultureProvider{ CookieName = IdentityServerConstants.LocalizationCookieName },
+               new AcceptLanguageHeaderRequestCultureProvider()
+           };
+        });
 
         builder.Services.AddRazorPages();
         builder.Services.AddControllers();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+         options.UseSqlServer(builder.Configuration.GetConnectionString(IdentityServerConstants.DefaultConnectionStringName)));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -70,7 +81,7 @@ internal static class HostingExtensions
         var builderIdentity = builder.Services
             .AddIdentityServer(options =>
             {
-                options.IssuerUri = builder.Configuration.GetValue<string>("IdentityServerUrl");
+                options.IssuerUri = builder.Configuration.GetValue<string>(IdentityServerConstants.ConfigKeyIdentityServerUrl);
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
@@ -82,13 +93,13 @@ internal static class HostingExtensions
             .AddConfigurationStore(options =>
       {
           options.ConfigureDbContext = c =>
-   {
-       c.UseSqlServer
-(
-builder.Configuration.GetConnectionString("DefaultConnection"),
-sqloptions => sqloptions.MigrationsAssembly(assemblyName)
-);
-   };
+        {
+            c.UseSqlServer
+                (
+                    builder.Configuration.GetConnectionString(IdentityServerConstants.DefaultConnectionStringName),
+                    sqloptions => sqloptions.MigrationsAssembly(assemblyName)
+                );
+        };
 
       })
       .AddOperationalStore(options =>
@@ -97,7 +108,7 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
                     {
                         c.UseSqlServer
                   (
-                    builder.Configuration.GetConnectionString("DefaultConnection"),
+                    builder.Configuration.GetConnectionString(IdentityServerConstants.DefaultConnectionStringName),
                                sqloptions => sqloptions.MigrationsAssembly(assemblyName)
             );
                     };
@@ -106,12 +117,12 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
        .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<ProfileService>();
 
-        if (builder.Configuration[IdentityServerConstants.IdentityRunningMode] == "docker")
+        if (builder.Configuration[IdentityServerConstants.IdentityRunningMode] == IdentityServerConstants.RunningModeDocker)
         {
-            var certName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/bonlinestore.pfx";
-            Log.Information(File.Exists(certName) == true ? $"Certificate status: {certName} found." : $"Certificate status: {certName} NOT FOUND!!!");
+            var certName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + IdentityServerConstants.SigningCertificateFile;
+            Log.Information(File.Exists(certName) == true ? string.Format(IdentityServerConstants.CertFoundLogTemplate, certName) : string.Format(IdentityServerConstants.CertNotFoundLogTemplate, certName));
 
-            builderIdentity.AddSigningCredential(new X509Certificate2(certName, "Scag185489"));
+            builderIdentity.AddSigningCredential(new X509Certificate2(certName, IdentityServerConstants.SigningCertificatePassword));
 
             builder.WebHost.ConfigureKestrel(options =>
             {
@@ -119,7 +130,7 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
                 options.ListenAnyIP(443, listenOptions =>
               {
                   listenOptions.UseConnectionLogging();
-                  listenOptions.UseHttps(certName, "Scag185489");
+                  listenOptions.UseHttps(certName, IdentityServerConstants.SigningCertificatePassword);
               });
             });
         }
@@ -132,16 +143,16 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
         builder.Services.AddAuthentication();
 
         IMapper mapper = MappingConfigrations.RegisterMaps().CreateMapper();
-        builder.Services.AddSingleton(mapper);        
+        builder.Services.AddSingleton(mapper);
 
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
-          {
-              options.ForwardedHeaders =
-                  ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        {
+            options.ForwardedHeaders =
+                ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 
-              options.KnownNetworks.Clear();
-              options.KnownProxies.Clear();
-          });
+            options.KnownNetworks.Clear();
+            options.KnownProxies.Clear();
+        });
 
         return builder.Build();
     }
@@ -156,6 +167,9 @@ sqloptions => sqloptions.MigrationsAssembly(assemblyName)
         }
 
         app.UseForwardedHeaders();
+
+        // Persist culture from query params into cookie early
+        app.UsePersistCultureFromQuery();
 
         // Add request localization middleware
         app.UseRequestLocalization();

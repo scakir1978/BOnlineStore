@@ -1,4 +1,6 @@
 @page
+@using BOnlineStore.Localization.Constants
+@inject Microsoft.Extensions.Localization.IStringLocalizer<BOnlineStore.Localization.Language> L
 @model BOnlineStore.IdentityServer.Pages.Logout.LoggedOut
 
 <!-- auth page content -->
@@ -12,13 +14,15 @@
                         <lord-icon src="https://cdn.lordicon.com/hzomhqxz.json" trigger="loop" colors="primary:#8c68cd,secondary:#4788ffs" style="width:180px;height:180px"></lord-icon>
 
                         <div class="mt-4 pt-2">
-                            <h5>Oturumu kapattýnýz</h5>
-                            <p class="text-muted"><span class="fw-semibold">B-Online-Store</span> uygulamasýný kullandýðýnýz için teþekkür ederiz.</p>
+                            <h5>@L[IdentityServerKeys.LoggedOutTitle]</h5>
+                            <p class="text-muted">
+                                @Html.Raw(string.Format(L[IdentityServerKeys.LoggedOutThanks], "<span class=\"fw-semibold\">B-Online-Store</span>"))
+                            </p>
 
                             @if (Model.View.PostLogoutRedirectUri != null)
                             {    
                                 <div class="mt-4">
-                                    <a href="@Model.View.PostLogoutRedirectUri" class="btn btn-primary w-100">Tekrar Oturum Aç</a>
+                                    <a href="@Model.View.PostLogoutRedirectUri" class="btn btn-primary w-100">@L[IdentityServerKeys.LoginAgain]</a>
                                 </div>
                             }
 

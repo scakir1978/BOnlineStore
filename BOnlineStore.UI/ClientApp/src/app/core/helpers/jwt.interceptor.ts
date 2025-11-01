@@ -1,22 +1,23 @@
-import { CookieService } from "ngx-cookie-service";
-import { Injectable } from "@angular/core";
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Injectable } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
 
-import { AuthenticationService } from "../services/auth.service";
-import { AuthfakeauthenticationService } from "../services/authfake.service";
-import { environment } from "../../../environments/environment";
+import { AuthenticationService } from '../services/auth.service';
+import { AuthfakeauthenticationService } from '../services/authfake.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(
-    private authenticationService: AuthenticationService,
-    public _cookiesService: CookieService
-  ) {}
+  constructor(private authenticationService: AuthenticationService) {}
 
   private serverLanguages = [
-    { code: "tr", serverCode: "tr-TR" },
-    { code: "en", serverCode: "en-US" },
+    { code: 'tr', serverCode: 'tr-TR' },
+    { code: 'en', serverCode: 'en-US' },
   ];
 
   intercept(
@@ -24,7 +25,7 @@ export class JwtInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const currentUser = this.authenticationService.currentUser();
-    const userLanguage = this._cookiesService.get("lang");
+    const userLanguage = localStorage.getItem('locale') || 'tr';
     const isLoggedIn = currentUser && currentUser.token;
 
     const serverLanguageCode = this.serverLanguages.find(
@@ -35,11 +36,11 @@ export class JwtInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${currentUser.token}`,
-          "Cache-Control": "no-cache",
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-          "Accept-Language": serverLanguageCode! ?? currentUser.language!,
-          Accept: "application/json",
+          'Cache-Control': 'no-cache',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+          'Accept-Language': serverLanguageCode! ?? currentUser.language!,
+          Accept: 'application/json',
         },
       });
     }
