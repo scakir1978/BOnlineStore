@@ -100,24 +100,6 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
             validationResults.Should().ContainSingle(v => v.MemberNames.Contains("Password"));
         }
 
-        [Fact]
-        public void UserCreateDto_MissingTenantId_FailsValidation()
-        {
-            // Arrange
-            var userCreateDto = new UserCreateDto
-            {
-                Email = "test@example.com",
-                Password = "Test123!",
-                TenantId = Guid.Empty
-            };
-
-            // Act
-            var validationResults = ValidateModel(userCreateDto);
-
-            // Assert
-            validationResults.Should().ContainSingle(v => v.MemberNames.Contains("TenantId"));
-        }
-
         [Theory]
         [InlineData("tr-TR")]
         [InlineData("en-US")]

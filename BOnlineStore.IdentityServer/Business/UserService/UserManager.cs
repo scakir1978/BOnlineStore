@@ -111,11 +111,14 @@ namespace BOnlineStore.IdentityServer.Business.UserService
             return user != null ? _mapper.Map<UserDto>(user) : null;
         }
 
-        public async Task<Response<UserDto>> UpdateAsync(UserUpdateDto userUpdateDto)
+        public async Task<Response<UserDto>> UpdateAsync(string id, UserUpdateDto userUpdateDto)
         {
             try
             {
+                userUpdateDto.Id = id;
+
                 var user = await _userManager.FindByIdAsync(userUpdateDto.Id);
+
                 if (user == null)
                 {
                     return Response<UserDto>.Fail(

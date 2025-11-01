@@ -106,12 +106,13 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
         #region UpdateUser Tests
 
         [Fact]
-        public async Task UpdateUser_ValidUserUpdateDto_ReturnsOkResult()
+        public async Task UpdateAsync_ValidUserUpdateDto_ReturnsOkResult()
         {
             // Arrange
+            var userId = Guid.NewGuid().ToString();
             var userUpdateDto = new UserUpdateDto
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = userId,
                 Email = "updated@example.com",
                 Name = "Updated User"
             };
@@ -126,11 +127,11 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
             var response = Response<UserDto>.Success(expectedUser, HttpStatusCode.OK);
 
             _mockUserService
-                .Setup(x => x.UpdateAsync(It.IsAny<UserUpdateDto>()))
+                .Setup(x => x.UpdateAsync(userId, It.IsAny<UserUpdateDto>()))
                 .ReturnsAsync(response);
 
             // Act
-            var result = await _controller.UpdateUser(userUpdateDto);
+            var result = await _controller.UpdateAsync(userId, userUpdateDto);
 
             // Assert
             result.Should().NotBeNull();
@@ -140,12 +141,13 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
         }
 
         [Fact]
-        public async Task UpdateUser_ServiceReturnsFailure_ReturnsBadRequest()
+        public async Task UpdateAsync_ServiceReturnsFailure_ReturnsBadRequest()
         {
             // Arrange
+            var userId = Guid.NewGuid().ToString();
             var userUpdateDto = new UserUpdateDto
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = userId,
                 Email = "test@example.com"
             };
 
@@ -157,11 +159,11 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
             var response = Response<UserDto>.Fail(error, HttpStatusCode.NotFound);
 
             _mockUserService
-                .Setup(x => x.UpdateAsync(It.IsAny<UserUpdateDto>()))
+                .Setup(x => x.UpdateAsync(userId, It.IsAny<UserUpdateDto>()))
                 .ReturnsAsync(response);
 
             // Act
-            var result = await _controller.UpdateUser(userUpdateDto);
+            var result = await _controller.UpdateAsync(userId, userUpdateDto);
 
             // Assert
             result.Should().NotBeNull();

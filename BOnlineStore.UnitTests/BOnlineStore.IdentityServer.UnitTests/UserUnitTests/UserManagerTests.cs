@@ -225,27 +225,27 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
         {
         // Arrange
          var userId = Guid.NewGuid().ToString();
-            var existingUser = new ApplicationUser
+         var existingUser = new ApplicationUser
    {
-       Id = userId,
-    Email = "old@example.com",
+     Id = userId,
+Email = "old@example.com",
     UserName = "old@example.com",
       TenantId = Guid.NewGuid(),
-          Name = "Old Name"
-       };
+    Name = "Old Name"
+   };
 
-            var userUpdateDto = new UserUpdateDto
+        var userUpdateDto = new UserUpdateDto
    {
      Id = userId,
        Email = "new@example.com",
-       Name = "New Name"
+   Name = "New Name"
     };
 
        var expectedUserDto = new UserDto
        {
      Id = userId,
 Email = userUpdateDto.Email,
-       Name = userUpdateDto.Name
+   Name = userUpdateDto.Name
        };
 
 _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(existingUser);
@@ -254,7 +254,7 @@ _mockUserManager.Setup(um => um.FindByIdAsync(userId)).ReturnsAsync(existingUser
     _mockMapper.Setup(m => m.Map<UserDto>(It.IsAny<ApplicationUser>())).Returns(expectedUserDto);
 
         // Act
-     var response = await _userManager.UpdateAsync(userUpdateDto);
+     var response = await _userManager.UpdateAsync(userId, userUpdateDto);
 
        // Assert
        response.Should().NotBeNull();
@@ -266,11 +266,12 @@ response.IsSucceed.Should().BeTrue();
 
  [Fact]
         public async Task UpdateAsync_NonExistentUser_ReturnsFailure()
-        {
+     {
        // Arrange
+      var userId = Guid.NewGuid().ToString();
     var userUpdateDto = new UserUpdateDto
       {
-       Id = Guid.NewGuid().ToString(),
+       Id = userId,
       Email = "test@example.com"
             };
 
@@ -278,12 +279,12 @@ response.IsSucceed.Should().BeTrue();
      .ReturnsAsync((ApplicationUser)null);
 
  // Act
-    var response = await _userManager.UpdateAsync(userUpdateDto);
+    var response = await _userManager.UpdateAsync(userId, userUpdateDto);
 
      // Assert
        response.Should().NotBeNull();
      response.IsSucceed.Should().BeFalse();
-    response.Result.Should().BeNull();
+response.Result.Should().BeNull();
      response.Errors.Should().ContainSingle(e => e.ErrorCode == "UserNotFound");
    response.Errors.First().Message.Should().Contain("Kullanýcý bulunamadý");
  }

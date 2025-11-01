@@ -18,7 +18,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
         /// </summary>
         /// <param name="userUpdateDto">Güncellenecek kullanýcý bilgileri</param>
         /// <returns>Güncellenmiþ kullanýcý bilgileri ve iþlem sonucu</returns>
-        Task<Response<UserDto>> UpdateAsync(UserUpdateDto userUpdateDto);
+        Task<Response<UserDto>> UpdateAsync(string id, UserUpdateDto userUpdateDto);
 
         /// <summary>
         /// Kullanýcýyý ID ile getirir

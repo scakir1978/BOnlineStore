@@ -33,6 +33,10 @@ export class UserComponent
   // Track if we're in edit mode (true) or add mode (false)
   isEditMode = false;
 
+  // Password visibility button options
+  passwordButtonOptions: any;
+  passwordConfirmationButtonOptions: any;
+
   constructor(
     public override _translate: TranslateService,
     private _userService: UserService,
@@ -74,20 +78,64 @@ export class UserComponent
     this.timezoneService.getTimeZones().subscribe((zones) => {
       this.timeZoneOptions = zones;
     });
+
+    // Initialize password visibility buttons
+    this.initializePasswordButtons();
+  }
+
+  // Initialize password visibility button options
+  initializePasswordButtons(): void {
+    this.passwordButtonOptions = {
+      icon: 'eyeclose',
+      type: 'default',
+      stylingMode: 'text',
+      onClick: (e: any) => {
+        this.togglePasswordVisibility(e, 'password');
+      },
+    };
+
+    this.passwordConfirmationButtonOptions = {
+      icon: 'eyeclose',
+      type: 'default',
+      stylingMode: 'text',
+      onClick: (e: any) => {
+        this.togglePasswordVisibility(e, 'passwordConfirmation');
+      },
+    };
+  }
+
+  // Toggle password visibility
+  togglePasswordVisibility(buttonEvent: any, fieldName: string): void {
+    const textBox = buttonEvent.component.element().closest('.dx-textbox');
+    const input = textBox?.querySelector('input');
+
+    if (input) {
+      if (input.type === 'password') {
+        input.type = 'text';
+        buttonEvent.component.option('icon', 'eyeopen');
+      } else {
+        input.type = 'password';
+        buttonEvent.component.option('icon', 'eyeclose');
+      }
+    }
   }
 
   // Event handler when starting to add a new row
   onInitNewRow = (e: any) => {
     this.isEditMode = false;
+    // Reset password visibility buttons
+    this.initializePasswordButtons();
   };
 
   // Event handler when starting to edit an existing row
   onEditingStart = (e: any) => {
     this.isEditMode = true;
+    // Reset password visibility buttons
+    this.initializePasswordButtons();
   };
 
   // Validate password with medium complexity
-  // Min 8 characters, at least 1 uppercase, 1 lowercase
+  // Min 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, 1 special character
   validatePassword = (options: any) => {
     const password = options.value;
 
@@ -101,9 +149,13 @@ export class UserComponent
       return false;
     }
 
-    // Medium complexity: Min 8 characters, at least 1 uppercase, 1 lowercase
+    // Medium complexity: Min 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, 1 special character
     return (
-      password.length >= 8 && /[a-z]/.test(password) && /[A-Z]/.test(password)
+      password.length >= 8 &&
+      /[a-z]/.test(password) &&
+      /[A-Z]/.test(password) &&
+      /[0-9]/.test(password) &&
+      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
     );
   };
 

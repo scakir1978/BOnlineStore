@@ -9,6 +9,7 @@ import {
   UserProfileDto,
   UserProfileUpdateDto,
 } from '../../dtos/settings/user-profile.dto';
+import { ChangePasswordDto } from '../../dtos/settings/change-password.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -46,5 +47,12 @@ export class UserProfileService extends BaseService {
 
   getUserById(id: string): Observable<UserProfileDto> {
     return this._http.get<UserProfileDto>(`${this.identityApiUrl}/${id}`);
+  }
+
+  changePassword(changePasswordDto: ChangePasswordDto): Observable<any> {
+    return this._http.post(
+      `${this.identityApiUrl}/change-password`,
+      changePasswordDto
+    );
   }
 }

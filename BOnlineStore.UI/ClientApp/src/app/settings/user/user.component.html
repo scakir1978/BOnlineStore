@@ -28,8 +28,9 @@
     [refreshMode]="'full'"
     [confirmDelete]="true"
   >
+    <dxo-popup [width]="900" [height]="'auto'"></dxo-popup>
     <dxo-form labelMode="floating" [colCount]="4">
-      <!-- Row 1: Personal Info (Full Width) -->
+      <!-- Kişisel Bilgiler -->
       <dxi-item
         itemType="group"
         [caption]="'USER_PROFILE.PERSONAL_INFO' | translate"
@@ -44,7 +45,7 @@
         <dxi-item dataField="preferredUsername" [colSpan]="2"></dxi-item>
       </dxi-item>
 
-      <!-- Row 2: Contact Info (Full Width) -->
+      <!-- İletişim Bilgileri -->
       <dxi-item
         itemType="group"
         [caption]="'USER_PROFILE.CONTACT_INFO' | translate"
@@ -56,7 +57,7 @@
         <dxi-item dataField="website" [colSpan]="1"></dxi-item>
       </dxi-item>
 
-      <!-- Row 3: Password & Security (Only visible on Add) -->
+      <!-- Şifre ve Güvenlik -->
       <dxi-item
         itemType="group"
         [caption]="'USER.PASSWORD_SECURITY' | translate"
@@ -64,11 +65,39 @@
         [colSpan]="4"
         [visible]="!isEditMode"
       >
-        <dxi-item dataField="password" [colSpan]="1"></dxi-item>
-        <dxi-item dataField="passwordConfirmation" [colSpan]="1"></dxi-item>
+        <dxi-item
+          dataField="password"
+          [colSpan]="1"
+          editorType="dxTextBox"
+          [editorOptions]="{
+            mode: 'password',
+            buttons: [
+              {
+                name: 'password',
+                location: 'after',
+                options: passwordButtonOptions
+              }
+            ]
+          }"
+        ></dxi-item>
+        <dxi-item
+          dataField="passwordConfirmation"
+          [colSpan]="1"
+          editorType="dxTextBox"
+          [editorOptions]="{
+            mode: 'password',
+            buttons: [
+              {
+                name: 'passwordConfirmation',
+                location: 'after',
+                options: passwordConfirmationButtonOptions
+              }
+            ]
+          }"
+        ></dxi-item>
       </dxi-item>
 
-      <!-- Row 4: Profile Info & Localization (Side by Side) -->
+      <!-- Profil Bilgileri & Yerelleştirme (Yan Yana) -->
       <dxi-item
         itemType="group"
         [caption]="'USER_PROFILE.PROFILE_INFO' | translate"
@@ -84,11 +113,11 @@
       <dxi-item
         itemType="group"
         [caption]="'USER_PROFILE.LOCALIZATION_SETTINGS' | translate"
-        [colCount]="1"
+        [colCount]="2"
         [colSpan]="2"
       >
-        <dxi-item dataField="locale" [colSpan]="1"></dxi-item>
-        <dxi-item dataField="zoneInfo" [colSpan]="1"></dxi-item>
+        <dxi-item dataField="locale" [colSpan]="2"></dxi-item>
+        <dxi-item dataField="zoneInfo" [colSpan]="2"></dxi-item>
       </dxi-item>
     </dxo-form>
   </dxo-editing>
@@ -289,11 +318,7 @@
   <dxi-column
     dataField="password"
     caption="{{ 'USER.PASSWORD' | translate }}"
-    [visible]="!isEditMode"
-    editorType="dxTextBox"
-    [editorOptions]="{
-      mode: 'password'
-    }"
+    [visible]="false"
   >
     <dxi-validation-rule
       type="required"
@@ -308,11 +333,7 @@
   <dxi-column
     dataField="passwordConfirmation"
     caption="{{ 'USER.PASSWORD_CONFIRMATION' | translate }}"
-    [visible]="!isEditMode"
-    editorType="dxTextBox"
-    [editorOptions]="{
-      mode: 'password'
-    }"
+    [visible]="false"
   >
     <dxi-validation-rule
       type="required"

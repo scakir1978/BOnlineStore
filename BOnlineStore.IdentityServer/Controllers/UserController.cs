@@ -62,10 +62,10 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// </summary>
         /// <param name="userUpdateDto">Güncellenecek kullanýcý bilgileri</param>
         /// <returns>Güncellenmiþ kullanýcý bilgileri</returns>
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] UserUpdateDto userUpdateDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(string id, [FromBody] UserUpdateDto userUpdateDto)
         {
-            var response = await _userService.UpdateAsync(userUpdateDto);
+            var response = await _userService.UpdateAsync(id, userUpdateDto);
 
             if (!response.IsSucceed)
             {
