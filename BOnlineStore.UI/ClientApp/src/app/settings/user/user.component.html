@@ -1,0 +1,362 @@
+<app-breadcrumbs
+  title="{{ 'SETTINGS' | translate }}"
+  [breadcrumbItems]="breadCrumbItems"
+></app-breadcrumbs>
+
+<dx-data-grid
+  id="gridContainer"
+  [dataSource]="userDataSource"
+  [showBorders]="true"
+  [remoteOperations]="true"
+  [repaintChangesOnly]="true"
+  [showColumnLines]="true"
+  [showRowLines]="true"
+  [rowAlternationEnabled]="true"
+  (onExporting)="onExporting($event)"
+  (onInitNewRow)="onInitNewRow($event)"
+  (onEditingStart)="onEditingStart($event)"
+>
+  <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
+  <dxo-filter-row [visible]="true"> </dxo-filter-row>
+  <dxo-header-filter [visible]="true"> </dxo-header-filter>
+  <dxo-editing
+    mode="popup"
+    [allowAdding]="true"
+    [allowDeleting]="true"
+    [allowUpdating]="true"
+    [useIcons]="true"
+    [refreshMode]="'full'"
+    [confirmDelete]="true"
+  >
+    <dxo-popup [width]="900" [height]="'auto'"></dxo-popup>
+    <dxo-form labelMode="floating" [colCount]="4">
+      <!-- Kişisel Bilgiler -->
+      <dxi-item
+        itemType="group"
+        [caption]="'USER_PROFILE.PERSONAL_INFO' | translate"
+        [colCount]="4"
+        [colSpan]="4"
+      >
+        <dxi-item dataField="givenName" [colSpan]="1"></dxi-item>
+        <dxi-item dataField="familyName" [colSpan]="1"></dxi-item>
+        <dxi-item dataField="middleName" [colSpan]="1"></dxi-item>
+        <dxi-item dataField="nickname" [colSpan]="1"></dxi-item>
+        <dxi-item dataField="name" [colSpan]="2"></dxi-item>
+        <dxi-item dataField="preferredUsername" [colSpan]="2"></dxi-item>
+      </dxi-item>
+
+      <!-- İletişim Bilgileri -->
+      <dxi-item
+        itemType="group"
+        [caption]="'USER_PROFILE.CONTACT_INFO' | translate"
+        [colCount]="4"
+        [colSpan]="4"
+      >
+        <dxi-item dataField="email" [colSpan]="2"></dxi-item>
+        <dxi-item dataField="phoneNumber" [colSpan]="1"></dxi-item>
+        <dxi-item dataField="website" [colSpan]="1"></dxi-item>
+      </dxi-item>
+
+      <!-- Şifre ve Güvenlik -->
+      <dxi-item
+        itemType="group"
+        [caption]="'USER.PASSWORD_SECURITY' | translate"
+        [colCount]="2"
+        [colSpan]="4"
+        [visible]="!isEditMode"
+      >
+        <dxi-item
+          dataField="password"
+          [colSpan]="1"
+          editorType="dxTextBox"
+          [editorOptions]="{
+            mode: 'password',
+            buttons: [
+              {
+                name: 'password',
+                location: 'after',
+                options: passwordButtonOptions
+              }
+            ]
+          }"
+        ></dxi-item>
+        <dxi-item
+          dataField="passwordConfirmation"
+          [colSpan]="1"
+          editorType="dxTextBox"
+          [editorOptions]="{
+            mode: 'password',
+            buttons: [
+              {
+                name: 'passwordConfirmation',
+                location: 'after',
+                options: passwordConfirmationButtonOptions
+              }
+            ]
+          }"
+        ></dxi-item>
+      </dxi-item>
+
+      <!-- Profil Bilgileri & Yerelleştirme (Yan Yana) -->
+      <dxi-item
+        itemType="group"
+        [caption]="'USER_PROFILE.PROFILE_INFO' | translate"
+        [colCount]="2"
+        [colSpan]="2"
+      >
+        <dxi-item dataField="gender" [colSpan]="1"></dxi-item>
+        <dxi-item dataField="birthdate" [colSpan]="1"></dxi-item>
+        <dxi-item dataField="profile" [colSpan]="2"></dxi-item>
+        <dxi-item dataField="picture" [colSpan]="2"></dxi-item>
+      </dxi-item>
+
+      <dxi-item
+        itemType="group"
+        [caption]="'USER_PROFILE.LOCALIZATION_SETTINGS' | translate"
+        [colCount]="2"
+        [colSpan]="2"
+      >
+        <dxi-item dataField="locale" [colSpan]="2"></dxi-item>
+        <dxi-item dataField="zoneInfo" [colSpan]="2"></dxi-item>
+      </dxi-item>
+    </dxo-form>
+  </dxo-editing>
+
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager
+    [visible]="true"
+    [displayMode]="'full'"
+    [showPageSizeSelector]="true"
+    [showInfo]="true"
+    [showNavigationButtons]="true"
+  >
+  </dxo-pager>
+
+  <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+  <dxo-filter-builder [allowHierarchicalFields]="true"></dxo-filter-builder>
+  <dxo-export [enabled]="true" [formats]="['xlsx', 'pdf']"></dxo-export>
+
+  <dxo-group-panel [visible]="true"></dxo-group-panel>
+  <dxo-grouping #expand [autoExpandAll]="false"></dxo-grouping>
+
+  <dxo-toolbar>
+    <dxi-item location="after">
+      <div *dxTemplate>
+        <dx-button icon="refresh" (onClick)="refreshDataGrid($event)">
+        </dx-button>
+      </div>
+    </dxi-item>
+    <dxi-item name="groupPanel"></dxi-item>
+    <dxi-item name="addRowButton"></dxi-item>
+    <dxi-item name="saveButton"></dxi-item>
+    <dxi-item name="revertButton"></dxi-item>
+    <dxi-item name="exportButton"></dxi-item>
+    <dxi-item name="columnChooserButton"></dxi-item>
+  </dxo-toolbar>
+
+  <!-- #region [Data grid columns] -->
+  <dxi-column dataField="id" [allowEditing]="false" [visible]="false">
+  </dxi-column>
+  <dxi-column
+    dataField="email"
+    caption="{{ 'USER_PROFILE.EMAIL' | translate }}"
+  >
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="email"
+      message="{{ 'USER_PROFILE.EMAIL_INVALID' | translate }}"
+    ></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="150"
+      message="{{ 'EMAILMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="name"
+    caption="{{ 'USER_PROFILE.FULL_NAME' | translate }}"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="givenName"
+    caption="{{ 'USER_PROFILE.FIRST_NAME' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="familyName"
+    caption="{{ 'USER_PROFILE.LAST_NAME' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule type="required"></dxi-validation-rule>
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="middleName"
+    caption="{{ 'USER_PROFILE.MIDDLE_NAME' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="nickname"
+    caption="{{ 'USER_PROFILE.NICKNAME' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="preferredUsername"
+    caption="{{ 'USER_PROFILE.PREFERRED_USERNAME' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'NAMEMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="phoneNumber"
+    caption="{{ 'USER_PROFILE.PHONE_NUMBER' | translate }}"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="20"
+      message="{{ 'CELLPHONENUMBERMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="website"
+    caption="{{ 'USER_PROFILE.WEBSITE' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="250"
+      message="{{ 'EMAILMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="gender"
+    caption="{{ 'USER_PROFILE.GENDER' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="genderOptions"
+      displayExpr="text"
+      valueExpr="value"
+      allowClearing="true"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="birthdate"
+    caption="{{ 'USER_PROFILE.BIRTHDATE' | translate }}"
+    dataType="date"
+    format="dd.MM.yyyy"
+    [visible]="false"
+  >
+  </dxi-column>
+  <dxi-column
+    dataField="profile"
+    caption="{{ 'USER_PROFILE.PROFILE_URL' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="500"
+      message="{{ 'EMAILMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="picture"
+    caption="{{ 'USER_PROFILE.PICTURE_URL' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="stringLength"
+      [max]="500"
+      message="{{ 'EMAILMAXLENGTH' | translate }}"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="locale"
+    caption="{{ 'USER_PROFILE.LOCALE' | translate }}"
+  >
+    <dxo-lookup
+      [dataSource]="localeOptions"
+      displayExpr="text"
+      valueExpr="value"
+      allowClearing="true"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <dxi-column
+    dataField="password"
+    caption="{{ 'USER.PASSWORD' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="required"
+      [message]="'USER.PASSWORD_REQUIRED' | translate"
+    ></dxi-validation-rule>
+    <dxi-validation-rule
+      type="custom"
+      [validationCallback]="validatePassword"
+      [message]="'USER.PASSWORD_VALIDATION_MEDIUM' | translate"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="passwordConfirmation"
+    caption="{{ 'USER.PASSWORD_CONFIRMATION' | translate }}"
+    [visible]="false"
+  >
+    <dxi-validation-rule
+      type="required"
+      [message]="'USER.PASSWORD_CONFIRMATION_REQUIRED' | translate"
+    ></dxi-validation-rule>
+    <dxi-validation-rule
+      type="custom"
+      [validationCallback]="validatePasswordConfirmation"
+      [message]="'USER.PASSWORDS_DO_NOT_MATCH' | translate"
+    ></dxi-validation-rule>
+  </dxi-column>
+  <dxi-column
+    dataField="zoneInfo"
+    caption="{{ 'USER_PROFILE.ZONE_INFO' | translate }}"
+    [visible]="false"
+  >
+    <dxo-lookup
+      [dataSource]="timeZoneOptions"
+      displayExpr="text"
+      valueExpr="value"
+      allowClearing="true"
+    >
+    </dxo-lookup>
+  </dxi-column>
+  <!-- #endregion -->
+</dx-data-grid>

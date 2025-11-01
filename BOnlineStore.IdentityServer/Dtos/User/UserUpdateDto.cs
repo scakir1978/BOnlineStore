@@ -6,7 +6,7 @@ namespace BOnlineStore.IdentityServer.Dtos.User
     {
         /// <summary>
         /// Kullanýcý kimliði
-        /// </summary>
+        /// </summary>        
         [Required]
         public string Id { get; set; }
 

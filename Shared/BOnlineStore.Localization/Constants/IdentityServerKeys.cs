@@ -17,9 +17,10 @@ namespace BOnlineStore.Localization.Constants
         public const string TenantAlreadyExists = "TenantAlreadyExists";
         public const string TenantNotFoundForDelete = "TenantNotFoundForDelete";
         public const string TenantNotFoundForUpdate = "TenantNotFoundForUpdate";
-        
+
         // User Management Keys
         public const string UserNotFound = "UserNotFound";
+        public const string EmailAlreadyExists = "EmailAlreadyExists";
         public const string CreateUserError = "CreateUserError";
         public const string UpdateUserError = "UpdateUserError";
         public const string DeleteUserError = "DeleteUserError";
@@ -57,5 +58,14 @@ namespace BOnlineStore.Localization.Constants
         public const string UpdateRoleError = "UpdateRoleError";
         public const string DeleteRoleError = "DeleteRoleError";
         public const string RoleAlreadyExists = "RoleAlreadyExists";
+
+        // User-Role Management Keys
+        public const string AssignRoleToUserError = "AssignRoleToUserError";
+        public const string RemoveRoleFromUserError = "RemoveRoleFromUserError";
+        public const string UserRoleNotFound = "UserRoleNotFound";
+        public const string UserAlreadyHasRole = "UserAlreadyHasRole";
+        public const string GetUserRolesError = "GetUserRolesError";
+        public const string SuperUser = "SuperUser";
+        public const string Admin = "Admin";
     }
 }

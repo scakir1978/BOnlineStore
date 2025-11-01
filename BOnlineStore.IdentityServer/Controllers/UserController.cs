@@ -1,11 +1,17 @@
+using BOnlineStore.IdentityServer.Business.RoleService;
 using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Controllers;
+using BOnlineStore.Shared.Dtos;
+using DevExtreme.AspNet.Data;
+using DevExtreme.AspNet.Data.ResponseModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using System.Net;
 using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace BOnlineStore.IdentityServer.Controllers
@@ -13,7 +19,7 @@ namespace BOnlineStore.IdentityServer.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(LocalApi.PolicyName)]
-    public class UserController : ControllerBase
+    public class UserController : ControllerShared
     {
         private readonly IUserService _userService;
         private readonly IStringLocalizer<Language> _stringLocalizer;
@@ -24,32 +30,31 @@ namespace BOnlineStore.IdentityServer.Controllers
             _stringLocalizer = stringLocalizer;
         }
 
+
+        [HttpPost("Load")]
+        public async Task<IActionResult> Load(DataSourceLoadOptionsBase loadOptions)
+        {
+            loadOptions.StringToLower = true;
+            var users = await _userService.GetAllUsersAsync();
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(users, loadOptions));
+        }
+
         /// <summary>
         /// Yeni kullanýcý oluþturur
         /// </summary>
         /// <param name="userCreateDto">Oluþturulacak kullanýcý bilgileri</param>
         /// <returns>Oluþturulan kullanýcý bilgileri</returns>
         [HttpPost]
-        public async Task<ActionResult<UserDto>> CreateUser([FromBody] UserCreateDto userCreateDto)
+        public async Task<IActionResult> CreateUser([FromBody] UserCreateDto userCreateDto)
         {
-            if (!ModelState.IsValid)
+            var response = await _userService.CreateAsync(userCreateDto);
+
+            if (!response.IsSucceed)
             {
-                return BadRequest(ModelState);
+                return CreateErrorActionResultInstance<UserDto>(null, response.Errors);
             }
 
-            var (user, result) = await _userService.CreateAsync(userCreateDto);
-
-            if (result.Succeeded)
-            {
-                return CreatedAtAction("GetUserById", new { id = user.Id }, user);
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-
-            return BadRequest(ModelState);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>
@@ -57,27 +62,17 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// </summary>
         /// <param name="userUpdateDto">Güncellenecek kullanýcý bilgileri</param>
         /// <returns>Güncellenmiþ kullanýcý bilgileri</returns>
-        [HttpPut]
-        public async Task<ActionResult<UserDto>> UpdateUser([FromBody] UserUpdateDto userUpdateDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(string id, [FromBody] UserUpdateDto userUpdateDto)
         {
-            if (!ModelState.IsValid)
+            var response = await _userService.UpdateAsync(id, userUpdateDto);
+
+            if (!response.IsSucceed)
             {
-                return BadRequest(ModelState);
+                return CreateErrorActionResultInstance<UserDto>(null, response.Errors);
             }
 
-            var (user, result) = await _userService.UpdateAsync(userUpdateDto);
-
-            if (result.Succeeded)
-            {
-                return Ok(user);
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-
-            return BadRequest(ModelState);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>
@@ -122,21 +117,16 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// <param name="id">Silinecek kullanýcý kimliði</param>
         /// <returns>Ýþlem sonucu</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
-            var result = await _userService.DeleteAsync(id);
+            var response = await _userService.DeleteAsync(id);
 
-            if (result.Succeeded)
+            if (!response.IsSucceed)
             {
-                return NoContent();
+                return CreateErrorActionResultInstance(response.Result, response.Errors);
             }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-
-            return BadRequest(ModelState);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>

@@ -40,58 +40,66 @@ namespace BOnlineStore.IdentityServer.Controllers
         [HttpGet("{id}", Name = "GetRoleById")]
         public async Task<IActionResult> GetByIdAsync(string id)
         {
-            var (role, result) = await _roleService.GetByIdAsync(id);
+            var response = await _roleService.GetByIdAsync(id);
 
-            if (result.Succeeded)
-                return CreateSuccessActionResultInstance(role);
+            if (!response.IsSucceed)
+            {
+                return CreateErrorActionResultInstance<RoleDto>(response.Result, response.Errors);
+            }
 
-            return BadRequest(result.Errors);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         [HttpGet("by-name/{name}")]
         public async Task<IActionResult> GetByNameAsync(string name)
         {
-            var (role, result) = await _roleService.GetByNameAsync(name);
+            var response = await _roleService.GetByNameAsync(name);
 
-            if (result.Succeeded)
-                return CreateSuccessActionResultInstance(role);
+            if (!response.IsSucceed)
+            {
+                return CreateErrorActionResultInstance<RoleDto>(response.Result, response.Errors);
+            }
 
-            return BadRequest(result.Errors);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] RoleCreateDto input)
         {
-            var (role, result) = await _roleService.CreateAsync(input);
+            var response = await _roleService.CreateAsync(input);
 
-            if (result.Succeeded)
+            if (!response.IsSucceed)
             {
-                return CreateSuccessActionResultInstance(role);
+                return CreateErrorActionResultInstance<RoleDto>(null, response.Errors);
             }
 
-            return BadRequest(result.Errors);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(string id, RoleUpdateDto input)
         {
-            var (role, result) = await _roleService.UpdateAsync(id, input);
+            var response = await _roleService.UpdateAsync(id, input);
 
-            if (result.Succeeded)
-                return CreateSuccessActionResultInstance(role);
+            if (!response.IsSucceed)
+            {
+                return CreateErrorActionResultInstance<RoleDto>(response.Result, response.Errors);
+            }
 
-            return BadRequest(result.Errors);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            var (role, result) = await _roleService.DeleteAsync(id);
+            var response = await _roleService.DeleteAsync(id);
 
-            if (result.Succeeded)
-                return CreateSuccessActionResultInstance(role);
+            if (!response.IsSucceed)
+            {
+                return CreateErrorActionResultInstance<RoleDto>(response.Result, response.Errors);
+            }
 
-            return BadRequest(result.Errors);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
     }
 }

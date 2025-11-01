@@ -190,7 +190,7 @@
     <value>Reçete tip kodu en fazla 50 karakter olabilir.</value>
   </data>
 	<data name="ModelGroupNameMaxLength" xml:space="preserve">
-    <value>Model grup adı en fazla 250 karakter olabilir.</value>
+    <value>Model grup adı en fazlası 250 karakter olabilir.</value>
   </data>
 	<data name="ModelGroupCodeMaxLength" xml:space="preserve">
     <value>Model grup kodu en fazla 50 karakter olabilir.</value>
@@ -544,6 +544,10 @@
     <value>Kullanıcı bulunamadı</value>
     <comment>User not found</comment>
   </data>
+	<data name="EmailAlreadyExists" xml:space="preserve">
+    <value>Bu e-posta adresi zaten kullanılıyor</value>
+    <comment>Email address is already in use</comment>
+  </data>
 	<data name="CreateUserError" xml:space="preserve">
     <value>Kullanıcı oluşturulurken hata oluştu: {0}</value>
     <comment>An error occurred while creating user: {0}</comment>
@@ -581,7 +585,7 @@
     <comment>Password reset successfully</comment>
   </data>
 	<data name="LoggedOutTitle" xml:space="preserve">
-    <value>Oturumu kapattınız</value>
+    <value>Oturumu kapattığınız</value>
     <comment>You have signed out</comment>
   </data>
 	<data name="LoggedOutThanks" xml:space="preserve">
@@ -667,5 +671,25 @@
 	<data name="RoleAlreadyExists" xml:space="preserve">
     <value>Bu isimde bir rol zaten mevcut</value>
     <comment>A role with this name already exists</comment>
+  </data>
+	<data name="AssignRoleToUserError" xml:space="preserve">
+    <value>Kullanıcıya rol atanırken hata oluştu: {0}</value>
+    <comment>An error occurred while assigning role to user: {0}</comment>
+  </data>
+	<data name="RemoveRoleFromUserError" xml:space="preserve">
+    <value>Kullanıcıdan rol kaldırılırken hata oluştu: {0}</value>
+    <comment>An error occurred while removing role from user: {0}</comment>
+  </data>
+	<data name="UserRoleNotFound" xml:space="preserve">
+    <value>Kullanıcı-rol ilişkisi bulunamadı</value>
+    <comment>User role not found</comment>
+  </data>
+	<data name="UserAlreadyHasRole" xml:space="preserve">
+    <value>Kullanıcı zaten bu role sahip</value>
+    <comment>User already has this role</comment>
+  </data>
+	<data name="GetUserRolesError" xml:space="preserve">
+    <value>Kullanıcı rolleri getirilirken hata oluştu: {0}</value>
+    <comment>An error occurred while getting user roles: {0}</comment>
   </data>
 </root>

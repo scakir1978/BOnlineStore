@@ -274,6 +274,18 @@ export const MENU: MenuItem[] = [
         link: '/settings/role',
         parentId: 90010,
       },
+      {
+        id: 90030,
+        label: 'USERROLE',
+        link: '/settings/user-role',
+        parentId: 90010,
+      },
+      {
+        id: 90040,
+        label: 'USERS',
+        link: '/settings/user',
+        parentId: 90010,
+      },
     ],
   },
 ];
