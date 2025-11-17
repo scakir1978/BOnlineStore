@@ -7,6 +7,7 @@ import {
   TimezoneService,
   TimeZoneOption,
 } from 'app/core/services/timezone.service';
+import { PasswordValidatorService } from '../../base-classes/shared/password-validator.service';
 
 @Component({
   selector: 'user',
@@ -40,7 +41,8 @@ export class UserComponent
   constructor(
     public override _translate: TranslateService,
     private _userService: UserService,
-    private timezoneService: TimezoneService
+    private timezoneService: TimezoneService,
+    private passwordValidator: PasswordValidatorService
   ) {
     super(
       _translate,
@@ -149,14 +151,7 @@ export class UserComponent
       return false;
     }
 
-    // Medium complexity: Min 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, 1 special character
-    return (
-      password.length >= 8 &&
-      /[a-z]/.test(password) &&
-      /[A-Z]/.test(password) &&
-      /[0-9]/.test(password) &&
-      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
-    );
+    return this.passwordValidator.validatePasswordStrength(password);
   };
 
   // Validate password confirmation
