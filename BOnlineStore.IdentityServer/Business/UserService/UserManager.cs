@@ -39,6 +39,22 @@ namespace BOnlineStore.IdentityServer.Business.UserService
             return new Guid(tenantId);
         }
 
+        /// <summary>
+        /// Þifre karmaþýklýðýný kontrol eder
+        /// Medium complexity: Min 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, 1 special character
+        /// </summary>
+        private bool ValidatePasswordComplexity(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password))
+                return false;
+
+            return password.Length >= 8 &&
+                   System.Text.RegularExpressions.Regex.IsMatch(password, @"[a-z]") &&
+                   System.Text.RegularExpressions.Regex.IsMatch(password, @"[A-Z]") &&
+                   System.Text.RegularExpressions.Regex.IsMatch(password, @"[0-9]") &&
+                   System.Text.RegularExpressions.Regex.IsMatch(password, @"[!@#$%^&*()_+\-=\[\]{};':""\\|,.<>\/?]");
+        }
+
         public async Task<Response<UserDto>> CreateAsync(UserCreateDto userCreateDto)
         {
             try
@@ -56,6 +72,17 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                             ErrorCode = nameof(IdentityServerKeys.TenantNotFound),
                             Message = _stringLocalizer[IdentityServerKeys.TenantNotFound]
                         }, HttpStatusCode.NotFound);
+                }
+
+                // Password complexity kontrolü
+                if (!ValidatePasswordComplexity(userCreateDto.Password))
+                {
+                    return Response<UserDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.PasswordComplexityError),
+                            Message = _stringLocalizer[IdentityServerKeys.PasswordComplexityError]
+                        }, HttpStatusCode.BadRequest);
                 }
 
                 // Email kontrolü
@@ -223,6 +250,16 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                 return IdentityResult.Failed(new IdentityError { Code = "UserNotFound", Description = _stringLocalizer[IdentityServerKeys.UserNotFound] });
             }
 
+            // Password complexity kontrolü
+            if (!ValidatePasswordComplexity(newPassword))
+            {
+                return IdentityResult.Failed(new IdentityError 
+                { 
+                    Code = nameof(IdentityServerKeys.PasswordComplexityError), 
+                    Description = _stringLocalizer[IdentityServerKeys.PasswordComplexityError] 
+                });
+            }
+
             return await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
         }
 
@@ -232,6 +269,16 @@ namespace BOnlineStore.IdentityServer.Business.UserService
             if (user == null)
             {
                 return IdentityResult.Failed(new IdentityError { Code = "UserNotFound", Description = _stringLocalizer[IdentityServerKeys.UserNotFound] });
+            }
+
+            // Password complexity kontrolü
+            if (!ValidatePasswordComplexity(newPassword))
+            {
+                return IdentityResult.Failed(new IdentityError 
+                { 
+                    Code = nameof(IdentityServerKeys.PasswordComplexityError), 
+                    Description = _stringLocalizer[IdentityServerKeys.PasswordComplexityError] 
+                });
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
