@@ -5,10 +5,12 @@ using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Dtos;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Moq;
+using System.Net;
 using Xunit;
 
 namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
@@ -79,7 +81,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         }
 
         [Fact]
-        public async Task CreateAsync_ValidTenant_ReturnsCreatedTenant()
+        public async Task CreateAsync_ValidTenant_ReturnsSuccessResponse()
         {
             // Arrange
             var tenantCreateDto = new TenantCreateDto
@@ -107,19 +109,22 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
 
             // Assert
             result.Should().NotBeNull();
-            result.Name.Should().Be(tenantCreateDto.Name);
-            result.Adress.Should().NotBeNull();
-            result.Adress.StateOrCityName.Should().Be("Ýstanbul");
-            result.TaxInformation.TaxNumber.Should().Be("1234567890");
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.Created);
+            result.Result.Should().NotBeNull();
+            result.Result.Name.Should().Be(tenantCreateDto.Name);
+            result.Result.Adress.Should().NotBeNull();
+            result.Result.Adress.StateOrCityName.Should().Be("Ýstanbul");
+            result.Result.TaxInformation.TaxNumber.Should().Be("1234567890");
 
             // Verify in database
-            var dbTenant = await _context.Tenant.FindAsync(result.Id);
+            var dbTenant = await _context.Tenant.FindAsync(result.Result.Id);
             dbTenant.Should().NotBeNull();
             dbTenant.Name.Should().Be(tenantCreateDto.Name);
         }
 
         [Fact]
-        public async Task CreateAsync_DuplicateName_ThrowsException()
+        public async Task CreateAsync_DuplicateName_ReturnsFailResponse()
         {
             // Arrange
             var tenant1 = new TenantCreateDto
@@ -140,16 +145,17 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
 
             // Act
             await _tenantService.CreateAsync(tenant1);
+            var result = await _tenantService.CreateAsync(tenant2);
 
             // Assert
-            var exception = await Assert.ThrowsAsync<Exception>(
-                () => _tenantService.CreateAsync(tenant2));
-            
-            exception.Message.Should().Contain("Girilen þirket sistemde mevcut");
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeFalse();
+            result.Errors.Should().NotBeEmpty();
+            result.Errors.First().Message.Should().Contain("Girilen þirket sistemde mevcut");
         }
 
         [Fact]
-        public async Task UpdateAsync_ExistingTenant_ReturnsUpdatedTenant()
+        public async Task UpdateAsync_ExistingTenant_ReturnsSuccessResponse()
         {
             // Arrange
             var originalTenant = new TenantCreateDto
@@ -160,11 +166,11 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 UpdateDateTime = DateTime.Now.AddDays(-1)
             };
 
-            var createdTenant = await _tenantService.CreateAsync(originalTenant);
+            var createdResult = await _tenantService.CreateAsync(originalTenant);
 
             var updateDto = new TenantUpdateDto
             {
-                Id = createdTenant.Id,
+                Id = createdResult.Result.Id,
                 Name = "Updated Name",
                 Adress = new Adress
                 {
@@ -175,17 +181,20 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             };
 
             // Act
-            var result = await _tenantService.UpdateAsync(updateDto);
+            var result = await _tenantService.UpdateAsync(createdResult.Result.Id, updateDto);
 
             // Assert
             result.Should().NotBeNull();
-            result.Id.Should().Be(createdTenant.Id);
-            result.Name.Should().Be("Updated Name");
-            result.Adress.StateOrCityName.Should().Be("Ankara");
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
+            result.Result.Id.Should().Be(createdResult.Result.Id);
+            result.Result.Name.Should().Be("Updated Name");
+            result.Result.Adress.StateOrCityName.Should().Be("Ankara");
         }
 
         [Fact]
-        public async Task DeleteAsync_ExistingTenant_ReturnsTrue()
+        public async Task DeleteAsync_ExistingTenant_ReturnsSuccessResponse()
         {
             // Arrange
             var tenantCreateDto = new TenantCreateDto
@@ -196,69 +205,78 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 UpdateDateTime = DateTime.Now
             };
 
-            var createdTenant = await _tenantService.CreateAsync(tenantCreateDto);
+            var createdResult = await _tenantService.CreateAsync(tenantCreateDto);
 
             // Act
-            var result = await _tenantService.DeleteAsync(createdTenant.Id);
+            var result = await _tenantService.DeleteAsync(createdResult.Result.Id);
 
             // Assert
-            result.Should().BeTrue();
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
 
             // Verify deletion
-            var deletedTenant = await _context.Tenant.FindAsync(createdTenant.Id);
+            var deletedTenant = await _context.Tenant.FindAsync(createdResult.Result.Id);
             deletedTenant.Should().BeNull();
         }
 
         [Fact]
-        public void FindById_ExistingTenant_ReturnsTenant()
+        public async Task GetByIdAsync_ExistingTenant_ReturnsSuccessResponse()
         {
             // Arrange
             var tenant = new Tenant
             {
                 Id = Guid.NewGuid(),
-                Name = "Find By Id Test",
+                Name = "Get By Id Test",
                 CreateDateTime = DateTime.Now,
                 UpdateDateTime = DateTime.Now
             };
 
             _context.Tenant.Add(tenant);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Act
-            var result = _tenantService.FindById(tenant.Id);
+            var result = await _tenantService.GetByIdAsync(tenant.Id);
 
             // Assert
             result.Should().NotBeNull();
-            result.Id.Should().Be(tenant.Id);
-            result.Name.Should().Be(tenant.Name);
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
+            result.Result.Id.Should().Be(tenant.Id);
+            result.Result.Name.Should().Be(tenant.Name);
         }
 
         [Fact]
-        public void FindByName_ExistingTenant_ReturnsTenant()
+        public async Task GetByNameAsync_ExistingTenant_ReturnsSuccessResponse()
         {
             // Arrange
             var tenant = new Tenant
             {
                 Id = Guid.NewGuid(),
-                Name = "Find By Name Test",
+                Name = "Get By Name Test",
                 CreateDateTime = DateTime.Now,
                 UpdateDateTime = DateTime.Now
             };
 
             _context.Tenant.Add(tenant);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Act
-            var result = _tenantService.FindByName(tenant.Name);
+            var result = await _tenantService.GetByNameAsync(tenant.Name);
 
             // Assert
             result.Should().NotBeNull();
-            result.Id.Should().Be(tenant.Id);
-            result.Name.Should().Be(tenant.Name);
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
+            result.Result.Id.Should().Be(tenant.Id);
+            result.Result.Name.Should().Be(tenant.Name);
         }
 
         [Fact]
-        public void Tenants_WithData_ReturnsAllTenants()
+        public async Task GetAllAsync_WithData_ReturnsSuccessResponseWithAllTenants()
         {
             // Arrange
             var tenant1 = new Tenant
@@ -278,20 +296,23 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             };
 
             _context.Tenant.AddRange(tenant1, tenant2);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Act
-            var result = _tenantService.Tenants().ToList();
+            var result = await _tenantService.GetAllAsync();
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().HaveCount(2);
-            result.Should().Contain(t => t.Name == "Tenant 1");
-            result.Should().Contain(t => t.Name == "Tenant 2");
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
+            result.Result.Should().HaveCount(2);
+            result.Result.Should().Contain(t => t.Name == "Tenant 1");
+            result.Result.Should().Contain(t => t.Name == "Tenant 2");
         }
 
         [Fact]
-        public void IsAnyTenantExist_WithTenants_ReturnsTrue()
+        public async Task IsAnyTenantExistAsync_WithTenants_ReturnsSuccessResponseWithTrue()
         {
             // Arrange
             var tenant = new Tenant
@@ -303,25 +324,31 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             };
 
             _context.Tenant.Add(tenant);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Act
-            var result = _tenantService.IsAnyTenantExist();
+            var result = await _tenantService.IsAnyTenantExistAsync();
 
             // Assert
-            result.Should().BeTrue();
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().BeTrue();
         }
 
         [Fact]
-        public void IsAnyTenantExist_WithoutTenants_ReturnsFalse()
+        public async Task IsAnyTenantExistAsync_WithoutTenants_ReturnsSuccessResponseWithFalse()
         {
             // Arrange - empty database
 
             // Act
-            var result = _tenantService.IsAnyTenantExist();
+            var result = await _tenantService.IsAnyTenantExistAsync();
 
             // Assert
-            result.Should().BeFalse();
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().BeFalse();
         }
 
         public void Dispose()
