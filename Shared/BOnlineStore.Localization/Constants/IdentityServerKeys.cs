@@ -17,6 +17,9 @@ namespace BOnlineStore.Localization.Constants
         public const string TenantAlreadyExists = "TenantAlreadyExists";
         public const string TenantNotFoundForDelete = "TenantNotFoundForDelete";
         public const string TenantNotFoundForUpdate = "TenantNotFoundForUpdate";
+        public const string CreateTenantError = "CreateTenantError";
+        public const string UpdateTenantError = "UpdateTenantError";
+        public const string DeleteTenantError = "DeleteTenantError";
 
         // User Management Keys
         public const string UserNotFound = "UserNotFound";

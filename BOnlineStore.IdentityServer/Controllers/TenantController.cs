@@ -28,17 +28,14 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// </summary>
         /// <returns>Firma listesi</returns>
         [HttpGet]
-        public ActionResult<IEnumerable<TenantDto>> GetAllTenants()
+        public async Task<ActionResult<IEnumerable<TenantDto>>> GetAllTenants()
         {
-            try
+            var response = await _tenantService.GetAllAsync();
+            if (!response.IsSucceed)
             {
-                var tenants = _tenantService.Tenants().ToList();
-                return Ok(tenants);
+                return StatusCode((int)response.StatusCode, response.Errors);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, string.Format(_stringLocalizer[IdentityServerKeys.TenantsFetchError], ex.Message));
-            }
+            return Ok(response.Result);
         }
 
         /// <summary>
@@ -47,21 +44,14 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// <param name="id">Firma kimliği</param>
         /// <returns>Firma bilgileri</returns>
         [HttpGet("{id}")]
-        public ActionResult<TenantDto> GetTenantById(Guid id)
+        public async Task<ActionResult<TenantDto>> GetTenantById(Guid id)
         {
-            try
+            var response = await _tenantService.GetByIdAsync(id);
+            if (!response.IsSucceed)
             {
-                var tenant = _tenantService.FindById(id);
-                if (tenant == null)
-                {
-                    return NotFound(_stringLocalizer[IdentityServerKeys.TenantNotFound]);
-                }
-                return Ok(tenant);
+                return StatusCode((int)response.StatusCode, response.Errors);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, string.Format(_stringLocalizer[IdentityServerKeys.TenantFetchError], ex.Message));
-            }
+            return Ok(response.Result);
         }
 
         /// <summary>
@@ -70,21 +60,14 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// <param name="name">Firma adı</param>
         /// <returns>Firma bilgileri</returns>
         [HttpGet("by-name/{name}")]
-        public ActionResult<TenantDto> GetTenantByName(string name)
+        public async Task<ActionResult<TenantDto>> GetTenantByName(string name)
         {
-            try
+            var response = await _tenantService.GetByNameAsync(name);
+            if (!response.IsSucceed)
             {
-                var tenant = _tenantService.FindByName(name);
-                if (tenant == null)
-                {
-                    return NotFound(_stringLocalizer[IdentityServerKeys.TenantNotFound]);
-                }
-                return Ok(tenant);
+                return StatusCode((int)response.StatusCode, response.Errors);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, string.Format(_stringLocalizer[IdentityServerKeys.TenantFetchError], ex.Message));
-            }
+            return Ok(response.Result);
         }
 
         /// <summary>
@@ -100,15 +83,12 @@ namespace BOnlineStore.IdentityServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
+            var response = await _tenantService.CreateAsync(tenantCreateDto);
+            if (!response.IsSucceed)
             {
-                var createdTenant = await _tenantService.CreateAsync(tenantCreateDto);
-                return CreatedAtAction(nameof(GetTenantById), new { id = createdTenant.Id }, createdTenant);
+                return StatusCode((int)response.StatusCode, response.Errors);
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return CreatedAtAction(nameof(GetTenantById), new { id = response.Result.Id }, response.Result);
         }
 
         /// <summary>
@@ -130,15 +110,12 @@ namespace BOnlineStore.IdentityServer.Controllers
                 return BadRequest(_stringLocalizer[IdentityServerKeys.TenantIdMismatch]);
             }
 
-            try
+            var response = await _tenantService.UpdateAsync(id, tenantUpdateDto);
+            if (!response.IsSucceed)
             {
-                var updatedTenant = await _tenantService.UpdateAsync(tenantUpdateDto);
-                return Ok(updatedTenant);
+                return StatusCode((int)response.StatusCode, response.Errors);
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(response.Result);
         }
 
         /// <summary>
@@ -149,19 +126,12 @@ namespace BOnlineStore.IdentityServer.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteTenant(Guid id)
         {
-            try
+            var response = await _tenantService.DeleteAsync(id);
+            if (!response.IsSucceed)
             {
-                var result = await _tenantService.DeleteAsync(id);
-                if (result)
-                {
-                    return NoContent();
-                }
-                return BadRequest(_stringLocalizer[IdentityServerKeys.TenantDeleteFailed]);
+                return StatusCode((int)response.StatusCode, response.Errors);
             }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return NoContent();
         }
 
         /// <summary>
@@ -169,17 +139,14 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// </summary>
         /// <returns>Firma varlık durumu</returns>
         [HttpGet("exists")]
-        public ActionResult<bool> IsAnyTenantExist()
+        public async Task<ActionResult<bool>> IsAnyTenantExist()
         {
-            try
+            var response = await _tenantService.IsAnyTenantExistAsync();
+            if (!response.IsSucceed)
             {
-                var exists = _tenantService.IsAnyTenantExist();
-                return Ok(exists);
+                return StatusCode((int)response.StatusCode, response.Errors);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, string.Format(_stringLocalizer[IdentityServerKeys.TenantExistenceCheckError], ex.Message));
-            }
+            return Ok(response.Result);
         }
     }
 }
