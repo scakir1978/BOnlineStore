@@ -18,9 +18,9 @@ BOnlineStore, .NET 8, Angular ve bulut-yerel teknolojilerle geliştirilmiş, kim
 
 ```mermaid
 flowchart LR
-  User((Kullanıcı)) --> UI[UI (Angular)]
-  UI -->|REST/HTTPS| GW[API Gateway (Ocelot)]
-  UI -. OIDC .-> IDS[IdentityServer]
+  User((Kullanıcı)) --> 
+  UI -->REST/HTTPS --> GW
+  UI --> OIDC .-> IDS[IdentityServer]
   GW --> BFF[BFF Service]
   GW --> DEF[Definitions API]
   GW --> PRD[Production API]
