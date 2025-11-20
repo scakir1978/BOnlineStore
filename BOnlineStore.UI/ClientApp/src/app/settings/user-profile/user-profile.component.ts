@@ -13,6 +13,7 @@ import {
   UserProfileUpdateDto,
 } from 'app/dtos/settings/user-profile.dto';
 import { ChangePasswordDto } from 'app/dtos/settings/change-password.dto';
+import { PasswordValidatorService } from 'app/base-classes/shared/password-validator.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -60,7 +61,8 @@ export class UserProfileComponent implements OnInit {
     private authService: AuthenticationService,
     private userProfileService: UserProfileService,
     private translate: TranslateService,
-    private timezoneService: TimezoneService
+    private timezoneService: TimezoneService,
+    private passwordValidator: PasswordValidatorService
   ) {}
 
   private t(key: string): string {
@@ -278,14 +280,7 @@ export class UserProfileComponent implements OnInit {
       return false;
     }
 
-    // Medium complexity: Min 8 characters, at least 1 uppercase, 1 lowercase, 1 digit, 1 special character
-    return (
-      password.length >= 8 &&
-      /[a-z]/.test(password) &&
-      /[A-Z]/.test(password) &&
-      /[0-9]/.test(password) &&
-      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
-    );
+    return this.passwordValidator.validatePasswordStrength(password);
   };
 
   // Validate password confirmation

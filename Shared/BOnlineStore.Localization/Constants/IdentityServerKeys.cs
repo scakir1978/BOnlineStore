@@ -17,6 +17,9 @@ namespace BOnlineStore.Localization.Constants
         public const string TenantAlreadyExists = "TenantAlreadyExists";
         public const string TenantNotFoundForDelete = "TenantNotFoundForDelete";
         public const string TenantNotFoundForUpdate = "TenantNotFoundForUpdate";
+        public const string CreateTenantError = "CreateTenantError";
+        public const string UpdateTenantError = "UpdateTenantError";
+        public const string DeleteTenantError = "DeleteTenantError";
 
         // User Management Keys
         public const string UserNotFound = "UserNotFound";
@@ -30,6 +33,7 @@ namespace BOnlineStore.Localization.Constants
         public const string UserNotFoundByEmail = "UserNotFoundByEmail";
         public const string PasswordChangedSuccessfully = "PasswordChangedSuccessfully";
         public const string PasswordResetSuccessfully = "PasswordResetSuccessfully";
+        public const string PasswordComplexityError = "PasswordComplexityError";
 
         // Logout Page Keys
         public const string LoggedOutTitle = "LoggedOutTitle";

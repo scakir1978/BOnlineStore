@@ -114,7 +114,9 @@ public class SeedData
     {
         var tenantManager = scope.ServiceProvider.GetRequiredService<ITenantService>();
 
-        if (!tenantManager.IsAnyTenantExist())
+        var existsResponse = tenantManager.IsAnyTenantExistAsync().Result;
+        
+        if (!existsResponse.IsSucceed || !existsResponse.Result)
         {
             var tenantCreateDto = new TenantCreateDto
             {
@@ -134,9 +136,16 @@ public class SeedData
 
             try
             {
-                var tenant = tenantManager.CreateAsync(tenantCreateDto).Result;
-                Log.Debug("Default tenant created");
-                return tenant;
+                var response = tenantManager.CreateAsync(tenantCreateDto).Result;
+                if (response.IsSucceed)
+                {
+                    Log.Debug("Default tenant created");
+                    return response.Result;
+                }
+                else
+                {
+                    throw new Exception($"Failed to create tenant: {string.Join(", ", response.Errors.Select(e => e.Message))}");
+                }
             }
             catch (Exception ex)
             {
@@ -147,7 +156,15 @@ public class SeedData
         else
         {
             Log.Debug("Default tenant returned");
-            return tenantManager.FindByName("Console.Log Deneme Şirketi");
+            var tenantResponse = tenantManager.GetByNameAsync("Console.Log Deneme Şirketi").Result;
+            if (tenantResponse.IsSucceed)
+            {
+                return tenantResponse.Result;
+            }
+            else
+            {
+                throw new Exception($"Failed to get tenant: {string.Join(", ", tenantResponse.Errors.Select(e => e.Message))}");
+            }
         }
     }
 }

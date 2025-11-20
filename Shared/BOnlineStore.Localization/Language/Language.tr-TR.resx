@@ -584,6 +584,10 @@
     <value>Şifre başarıyla sıfırlandı</value>
     <comment>Password reset successfully</comment>
   </data>
+	<data name="PasswordComplexityError" xml:space="preserve">
+    <value>Şifre en az 8 karakter uzunluğunda olmalı ve en az 1 büyük harf, 1 küçük harf, 1 rakam ve 1 özel karakter içermelidir</value>
+    <comment>Password must be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 digit, and 1 special character</comment>
+  </data>
 	<data name="LoggedOutTitle" xml:space="preserve">
     <value>Oturumu kapattığınız</value>
     <comment>You have signed out</comment>

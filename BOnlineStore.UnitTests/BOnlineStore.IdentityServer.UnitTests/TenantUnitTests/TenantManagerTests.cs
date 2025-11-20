@@ -5,10 +5,12 @@ using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Dtos;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Moq;
+using System.Net;
 using Xunit;
 
 namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
@@ -47,6 +49,10 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             _mockStringLocalizer
                 .Setup(x => x[IdentityServerKeys.TenantNotFoundForUpdate])
                 .Returns(new LocalizedString(IdentityServerKeys.TenantNotFoundForUpdate, "Güncellenecek þirket sistemde bulunamadý"));
+            
+            _mockStringLocalizer
+                .Setup(x => x[IdentityServerKeys.TenantNotFound])
+                .Returns(new LocalizedString(IdentityServerKeys.TenantNotFound, "Tenant bulunamadý"));
 
             _tenantManager = new TenantManager(_context, _mockMapper.Object, _mockStringLocalizer.Object);
         }
@@ -54,7 +60,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         #region CreateAsync Tests
 
         [Fact]
-        public async Task CreateAsync_ValidTenantCreateDto_ReturnsTenantDto()
+        public async Task CreateAsync_ValidTenantCreateDto_ReturnsSuccessResponse()
         {
             // Arrange
             var tenantCreateDto = new TenantCreateDto
@@ -82,15 +88,16 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             };
 
             _mockMapper.Setup(m => m.Map<Tenant>(tenantCreateDto)).Returns(tenant);
-            _mockMapper.Setup(m => m.Map<TenantDto>(tenant)).Returns(expectedTenantDto);
-            _mockMapper.Setup(m => m.Map<TenantDto>(It.Is<Tenant>(t => t == null))).Returns((TenantDto)null); // For FindByName
+            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns(expectedTenantDto);
 
             // Act
             var result = await _tenantManager.CreateAsync(tenantCreateDto);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(expectedTenantDto);
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.Created);
+            result.Result.Should().BeEquivalentTo(expectedTenantDto);
             
             var savedTenant = await _context.Tenant.FindAsync(tenant.Id);
             savedTenant.Should().NotBeNull();
@@ -98,7 +105,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         }
 
         [Fact]
-        public async Task CreateAsync_DuplicateName_ThrowsException()
+        public async Task CreateAsync_DuplicateName_ReturnsFailResponse()
         {
             // Arrange
             var existingTenant = new Tenant
@@ -112,12 +119,6 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             _context.Tenant.Add(existingTenant);
             await _context.SaveChangesAsync();
 
-            var existingTenantDto = new TenantDto
-            {
-                Id = existingTenant.Id,
-                Name = existingTenant.Name
-            };
-
             var tenantCreateDto = new TenantCreateDto
             {
                 Id = Guid.NewGuid(),
@@ -126,13 +127,24 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 UpdateDateTime = DateTime.Now
             };
 
-            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns(existingTenantDto);
+            var tenant = new Tenant
+            {
+                Id = tenantCreateDto.Id,
+                Name = tenantCreateDto.Name,
+                CreateDateTime = tenantCreateDto.CreateDateTime,
+                UpdateDateTime = tenantCreateDto.UpdateDateTime
+            };
 
-            // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(
-                () => _tenantManager.CreateAsync(tenantCreateDto));
+            _mockMapper.Setup(m => m.Map<Tenant>(tenantCreateDto)).Returns(tenant);
+
+            // Act
+            var result = await _tenantManager.CreateAsync(tenantCreateDto);
             
-            exception.Message.Should().Contain("Girilen þirket sistemde mevcut");
+            // Assert
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeFalse();
+            result.Errors.Should().NotBeEmpty();
+            result.Errors.First().Message.Should().Contain("Girilen þirket sistemde mevcut");
         }
 
         #endregion
@@ -140,7 +152,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         #region UpdateAsync Tests
 
         [Fact]
-        public async Task UpdateAsync_ValidTenantUpdateDto_ReturnsTenantDto()
+        public async Task UpdateAsync_ValidTenantUpdateDto_ReturnsSuccessResponse()
         {
             // Arrange
             var existingTenant = new Tenant
@@ -160,57 +172,56 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 Name = "Updated Firma"
             };
 
-            var existingTenantDto = new TenantDto
+            var expectedTenantDto = new TenantDto
             {
                 Id = existingTenant.Id,
-                Name = existingTenant.Name
-            };
-
-            var updatedTenant = new Tenant
-            {
-                Id = tenantUpdateDto.Id,
-                Name = tenantUpdateDto.Name,
-                CreateDateTime = existingTenant.CreateDateTime,
+                Name = "Updated Firma",
+                CreateDateTime = existingTenant.CreateDateTime.Value,
                 UpdateDateTime = DateTime.Now
             };
 
-            var expectedTenantDto = new TenantDto
-            {
-                Id = updatedTenant.Id,
-                Name = updatedTenant.Name,
-                CreateDateTime = updatedTenant.CreateDateTime.Value,
-                UpdateDateTime = updatedTenant.UpdateDateTime.Value
-            };
-
-            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns(existingTenantDto);
-            _mockMapper.Setup(m => m.Map<Tenant>(tenantUpdateDto)).Returns(updatedTenant);
-            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<object>())).Returns(expectedTenantDto);
+            // Mock mapper to update the existing entity
+            _mockMapper.Setup(m => m.Map(tenantUpdateDto, existingTenant))
+                      .Callback<TenantUpdateDto, Tenant>((dto, tenant) => 
+                      {
+                          tenant.Name = dto.Name;
+                          if (dto.Adress != null) tenant.Adress = dto.Adress;
+                          if (dto.TaxInformation != null) tenant.TaxInformation = dto.TaxInformation;
+                      })
+                      .Returns(existingTenant);
+            
+            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns(expectedTenantDto);
 
             // Act
-            var result = await _tenantManager.UpdateAsync(tenantUpdateDto);
+            var result = await _tenantManager.UpdateAsync(existingTenant.Id, tenantUpdateDto);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(expectedTenantDto);
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
+            result.Result.Name.Should().Be("Updated Firma");
         }
 
         [Fact]
-        public async Task UpdateAsync_NonExistentTenant_ThrowsException()
+        public async Task UpdateAsync_NonExistentTenant_ReturnsFailResponse()
         {
             // Arrange
+            var nonExistentId = Guid.NewGuid();
             var tenantUpdateDto = new TenantUpdateDto
             {
-                Id = Guid.NewGuid(),
+                Id = nonExistentId,
                 Name = "Non-existent Firma"
             };
 
-            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns((TenantDto)null);
-
-            // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(
-                () => _tenantManager.UpdateAsync(tenantUpdateDto));
+            // Act
+            var result = await _tenantManager.UpdateAsync(nonExistentId, tenantUpdateDto);
             
-            exception.Message.Should().Contain("Güncellenecek þirket sistemde bulunamadý");
+            // Assert
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeFalse();
+            result.Errors.Should().NotBeEmpty();
+            result.Errors.First().Message.Should().Contain("Tenant bulunamadý");
         }
 
         #endregion
@@ -218,7 +229,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         #region DeleteAsync Tests
 
         [Fact]
-        public async Task DeleteAsync_ExistingTenant_ReturnsTrue()
+        public async Task DeleteAsync_ExistingTenant_ReturnsSuccessResponse()
         {
             // Arrange
             var existingTenant = new Tenant
@@ -238,39 +249,43 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 Name = existingTenant.Name
             };
 
-            _mockMapper.Setup(m => m.Map<TenantDto>(existingTenant)).Returns(existingTenantDto);
-            _mockMapper.Setup(m => m.Map<Tenant>(existingTenantDto)).Returns(existingTenant);
+            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns(existingTenantDto);
 
             // Act
             var result = await _tenantManager.DeleteAsync(existingTenant.Id);
 
             // Assert
-            result.Should().BeTrue();
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
             
             var deletedTenant = await _context.Tenant.FindAsync(existingTenant.Id);
             deletedTenant.Should().BeNull();
         }
 
         [Fact]
-        public async Task DeleteAsync_NonExistentTenant_ThrowsException()
+        public async Task DeleteAsync_NonExistentTenant_ReturnsFailResponse()
         {
             // Arrange
             var nonExistentId = Guid.NewGuid();
-            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns((TenantDto)null);
 
-            // Act & Assert
-            var exception = await Assert.ThrowsAsync<Exception>(
-                () => _tenantManager.DeleteAsync(nonExistentId));
+            // Act
+            var result = await _tenantManager.DeleteAsync(nonExistentId);
             
-            exception.Message.Should().Contain("Silinecek þirket sistemde bulunamadý");
+            // Assert
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeFalse();
+            result.Errors.Should().NotBeEmpty();
+            result.Errors.First().Message.Should().Contain("Tenant bulunamadý");
         }
 
         #endregion
 
-        #region FindById Tests
+        #region GetByIdAsync Tests
 
         [Fact]
-        public void FindById_ExistingId_ReturnsTenantDto()
+        public async Task GetByIdAsync_ExistingId_ReturnsSuccessResponse()
         {
             // Arrange
             var existingTenant = new Tenant
@@ -282,7 +297,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             };
 
             _context.Tenant.Add(existingTenant);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             var expectedTenantDto = new TenantDto
             {
@@ -290,36 +305,39 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 Name = existingTenant.Name
             };
 
-            _mockMapper.Setup(m => m.Map<TenantDto>(existingTenant)).Returns(expectedTenantDto);
+            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns(expectedTenantDto);
 
             // Act
-            var result = _tenantManager.FindById(existingTenant.Id);
+            var result = await _tenantManager.GetByIdAsync(existingTenant.Id);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(expectedTenantDto);
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().BeEquivalentTo(expectedTenantDto);
         }
 
         [Fact]
-        public void FindById_NonExistingId_ReturnsNull()
+        public async Task GetByIdAsync_NonExistingId_ReturnsFailResponse()
         {
             // Arrange
             var nonExistentId = Guid.NewGuid();
-            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns((TenantDto)null);
 
             // Act
-            var result = _tenantManager.FindById(nonExistentId);
+            var result = await _tenantManager.GetByIdAsync(nonExistentId);
 
             // Assert
-            result.Should().BeNull();
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeFalse();
+            result.Errors.Should().NotBeEmpty();
         }
 
         #endregion
 
-        #region FindByName Tests
+        #region GetByNameAsync Tests
 
         [Fact]
-        public void FindByName_ExistingName_ReturnsTenantDto()
+        public async Task GetByNameAsync_ExistingName_ReturnsSuccessResponse()
         {
             // Arrange
             var existingTenant = new Tenant
@@ -331,7 +349,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             };
 
             _context.Tenant.Add(existingTenant);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             var expectedTenantDto = new TenantDto
             {
@@ -339,36 +357,39 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 Name = existingTenant.Name
             };
 
-            _mockMapper.Setup(m => m.Map<TenantDto>(existingTenant)).Returns(expectedTenantDto);
+            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns(expectedTenantDto);
 
             // Act
-            var result = _tenantManager.FindByName(existingTenant.Name);
+            var result = await _tenantManager.GetByNameAsync(existingTenant.Name);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(expectedTenantDto);
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().BeEquivalentTo(expectedTenantDto);
         }
 
         [Fact]
-        public void FindByName_NonExistingName_ReturnsNull()
+        public async Task GetByNameAsync_NonExistingName_ReturnsFailResponse()
         {
             // Arrange
             var nonExistentName = "Non-existent Firma";
-            _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns((TenantDto)null);
 
             // Act
-            var result = _tenantManager.FindByName(nonExistentName);
+            var result = await _tenantManager.GetByNameAsync(nonExistentName);
 
             // Assert
-            result.Should().BeNull();
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeFalse();
+            result.Errors.Should().NotBeEmpty();
         }
 
         #endregion
 
-        #region Tenants Tests
+        #region GetAllAsync Tests
 
         [Fact]
-        public void Tenants_WithData_ReturnsQueryableTenantDto()
+        public async Task GetAllAsync_WithData_ReturnsSuccessResponseWithList()
         {
             // Arrange
             var tenant1 = new Tenant
@@ -388,7 +409,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             };
 
             _context.Tenant.AddRange(tenant1, tenant2);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             var tenantDtos = new List<TenantDto>
             {
@@ -396,45 +417,50 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 new TenantDto { Id = tenant2.Id, Name = tenant2.Name }
             };
 
-            // Setup ProjectTo differently to avoid optional parameters issue
-            var mockQueryProvider = new Mock<IQueryProvider>();
-            var mockQueryable = tenantDtos.AsQueryable();
-            mockQueryProvider.Setup(x => x.CreateQuery<TenantDto>(It.IsAny<System.Linq.Expressions.Expression>()))
-                            .Returns(mockQueryable);
-
-            _mockMapper.Setup(m => m.ProjectTo<TenantDto>(It.IsAny<IQueryable<Tenant>>(), It.IsAny<object>()))
-                      .Returns(tenantDtos.AsQueryable());
+            // Mock Map for List<TenantDto> instead of ProjectTo
+            _mockMapper.Setup(m => m.Map<List<TenantDto>>(It.IsAny<List<Tenant>>()))
+                      .Returns(tenantDtos);
 
             // Act
-            var result = _tenantManager.Tenants();
+            var result = await _tenantManager.GetAllAsync();
 
             // Assert
             result.Should().NotBeNull();
-            // Note: Due to mocking limitations, we can't easily test the actual count
-            // In a real scenario, this would work with actual AutoMapper configuration
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
+            result.Result.Should().HaveCount(2);
+            result.Result.Should().Contain(t => t.Name == "Firma 1");
+            result.Result.Should().Contain(t => t.Name == "Firma 2");
         }
 
         [Fact]
-        public void Tenants_EmptyDatabase_ReturnsEmptyQueryable()
+        public async Task GetAllAsync_EmptyDatabase_ReturnsSuccessResponseWithEmptyList()
         {
             // Arrange
             var emptyTenantDtos = new List<TenantDto>();
-            _mockMapper.Setup(m => m.ProjectTo<TenantDto>(It.IsAny<IQueryable<Tenant>>(), It.IsAny<object>()))
-                      .Returns(emptyTenantDtos.AsQueryable());
+            
+            // Mock Map for empty List<TenantDto>
+            _mockMapper.Setup(m => m.Map<List<TenantDto>>(It.IsAny<List<Tenant>>()))
+                      .Returns(emptyTenantDtos);
 
             // Act
-            var result = _tenantManager.Tenants();
+            var result = await _tenantManager.GetAllAsync();
 
             // Assert
             result.Should().NotBeNull();
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().NotBeNull();
+            result.Result.Should().BeEmpty();
         }
 
         #endregion
 
-        #region IsAnyTenantExist Tests
+        #region IsAnyTenantExistAsync Tests
 
         [Fact]
-        public void IsAnyTenantExist_WithTenants_ReturnsTrue()
+        public async Task IsAnyTenantExistAsync_WithTenants_ReturnsSuccessResponseWithTrue()
         {
             // Arrange
             var tenant = new Tenant
@@ -446,26 +472,32 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             };
 
             _context.Tenant.Add(tenant);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Act
-            var result = _tenantManager.IsAnyTenantExist();
+            var result = await _tenantManager.IsAnyTenantExistAsync();
 
             // Assert
-            result.Should().BeTrue();
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().BeTrue();
         }
 
         [Fact]
-        public void IsAnyTenantExist_WithoutTenants_ReturnsFalse()
+        public async Task IsAnyTenantExistAsync_WithoutTenants_ReturnsSuccessResponseWithFalse()
         {
             // Arrange
             // Empty database
 
             // Act
-            var result = _tenantManager.IsAnyTenantExist();
+            var result = await _tenantManager.IsAnyTenantExistAsync();
 
             // Assert
-            result.Should().BeFalse();
+            result.Should().NotBeNull();
+            result.IsSucceed.Should().BeTrue();
+            result.StatusCode.Should().Be(HttpStatusCode.OK);
+            result.Result.Should().BeFalse();
         }
 
         #endregion

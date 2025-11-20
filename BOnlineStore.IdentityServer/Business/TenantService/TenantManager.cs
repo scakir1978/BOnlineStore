@@ -4,10 +4,16 @@ using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Dtos;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using System.Net;
 
 namespace BOnlineStore.IdentityServer.Business.TenantService
 {
+    /// <summary>
+    /// Tenant işlemlerini yöneten servis. Oluşturma, güncelleme, silme ve sorgulama işlemlerini gerçekleştirir.
+    /// </summary>
     public class TenantManager : ITenantService
     {
         protected readonly ApplicationDbContext _context;
@@ -21,61 +27,252 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
             _stringLocalizer = stringLocalizer;
         }
 
-        public async Task<TenantDto> CreateAsync(TenantCreateDto tenantDto)
+        /// <summary>
+        /// Yeni tenant oluşturur.
+        /// </summary>
+        /// <param name="tenantDto">Oluşturulacak tenant bilgileri</param>
+        /// <returns>Oluşturulan tenant ve işlem sonucu</returns>
+        public async Task<Response<TenantDto>> CreateAsync(TenantCreateDto tenantDto)
         {
-            var existingTenant = FindByName(tenantDto.Name);
-            if (existingTenant != null)
-                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantAlreadyExists]);
+            try
+            {
+                // Tenant zaten var mı kontrol et
+                var existingTenant = await _context.Tenant
+                    .FirstOrDefaultAsync(x => x.Name == tenantDto.Name);
+                    
+                if (existingTenant != null)
+                {
+                    return Response<TenantDto>.Fail(new Error
+                    {
+                        ErrorCode = nameof(IdentityServerKeys.TenantAlreadyExists),
+                        Message = _stringLocalizer[IdentityServerKeys.TenantAlreadyExists]
+                    }, HttpStatusCode.BadRequest);
+                }
 
-            var result = await _context.Tenant.AddAsync(_mapper.Map<Tenant>(tenantDto));
+                var tenant = _mapper.Map<Tenant>(tenantDto);
+                var result = await _context.Tenant.AddAsync(tenant);
+                await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
-
-            return _mapper.Map<TenantDto>(result.Entity);
+                var createdTenantDto = _mapper.Map<TenantDto>(result.Entity);
+                return Response<TenantDto>.Success(createdTenantDto, HttpStatusCode.Created);
+            }
+            catch (Exception ex)
+            {
+                return Response<TenantDto>.Fail(
+                    new Error
+                    {
+                        ErrorCode = nameof(IdentityServerKeys.CreateTenantError),
+                        Message = string.Format(_stringLocalizer[IdentityServerKeys.CreateTenantError], ex.Message),
+                        StackTrace = ex.StackTrace
+                    }, HttpStatusCode.InternalServerError);
+            }
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        /// <summary>
+        /// Var olan tenant'ı günceller.
+        /// </summary>
+        /// <param name="id">Güncellenecek tenant kimliği</param>
+        /// <param name="tenantDto">Güncellenecek tenant bilgileri</param>
+        /// <returns>Güncellenen tenant ve işlem sonucu</returns>
+        public async Task<Response<TenantDto>> UpdateAsync(Guid id, TenantUpdateDto tenantDto)
         {
-            var existingTenant = _context.Tenant.FirstOrDefault(x => x.Id == id);
-            if (existingTenant == null)
-                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantNotFoundForDelete]);
+            try
+            {
+                var existingTenant = await _context.Tenant
+                    .FirstOrDefaultAsync(x => x.Id == id);
 
-            _context.Tenant.Remove(existingTenant);
-            return await _context.SaveChangesAsync() > 0;
+                if (existingTenant == null)
+                {
+                    return Response<TenantDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.TenantNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.TenantNotFound]
+                        }, HttpStatusCode.NotFound);
+                }
+
+                // Map the update values to the existing tracked entity
+                _mapper.Map(tenantDto, existingTenant);
+                existingTenant.UpdateDateTime = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                var updatedTenantDto = _mapper.Map<TenantDto>(existingTenant);
+                return Response<TenantDto>.Success(updatedTenantDto, HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Response<TenantDto>.Fail(
+                    new Error
+                    {
+                        ErrorCode = nameof(IdentityServerKeys.UpdateTenantError),
+                        Message = string.Format(_stringLocalizer[IdentityServerKeys.UpdateTenantError], ex.Message),
+                        StackTrace = ex.StackTrace
+                    }, HttpStatusCode.InternalServerError);
+            }
         }
 
-        public TenantDto FindById(Guid id)
+        /// <summary>
+        /// Tenant siler.
+        /// </summary>
+        /// <param name="id">Silinecek tenant kimliği</param>
+        /// <returns>İşlem sonucu</returns>
+        public async Task<Response<TenantDto>> DeleteAsync(Guid id)
         {
-            return _mapper.Map<TenantDto>(_context.Tenant.Where(x => x.Id == id).FirstOrDefault());
+            try
+            {
+                var existingTenant = await _context.Tenant
+                    .FirstOrDefaultAsync(x => x.Id == id);
+
+                if (existingTenant == null)
+                {
+                    return Response<TenantDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.TenantNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.TenantNotFound]
+                        }, HttpStatusCode.NotFound);
+                }
+
+                // Tenant'ı silmeden önce DTO'ya dönüştür
+                var tenantDto = _mapper.Map<TenantDto>(existingTenant);
+
+                _context.Tenant.Remove(existingTenant);
+                await _context.SaveChangesAsync();
+
+                return Response<TenantDto>.Success(tenantDto, HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Response<TenantDto>.Fail(
+                    new Error
+                    {
+                        ErrorCode = nameof(IdentityServerKeys.DeleteTenantError),
+                        Message = string.Format(_stringLocalizer[IdentityServerKeys.DeleteTenantError], ex.Message),
+                        StackTrace = ex.StackTrace
+                    }, HttpStatusCode.InternalServerError);
+            }
         }
 
-        public TenantDto FindByName(string name)
+        /// <summary>
+        /// Tenant'ı ID ile getirir.
+        /// </summary>
+        /// <param name="id">Tenant kimliği</param>
+        /// <returns>Tenant bilgileri</returns>
+        public async Task<Response<TenantDto>> GetByIdAsync(Guid id)
         {
-            return _mapper.Map<TenantDto>(_context.Tenant.Where(x => x.Name == name).FirstOrDefault());
+            try
+            {
+                var tenant = await _context.Tenant
+                    .FirstOrDefaultAsync(x => x.Id == id);
+
+                if (tenant == null)
+                {
+                    return Response<TenantDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.TenantNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.TenantNotFound]
+                        }, HttpStatusCode.NotFound);
+                }
+
+                var tenantDto = _mapper.Map<TenantDto>(tenant);
+                return Response<TenantDto>.Success(tenantDto, HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Response<TenantDto>.Fail(
+                    new Error
+                    {
+                        ErrorCode = "GetTenantByIdError",
+                        Message = $"Error getting tenant by ID: {ex.Message}",
+                        StackTrace = ex.StackTrace
+                    }, HttpStatusCode.InternalServerError);
+            }
         }
 
-        public IQueryable<TenantDto> Tenants()
+        /// <summary>
+        /// Tenant'ı adıyla getirir.
+        /// </summary>
+        /// <param name="name">Tenant adı</param>
+        /// <returns>Tenant bilgileri</returns>
+        public async Task<Response<TenantDto>> GetByNameAsync(string name)
         {
-            return _mapper.ProjectTo<TenantDto>(_context.Tenant.AsQueryable());
+            try
+            {
+                var tenant = await _context.Tenant
+                    .FirstOrDefaultAsync(x => x.Name == name);
+
+                if (tenant == null)
+                {
+                    return Response<TenantDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.TenantNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.TenantNotFound]
+                        }, HttpStatusCode.NotFound);
+                }
+
+                var tenantDto = _mapper.Map<TenantDto>(tenant);
+                return Response<TenantDto>.Success(tenantDto, HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Response<TenantDto>.Fail(
+                    new Error
+                    {
+                        ErrorCode = "GetTenantByNameError",
+                        Message = $"Error getting tenant by name: {ex.Message}",
+                        StackTrace = ex.StackTrace
+                    }, HttpStatusCode.InternalServerError);
+            }
         }
 
-        public bool IsAnyTenantExist()
+        /// <summary>
+        /// Tüm tenant'ları listeler.
+        /// </summary>
+        /// <returns>Tenant listesi</returns>
+        public async Task<Response<List<TenantDto>>> GetAllAsync()
         {
-            return _context.Tenant.Any();
+            try
+            {
+                var tenants = await _context.Tenant.ToListAsync();
+                var tenantDtos = _mapper.Map<List<TenantDto>>(tenants);
+                return Response<List<TenantDto>>.Success(tenantDtos, HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Response<List<TenantDto>>.Fail(
+                    new Error
+                    {
+                        ErrorCode = "GetAllTenantsError",
+                        Message = $"Error getting all tenants: {ex.Message}",
+                        StackTrace = ex.StackTrace
+                    }, HttpStatusCode.InternalServerError);
+            }
         }
 
-        public async Task<TenantDto> UpdateAsync(TenantUpdateDto tenantDto)
+        /// <summary>
+        /// Herhangi bir tenant'ın var olup olmadığını kontrol eder.
+        /// </summary>
+        /// <returns>Tenant varlık kontrolü sonucu</returns>
+        public async Task<Response<bool>> IsAnyTenantExistAsync()
         {
-            var existingTenant = _context.Tenant.FirstOrDefault(x => x.Id == tenantDto.Id);
-            if (existingTenant == null)
-                throw new Exception(_stringLocalizer[IdentityServerKeys.TenantNotFoundForUpdate]);
-
-            // Map the update values to the existing tracked entity
-            _mapper.Map(tenantDto, existingTenant);
-            existingTenant.UpdateDateTime = DateTime.Now;
-            
-            await _context.SaveChangesAsync();
-            return _mapper.Map<TenantDto>(existingTenant);
+            try
+            {
+                var exists = await _context.Tenant.AnyAsync();
+                return Response<bool>.Success(exists, HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Response<bool>.Fail(
+                    new Error
+                    {
+                        ErrorCode = "CheckTenantExistenceError",
+                        Message = $"Error checking tenant existence: {ex.Message}",
+                        StackTrace = ex.StackTrace
+                    }, HttpStatusCode.InternalServerError);
+            }
         }
     }
 }
