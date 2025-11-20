@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using BOnlineStore.IdentityServer.Business.TenantService;
 using BOnlineStore.IdentityServer.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
 using Microsoft.Extensions.Localization;
+using BOnlineStore.Shared.Controllers;
+using DevExtreme.AspNet.Data;
+using static Duende.IdentityServer.IdentityServerConstants;
 
 namespace BOnlineStore.IdentityServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class TenantController : ControllerBase
+    [Authorize(LocalApi.PolicyName)]
+    public class TenantController : ControllerShared
     {
         private readonly ITenantService _tenantService;
         private readonly IStringLocalizer<Language> _stringLocalizer;
@@ -23,19 +25,31 @@ namespace BOnlineStore.IdentityServer.Controllers
             _stringLocalizer = stringLocalizer;
         }
 
+        [HttpPost("Load")]
+        public async Task<IActionResult> Load(DataSourceLoadOptionsBase loadOptions)
+        {
+            loadOptions.StringToLower = true;
+            var response = await _tenantService.GetAllAsync();
+            if (!response.IsSucceed)
+            {
+                return CreateErrorActionResultInstance(response.Result, response.Errors);
+            }
+            return CreateSuccessActionResultInstance(DataSourceLoader.Load(response.Result, loadOptions));
+        }
+
         /// <summary>
         /// Tüm firmaları getirir
         /// </summary>
         /// <returns>Firma listesi</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TenantDto>>> GetAllTenants()
+        public async Task<IActionResult> GetAllAsync()
         {
             var response = await _tenantService.GetAllAsync();
             if (!response.IsSucceed)
             {
-                return StatusCode((int)response.StatusCode, response.Errors);
+                return CreateErrorActionResultInstance(response.Result, response.Errors);
             }
-            return Ok(response.Result);
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>
@@ -44,14 +58,16 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// <param name="id">Firma kimliği</param>
         /// <returns>Firma bilgileri</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<TenantDto>> GetTenantById(Guid id)
+        public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var response = await _tenantService.GetByIdAsync(id);
+
             if (!response.IsSucceed)
             {
-                return StatusCode((int)response.StatusCode, response.Errors);
+                return CreateErrorActionResultInstance(response.Result, response.Errors);
             }
-            return Ok(response.Result);
+
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>
@@ -60,14 +76,16 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// <param name="name">Firma adı</param>
         /// <returns>Firma bilgileri</returns>
         [HttpGet("by-name/{name}")]
-        public async Task<ActionResult<TenantDto>> GetTenantByName(string name)
+        public async Task<IActionResult> GetByNameAsync(string name)
         {
             var response = await _tenantService.GetByNameAsync(name);
+
             if (!response.IsSucceed)
             {
-                return StatusCode((int)response.StatusCode, response.Errors);
+                return CreateErrorActionResultInstance(response.Result, response.Errors);
             }
-            return Ok(response.Result);
+
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>
@@ -76,19 +94,16 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// <param name="tenantCreateDto">Oluşturulacak firma bilgileri</param>
         /// <returns>Oluşturulan firma bilgileri</returns>
         [HttpPost]
-        public async Task<ActionResult<TenantDto>> CreateTenant([FromBody] TenantCreateDto tenantCreateDto)
+        public async Task<IActionResult> CreateAsync([FromBody] TenantCreateDto tenantCreateDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var response = await _tenantService.CreateAsync(tenantCreateDto);
+
             if (!response.IsSucceed)
             {
-                return StatusCode((int)response.StatusCode, response.Errors);
+                return CreateErrorActionResultInstance<TenantDto>(null, response.Errors);
             }
-            return CreatedAtAction(nameof(GetTenantById), new { id = response.Result.Id }, response.Result);
+
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>
@@ -98,24 +113,26 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// <param name="tenantUpdateDto">Güncellenecek firma bilgileri</param>
         /// <returns>Güncellenmiş firma bilgileri</returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult<TenantDto>> UpdateTenant(Guid id, [FromBody] TenantUpdateDto tenantUpdateDto)
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] TenantUpdateDto tenantUpdateDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != tenantUpdateDto.Id)
             {
-                return BadRequest(_stringLocalizer[IdentityServerKeys.TenantIdMismatch]);
+                var error = new BOnlineStore.Shared.Dtos.Error 
+                { 
+                    ErrorCode = "TENANT_ID_MISMATCH", 
+                    Message = _stringLocalizer[IdentityServerKeys.TenantIdMismatch] 
+                };
+                return CreateErrorActionResultInstance<TenantDto>(null, new List<BOnlineStore.Shared.Dtos.Error> { error });
             }
 
             var response = await _tenantService.UpdateAsync(id, tenantUpdateDto);
+
             if (!response.IsSucceed)
             {
-                return StatusCode((int)response.StatusCode, response.Errors);
+                return CreateErrorActionResultInstance(response.Result, response.Errors);
             }
-            return Ok(response.Result);
+
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>
@@ -124,14 +141,16 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// <param name="id">Silinecek firma kimliği</param>
         /// <returns>Silme işlemi sonucu</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTenant(Guid id)
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var response = await _tenantService.DeleteAsync(id);
+
             if (!response.IsSucceed)
             {
-                return StatusCode((int)response.StatusCode, response.Errors);
+                return CreateErrorActionResultInstance(response.Result, response.Errors);
             }
-            return NoContent();
+
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
 
         /// <summary>
@@ -139,14 +158,16 @@ namespace BOnlineStore.IdentityServer.Controllers
         /// </summary>
         /// <returns>Firma varlık durumu</returns>
         [HttpGet("exists")]
-        public async Task<ActionResult<bool>> IsAnyTenantExist()
+        public async Task<IActionResult> IsAnyTenantExist()
         {
             var response = await _tenantService.IsAnyTenantExistAsync();
+
             if (!response.IsSucceed)
             {
-                return StatusCode((int)response.StatusCode, response.Errors);
+                return CreateErrorActionResultInstance(response.Result, response.Errors);
             }
-            return Ok(response.Result);
+
+            return CreateActionResultInstance(response.Result, response.StatusCode);
         }
     }
 }

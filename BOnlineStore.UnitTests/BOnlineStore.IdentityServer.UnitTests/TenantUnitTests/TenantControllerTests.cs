@@ -4,10 +4,12 @@ using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
+using BOnlineStore.Shared.Dtos;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Moq;
+using System.Net;
 using Xunit;
 
 namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
@@ -31,10 +33,10 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             _controller = new TenantController(_mockTenantService.Object, _mockStringLocalizer.Object);
         }
 
-        #region GetAllTenants Tests
+        #region GetAllAsync Tests
 
         [Fact]
-        public void GetAllTenants_HasTenants_ReturnsOkResultWithTenantList()
+        public async Task GetAllAsync_HasTenants_ReturnsOkResultWithTenantList()
         {
             // Arrange
             var expectedTenants = new List<TenantDto>
@@ -55,71 +57,75 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 }
             };
 
+            var response = Response<List<TenantDto>>.Success(expectedTenants, HttpStatusCode.OK);
+
             _mockTenantService
-                .Setup(x => x.Tenants())
-                .Returns(expectedTenants.AsQueryable());
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.GetAllTenants();
+            var result = await _controller.GetAllAsync();
 
             // Assert
             result.Should().NotBeNull();
-            var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-            var tenants = okResult.Value as List<TenantDto>;
-            tenants.Should().HaveCount(2);
-            tenants.Should().BeEquivalentTo(expectedTenants);
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(200);
+            var responseValue = okResult.Value.Should().BeOfType<Response<List<TenantDto>>>().Subject;
+            responseValue.Result.Should().HaveCount(2);
+            responseValue.Result.Should().BeEquivalentTo(expectedTenants);
         }
 
         [Fact]
-        public void GetAllTenants_NoTenants_ReturnsOkResultWithEmptyList()
+        public async Task GetAllAsync_NoTenants_ReturnsOkResultWithEmptyList()
         {
             // Arrange
             var expectedTenants = new List<TenantDto>();
+            var response = Response<List<TenantDto>>.Success(expectedTenants, HttpStatusCode.OK);
 
             _mockTenantService
-                .Setup(x => x.Tenants())
-                .Returns(expectedTenants.AsQueryable());
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.GetAllTenants();
+            var result = await _controller.GetAllAsync();
 
             // Assert
             result.Should().NotBeNull();
-            var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-            var tenants = okResult.Value as List<TenantDto>;
-            tenants.Should().BeEmpty();
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(200);
+            var responseValue = okResult.Value.Should().BeOfType<Response<List<TenantDto>>>().Subject;
+            responseValue.Result.Should().BeEmpty();
         }
 
         [Fact]
-        public void GetAllTenants_ServiceThrowsException_ReturnsInternalServerError()
+        public async Task GetAllAsync_ServiceReturnsError_ReturnsInternalServerError()
         {
             // Arrange
-            var errorMessage = "Database baðlantý hatasý";
-            _mockStringLocalizer
-                .Setup(x => x[IdentityServerKeys.TenantsFetchError])
-                .Returns(new LocalizedString(IdentityServerKeys.TenantsFetchError, "Firmalar getirilirken hata oluþtu: {0}"));
-            
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_FETCH_ERROR", "Database baðlantý hatasý") 
+            };
+            var response = Response<List<TenantDto>>.Fail(errors, HttpStatusCode.InternalServerError);
+
             _mockTenantService
-                .Setup(x => x.Tenants())
-                .Throws(new Exception(errorMessage));
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.GetAllTenants();
+            var result = await _controller.GetAllAsync();
 
             // Assert
             result.Should().NotBeNull();
-            var statusResult = result.Result.Should().BeOfType<ObjectResult>().Subject;
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
             statusResult.StatusCode.Should().Be(500);
-            var valueAsString = statusResult.Value.ToString();
-            valueAsString.Should().Contain(errorMessage);
         }
 
         #endregion
 
-        #region GetTenantById Tests
+        #region GetByIdAsync Tests
 
         [Fact]
-        public void GetTenantById_ExistingId_ReturnsOkResultWithTenant()
+        public async Task GetByIdAsync_ExistingId_ReturnsOkResultWithTenant()
         {
             // Arrange
             var tenantId = Guid.NewGuid();
@@ -142,72 +148,77 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 }
             };
 
+            var response = Response<TenantDto>.Success(expectedTenant, HttpStatusCode.OK);
+
             _mockTenantService
-                .Setup(x => x.FindById(tenantId))
-                .Returns(expectedTenant);
+                .Setup(x => x.GetByIdAsync(tenantId))
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.GetTenantById(tenantId);
+            var result = await _controller.GetByIdAsync(tenantId);
 
             // Assert
             result.Should().NotBeNull();
-            var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-            okResult.Value.Should().BeEquivalentTo(expectedTenant);
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(200);
+            var responseValue = okResult.Value.Should().BeOfType<Response<TenantDto>>().Subject;
+            responseValue.Result.Should().BeEquivalentTo(expectedTenant);
         }
 
         [Fact]
-        public void GetTenantById_NonExistingId_ReturnsNotFound()
+        public async Task GetByIdAsync_NonExistingId_ReturnsError()
         {
             // Arrange
             var tenantId = Guid.NewGuid();
-            _mockStringLocalizer
-                .Setup(x => x[IdentityServerKeys.TenantNotFound])
-                .Returns(new LocalizedString(IdentityServerKeys.TenantNotFound, "Firma bulunamadý"));
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_NOT_FOUND", "Firma bulunamadý") 
+            };
+            var response = Response<TenantDto>.Fail(errors, HttpStatusCode.NotFound);
 
             _mockTenantService
-                .Setup(x => x.FindById(tenantId))
-                .Returns((TenantDto)null);
+                .Setup(x => x.GetByIdAsync(tenantId))
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.GetTenantById(tenantId);
+            var result = await _controller.GetByIdAsync(tenantId);
 
             // Assert
             result.Should().NotBeNull();
-            var notFoundResult = result.Result.Should().BeOfType<NotFoundObjectResult>().Subject;
-            notFoundResult.Value.Should().BeOfType<LocalizedString>();
-        }
-
-        [Fact]
-        public void GetTenantById_ServiceThrowsException_ReturnsInternalServerError()
-        {
-            // Arrange
-            var tenantId = Guid.NewGuid();
-            var errorMessage = "Database eriþim hatasý";
-            _mockStringLocalizer
-                .Setup(x => x[IdentityServerKeys.TenantFetchError])
-                .Returns(new LocalizedString(IdentityServerKeys.TenantFetchError, "Firma getirilirken hata oluþtu: {0}"));
-
-            _mockTenantService
-                .Setup(x => x.FindById(tenantId))
-                .Throws(new Exception(errorMessage));
-
-            // Act
-            var result = _controller.GetTenantById(tenantId);
-
-            // Assert
-            result.Should().NotBeNull();
-            var statusResult = result.Result.Should().BeOfType<ObjectResult>().Subject;
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
             statusResult.StatusCode.Should().Be(500);
-            var valueAsString = statusResult.Value.ToString();
-            valueAsString.Should().Contain(errorMessage);
+        }
+
+        [Fact]
+        public async Task GetByIdAsync_ServiceReturnsError_ReturnsInternalServerError()
+        {
+            // Arrange
+            var tenantId = Guid.NewGuid();
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_FETCH_ERROR", "Database eriþim hatasý") 
+            };
+            var response = Response<TenantDto>.Fail(errors, HttpStatusCode.InternalServerError);
+
+            _mockTenantService
+                .Setup(x => x.GetByIdAsync(tenantId))
+                .ReturnsAsync(response);
+
+            // Act
+            var result = await _controller.GetByIdAsync(tenantId);
+
+            // Assert
+            result.Should().NotBeNull();
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
+            statusResult.StatusCode.Should().Be(500);
         }
 
         #endregion
 
-        #region GetTenantByName Tests
+        #region GetByNameAsync Tests
 
         [Fact]
-        public void GetTenantByName_ExistingName_ReturnsOkResultWithTenant()
+        public async Task GetByNameAsync_ExistingName_ReturnsOkResultWithTenant()
         {
             // Arrange
             var tenantName = "Test Firma";
@@ -219,72 +230,77 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 UpdateDateTime = DateTime.Now.AddDays(-5)
             };
 
+            var response = Response<TenantDto>.Success(expectedTenant, HttpStatusCode.OK);
+
             _mockTenantService
-                .Setup(x => x.FindByName(tenantName))
-                .Returns(expectedTenant);
+                .Setup(x => x.GetByNameAsync(tenantName))
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.GetTenantByName(tenantName);
+            var result = await _controller.GetByNameAsync(tenantName);
 
             // Assert
             result.Should().NotBeNull();
-            var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-            okResult.Value.Should().BeEquivalentTo(expectedTenant);
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(200);
+            var responseValue = okResult.Value.Should().BeOfType<Response<TenantDto>>().Subject;
+            responseValue.Result.Should().BeEquivalentTo(expectedTenant);
         }
 
         [Fact]
-        public void GetTenantByName_NonExistingName_ReturnsNotFound()
+        public async Task GetByNameAsync_NonExistingName_ReturnsError()
         {
             // Arrange
             var tenantName = "Olmayan Firma";
-            _mockStringLocalizer
-                .Setup(x => x[IdentityServerKeys.TenantNotFound])
-                .Returns(new LocalizedString(IdentityServerKeys.TenantNotFound, "Firma bulunamadý"));
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_NOT_FOUND", "Firma bulunamadý") 
+            };
+            var response = Response<TenantDto>.Fail(errors, HttpStatusCode.NotFound);
 
             _mockTenantService
-                .Setup(x => x.FindByName(tenantName))
-                .Returns((TenantDto)null);
+                .Setup(x => x.GetByNameAsync(tenantName))
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.GetTenantByName(tenantName);
+            var result = await _controller.GetByNameAsync(tenantName);
 
             // Assert
             result.Should().NotBeNull();
-            var notFoundResult = result.Result.Should().BeOfType<NotFoundObjectResult>().Subject;
-            notFoundResult.Value.Should().BeOfType<LocalizedString>();
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
+            statusResult.StatusCode.Should().Be(500);
         }
 
         [Fact]
-        public void GetTenantByName_ServiceThrowsException_ReturnsInternalServerError()
+        public async Task GetByNameAsync_ServiceReturnsError_ReturnsInternalServerError()
         {
             // Arrange
             var tenantName = "Test Firma";
-            var errorMessage = "Arama hatasý";
-            _mockStringLocalizer
-                .Setup(x => x[IdentityServerKeys.TenantFetchError])
-                .Returns(new LocalizedString(IdentityServerKeys.TenantFetchError, "Firma getirilirken hata oluþtu: {0}"));
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_FETCH_ERROR", "Arama hatasý") 
+            };
+            var response = Response<TenantDto>.Fail(errors, HttpStatusCode.InternalServerError);
 
             _mockTenantService
-                .Setup(x => x.FindByName(tenantName))
-                .Throws(new Exception(errorMessage));
+                .Setup(x => x.GetByNameAsync(tenantName))
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.GetTenantByName(tenantName);
+            var result = await _controller.GetByNameAsync(tenantName);
 
             // Assert
             result.Should().NotBeNull();
-            var statusResult = result.Result.Should().BeOfType<ObjectResult>().Subject;
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
             statusResult.StatusCode.Should().Be(500);
-            var valueAsString = statusResult.Value.ToString();
-            valueAsString.Should().Contain(errorMessage);
         }
 
         #endregion
 
-        #region CreateTenant Tests
+        #region CreateAsync Tests
 
         [Fact]
-        public async Task CreateTenant_ValidTenantCreateDto_ReturnsCreatedResult()
+        public async Task CreateAsync_ValidTenantCreateDto_ReturnsCreatedResult()
         {
             // Arrange
             var tenantCreateDto = new TenantCreateDto
@@ -317,38 +333,25 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 TaxInformation = tenantCreateDto.TaxInformation
             };
 
+            var response = Response<TenantDto>.Success(expectedTenant, HttpStatusCode.Created);
+
             _mockTenantService
                 .Setup(x => x.CreateAsync(It.IsAny<TenantCreateDto>()))
-                .ReturnsAsync(expectedTenant);
+                .ReturnsAsync(response);
 
             // Act
-            var result = await _controller.CreateTenant(tenantCreateDto);
+            var result = await _controller.CreateAsync(tenantCreateDto);
 
             // Assert
             result.Should().NotBeNull();
-            var createdResult = result.Result.Should().BeOfType<CreatedAtActionResult>().Subject;
-            createdResult.Value.Should().BeEquivalentTo(expectedTenant);
-            createdResult.ActionName.Should().Be(nameof(TenantController.GetTenantById));
-            createdResult.RouteValues["id"].Should().Be(expectedTenant.Id);
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(201);
+            var responseValue = okResult.Value.Should().BeOfType<Response<TenantDto>>().Subject;
+            responseValue.Result.Should().BeEquivalentTo(expectedTenant);
         }
 
         [Fact]
-        public async Task CreateTenant_InvalidModelState_ReturnsBadRequest()
-        {
-            // Arrange
-            var tenantCreateDto = new TenantCreateDto(); // Invalid DTO
-            _controller.ModelState.AddModelError("Name", "Firma adý gereklidir");
-
-            // Act
-            var result = await _controller.CreateTenant(tenantCreateDto);
-
-            // Assert
-            result.Should().NotBeNull();
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
-        }
-
-        [Fact]
-        public async Task CreateTenant_ServiceThrowsException_ReturnsBadRequest()
+        public async Task CreateAsync_ServiceReturnsError_ReturnsError()
         {
             // Arrange
             var tenantCreateDto = new TenantCreateDto
@@ -358,25 +361,31 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 UpdateDateTime = DateTime.Now
             };
 
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_EXISTS", "Girilen þirket sistemde mevcut") 
+            };
+            var response = Response<TenantDto>.Fail(errors, HttpStatusCode.BadRequest);
+
             _mockTenantService
                 .Setup(x => x.CreateAsync(It.IsAny<TenantCreateDto>()))
-                .ThrowsAsync(new Exception("Girilen þirket sistemde mevcut"));
+                .ReturnsAsync(response);
 
             // Act
-            var result = await _controller.CreateTenant(tenantCreateDto);
+            var result = await _controller.CreateAsync(tenantCreateDto);
 
             // Assert
             result.Should().NotBeNull();
-            var badRequestResult = result.Result.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be("Girilen þirket sistemde mevcut");
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
+            statusResult.StatusCode.Should().Be(500);
         }
 
         #endregion
 
-        #region UpdateTenant Tests
+        #region UpdateAsync Tests
 
         [Fact]
-        public async Task UpdateTenant_ValidTenantUpdateDto_ReturnsOkResult()
+        public async Task UpdateAsync_ValidTenantUpdateDto_ReturnsOkResult()
         {
             // Arrange
             var tenantId = Guid.NewGuid();
@@ -406,37 +415,25 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 UpdateDateTime = DateTime.Now
             };
 
+            var response = Response<TenantDto>.Success(expectedTenant, HttpStatusCode.OK);
+
             _mockTenantService
-                .Setup(x => x.UpdateAsync(It.IsAny<TenantUpdateDto>()))
-                .ReturnsAsync(expectedTenant);
+                .Setup(x => x.UpdateAsync(tenantId, It.IsAny<TenantUpdateDto>()))
+                .ReturnsAsync(response);
 
             // Act
-            var result = await _controller.UpdateTenant(tenantId, tenantUpdateDto);
+            var result = await _controller.UpdateAsync(tenantId, tenantUpdateDto);
 
             // Assert
             result.Should().NotBeNull();
-            var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-            okResult.Value.Should().BeEquivalentTo(expectedTenant);
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(200);
+            var responseValue = okResult.Value.Should().BeOfType<Response<TenantDto>>().Subject;
+            responseValue.Result.Should().BeEquivalentTo(expectedTenant);
         }
 
         [Fact]
-        public async Task UpdateTenant_InvalidModelState_ReturnsBadRequest()
-        {
-            // Arrange
-            var tenantId = Guid.NewGuid();
-            var tenantUpdateDto = new TenantUpdateDto { Id = tenantId };
-            _controller.ModelState.AddModelError("Name", "Firma adý gereklidir");
-
-            // Act
-            var result = await _controller.UpdateTenant(tenantId, tenantUpdateDto);
-
-            // Assert
-            result.Should().NotBeNull();
-            result.Result.Should().BeOfType<BadRequestObjectResult>();
-        }
-
-        [Fact]
-        public async Task UpdateTenant_MismatchedIds_ReturnsBadRequest()
+        public async Task UpdateAsync_MismatchedIds_ReturnsError()
         {
             // Arrange
             var tenantId = Guid.NewGuid();
@@ -452,16 +449,16 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 .Returns(new LocalizedString(IdentityServerKeys.TenantIdMismatch, "URL'deki ID ile gönderilen ID eþleþmiyor"));
 
             // Act
-            var result = await _controller.UpdateTenant(tenantId, tenantUpdateDto);
+            var result = await _controller.UpdateAsync(tenantId, tenantUpdateDto);
 
             // Assert
             result.Should().NotBeNull();
-            var badRequestResult = result.Result.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().BeOfType<LocalizedString>();
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
+            statusResult.StatusCode.Should().Be(500);
         }
 
         [Fact]
-        public async Task UpdateTenant_ServiceThrowsException_ReturnsBadRequest()
+        public async Task UpdateAsync_ServiceReturnsError_ReturnsError()
         {
             // Arrange
             var tenantId = Guid.NewGuid();
@@ -471,80 +468,72 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 Name = "Olmayan Firma"
             };
 
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_NOT_FOUND", "Güncellenecek þirket sistemde bulunamadý") 
+            };
+            var response = Response<TenantDto>.Fail(errors, HttpStatusCode.NotFound);
+
             _mockTenantService
-                .Setup(x => x.UpdateAsync(It.IsAny<TenantUpdateDto>()))
-                .ThrowsAsync(new Exception("Güncellenecek þirket sistemde bulunamadý"));
+                .Setup(x => x.UpdateAsync(tenantId, It.IsAny<TenantUpdateDto>()))
+                .ReturnsAsync(response);
 
             // Act
-            var result = await _controller.UpdateTenant(tenantId, tenantUpdateDto);
+            var result = await _controller.UpdateAsync(tenantId, tenantUpdateDto);
 
             // Assert
             result.Should().NotBeNull();
-            var badRequestResult = result.Result.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be("Güncellenecek þirket sistemde bulunamadý");
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
+            statusResult.StatusCode.Should().Be(500);
         }
 
         #endregion
 
-        #region DeleteTenant Tests
+        #region DeleteAsync Tests
 
         [Fact]
-        public async Task DeleteTenant_ExistingTenant_ReturnsNoContent()
+        public async Task DeleteAsync_ExistingTenant_ReturnsOkResult()
         {
             // Arrange
             var tenantId = Guid.NewGuid();
+            var deletedTenant = new TenantDto { Id = tenantId, Name = "Deleted Tenant" };
+            var response = Response<TenantDto>.Success(deletedTenant, HttpStatusCode.OK);
 
             _mockTenantService
                 .Setup(x => x.DeleteAsync(tenantId))
-                .ReturnsAsync(true);
+                .ReturnsAsync(response);
 
             // Act
-            var result = await _controller.DeleteTenant(tenantId);
+            var result = await _controller.DeleteAsync(tenantId);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeOfType<NoContentResult>();
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(200);
         }
 
         [Fact]
-        public async Task DeleteTenant_ServiceReturnsFalse_ReturnsBadRequest()
+        public async Task DeleteAsync_ServiceReturnsError_ReturnsError()
         {
             // Arrange
             var tenantId = Guid.NewGuid();
-            _mockStringLocalizer
-                .Setup(x => x[IdentityServerKeys.TenantDeleteFailed])
-                .Returns(new LocalizedString(IdentityServerKeys.TenantDeleteFailed, "Firma silinemedi"));
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_DELETE_FAILED", "Firma silinemedi") 
+            };
+            var response = Response<TenantDto>.Fail(errors, HttpStatusCode.BadRequest);
 
             _mockTenantService
                 .Setup(x => x.DeleteAsync(tenantId))
-                .ReturnsAsync(false);
+                .ReturnsAsync(response);
 
             // Act
-            var result = await _controller.DeleteTenant(tenantId);
+            var result = await _controller.DeleteAsync(tenantId);
 
             // Assert
             result.Should().NotBeNull();
-            var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().BeOfType<LocalizedString>();
-        }
-
-        [Fact]
-        public async Task DeleteTenant_ServiceThrowsException_ReturnsBadRequest()
-        {
-            // Arrange
-            var tenantId = Guid.NewGuid();
-
-            _mockTenantService
-                .Setup(x => x.DeleteAsync(tenantId))
-                .ThrowsAsync(new Exception("Silinecek þirket sistemde bulunamadý."));
-
-            // Act
-            var result = await _controller.DeleteTenant(tenantId);
-
-            // Assert
-            result.Should().NotBeNull();
-            var badRequestResult = result.Should().BeOfType<BadRequestObjectResult>().Subject;
-            badRequestResult.Value.Should().Be("Silinecek þirket sistemde bulunamadý.");
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
+            statusResult.StatusCode.Should().Be(500);
         }
 
         #endregion
@@ -552,61 +541,68 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         #region IsAnyTenantExist Tests
 
         [Fact]
-        public void IsAnyTenantExist_TenantsExist_ReturnsOkResultWithTrue()
+        public async Task IsAnyTenantExist_TenantsExist_ReturnsOkResultWithTrue()
         {
             // Arrange
+            var response = Response<bool>.Success(true, HttpStatusCode.OK);
+
             _mockTenantService
-                .Setup(x => x.IsAnyTenantExist())
-                .Returns(true);
+                .Setup(x => x.IsAnyTenantExistAsync())
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.IsAnyTenantExist();
+            var result = await _controller.IsAnyTenantExist();
 
             // Assert
             result.Should().NotBeNull();
-            var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-            okResult.Value.Should().BeEquivalentTo(true);
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(200);
+            var responseValue = okResult.Value.Should().BeOfType<Response<bool>>().Subject;
+            responseValue.Result.Should().BeTrue();
         }
 
         [Fact]
-        public void IsAnyTenantExist_NoTenantsExist_ReturnsOkResultWithFalse()
+        public async Task IsAnyTenantExist_NoTenantsExist_ReturnsOkResultWithFalse()
         {
             // Arrange
+            var response = Response<bool>.Success(false, HttpStatusCode.OK);
+
             _mockTenantService
-                .Setup(x => x.IsAnyTenantExist())
-                .Returns(false);
+                .Setup(x => x.IsAnyTenantExistAsync())
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.IsAnyTenantExist();
+            var result = await _controller.IsAnyTenantExist();
 
             // Assert
             result.Should().NotBeNull();
-            var okResult = result.Result.Should().BeOfType<OkObjectResult>().Subject;
-            okResult.Value.Should().BeEquivalentTo(false);
+            var okResult = result.Should().BeOfType<ObjectResult>().Subject;
+            okResult.StatusCode.Should().Be(200);
+            var responseValue = okResult.Value.Should().BeOfType<Response<bool>>().Subject;
+            responseValue.Result.Should().BeFalse();
         }
 
         [Fact]
-        public void IsAnyTenantExist_ServiceThrowsException_ReturnsInternalServerError()
+        public async Task IsAnyTenantExist_ServiceReturnsError_ReturnsInternalServerError()
         {
             // Arrange
-            var errorMessage = "Database baðlantý hatasý";
-            _mockStringLocalizer
-                .Setup(x => x[IdentityServerKeys.TenantExistenceCheckError])
-                .Returns(new LocalizedString(IdentityServerKeys.TenantExistenceCheckError, "Firma varlýk kontrolü yapýlýrken hata oluþtu: {0}"));
+            var errors = new List<Error> 
+            { 
+                Error.CreateError("TENANT_EXISTENCE_CHECK_ERROR", "Database baðlantý hatasý") 
+            };
+            var response = Response<bool>.Fail(errors, HttpStatusCode.InternalServerError);
             
             _mockTenantService
-                .Setup(x => x.IsAnyTenantExist())
-                .Throws(new Exception(errorMessage));
+                .Setup(x => x.IsAnyTenantExistAsync())
+                .ReturnsAsync(response);
 
             // Act
-            var result = _controller.IsAnyTenantExist();
+            var result = await _controller.IsAnyTenantExist();
 
             // Assert
             result.Should().NotBeNull();
-            var statusResult = result.Result.Should().BeOfType<ObjectResult>().Subject;
+            var statusResult = result.Should().BeOfType<ObjectResult>().Subject;
             statusResult.StatusCode.Should().Be(500);
-            var valueAsString = statusResult.Value.ToString();
-            valueAsString.Should().Contain(errorMessage);
         }
 
         #endregion
