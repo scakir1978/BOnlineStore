@@ -163,7 +163,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   /**
    * Topbar Light-Dark Mode Change
    */
-  changeMode(mode: string) {
+  changeModeFromTopbar(mode: string) {
     this.mode = mode;
     this.layoutService.setLayoutModeFromTopbar(mode);
     this.getLogoPath();
@@ -263,7 +263,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
    */
   getLogoPath(): string {
     return this.mode === 'dark'
-      ? 'assets/images/logo-console-log-dark.png'
-      : 'assets/images/logo-console-log-light.png';
+      ? 'assets/images/logo-console-log-dark2.png'
+      : 'assets/images/logo-console-log-light3.png';
   }
 }

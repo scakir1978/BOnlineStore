@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { LayoutService } from './../../core/services/layout.service';
 import { Component, Inject, OnInit } from '@angular/core';
+import { EventService } from '../../core/services/event.service';
 
 @Component({
   selector: 'app-vertical',
@@ -10,7 +11,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 export class VerticalComponent implements OnInit {
   isCondensed = false;
 
-  constructor(private layoutService: LayoutService) {}
+  constructor(
+    private layoutService: LayoutService,
+    private eventService: EventService
+  ) {}
 
   ngOnInit(): void {
     this.layoutService.setLayoutSettingsToDocument(
@@ -86,6 +90,18 @@ export class VerticalComponent implements OnInit {
         (document.getElementById('preloader') as HTMLElement).style.visibility =
           'hidden';
       }, 1000);
+    }
+  }
+
+  onResize(event: any) {
+    if (document.body.getAttribute('layout') == 'twocolumn') {
+      if (event.target.innerWidth <= 767) {
+        this.eventService.broadcast('changeLayout', 'vertical');
+      } else {
+        this.eventService.broadcast('changeLayout', 'twocolumn');
+        document.body.classList.remove('twocolumn-panel');
+        document.body.classList.remove('vertical-sidebar-enable');
+      }
     }
   }
 }

@@ -196,7 +196,7 @@ export class RightsidebarComponent implements OnInit {
   }
 
   // Mode Change
-  changeMode(mode: string) {
+  changeModeFromRightSideBar(mode: string) {
     this.mode = mode;
     document.documentElement.setAttribute('data-bs-theme', mode);
 

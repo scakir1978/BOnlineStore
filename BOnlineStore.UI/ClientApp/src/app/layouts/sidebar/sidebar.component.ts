@@ -297,8 +297,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   getLogoPath(): string {
     return this.currentTheme === 'dark'
-      ? 'assets/images/logo-console-log-dark.png'
-      : 'assets/images/logo-console-log-light.png';
+      ? 'assets/images/logo-console-log-dark2.png'
+      : 'assets/images/logo-console-log-dark2.png';
   }
 
   /**
