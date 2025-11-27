@@ -10,6 +10,7 @@ import {
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { EventService } from '../../core/services/event.service';
+import { MenuAuthorizationService } from '../../core/services/menu-authorization.service';
 
 import { MENU } from '././../../menu/menu';
 import { MenuItem } from './../../menu/menu.model';
@@ -35,14 +36,15 @@ export class TwoColumnSidebarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public translate: TranslateService,
-    private eventService: EventService
+    private eventService: EventService,
+    private menuAuthService: MenuAuthorizationService
   ) {
     translate.setDefaultLang('tr');
   }
 
   ngOnInit(): void {
-    // Menu Items
-    this.menuItems = MENU;
+    // Menu Items - Rol bazlı filtreleme ile
+    this.menuItems = this.menuAuthService.filterMenuByRole(MENU);
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.initActiveMenu();

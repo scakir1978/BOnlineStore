@@ -110,11 +110,8 @@ export class RightsidebarComponent implements OnInit, OnDestroy {
       this.eventService.broadcast('changeLayout', layout);
     }
 
-    if (layout == 'horizontal') {
-      document.documentElement.setAttribute('data-sidebar', 'dark');
-      this.eventService.broadcast('changeSideBarBackground', 'dark');
-    }
-
+    // Mevcut sidebar değerini DOM'a uygula (layout değişikliklerinde korunması için)
+    document.documentElement.setAttribute('data-sidebar', this.sidebar!);
     document.documentElement.setAttribute('data-layout', layout);
 
     this.layoutService.setLayoutSettings(
@@ -138,8 +135,10 @@ export class RightsidebarComponent implements OnInit, OnDestroy {
 
   setLayout(layout: string) {
     this.attribute = layout;
-    this.sidebar = 'light';
     this.layout = layout;
+
+    // Mevcut sidebar değerini koru
+    document.documentElement.setAttribute('data-sidebar', this.sidebar!);
     document.documentElement.setAttribute('data-layout', layout);
 
     this.layoutService.setLayoutSettings(
