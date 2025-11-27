@@ -26,8 +26,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   menuItems: MenuItem[] = [];
   filteredMenuItems: MenuItem[] = [];
   searchTerm: string = '';
-  currentTheme: string = 'light';
-  private themeSubscription: any;
+  currentBackground: string = 'light';
+  private sideBarBackgroundSubscription: any;
   private userRoles: string[] = []; // Kullanıcı rolleri
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
@@ -43,15 +43,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Initialize theme from current document attribute
-    const currentTheme =
-      document.documentElement.getAttribute('data-bs-theme') || 'light';
-    this.currentTheme = currentTheme;
+    const currentBackground =
+      document.documentElement.getAttribute('data-sidebar') || 'light';
+    this.currentBackground = currentBackground;
 
     // Listen for theme change events
-    this.themeSubscription = this.eventService.subscribe(
-      'changeMode',
-      (mode: string) => {
-        this.currentTheme = mode;
+    this.sideBarBackgroundSubscription = this.eventService.subscribe(
+      'changeSideBarBackground',
+      (currentBackground: string) => {
+        this.currentBackground = currentBackground;
       }
     );
 
@@ -71,8 +71,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.themeSubscription) {
-      this.themeSubscription.unsubscribe();
+    if (this.sideBarBackgroundSubscription) {
+      this.sideBarBackgroundSubscription.unsubscribe();
     }
   }
 
@@ -296,9 +296,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
    * Get logo path based on current theme
    */
   getLogoPath(): string {
-    return this.currentTheme === 'dark'
+    return this.currentBackground === 'dark'
       ? 'assets/images/logo-console-log-dark2.png'
-      : 'assets/images/logo-console-log-dark2.png';
+      : 'assets/images/logo-console-log-light3.png';
+  }
+
+  getIconPath(): string {
+    return this.currentBackground === 'dark'
+      ? 'assets/images/console-log-icon.png'
+      : 'assets/images/console-log-icon-light.png';
   }
 
   /**

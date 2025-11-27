@@ -6,6 +6,7 @@ import {
   EventEmitter,
   TemplateRef,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import { EventService } from '../../core/services/event.service';
 import {
@@ -33,7 +34,7 @@ import themes from 'devextreme/ui/themes';
 /**
  * Right Sidebar component
  */
-export class RightsidebarComponent implements OnInit {
+export class RightsidebarComponent implements OnInit, OnDestroy {
   layout: string | undefined;
   mode: string | undefined;
   width: string | undefined;
@@ -50,6 +51,9 @@ export class RightsidebarComponent implements OnInit {
 
   @Output() settingsButtonClicked = new EventEmitter();
   @ViewChild('filtetcontent') filtetcontent!: TemplateRef<any>;
+
+  private modeSubscription: any;
+
   constructor(
     private eventService: EventService,
     private offcanvasService: NgbOffcanvas,
@@ -77,12 +81,20 @@ export class RightsidebarComponent implements OnInit {
     this.sidebarVisibility = layoutSettings.sideBarVisibility;
     this.attribute = '';
 
-    this.eventService.subscribe('changeMode', (mode: string) => {
-      this.mode = mode;
-    });
+    this.modeSubscription = this.eventService.subscribe(
+      'changeMode',
+      (mode: string) => {
+        this.mode = mode;
+      }
+    );
   }
 
-  ngAfterViewInit() {}
+  ngOnDestroy(): void {
+    // Subscription'ı temizle
+    if (this.modeSubscription) {
+      this.modeSubscription.unsubscribe();
+    }
+  }
 
   /**
    * Change the layout onclick
@@ -96,6 +108,11 @@ export class RightsidebarComponent implements OnInit {
       this.eventService.broadcast('changeLayout', 'vertical');
     } else {
       this.eventService.broadcast('changeLayout', layout);
+    }
+
+    if (layout == 'horizontal') {
+      document.documentElement.setAttribute('data-sidebar', 'dark');
+      this.eventService.broadcast('changeSideBarBackground', 'dark');
     }
 
     document.documentElement.setAttribute('data-layout', layout);
@@ -228,6 +245,8 @@ export class RightsidebarComponent implements OnInit {
         themes.current('light');
         break;
     }
+
+    this.eventService.broadcast('changeMode', mode);
   }
 
   // Visibility Change
@@ -311,6 +330,7 @@ export class RightsidebarComponent implements OnInit {
       this.sidebarVisibility,
       this.bodyImage
     );
+    this.eventService.broadcast('changeTopBarBackground', color);
   }
 
   // Sidebar Size Change
@@ -369,6 +389,8 @@ export class RightsidebarComponent implements OnInit {
       this.sidebarVisibility,
       this.bodyImage
     );
+
+    this.eventService.broadcast('changeSideBarBackground', color);
   }
 
   // PreLoader Image Change
