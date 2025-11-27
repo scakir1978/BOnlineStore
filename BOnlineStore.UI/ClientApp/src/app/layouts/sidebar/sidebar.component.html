@@ -5,7 +5,7 @@
     <!-- Dark Logo-->
     <a routerLink="/" class="logo logo-dark">
       <span class="logo-sm">
-        <img src="assets/images/logo-sm.png" alt="" height="22" />
+        <img [src]="getIconPath()" alt="" height="22" />
       </span>
       <span class="logo-lg">
         <img [src]="getLogoPath()" alt="" />
@@ -14,7 +14,7 @@
     <!-- Light Logo-->
     <a routerLink="/" class="logo logo-light">
       <span class="logo-sm">
-        <img src="assets/images/logo-sm.png" alt="" height="22" />
+        <img [src]="getIconPath()" alt="" height="22" />
       </span>
       <span class="logo-lg">
         <img [src]="getLogoPath()" alt="" />

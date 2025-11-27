@@ -6,7 +6,11 @@
         <div class="navbar-brand-box horizontal-logo">
           <a routerLink="" class="logo logo-dark">
             <span class="logo-sm">
-              <img src="assets/images/logo-sm.png" alt="" height="22" />
+              <img
+                src="assets/images/console-log-icon.png"
+                alt=""
+                height="22"
+              />
             </span>
             <span class="logo-lg">
               <img [src]="getLogoPath()" alt="" />
@@ -15,7 +19,11 @@
 
           <a routerLink="" class="logo logo-light">
             <span class="logo-sm">
-              <img src="assets/images/logo-sm.png" alt="" height="22" />
+              <img
+                src="assets/images/console-log-icon.png"
+                alt=""
+                height="22"
+              />
             </span>
             <span class="logo-lg">
               <img [src]="getLogoPath()" alt="" />
@@ -99,8 +107,14 @@
             type="button"
             class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode"
           >
-            <i class="bx bx-moon fs-22" (click)="changeMode('dark')"></i>
-            <i class="bx bx-sun fs-22" (click)="changeMode('light')"></i>
+            <i
+              class="bx bx-moon fs-22"
+              (click)="changeModeFromTopbar('dark')"
+            ></i>
+            <i
+              class="bx bx-sun fs-22"
+              (click)="changeModeFromTopbar('light')"
+            ></i>
           </button>
         </div>
 

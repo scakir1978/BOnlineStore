@@ -1,6 +1,7 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
   EventEmitter,
   Output,
   ViewChild,
@@ -8,6 +9,8 @@ import {
 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { EventService } from '../../core/services/event.service';
+import { MenuAuthorizationService } from '../../core/services/menu-authorization.service';
 
 // Menu Pachage
 // import MetisMenu from 'metismenujs';
@@ -20,19 +23,45 @@ import { MenuItem } from './../../menu/menu.model';
   templateUrl: './horizontal-topbar.component.html',
   styleUrls: ['./horizontal-topbar.component.scss'],
 })
-export class HorizontalTopbarComponent implements OnInit {
+export class HorizontalTopbarComponent implements OnInit, OnDestroy {
   menu: any;
   menuItems: MenuItem[] = [];
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
-  constructor(private router: Router, public translate: TranslateService) {
+  currentBackground: string = 'light';
+  private topBarBackgroundSubscription: any;
+
+  constructor(
+    private router: Router,
+    public translate: TranslateService,
+    private eventService: EventService,
+    private menuAuthService: MenuAuthorizationService
+  ) {
     translate.setDefaultLang('tr');
   }
 
   ngOnInit(): void {
-    // Menu Items
-    this.menuItems = MENU;
+    // Menu Items - Rol bazlı filtreleme ile
+    this.menuItems = this.menuAuthService.filterMenuByRole(MENU);
+
+    const currentBackground =
+      document.documentElement.getAttribute('data-sidebar') || 'light';
+    this.currentBackground = currentBackground;
+
+    // Listen for theme change events
+    this.topBarBackgroundSubscription = this.eventService.subscribe(
+      'changeSideBarBackground',
+      (currentBackground: string) => {
+        this.currentBackground = currentBackground;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.topBarBackgroundSubscription) {
+      this.topBarBackgroundSubscription.unsubscribe();
+    }
   }
 
   /***
@@ -40,6 +69,15 @@ export class HorizontalTopbarComponent implements OnInit {
    */
   ngAfterViewInit() {
     this.initActiveMenu();
+  }
+
+  /**
+   * Get logo path based on current theme
+   */
+  getLogoPath(): string {
+    return this.currentBackground === 'dark'
+      ? 'assets/images/logo-console-log-dark2.png'
+      : 'assets/images/logo-console-log-light3.png';
   }
 
   removeActivation(items: any) {

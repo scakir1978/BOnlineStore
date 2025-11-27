@@ -10,7 +10,7 @@ import {
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { EventService } from '../../core/services/event.service';
-import { AuthenticationService } from '../../core/services/auth.service';
+import { MenuAuthorizationService } from '../../core/services/menu-authorization.service';
 
 import { MENU } from '././../../menu/menu';
 import { MenuItem } from './../../menu/menu.model';
@@ -26,9 +26,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   menuItems: MenuItem[] = [];
   filteredMenuItems: MenuItem[] = [];
   searchTerm: string = '';
-  currentTheme: string = 'light';
-  private themeSubscription: any;
-  private userRoles: string[] = []; // Kullanıcı rolleri
+  currentBackground: string = 'light';
+  private sideBarBackgroundSubscription: any;
   @ViewChild('sideMenu') sideMenu!: ElementRef;
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
@@ -36,30 +35,27 @@ export class SidebarComponent implements OnInit, OnDestroy {
     private router: Router,
     public translate: TranslateService,
     private eventService: EventService,
-    private authService: AuthenticationService
+    private menuAuthService: MenuAuthorizationService
   ) {
     translate.setDefaultLang('tr');
   }
 
   ngOnInit(): void {
     // Initialize theme from current document attribute
-    const currentTheme =
-      document.documentElement.getAttribute('data-bs-theme') || 'light';
-    this.currentTheme = currentTheme;
+    const currentBackground =
+      document.documentElement.getAttribute('data-sidebar') || 'light';
+    this.currentBackground = currentBackground;
 
     // Listen for theme change events
-    this.themeSubscription = this.eventService.subscribe(
-      'changeMode',
-      (mode: string) => {
-        this.currentTheme = mode;
+    this.sideBarBackgroundSubscription = this.eventService.subscribe(
+      'changeSideBarBackground',
+      (currentBackground: string) => {
+        this.currentBackground = currentBackground;
       }
     );
 
-    // Kullanıcı rollerini al
-    this.loadUserRoles();
-
     // Menu Items - Rol bazlı filtreleme ile
-    this.menuItems = this.filterMenuByRole(MENU);
+    this.menuItems = this.menuAuthService.filterMenuByRole(MENU);
     this.filteredMenuItems = [...this.menuItems];
     this.router.events.subscribe((event) => {
       if (document.documentElement.getAttribute('data-layout') != 'twocolumn') {
@@ -71,8 +67,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.themeSubscription) {
-      this.themeSubscription.unsubscribe();
+    if (this.sideBarBackgroundSubscription) {
+      this.sideBarBackgroundSubscription.unsubscribe();
     }
   }
 
@@ -296,9 +292,15 @@ export class SidebarComponent implements OnInit, OnDestroy {
    * Get logo path based on current theme
    */
   getLogoPath(): string {
-    return this.currentTheme === 'dark'
-      ? 'assets/images/logo-console-log-dark.png'
-      : 'assets/images/logo-console-log-light.png';
+    return this.currentBackground === 'dark'
+      ? 'assets/images/logo-console-log-dark2.png'
+      : 'assets/images/logo-console-log-light3.png';
+  }
+
+  getIconPath(): string {
+    return this.currentBackground === 'dark'
+      ? 'assets/images/console-log-icon.png'
+      : 'assets/images/console-log-icon-light.png';
   }
 
   /**
@@ -471,63 +473,5 @@ export class SidebarComponent implements OnInit, OnDestroy {
    */
   SidebarHide() {
     document.body.classList.remove('vertical-sidebar-enable');
-  }
-
-  /**
-   * Kullanıcı rollerini yükle
-   */
-  private loadUserRoles(): void {
-    const currentUser = this.authService.currentUser();
-    if (currentUser && currentUser.role) {
-      // Rolleri virgülle ayrılmış string'den array'e çevir
-      if (typeof currentUser.role === 'string') {
-        this.userRoles = currentUser.role.split(',').map((role) => role.trim());
-      } else if (Array.isArray(currentUser.role)) {
-        this.userRoles = currentUser.role;
-      } else {
-        this.userRoles = [];
-      }
-    } else {
-      this.userRoles = [];
-    }
-  }
-
-  /**
-   * Kullanıcının role göre menüyü filtrele
-   */
-  private filterMenuByRole(menuItems: MenuItem[]): MenuItem[] {
-    return menuItems
-      .filter((item) => this.hasRoleAccess(item))
-      .map((item) => {
-        if (item.subItems && item.subItems.length > 0) {
-          return {
-            ...item,
-            subItems: this.filterMenuByRole(item.subItems),
-          };
-        }
-        return item;
-      })
-      .filter((item) => {
-        // Eğer bir menünün alt menüleri varsa ve hiçbiri görünmüyorsa, üst menüyü de gösterme
-        if (item.subItems && item.subItems.length === 0 && !item.link) {
-          return false;
-        }
-        return true;
-      });
-  }
-
-  /**
-   * Kullanıcının belirli bir menüye erişim yetkisi var mı kontrol et
-   */
-  private hasRoleAccess(item: MenuItem): boolean {
-    // Eğer menüde allowedRoles tanımlı değilse, herkes görebilir
-    if (!item.allowedRoles || item.allowedRoles.length === 0) {
-      return true;
-    }
-
-    // Kullanıcının rollerinden herhangi biri allowedRoles içinde var mı?
-    return this.userRoles.some((userRole) =>
-      item.allowedRoles!.includes(userRole)
-    );
   }
 }

@@ -28,6 +28,7 @@ import themes from 'devextreme/ui/themes';
 import { locale, loadMessages } from 'devextreme/localization';
 import * as trDevextremeMessages from '../../../assets/i18n/devextreme/tr.json';
 import * as enDevextremeMessages from '../../../assets/i18n/devextreme/en.json';
+import { get } from 'lodash';
 
 themes.current(window.localStorage.getItem('dx-theme') || 'dark');
 
@@ -38,7 +39,7 @@ themes.current(window.localStorage.getItem('dx-theme') || 'dark');
 })
 export class TopbarComponent implements OnInit, OnDestroy {
   element: any;
-  mode: string | undefined;
+  mode: string = 'light';
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
   cartData!: CartModel[];
@@ -51,9 +52,11 @@ export class TopbarComponent implements OnInit, OnDestroy {
   defaultLanguage: any;
   userData: any;
 
-  currentTheme: string = 'light';
-  private themeSubscription: any;
   private userSubscription: Subscription = new Subscription();
+
+  currentTopBarBackground: string = 'light';
+  private topBarBackgroundSubscription: any;
+  private modeSubscription: any;
 
   constructor(
     @Inject(DOCUMENT) private document: any,
@@ -104,12 +107,41 @@ export class TopbarComponent implements OnInit, OnDestroy {
       var item_price = item.quantity * item.price;
       this.total += item_price;
     });
+
+    this.currentTopBarBackground =
+      document.documentElement.getAttribute('data-topbar') || 'light';
+
+    this.mode =
+      document.documentElement.getAttribute('data-bs-theme') || 'light';
+
+    // Listen for top bar background change events
+    this.topBarBackgroundSubscription = this.eventService.subscribe(
+      'changeTopBarBackground',
+      (currentTopBarBackground: string) => {
+        this.currentTopBarBackground = currentTopBarBackground;
+      }
+    );
+
+    this.modeSubscription = this.eventService.subscribe(
+      'changeMode',
+      (mode: string) => {
+        this.mode = mode;
+      }
+    );
   }
 
   ngOnDestroy(): void {
     // Subscription'ı temizle
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
+    }
+
+    if (this.topBarBackgroundSubscription) {
+      this.topBarBackgroundSubscription.unsubscribe();
+    }
+
+    if (this.modeSubscription) {
+      this.modeSubscription.unsubscribe();
     }
   }
 
@@ -163,7 +195,7 @@ export class TopbarComponent implements OnInit, OnDestroy {
   /**
    * Topbar Light-Dark Mode Change
    */
-  changeMode(mode: string) {
+  changeModeFromTopbar(mode: string) {
     this.mode = mode;
     this.layoutService.setLayoutModeFromTopbar(mode);
     this.getLogoPath();
@@ -258,12 +290,23 @@ export class TopbarComponent implements OnInit, OnDestroy {
     document.getElementById('item_' + id)?.remove();
   }
 
-  /**
-   * Get logo path based on current theme
-   */
   getLogoPath(): string {
-    return this.mode === 'dark'
-      ? 'assets/images/logo-console-log-dark.png'
-      : 'assets/images/logo-console-log-light.png';
+    var layout = document.documentElement.getAttribute('data-layout');
+
+    if (this.currentTopBarBackground === 'light' && this.mode === 'dark') {
+      return 'assets/images/logo-console-log-dark2.png';
+    }
+
+    if (this.currentTopBarBackground === 'dark' && this.mode === 'dark') {
+      return 'assets/images/logo-console-log-dark4.png';
+    }
+
+    if (this.currentTopBarBackground === 'dark' && this.mode === 'light') {
+      return 'assets/images/logo-console-log-dark4.png';
+    }
+
+    if (this.currentTopBarBackground === 'light' && this.mode === 'light') {
+      return 'assets/images/logo-console-log-light3.png';
+    }
   }
 }
