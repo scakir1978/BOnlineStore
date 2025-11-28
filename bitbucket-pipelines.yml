@@ -581,6 +581,7 @@ pipelines:
           - step:
               name: Test Build - Definitions Service
               image: mcr.microsoft.com/dotnet/sdk:8.0
+              size: 2x
               condition:
                 changesets:
                   includePaths:
@@ -611,7 +612,8 @@ pipelines:
 
           # Production Service Test Build
           - step:
-              name: Test Build - Production Service
+              name: Test Build - Production Service              
+              size: 2x
               condition:
                 changesets:
                   includePaths:
@@ -628,7 +630,8 @@ pipelines:
 
           # BFF Service Test Build
           - step:
-              name: Test Build - BFF Service
+              name: Test Build - BFF Service              
+              size: 2x  
               condition:
                 changesets:
                   includePaths:
@@ -646,7 +649,7 @@ pipelines:
           # UI Angular Project Test Build
           - step:
               name: Test Build - UI
-              size: 4x
+              size: 2x
               condition:
                 changesets:
                   includePaths:
@@ -670,6 +673,7 @@ pipelines:
           - step:
               name: Test Build - IdentityServer
               image: mcr.microsoft.com/dotnet/sdk:8.0
+              size: 2x
               condition:
                 changesets:
                   includePaths:
