@@ -16,8 +16,6 @@ export class WorkOrderDefaultFormComponent {
     this.closeForm.emit();
   }
 
-  telephoneFormat(telephoneNumber: string) {}
-
   isPanelExists(workOrderForm: WorkOrderFormFrontEndDto): string {
     if (
       workOrderForm.workOrder.panelHeight ||
@@ -39,7 +37,17 @@ export class WorkOrderDefaultFormComponent {
   }
 
   phoneFormat(telephoneNumber: string): string {
-    var phoneFormatter = require('phone-formatter');
-    return phoneFormatter.format(telephoneNumber, '(NNN) NNN-NNNN');
+    if (!telephoneNumber) return '';
+
+    // Remove all non-numeric characters
+    const cleaned = telephoneNumber.replace(/\D/g, '');
+
+    // Format as (NNN) NNN-NNNN
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return `(${match[1]}) ${match[2]}-${match[3]}`;
+    }
+
+    return telephoneNumber;
   }
 }
