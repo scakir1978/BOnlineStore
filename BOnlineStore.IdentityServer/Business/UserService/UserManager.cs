@@ -1,22 +1,24 @@
 using AutoMapper;
 using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Data;
+using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Extensions;
 using BOnlineStore.IdentityServer.Models;
+using BOnlineStore.IdentityServer.Settings;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
 using BOnlineStore.Shared.Constansts;
 using BOnlineStore.Shared.Dtos;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Net;
-using Microsoft.AspNetCore.Http;
 
 namespace BOnlineStore.IdentityServer.Business.UserService
 {
-    public class UserManager : IUserService
+    public class IUserManager : IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
@@ -24,7 +26,7 @@ namespace BOnlineStore.IdentityServer.Business.UserService
         private readonly IStringLocalizer<Language> _stringLocalizer;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserManager(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer, IHttpContextAccessor httpContextAccessor)
+        public IUserManager(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _context = context;
@@ -107,6 +109,67 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                 if (result.Succeeded)
                 {
                     var userDto = _mapper.Map<UserDto>(user);
+                    return Response<UserDto>.Success(userDto, HttpStatusCode.Created);
+                }
+
+                var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
+                return Response<UserDto>.Fail(errors, HttpStatusCode.BadRequest);
+            }
+            catch (Exception ex)
+            {
+                return Response<UserDto>.Fail(
+                    new Error
+                    {
+                        ErrorCode = nameof(IdentityServerKeys.CreateUserError),
+                        Message = string.Format(_stringLocalizer[IdentityServerKeys.CreateUserError], ex.Message),
+                        StackTrace = ex.StackTrace
+                    },
+                    HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public async Task<Response<UserDto>> CreateDefaultUserAsync(Guid tenantId, string adminUserEmail, string adminUserPassword)
+        {
+            try
+            {
+                // Tenant kontrolü
+                var tenantExists = await _context.Tenant.AnyAsync(t => t.Id == tenantId);
+                if (!tenantExists)
+                {
+                    return Response<UserDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.TenantNotFound),
+                            Message = _stringLocalizer[IdentityServerKeys.TenantNotFound]
+                        }, HttpStatusCode.NotFound);
+                }
+
+                // Password complexity kontrolü
+                if (!ValidatePasswordComplexity(adminUserPassword))
+                {
+                    return Response<UserDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.PasswordComplexityError),
+                            Message = _stringLocalizer[IdentityServerKeys.PasswordComplexityError]
+                        }, HttpStatusCode.BadRequest);
+                }
+
+                var adminUser = new ApplicationUser
+                {
+                    UserName = adminUserEmail,
+                    Email = adminUserEmail,
+                    Locale = IdentityServerConstants.turkish,
+                    PreferredUsername = adminUserEmail,
+                    TenantId = tenantId,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                var result = await _userManager.CreateAsync(adminUser, adminUserPassword);
+
+                if (result.Succeeded)
+                {
+                    var userDto = _mapper.Map<UserDto>(adminUser);
                     return Response<UserDto>.Success(userDto, HttpStatusCode.Created);
                 }
 

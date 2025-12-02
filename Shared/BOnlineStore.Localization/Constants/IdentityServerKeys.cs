@@ -71,5 +71,9 @@ namespace BOnlineStore.Localization.Constants
         public const string GetUserRolesError = "GetUserRolesError";
         public const string SuperUser = "SuperUser";
         public const string Admin = "Admin";
+
+        // Additional Keys
+        public const string CreateDefaultAdminUserError = "CreateDefaultAdminUserError";
+         
     }
 }

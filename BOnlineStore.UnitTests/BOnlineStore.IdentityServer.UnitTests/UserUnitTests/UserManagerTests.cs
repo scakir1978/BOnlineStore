@@ -24,7 +24,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IStringLocalizer<Language>> _mockStringLocalizer;
         private readonly Mock<IHttpContextAccessor> _mockHttpContextAccessor;
-        private readonly UserManager _userManager;
+        private readonly IUserManager _userManager;
         private readonly Guid _testTenantId = Guid.NewGuid();
 
         public UserManagerTests()
@@ -61,7 +61,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.UserUnitTests
             // Setup specific localization keys
             SetupLocalizationKeys();
 
-            _userManager = new UserManager(
+            _userManager = new IUserManager(
                 _mockUserManager.Object, 
                 _context, 
                 _mockMapper.Object, 
