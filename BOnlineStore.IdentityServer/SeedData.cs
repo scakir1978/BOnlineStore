@@ -65,7 +65,13 @@ public class SeedData
             var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
             context.Database.Migrate();
 
+            // Varsayılan roller eklenir.
+            AddDefaultRoles(scope);
+
+            // Varsayılan tenant eklenir.
             var tenantDto = AddDefaultTenant(scope);
+
+            // Varsayılan kullanıcı eklenir.
             AddDefaultUser(scope, tenantDto);
 
             #endregion
@@ -77,7 +83,54 @@ public class SeedData
         }
     }
 
-    private static void AddDefaultUser(IServiceScope scope, TenantDto tenantDto)
+    /// <summary>
+    /// Uygulama için gerekli olan varsayılan rollerin kimlik sisteminde oluşturulmasını sağlar.
+    /// </summary>
+    /// <remarks>Bu metot, önceden tanımlanmış rollerin varlığını kontrol eder ve eğer henüz mevcut
+    /// değillerse onları oluşturur. Roller <see cref="IdentityServerConstants"/> sınıfında tanımlanmıştır.
+    /// Rol oluşturma işlemi başarısız olursa bir hata fırlatılır.</remarks>
+    /// <param name="scope"><see cref="RoleManager{T}"/> servisini çözümlemek için kullanılan <see cref="IServiceScope"/>.</param>
+    /// <exception cref="Exception">Kimlik sistemindeki bir hata nedeniyle rol oluşturma işlemi başarısız olursa fırlatılır.</exception>
+    private static void AddDefaultRoles(IServiceScope scope)
+    {
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+        var roles = new List<IdentityRole>
+        {
+            new IdentityRole(IdentityServerConstants.RoleNameSuperUser),
+            new IdentityRole(IdentityServerConstants.RoleNameAdmin)
+        };
+
+        var serverRoles = roleManager.Roles.ToList();
+
+        foreach (var role in roles)
+        {
+            if (!serverRoles.Exists(r => r.Name == role.Name))
+            {
+                var result = roleManager.CreateAsync(role).Result;
+
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+            }
+        }
+
+        Log.Debug("Default roles created");
+
+    }
+
+    /// <summary>
+    /// Sistemde şu anda hiç kullanıcı yoksa varsayılan bir yönetici kullanıcı ekler.
+    /// </summary>
+    /// <remarks>Bu metot, önceden tanımlanmış kimlik bilgileri ve özelliklere sahip varsayılan bir yönetici kullanıcı
+    /// oluşturur. Yalnızca, hiç kullanıcının bulunmasının beklenmediği başlatma veya kurulum süreçlerinde çağrılmalıdır.
+    /// Eğer bir kullanıcı zaten mevcutsa, metot herhangi bir işlem yapmaz.</remarks>
+    /// <param name="scope">Kullanıcı yöneticisi gibi bağımlılıkları çözümlemek için kullanılan <see cref="IServiceScope"/>.</param>
+    /// <param name="tenantDto">Varsayılan kullanıcıyı belirli bir şirketle ilişkilendirmek için kullanılan şirket bilgisi.</param>
+    /// <exception cref="Exception">Kullanıcı oluşturma süreci başarısız olursa fırlatılır. İstisna mesajı hata ile ilgili
+    /// ayrıntıları içerir.</exception>
+    private static async void AddDefaultUser(IServiceScope scope, TenantDto tenantDto)
     {
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
@@ -86,23 +139,30 @@ public class SeedData
 
             var adminUser = new ApplicationUser
             {
-                UserName = "scakir1978@hotmail.com",
-                Email = "scakir1978@hotmail.com",
+                UserName = IdentityServerConstants.SuperUserEmail,
+                Email = IdentityServerConstants.SuperUserEmail,
                 Locale = IdentityServerConstants.turkish,
-                Name = "Süleyman",
-                FamilyName = "Çakır",
-                Gender = "E",
-                Birthdate = new DateTime(1978,1,9),
-                Nickname = "scakir1978",
-                PreferredUsername = "scakir1978@hotmail.com",
+                Name = IdentityServerConstants.SuperUserName,
+                FamilyName = IdentityServerConstants.SuperUserFamilyName,
+                Gender = IdentityServerConstants.SuperUserGender,
+                Birthdate = new DateTime(1978, 1, 9),
+                Nickname = IdentityServerConstants.SuperUserNickname,
+                PreferredUsername = IdentityServerConstants.SuperUserEmail,
                 TenantId = tenantDto.Id
             };
 
-            var result = userManager.CreateAsync(adminUser, "Scag185489*").Result;
+            var result = userManager.CreateAsync(adminUser, IdentityServerConstants.SuperUserDefaultPassword).Result;
 
             if (!result.Succeeded)
             {
                 throw new Exception(result.Errors.First().Description);
+            }
+
+            var roleResult = await userManager.AddToRoleAsync(adminUser, IdentityServerConstants.RoleNameSuperUser);
+
+            if (!roleResult.Succeeded)
+            {
+                throw new Exception(roleResult.Errors.First().Description);
             }
 
             Log.Debug("administrator created");
@@ -110,18 +170,30 @@ public class SeedData
         }
     }
 
+    /// <summary>
+    /// Sistemde varsayılan bir şirketin (tenant) bulunmasını sağlar. Eğer hiç şirket yoksa,
+    /// önceden tanımlanmış değerlerle varsayılan bir şirket oluşturur. Eğer varsayılan bir şirket zaten mevcutsa,
+    /// onu getirir ve döndürür.
+    /// </summary>
+    /// <remarks>Bu metot, asenkron metotlara senkron çağrılar kullanır; bu durum belirli ortamlarda
+    /// potansiyel kilitlenmelere (deadlock) yol açabilir. Metodun, bu davranışın kabul edilebilir olduğu
+    /// bir bağlamda kullanıldığından emin olun.</remarks>
+    /// <param name="scope">Şirket yönetimi için gerekli servisleri çözümlemek amacıyla kullanılan <see cref="IServiceScope"/>.</param>
+    /// <returns>Varsayılan şirketi temsil eden bir <see cref="TenantDto"/>. Şirket yeni oluşturulduysa,
+    /// oluşturulan şirket döndürülür. Şirket zaten mevcutsa, mevcut şirket döndürülür.</returns>
+    /// <exception cref="Exception">Varsayılan şirketin oluşturulması veya mevcut şirketin getirilmesi başarısız olursa fırlatılır.</exception>
     private static TenantDto AddDefaultTenant(IServiceScope scope)
     {
         var tenantManager = scope.ServiceProvider.GetRequiredService<ITenantService>();
 
         var existsResponse = tenantManager.IsAnyTenantExistAsync().Result;
-        
+
         if (!existsResponse.IsSucceed || !existsResponse.Result)
         {
             var tenantCreateDto = new TenantCreateDto
             {
-                Id = Guid.Parse("894326A8-AA25-4A33-25C0-08DA904CDDC4"),
-                Name = "Console.Log Deneme Şirketi",
+                Id = Guid.NewGuid(),
+                Name = "Console.Log",
                 CreateDateTime = DateTime.Now,
                 Adress = new Adress
                 {
@@ -156,7 +228,7 @@ public class SeedData
         else
         {
             Log.Debug("Default tenant returned");
-            var tenantResponse = tenantManager.GetByNameAsync("Console.Log Deneme Şirketi").Result;
+            var tenantResponse = tenantManager.GetByNameAsync("Console.Log").Result;
             if (tenantResponse.IsSucceed)
             {
                 return tenantResponse.Result;

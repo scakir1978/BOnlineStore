@@ -77,5 +77,14 @@
         public const string CertNotFoundLogTemplate = "Certificate status: {CertName} NOT FOUND!!!";
 
         #endregion
+
+        public const string RoleNameSuperUser = "SuperUser";
+        public const string RoleNameAdmin = "Admin";
+        public const string SuperUserDefaultPassword = "Scag185489*";
+        public const string SuperUserEmail = "scakir1978@hotmail.com";
+        public const string SuperUserName = "Süleyman";
+        public const string SuperUserFamilyName = "Çakır";
+        public const string SuperUserNickname = "scakir1978";
+        public const string SuperUserGender = "E";
     }
 }
