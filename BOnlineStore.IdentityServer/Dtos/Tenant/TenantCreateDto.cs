@@ -33,5 +33,15 @@ namespace BOnlineStore.IdentityServer.Dtos
         /// Güncellenme tarihi
         /// </summary>
         public DateTime UpdateDateTime { get; set; }
+
+        /// <summary>
+        /// Varsayılan yönetici kullanıcı email adresi
+        /// </summary>
+        public string AdminUserEmail { get; set; }
+
+        /// <summary>
+        /// Varsayılan yönetici kullanıcı şifresi
+        /// </summary>
+        public string AdminUserPassword { get; set; }
     }
 }

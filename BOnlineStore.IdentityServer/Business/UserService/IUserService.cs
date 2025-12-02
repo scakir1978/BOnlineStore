@@ -14,6 +14,15 @@ namespace BOnlineStore.IdentityServer.Business.UserService
         Task<Response<UserDto>> CreateAsync(UserCreateDto userCreateDto);
 
         /// <summary>
+        /// Tenant için yeni varsayýlan kullanýcý oluþturur
+        /// </summary>
+        /// <param name="tenantId">Þirket kimliði</param>
+        /// <param name="adminUserEmail">Admin kullanýcý email adresi</param>
+        /// <param name="adminUserPassword">Admin kullanýcý þifresi</param>
+        /// <returns>Oluþturulan kullanýcý bilgileri ve iþlem sonucu</returns>
+        Task<Response<UserDto>> CreateDefaultUserAsync(Guid tenantId, string adminUserEmail, string adminUserPassword);
+
+        /// <summary>
         /// Kullanýcý bilgilerini günceller
         /// </summary>
         /// <param name="userUpdateDto">Güncellenecek kullanýcý bilgileri</param>

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Dtos;
 using BOnlineStore.IdentityServer.Models;
@@ -19,12 +20,14 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
         protected readonly ApplicationDbContext _context;
         protected readonly IMapper _mapper;
         private readonly IStringLocalizer<Language> _stringLocalizer;
+        private readonly IUserService _userManager;
 
-        public TenantManager(ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer)
+        public TenantManager(ApplicationDbContext context, IMapper mapper, IStringLocalizer<Language> stringLocalizer, IUserService userManager)
         {
             _context = context;
             _mapper = mapper;
             _stringLocalizer = stringLocalizer;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -34,6 +37,8 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
         /// <returns>Oluşturulan tenant ve işlem sonucu</returns>
         public async Task<Response<TenantDto>> CreateAsync(TenantCreateDto tenantDto)
         {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
                 // Tenant zaten var mı kontrol et
@@ -54,10 +59,26 @@ namespace BOnlineStore.IdentityServer.Business.TenantService
                 await _context.SaveChangesAsync();
 
                 var createdTenantDto = _mapper.Map<TenantDto>(result.Entity);
+
+                // Varsayılan admin kullanıcısını oluştur
+                var resultUser = await _userManager.CreateDefaultUserAsync(tenant.Id, tenantDto.AdminUserEmail, tenantDto.AdminUserPassword);
+                if (!resultUser.IsSucceed)
+                {
+                    await transaction.RollbackAsync();
+                    return Response<TenantDto>.Fail(
+                        new Error
+                        {
+                            ErrorCode = nameof(IdentityServerKeys.CreateDefaultAdminUserError),
+                            Message = _stringLocalizer[IdentityServerKeys.CreateDefaultAdminUserError]
+                        }, HttpStatusCode.InternalServerError);
+                }
+
+                await transaction.CommitAsync();
                 return Response<TenantDto>.Success(createdTenantDto, HttpStatusCode.Created);
             }
             catch (Exception ex)
             {
+                await transaction.RollbackAsync();
                 return Response<TenantDto>.Fail(
                     new Error
                     {
