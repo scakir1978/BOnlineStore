@@ -167,10 +167,10 @@ namespace BOnlineStore.IdentityServer.Business.UserService
 
                 var result = await _userManager.CreateAsync(adminUser, adminUserPassword);
 
-                if (result.Succeeded)
+                if (!result.Succeeded)
                 {
-                    var userDto = _mapper.Map<UserDto>(adminUser);
-                    return Response<UserDto>.Success(userDto, HttpStatusCode.Created);
+                    var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
+                    return Response<UserDto>.Fail(errors, HttpStatusCode.BadRequest);                    
                 }
 
                 var roleResult =  await _userManager.AddToRoleAsync(adminUser, IdentityServerConstants.RoleNameAdmin);
@@ -180,8 +180,9 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                     return Response<UserDto>.Fail(roleErrors, HttpStatusCode.BadRequest);
                 }
 
-                var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
-                return Response<UserDto>.Fail(errors, HttpStatusCode.BadRequest);
+                var userDto = _mapper.Map<UserDto>(adminUser);
+                return Response<UserDto>.Success(userDto, HttpStatusCode.Created);
+
             }
             catch (Exception ex)
             {
