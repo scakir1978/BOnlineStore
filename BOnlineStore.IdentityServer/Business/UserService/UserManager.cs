@@ -173,6 +173,13 @@ namespace BOnlineStore.IdentityServer.Business.UserService
                     return Response<UserDto>.Success(userDto, HttpStatusCode.Created);
                 }
 
+                var roleResult =  await _userManager.AddToRoleAsync(adminUser, IdentityServerConstants.RoleNameAdmin);
+                if (!roleResult.Succeeded)
+                {
+                    var roleErrors = roleResult.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
+                    return Response<UserDto>.Fail(roleErrors, HttpStatusCode.BadRequest);
+                }
+
                 var errors = result.Errors.Select(e => new Error { ErrorCode = e.Code, Message = e.Description }).ToList();
                 return Response<UserDto>.Fail(errors, HttpStatusCode.BadRequest);
             }
