@@ -692,8 +692,12 @@
     <value>Kullanıcı zaten bu role sahip</value>
     <comment>User already has this role</comment>
   </data>
-	<data name="GetUserRolesError" xml:space="preserve">
+  <data name="GetUserRolesError" xml:space="preserve">
     <value>Kullanıcı rolleri getirilirken hata oluştu: {0}</value>
     <comment>An error occurred while getting user roles: {0}</comment>
+  </data>
+  <data name="CreateDefaultAdminUserError" xml:space="preserve">
+    <value>Varsayılan admin kullanıcısı oluşturulurken hata oluştu</value>
+    <comment>An error occurred while creating default admin user</comment>
   </data>
 </root>

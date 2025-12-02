@@ -1,13 +1,16 @@
 using AutoMapper;
 using BOnlineStore.IdentityServer.Business.TenantService;
+using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Dtos;
+using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
 using BOnlineStore.Localization.Constants;
 using BOnlineStore.Shared.Dtos;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Localization;
 using Moq;
 using System.Net;
@@ -20,17 +23,20 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         private readonly ApplicationDbContext _context;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IStringLocalizer<Language>> _mockStringLocalizer;
+        private readonly Mock<IUserService> _mockUserService;
         private readonly TenantManager _tenantManager;
 
         public TenantManagerTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .ConfigureWarnings(warnings => warnings.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
             _context = new ApplicationDbContext(options);
             _mockMapper = new Mock<IMapper>();
             _mockStringLocalizer = new Mock<IStringLocalizer<Language>>();
+            _mockUserService = new Mock<IUserService>();
             
             // Setup default localizer behavior
             _mockStringLocalizer
@@ -54,7 +60,7 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 .Setup(x => x[IdentityServerKeys.TenantNotFound])
                 .Returns(new LocalizedString(IdentityServerKeys.TenantNotFound, "Tenant bulunamadý"));
 
-            _tenantManager = new TenantManager(_context, _mockMapper.Object, _mockStringLocalizer.Object);
+            _tenantManager = new TenantManager(_context, _mockMapper.Object, _mockStringLocalizer.Object, _mockUserService.Object);
         }
 
         #region CreateAsync Tests
@@ -68,7 +74,9 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
                 Id = Guid.NewGuid(),
                 Name = "Test Firma",
                 CreateDateTime = DateTime.Now,
-                UpdateDateTime = DateTime.Now
+                UpdateDateTime = DateTime.Now,
+                AdminUserEmail = "scakir1978@hotmail.com",
+                AdminUserPassword = "Admin123!"
             };
 
             var tenant = new Tenant
@@ -89,6 +97,13 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
 
             _mockMapper.Setup(m => m.Map<Tenant>(tenantCreateDto)).Returns(tenant);
             _mockMapper.Setup(m => m.Map<TenantDto>(It.IsAny<Tenant>())).Returns(expectedTenantDto);
+            
+            // Mock CreateDefaultUserAsync to return success
+            _mockUserService.Setup(x => x.CreateDefaultUserAsync(
+                It.IsAny<Guid>(), 
+                It.IsAny<string>(), 
+                It.IsAny<string>()))
+                .ReturnsAsync(Response<UserDto>.Success(new UserDto(), HttpStatusCode.Created));
 
             // Act
             var result = await _tenantManager.CreateAsync(tenantCreateDto);

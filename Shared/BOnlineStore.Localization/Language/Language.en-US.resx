@@ -833,4 +833,8 @@
     <value>An error occurred while getting user roles: {0}</value>
     <comment>Kullanıcı rolleri getirilirken hata oluştu: {0}</comment>
   </data>
+  <data name="CreateDefaultAdminUserError" xml:space="preserve">
+    <value>An error occurred while creating default admin user</value>
+    <comment>Varsayılan admin kullanıcısı oluşturulurken hata oluştu</comment>
+  </data>
 </root>

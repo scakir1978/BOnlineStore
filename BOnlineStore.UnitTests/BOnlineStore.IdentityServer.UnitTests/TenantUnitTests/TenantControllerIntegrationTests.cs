@@ -1,12 +1,16 @@
 using BOnlineStore.IdentityServer.Business.TenantService;
+using BOnlineStore.IdentityServer.Business.UserService;
 using BOnlineStore.IdentityServer.Controllers;
 using BOnlineStore.IdentityServer.Data;
 using BOnlineStore.IdentityServer.Dtos;
+using BOnlineStore.IdentityServer.Dtos.User;
 using BOnlineStore.IdentityServer.Models;
 using BOnlineStore.Localization;
+using BOnlineStore.Shared.Dtos;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Moq;
@@ -23,11 +27,13 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
         private readonly TenantController _controller;
         private readonly ITenantService _tenantService;
         private readonly Mock<IStringLocalizer<Language>> _mockStringLocalizer;
+        private readonly Mock<IUserService> _mockUserService;
 
         public TenantControllerIntegrationTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .ConfigureWarnings(warnings => warnings.Ignore(InMemoryEventId.TransactionIgnoredWarning))
                 .Options;
 
             _context = new ApplicationDbContext(options);
@@ -59,13 +65,21 @@ namespace BOnlineStore.IdentityServer.UnitTests.TenantUnitTests
             var mapper = mapperConfig.CreateMapper();
 
             _mockStringLocalizer = new Mock<IStringLocalizer<Language>>();
+            _mockUserService = new Mock<IUserService>();
             
             // Setup default localizer behavior
             _mockStringLocalizer
                 .Setup(x => x[It.IsAny<string>()])
                 .Returns((string key) => new LocalizedString(key, key));
 
-            _tenantService = new TenantManager(_context, mapper, _mockStringLocalizer.Object);
+            // Setup default CreateDefaultUserAsync mock
+            _mockUserService.Setup(x => x.CreateDefaultUserAsync(
+                It.IsAny<Guid>(), 
+                It.IsAny<string>(), 
+                It.IsAny<string>()))
+                .ReturnsAsync(Response<UserDto>.Success(new UserDto(), HttpStatusCode.Created));
+
+            _tenantService = new TenantManager(_context, mapper, _mockStringLocalizer.Object, _mockUserService.Object);
             _controller = new TenantController(_tenantService, _mockStringLocalizer.Object);
         }
 

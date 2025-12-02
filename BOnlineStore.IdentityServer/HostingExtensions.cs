@@ -36,7 +36,7 @@ internal static class HostingExtensions
         builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddScoped<ITenantService, TenantManager>();
-        builder.Services.AddScoped<IUserService, UserManager>();
+        builder.Services.AddScoped<IUserService, IUserManager>();
         builder.Services.AddScoped<IRoleService, RoleManager>();
         builder.Services.AddScoped<IUserRoleService, UserRoleManager>();
 
