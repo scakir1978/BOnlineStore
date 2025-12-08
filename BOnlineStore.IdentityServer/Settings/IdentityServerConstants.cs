@@ -79,8 +79,7 @@
         #endregion
 
         public const string RoleNameSuperUser = "SuperUser";
-        public const string RoleNameAdmin = "Admin";
-        public const string RoleNameNormal = "Normal";
+        public const string RoleNameAdmin = "Admin";        
         public const string SuperUserDefaultPassword = "Scag185489*";
         public const string SuperUserEmail = "scakir1978@hotmail.com";
         public const string SuperUserName = "Süleyman";
