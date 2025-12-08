@@ -1,6 +1,6 @@
 # Bitbucket Pipelines CI/CD Configuration for Multiple Services
 # This pipeline automatically builds and pushes Docker images when code is pushed to repository
-# Prerequisites: $DOCKERHUB_USERNAME, $DOCKERHUB_PASSWORD setup as deployment variables
+# Prerequisites: $DOCKERHUB_USERNAME, $DOCKERHUB_PASSWORD, $CLOUD_BUILDER_NAME setup as deployment variables
 
 image: atlassian/default-image:3
 
@@ -32,24 +32,25 @@ pipelines:
                 - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Login to Docker Hub using environment variables
+                # Setup Docker Buildx
+                - echo "Setting up Docker Buildx for Cloud Builder..."
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                
+                # Login to Docker Hub and setup Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
                 
-                # Build the Docker image
-                - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:latest .
-                - docker tag scakir1978/definitions.bonlinestore.com:latest scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Push both latest and commit-specific tags
-                - docker push scakir1978/definitions.bonlinestore.com:latest
-                - docker push scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Clean up local images to save space
-                - docker rmi scakir1978/definitions.bonlinestore.com:latest || true
-                - docker rmi scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT || true
+                # Build and push using Docker Cloud Builder (multi-platform)
+                - echo "Building with Docker Cloud Builder..."
+                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:latest --tag scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - echo "Cloud build completed successfully!"
               services:
                 - docker
               caches:
-                - docker-cache
                 - dotnetcore
               artifacts:
                 - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
@@ -65,24 +66,24 @@ pipelines:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
               script:
-                # Login to Docker Hub using environment variables
+                # Setup Docker Buildx
+                - echo "Setting up Docker Buildx for Cloud Builder..."
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                
+                # Login to Docker Hub and setup Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
                 
-                # Build the Docker image
-                - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:latest .
-                - docker tag scakir1978/production.bonlinestore.com:latest scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Push both latest and commit-specific tags
-                - docker push scakir1978/production.bonlinestore.com:latest
-                - docker push scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Clean up local images to save space
-                - docker rmi scakir1978/production.bonlinestore.com:latest || true
-                - docker rmi scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT || true
+                # Build and push using Docker Cloud Builder
+                - echo "Building with Docker Cloud Builder..."
+                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:latest --tag scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - echo "Cloud build completed successfully!"
               services:
                 - docker
-              caches:
-                - docker-cache
 
           # BFF Service Pipeline
           - step:
@@ -95,24 +96,24 @@ pipelines:
                     - "BOnlineStore.Services/BFF/**"
                     - "Shared/**"
               script:
-                # Login to Docker Hub using environment variables
+                # Setup Docker Buildx
+                - echo "Setting up Docker Buildx for Cloud Builder..."
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                
+                # Login to Docker Hub and setup Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
                 
-                # Build the Docker image
-                - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:latest .
-                - docker tag scakir1978/bff.bonlinestore.com:latest scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Push both latest and commit-specific tags
-                - docker push scakir1978/bff.bonlinestore.com:latest
-                - docker push scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Clean up local images to save space
-                - docker rmi scakir1978/bff.bonlinestore.com:latest || true
-                - docker rmi scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT || true
+                # Build and push using Docker Cloud Builder
+                - echo "Building with Docker Cloud Builder..."
+                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:latest --tag scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - echo "Cloud build completed successfully!"
               services:
                 - docker
-              caches:
-                - docker-cache
 
           # UI Angular Project Pipeline
           - step:
@@ -124,29 +125,26 @@ pipelines:
                   includePaths:
                     - "BOnlineStore.UI/ClientApp/**"
               script:
-                # Set memory optimization environment variables
-                - export NODE_OPTIONS="--max_old_space_size=3072"
-                - export DOCKER_BUILDKIT=1
+                # Setup Docker Buildx
+                - echo "Setting up Docker Buildx for Cloud Builder..."
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
-                # Login to Docker Hub using environment variables
+                # Login to Docker Hub and setup Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
                 
-                # Change to the Angular project directory and build the Docker image
+                # Build and push using Docker Cloud Builder
                 - cd BOnlineStore.UI/ClientApp
-                - docker build --memory=6g --memory-swap=8g -f Dockerfile -t scakir1978/ui.bonlinestore.com:latest .
-                - docker tag scakir1978/ui.bonlinestore.com:latest scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Push both latest and commit-specific tags
-                - docker push scakir1978/ui.bonlinestore.com:latest
-                - docker push scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Clean up local images to save space
-                - docker rmi scakir1978/ui.bonlinestore.com:latest || true
-                - docker rmi scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT || true
+                - echo "Building with Docker Cloud Builder..."
+                - docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:latest --tag scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - echo "Cloud build completed successfully!"
               services:
                 - docker
               caches:
-                - docker-cache
                 - node
 
           # IdentityServer Pipeline
@@ -172,24 +170,25 @@ pipelines:
                 - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Login to Docker Hub using environment variables
+                # Setup Docker Buildx
+                - echo "Setting up Docker Buildx for Cloud Builder..."
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                
+                # Login to Docker Hub and setup Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
                 
-                # Build the Docker image
-                - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:latest .
-                - docker tag scakir1978/identityserver.bonlinestore.com:latest scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Push both latest and commit-specific tags
-                - docker push scakir1978/identityserver.bonlinestore.com:latest
-                - docker push scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT
-                
-                # Clean up local images to save space
-                - docker rmi scakir1978/identityserver.bonlinestore.com:latest || true
-                - docker rmi scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT || true
+                # Build and push using Docker Cloud Builder
+                - echo "Building with Docker Cloud Builder..."
+                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:latest --tag scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - echo "Cloud build completed successfully!"
               services:
                 - docker
               caches:
-                - docker-cache
                 - dotnetcore
               artifacts:
                 - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
@@ -218,19 +217,20 @@ pipelines:
                 - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-dev-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Login to Docker Hub
+                # Setup Docker Buildx
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                
+                # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-                
-                # Build and push development version
-                - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT .
-                - docker push scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT
-                
-                # Clean up
-                - docker rmi scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
               caches:
-                - docker-cache
                 - dotnetcore
               artifacts:
                 - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
@@ -245,19 +245,20 @@ pipelines:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
               script:
-                # Login to Docker Hub
+                # Setup Docker Buildx
+                - echo "Setting up Docker Buildx for Cloud Builder..."
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                
+                # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-                
-                # Build and push development version
-                - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT .
-                - docker push scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT
-                
-                # Clean up
-                - docker rmi scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
-              caches:
-                - docker-cache
 
           # BFF Service Development Pipeline
           - step:
@@ -269,48 +270,47 @@ pipelines:
                     - "BOnlineStore.Services/BFF/**"
                     - "Shared/**"
               script:
-                # Login to Docker Hub
+                # Setup Docker Buildx
+                - echo "Setting up Docker Buildx for Cloud Builder..."
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                
+                # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-                
-                # Build and push development version
-                - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT .
-                - docker push scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT
-                
-                # Clean up
-                - docker rmi scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
-              caches:
-                - docker-cache
 
           # UI Angular Project Development Pipeline
           - step:
               name: Build and Deploy UI (Development)
               deployment: UIDevelopmentDeploy
-              size: 4x
+              size: 2x
               condition:
                 changesets:
                   includePaths:
                     - "BOnlineStore.UI/ClientApp/**"
               script:
-                # Set memory optimization environment variables
-                - export NODE_OPTIONS="--max_old_space_size=3072"
-                - export DOCKER_BUILDKIT=1
+                # Setup Docker Buildx
+                - echo "Setting up Docker Buildx for Cloud Builder..."
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
-                # Login to Docker Hub
+                # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-                
-                # Change to the Angular project directory and build development version
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
                 - cd BOnlineStore.UI/ClientApp
-                - docker build --memory=6g --memory-swap=8g -f Dockerfile -t scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT .
-                - docker push scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT
-                
-                # Clean up
-                - docker rmi scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+                - docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
               caches:
-                - docker-cache
                 - node
 
           # IdentityServer Development Pipeline
@@ -335,19 +335,20 @@ pipelines:
                 - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-dev-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Login to Docker Hub
+                # Setup Docker Buildx
+                - mkdir -vp ~/.docker/cli-plugins/
+                - ARCH=amd64
+                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                
+                # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-                
-                # Build and push development version
-                - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT .
-                - docker push scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT
-                
-                # Clean up
-                - docker rmi scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT || true
+                - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
               caches:
-                - docker-cache
                 - dotnetcore
               artifacts:
                 - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
@@ -372,15 +373,20 @@ pipelines:
             - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-manual-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:latest .
-            - docker tag scakir1978/definitions.bonlinestore.com:latest scakir1978/definitions.bonlinestore.com:prod-$BITBUCKET_COMMIT
-            - docker push scakir1978/definitions.bonlinestore.com:latest
-            - docker push scakir1978/definitions.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:latest --tag scakir1978/definitions.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
-            - docker-cache
             - dotnetcore
           artifacts:
             - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
@@ -401,13 +407,20 @@ pipelines:
             - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-staging-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT .
-            - docker push scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
-            - docker-cache
             - dotnetcore
           artifacts:
             - BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
@@ -419,28 +432,38 @@ pipelines:
           deployment: ProdSvcProdManual
           size: 2x
           script:
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:latest .
-            - docker tag scakir1978/production.bonlinestore.com:latest scakir1978/production.bonlinestore.com:prod-$BITBUCKET_COMMIT
-            - docker push scakir1978/production.bonlinestore.com:latest
-            - docker push scakir1978/production.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:latest --tag scakir1978/production.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
-          caches:
-            - docker-cache
 
     production-service-staging:
       - step:
           name: Manual Staging Deploy - Production Service
           deployment: ProdSvcStagingManual
           script:
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t scakir1978/production.bonlinestore.com:staging-$BITBUCKET_COMMIT .
-            - docker push scakir1978/production.bonlinestore.com:staging-$BITBUCKET_COMMIT
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
-          caches:
-            - docker-cache
 
     # BFF Service Manual Deployments
     bff-service-production:
@@ -449,70 +472,84 @@ pipelines:
           deployment: BFFProdManual
           size: 2x
           script:
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:latest .
-            - docker tag scakir1978/bff.bonlinestore.com:latest scakir1978/bff.bonlinestore.com:prod-$BITBUCKET_COMMIT
-            - docker push scakir1978/bff.bonlinestore.com:latest
-            - docker push scakir1978/bff.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:latest --tag scakir1978/bff.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
-          caches:
-            - docker-cache
 
     bff-service-staging:
       - step:
           name: Manual Staging Deploy - BFF Service
           deployment: BFFStagingManual
           script:
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t scakir1978/bff.bonlinestore.com:staging-$BITBUCKET_COMMIT .
-            - docker push scakir1978/bff.bonlinestore.com:staging-$BITBUCKET_COMMIT
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
-          caches:
-            - docker-cache
 
     # UI Angular Project Manual Deployments
     ui-production:
       - step:
           name: Manual Production Deploy - UI
           deployment: UIProdManual
-          size: 4x
+          size: 2x
           script:
-            # Set memory optimization environment variables
-            - export NODE_OPTIONS="--max_old_space_size=3072"
-            - export DOCKER_BUILDKIT=1
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
             - cd BOnlineStore.UI/ClientApp
-            - docker build --memory=6g --memory-swap=8g -f Dockerfile -t scakir1978/ui.bonlinestore.com:latest .
-            - docker tag scakir1978/ui.bonlinestore.com:latest scakir1978/ui.bonlinestore.com:prod-$BITBUCKET_COMMIT
-            - docker push scakir1978/ui.bonlinestore.com:latest
-            - docker push scakir1978/ui.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:latest --tag scakir1978/ui.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
-            - docker-cache
             - node
 
     ui-staging:
       - step:
           name: Manual Staging Deploy - UI
           deployment: UIStagingManual
-          size: 4x
+          size: 2x
           script:
-            # Set memory optimization environment variables
-            - export NODE_OPTIONS="--max_old_space_size=3072"
-            - export DOCKER_BUILDKIT=1
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
             - cd BOnlineStore.UI/ClientApp
-            - docker build --memory=6g --memory-swap=8g -f Dockerfile -t scakir1978/ui.bonlinestore.com:staging-$BITBUCKET_COMMIT .
-            - docker push scakir1978/ui.bonlinestore.com:staging-$BITBUCKET_COMMIT
+            - docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
-            - docker-cache
             - node
 
     # IdentityServer Manual Deployments
@@ -533,15 +570,20 @@ pipelines:
             - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-manual-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:latest .
-            - docker tag scakir1978/identityserver.bonlinestore.com:latest scakir1978/identityserver.bonlinestore.com:prod-$BITBUCKET_COMMIT
-            - docker push scakir1978/identityserver.bonlinestore.com:latest
-            - docker push scakir1978/identityserver.bonlinestore.com:prod-$BITBUCKET_COMMIT
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:latest --tag scakir1978/identityserver.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
-            - docker-cache
             - dotnetcore
           artifacts:
             - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
@@ -562,13 +604,20 @@ pipelines:
             - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-staging-test-results.trx" --no-restore
             - echo "Unit tests passed successfully!"
             
+            # Setup Docker Buildx
+            - mkdir -vp ~/.docker/cli-plugins/
+            - ARCH=amd64
+            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - chmod a+x ~/.docker/cli-plugins/docker-buildx
+            
+            # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-            - docker build -f BOnlineStore.IdentityServer/Dockerfile -t scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT .
-            - docker push scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT
+            - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
+            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
-            - docker-cache
             - dotnetcore
           artifacts:
             - BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
@@ -599,7 +648,7 @@ pipelines:
                 - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-pr-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Build Docker image
+                # Build Docker image (no push for PR)
                 - docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
@@ -620,7 +669,7 @@ pipelines:
                     - "BOnlineStore.Services/Production/**"
                     - "Shared/**"
               script:
-                # Build Docker image
+                # Build Docker image (no push for PR)
                 - docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t production-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
@@ -638,7 +687,7 @@ pipelines:
                     - "BOnlineStore.Services/BFF/**"
                     - "Shared/**"
               script:
-                # Build Docker image
+                # Build Docker image (no push for PR)
                 - docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t bff-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
@@ -659,7 +708,7 @@ pipelines:
                 - export NODE_OPTIONS="--max_old_space_size=3072"
                 - export DOCKER_BUILDKIT=1
                 
-                # Build Docker image
+                # Build Docker image (no push for PR)
                 - cd BOnlineStore.UI/ClientApp
                 - docker build --memory=6g --memory-swap=8g -f Dockerfile -t ui-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
@@ -691,7 +740,7 @@ pipelines:
                 - dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-pr-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Build Docker image
+                # Build Docker image (no push for PR)
                 - docker build -f BOnlineStore.IdentityServer/Dockerfile -t identityserver-test:$BITBUCKET_COMMIT .
                 - echo "Docker image built successfully for pull request validation"
               services:
@@ -707,6 +756,5 @@ definitions:
     docker:
       memory: 7168
   caches:
-    docker-cache: ~/.docker
     node: node_modules
     dotnetcore: ~/.nuget/packages
