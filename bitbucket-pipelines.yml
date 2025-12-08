@@ -32,13 +32,13 @@ pipelines:
                 - dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-test-results.trx" --no-restore
                 - echo "Unit tests passed successfully!"
                 
-                # Setup Docker Buildx
+                # Setup Docker Buildx (using direct URL method without jq)
                 - echo "Setting up Docker Buildx for Cloud Builder..."
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
+                - docker buildx version
                 
                 # Login to Docker Hub and setup Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
@@ -69,9 +69,8 @@ pipelines:
                 # Setup Docker Buildx
                 - echo "Setting up Docker Buildx for Cloud Builder..."
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login to Docker Hub and setup Cloud Builder
@@ -99,9 +98,8 @@ pipelines:
                 # Setup Docker Buildx
                 - echo "Setting up Docker Buildx for Cloud Builder..."
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login to Docker Hub and setup Cloud Builder
@@ -128,9 +126,8 @@ pipelines:
                 # Setup Docker Buildx
                 - echo "Setting up Docker Buildx for Cloud Builder..."
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login to Docker Hub and setup Cloud Builder
@@ -173,9 +170,8 @@ pipelines:
                 # Setup Docker Buildx
                 - echo "Setting up Docker Buildx for Cloud Builder..."
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login to Docker Hub and setup Cloud Builder
@@ -219,9 +215,8 @@ pipelines:
                 
                 # Setup Docker Buildx
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login and build with Cloud Builder
@@ -246,11 +241,9 @@ pipelines:
                     - "Shared/**"
               script:
                 # Setup Docker Buildx
-                - echo "Setting up Docker Buildx for Cloud Builder..."
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login and build with Cloud Builder
@@ -271,11 +264,9 @@ pipelines:
                     - "Shared/**"
               script:
                 # Setup Docker Buildx
-                - echo "Setting up Docker Buildx for Cloud Builder..."
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login and build with Cloud Builder
@@ -296,11 +287,9 @@ pipelines:
                     - "BOnlineStore.UI/ClientApp/**"
               script:
                 # Setup Docker Buildx
-                - echo "Setting up Docker Buildx for Cloud Builder..."
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login and build with Cloud Builder
@@ -337,9 +326,8 @@ pipelines:
                 
                 # Setup Docker Buildx
                 - mkdir -vp ~/.docker/cli-plugins/
-                - ARCH=amd64
-                - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+                - BUILDX_VERSION=v0.30.1
+                - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
                 - chmod a+x ~/.docker/cli-plugins/docker-buildx
                 
                 # Login and build with Cloud Builder
@@ -375,9 +363,8 @@ pipelines:
             
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -409,9 +396,8 @@ pipelines:
             
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -434,9 +420,8 @@ pipelines:
           script:
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -453,9 +438,8 @@ pipelines:
           script:
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -474,9 +458,8 @@ pipelines:
           script:
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -493,9 +476,8 @@ pipelines:
           script:
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -514,9 +496,8 @@ pipelines:
           script:
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -537,9 +518,8 @@ pipelines:
           script:
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -572,9 +552,8 @@ pipelines:
             
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -606,9 +585,8 @@ pipelines:
             
             # Setup Docker Buildx
             - mkdir -vp ~/.docker/cli-plugins/
-            - ARCH=amd64
-            - BUILDX_URL=$(curl -s https://raw.githubusercontent.com/docker/actions-toolkit/main/.github/buildx-lab-releases.json | jq -r ".latest.assets[] | select(endswith(\"linux-$ARCH\"))")
-            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx $BUILDX_URL
+            - BUILDX_VERSION=v0.30.1
+            - curl --silent -L --output ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/${BUILDX_VERSION}/buildx-${BUILDX_VERSION}.linux-amd64"
             - chmod a+x ~/.docker/cli-plugins/docker-buildx
             
             # Login and build with Cloud Builder
@@ -756,5 +734,6 @@ definitions:
     docker:
       memory: 7168
   caches:
+    docker-cache: ~/.docker
     node: node_modules
     dotnetcore: ~/.nuget/packages
