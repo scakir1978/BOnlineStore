@@ -47,7 +47,7 @@ pipelines:
                 
                 # Build and push using Docker Cloud Builder (multi-platform)
                 - echo "Building with Docker Cloud Builder..."
-                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:latest --tag scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:latest --tag scakir1978/definitions.bonlinestore.com:$BITBUCKET_COMMIT --push .
                 - echo "Cloud build completed successfully!"
               services:
                 - docker
@@ -82,7 +82,7 @@ pipelines:
                 
                 # Build and push using Docker Cloud Builder
                 - echo "Building with Docker Cloud Builder..."
-                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:latest --tag scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:latest --tag scakir1978/production.bonlinestore.com:$BITBUCKET_COMMIT --push .
                 - echo "Cloud build completed successfully!"
               services:
                 - docker
@@ -113,7 +113,7 @@ pipelines:
                 
                 # Build and push using Docker Cloud Builder
                 - echo "Building with Docker Cloud Builder..."
-                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:latest --tag scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:latest --tag scakir1978/bff.bonlinestore.com:$BITBUCKET_COMMIT --push .
                 - echo "Cloud build completed successfully!"
               services:
                 - docker
@@ -144,7 +144,7 @@ pipelines:
                 # Build and push using Docker Cloud Builder
                 - cd BOnlineStore.UI/ClientApp
                 - echo "Building with Docker Cloud Builder..."
-                - docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:latest --tag scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:latest --tag scakir1978/ui.bonlinestore.com:$BITBUCKET_COMMIT --push .
                 - echo "Cloud build completed successfully!"
               services:
                 - docker
@@ -189,7 +189,7 @@ pipelines:
                 
                 # Build and push using Docker Cloud Builder
                 - echo "Building with Docker Cloud Builder..."
-                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:latest --tag scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:latest --tag scakir1978/identityserver.bonlinestore.com:$BITBUCKET_COMMIT --push .
                 - echo "Cloud build completed successfully!"
               services:
                 - docker
@@ -232,7 +232,7 @@ pipelines:
                 # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
               caches:
@@ -262,7 +262,7 @@ pipelines:
                 # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
 
@@ -288,7 +288,7 @@ pipelines:
                 # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
 
@@ -315,7 +315,7 @@ pipelines:
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
                 - cd BOnlineStore.UI/ClientApp
-                - docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
               caches:
@@ -353,7 +353,7 @@ pipelines:
                 # Login and build with Cloud Builder
                 - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
                 - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-                - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
+                - docker buildx build --platform linux/amd64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:dev-$BITBUCKET_COMMIT --push .
               services:
                 - docker
               caches:
@@ -391,7 +391,7 @@ pipelines:
             # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:latest --tag scakir1978/definitions.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:latest --tag scakir1978/definitions.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
@@ -425,7 +425,7 @@ pipelines:
             # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile --tag scakir1978/definitions.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
@@ -450,7 +450,7 @@ pipelines:
             # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:latest --tag scakir1978/production.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:latest --tag scakir1978/production.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
 
@@ -469,7 +469,7 @@ pipelines:
             # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile --tag scakir1978/production.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
 
@@ -490,7 +490,7 @@ pipelines:
             # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:latest --tag scakir1978/bff.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:latest --tag scakir1978/bff.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
 
@@ -509,7 +509,7 @@ pipelines:
             # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile --tag scakir1978/bff.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
 
@@ -531,7 +531,7 @@ pipelines:
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
             - cd BOnlineStore.UI/ClientApp
-            - docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:latest --tag scakir1978/ui.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:latest --tag scakir1978/ui.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
@@ -554,7 +554,7 @@ pipelines:
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
             - cd BOnlineStore.UI/ClientApp
-            - docker buildx build --platform linux/amd64,linux/arm64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file Dockerfile --tag scakir1978/ui.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
@@ -588,7 +588,7 @@ pipelines:
             # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:latest --tag scakir1978/identityserver.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:latest --tag scakir1978/identityserver.bonlinestore.com:prod-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
@@ -622,7 +622,7 @@ pipelines:
             # Login and build with Cloud Builder
             - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             - docker buildx create --use --driver cloud "${DOCKERHUB_USERNAME}/${CLOUD_BUILDER_NAME}"
-            - docker buildx build --platform linux/amd64,linux/arm64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
+            - docker buildx build --platform linux/amd64 --file BOnlineStore.IdentityServer/Dockerfile --tag scakir1978/identityserver.bonlinestore.com:staging-$BITBUCKET_COMMIT --push .
           services:
             - docker
           caches:
