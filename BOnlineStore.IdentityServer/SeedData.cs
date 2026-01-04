@@ -228,15 +228,15 @@ public class SeedData
         else
         {
             Log.Debug("Default tenant returned");
-            var tenantResponse = tenantManager.GetByNameAsync("Console.Log").Result;
-            if (tenantResponse.IsSucceed)
+
+            var allTenants = tenantManager.GetAllAsync().Result.Result.ToList();
+
+            if (!allTenants.Any())
             {
-                return tenantResponse.Result;
+                throw new Exception("No tenants found in the system.");
             }
-            else
-            {
-                throw new Exception($"Failed to get tenant: {string.Join(", ", tenantResponse.Errors.Select(e => e.Message))}");
-            }
+
+            return allTenants.OrderByDescending(t => t.CreateDateTime).First();
         }
     }
 }
