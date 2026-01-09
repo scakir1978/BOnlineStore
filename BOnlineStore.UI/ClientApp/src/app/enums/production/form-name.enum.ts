@@ -5,4 +5,5 @@ export enum FormName {
   FormNo3,
   FormNo4,
   FormNo5,
+  FormNo6,
 }
