@@ -1,0 +1,890 @@
+name: CI/CD Pipeline for Multiple Services
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - '**'
+  workflow_dispatch:
+    inputs:
+      service:
+        description: 'Service to deploy'
+        required: true
+        type: choice
+        options:
+          - definitions-production
+          - definitions-staging
+          - production-service-production
+          - production-service-staging
+          - bff-service-production
+          - bff-service-staging
+          - ui-production
+          - ui-staging
+          - identityserver-production
+          - identityserver-staging
+
+env:
+  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+  CLOUD_BUILDER_NAME: ${{ secrets.CLOUD_BUILDER_NAME }}
+
+jobs:
+  # ==================== MAIN BRANCH - PRODUCTION DEPLOYMENTS ====================
+  definitions-service-production:
+    name: Build and Deploy Definitions Service
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: DefinitionsProductionDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            definitions:
+              - 'BOnlineStore.Services/Definitions/**'
+              - 'Shared/**'
+              - 'BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**'
+
+      - name: Setup .NET 8
+        if: steps.changes.outputs.definitions == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run unit tests
+        if: steps.changes.outputs.definitions == 'true'
+        run: |
+          echo "Running unit tests for Definitions Service..."
+          dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+          dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-test-results.trx" --no-restore
+          echo "Unit tests passed successfully!"
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.definitions == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.definitions == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.definitions == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/definitions.bonlinestore.com:latest
+            scakir1978/definitions.bonlinestore.com:${{ github.sha }}
+
+      - name: Upload test results
+        if: steps.changes.outputs.definitions == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: definitions-test-results
+          path: BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+
+  production-service-production:
+    name: Build and Deploy Production Service
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: ProductionProductionDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            production:
+              - 'BOnlineStore.Services/Production/**'
+              - 'Shared/**'
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.production == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.production == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.production == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/production.bonlinestore.com:latest
+            scakir1978/production.bonlinestore.com:${{ github.sha }}
+
+  bff-service-production:
+    name: Build and Deploy BFF Service
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: BFFProductionDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            bff:
+              - 'BOnlineStore.Services/BFF/**'
+              - 'Shared/**'
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.bff == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.bff == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.bff == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/bff.bonlinestore.com:latest
+            scakir1978/bff.bonlinestore.com:${{ github.sha }}
+
+  ui-production:
+    name: Build and Deploy UI
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: UIProductionDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            ui:
+              - 'BOnlineStore.UI/ClientApp/**'
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.ui == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.ui == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.ui == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: BOnlineStore.UI/ClientApp
+          file: BOnlineStore.UI/ClientApp/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/ui.bonlinestore.com:latest
+            scakir1978/ui.bonlinestore.com:${{ github.sha }}
+
+  identityserver-production:
+    name: Build and Deploy IdentityServer
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: IdentityProductionDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            identity:
+              - 'BOnlineStore.IdentityServer/**'
+              - 'Shared/**'
+              - 'BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**'
+
+      - name: Setup .NET 8
+        if: steps.changes.outputs.identity == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run unit tests
+        if: steps.changes.outputs.identity == 'true'
+        run: |
+          echo "Running unit tests for IdentityServer..."
+          dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+          dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-test-results.trx" --no-restore
+          echo "Unit tests passed successfully!"
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.identity == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.identity == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.identity == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.IdentityServer/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/identityserver.bonlinestore.com:latest
+            scakir1978/identityserver.bonlinestore.com:${{ github.sha }}
+
+      - name: Upload test results
+        if: steps.changes.outputs.identity == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: identity-test-results
+          path: BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
+
+  # ==================== DEVELOP BRANCH - DEVELOPMENT DEPLOYMENTS ====================
+  definitions-service-development:
+    name: Build and Deploy Definitions Service (Development)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: DefinitionsServiceDevelopmentDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            definitions:
+              - 'BOnlineStore.Services/Definitions/**'
+              - 'Shared/**'
+              - 'BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**'
+
+      - name: Setup .NET 8
+        if: steps.changes.outputs.definitions == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run unit tests
+        if: steps.changes.outputs.definitions == 'true'
+        run: |
+          echo "Running unit tests for Definitions Service..."
+          dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+          dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-dev-test-results.trx" --no-restore
+          echo "Unit tests passed successfully!"
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.definitions == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.definitions == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.definitions == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/definitions.bonlinestore.com:dev-${{ github.sha }}
+
+      - name: Upload test results
+        if: steps.changes.outputs.definitions == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: definitions-dev-test-results
+          path: BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+
+  production-service-development:
+    name: Build and Deploy Production Service (Development)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: ProductionServiceDevelopmentDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            production:
+              - 'BOnlineStore.Services/Production/**'
+              - 'Shared/**'
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.production == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.production == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.production == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/production.bonlinestore.com:dev-${{ github.sha }}
+
+  bff-service-development:
+    name: Build and Deploy BFF Service (Development)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: BFFServiceDevelopmentDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            bff:
+              - 'BOnlineStore.Services/BFF/**'
+              - 'Shared/**'
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.bff == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.bff == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.bff == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/bff.bonlinestore.com:dev-${{ github.sha }}
+
+  ui-development:
+    name: Build and Deploy UI (Development)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: UIDevelopmentDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            ui:
+              - 'BOnlineStore.UI/ClientApp/**'
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.ui == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.ui == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.ui == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: BOnlineStore.UI/ClientApp
+          file: BOnlineStore.UI/ClientApp/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/ui.bonlinestore.com:dev-${{ github.sha }}
+
+  identityserver-development:
+    name: Build and Deploy IdentityServer (Development)
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    environment: IdentityServerDevelopmentDeploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            identity:
+              - 'BOnlineStore.IdentityServer/**'
+              - 'Shared/**'
+              - 'BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**'
+
+      - name: Setup .NET 8
+        if: steps.changes.outputs.identity == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run unit tests
+        if: steps.changes.outputs.identity == 'true'
+        run: |
+          echo "Running unit tests for IdentityServer..."
+          dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+          dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-dev-test-results.trx" --no-restore
+          echo "Unit tests passed successfully!"
+
+      - name: Set up Docker Buildx
+        if: steps.changes.outputs.identity == 'true'
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        if: steps.changes.outputs.identity == 'true'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        if: steps.changes.outputs.identity == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.IdentityServer/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/identityserver.bonlinestore.com:dev-${{ github.sha }}
+
+      - name: Upload test results
+        if: steps.changes.outputs.identity == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: identity-dev-test-results
+          path: BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
+
+  # ==================== PULL REQUEST BUILDS ====================
+  pr-definitions-service:
+    name: Test Build - Definitions Service
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            definitions:
+              - 'BOnlineStore.Services/Definitions/**'
+              - 'Shared/**'
+              - 'BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/**'
+
+      - name: Setup .NET 8
+        if: steps.changes.outputs.definitions == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run unit tests
+        if: steps.changes.outputs.definitions == 'true'
+        run: |
+          echo "Running unit tests for Definitions Service..."
+          dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+          dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-pr-test-results.trx" --no-restore
+          echo "Unit tests passed successfully!"
+
+      - name: Build Docker image
+        if: steps.changes.outputs.definitions == 'true'
+        run: |
+          docker build -f BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile -t definitions-test:${{ github.sha }} .
+          echo "Docker image built successfully for pull request validation"
+
+      - name: Upload test results
+        if: steps.changes.outputs.definitions == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: definitions-pr-test-results
+          path: BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+
+  pr-production-service:
+    name: Test Build - Production Service
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            production:
+              - 'BOnlineStore.Services/Production/**'
+              - 'Shared/**'
+
+      - name: Build Docker image
+        if: steps.changes.outputs.production == 'true'
+        run: |
+          docker build -f BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile -t production-test:${{ github.sha }} .
+          echo "Docker image built successfully for pull request validation"
+
+  pr-bff-service:
+    name: Test Build - BFF Service
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            bff:
+              - 'BOnlineStore.Services/BFF/**'
+              - 'Shared/**'
+
+      - name: Build Docker image
+        if: steps.changes.outputs.bff == 'true'
+        run: |
+          docker build -f BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile -t bff-test:${{ github.sha }} .
+          echo "Docker image built successfully for pull request validation"
+
+  pr-ui:
+    name: Test Build - UI
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            ui:
+              - 'BOnlineStore.UI/ClientApp/**'
+
+      - name: Build Docker image
+        if: steps.changes.outputs.ui == 'true'
+        env:
+          NODE_OPTIONS: --max_old_space_size=3072
+          DOCKER_BUILDKIT: 1
+        run: |
+          cd BOnlineStore.UI/ClientApp
+          docker build -f Dockerfile -t ui-test:${{ github.sha }} .
+          echo "Docker image built successfully for pull request validation"
+
+  pr-identityserver:
+    name: Test Build - IdentityServer
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for changes
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            identity:
+              - 'BOnlineStore.IdentityServer/**'
+              - 'Shared/**'
+              - 'BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/**'
+
+      - name: Setup .NET 8
+        if: steps.changes.outputs.identity == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run unit tests
+        if: steps.changes.outputs.identity == 'true'
+        run: |
+          echo "Running unit tests for IdentityServer..."
+          dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+          dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-pr-test-results.trx" --no-restore
+          echo "Unit tests passed successfully!"
+
+      - name: Build Docker image
+        if: steps.changes.outputs.identity == 'true'
+        run: |
+          docker build -f BOnlineStore.IdentityServer/Dockerfile -t identityserver-test:${{ github.sha }} .
+          echo "Docker image built successfully for pull request validation"
+
+      - name: Upload test results
+        if: steps.changes.outputs.identity == 'true' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: identity-pr-test-results
+          path: BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
+
+  # ==================== MANUAL DEPLOYMENTS ====================
+  manual-deployment:
+    name: Manual Deployment
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8 (for services with tests)
+        if: contains(github.event.inputs.service, 'definitions') || contains(github.event.inputs.service, 'identityserver')
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run Definitions Service Tests
+        if: contains(github.event.inputs.service, 'definitions')
+        run: |
+          echo "Running unit tests for Definitions Service..."
+          dotnet restore BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj
+          dotnet test BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests.csproj --logger "trx;LogFileName=definitions-manual-test-results.trx" --no-restore
+
+      - name: Run IdentityServer Tests
+        if: contains(github.event.inputs.service, 'identityserver')
+        run: |
+          echo "Running unit tests for IdentityServer..."
+          dotnet restore BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj
+          dotnet test BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/BOnlineStore.IdentityServer.UnitTests.csproj --logger "trx;LogFileName=identity-manual-test-results.trx" --no-restore
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver: cloud
+          endpoint: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.CLOUD_BUILDER_NAME }}
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and Push - Definitions Production
+        if: github.event.inputs.service == 'definitions-production'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/definitions.bonlinestore.com:latest
+            scakir1978/definitions.bonlinestore.com:prod-${{ github.sha }}
+
+      - name: Build and Push - Definitions Staging
+        if: github.event.inputs.service == 'definitions-staging'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/Definitions/BOnlineStore.Services.Definitions.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/definitions.bonlinestore.com:staging-${{ github.sha }}
+
+      - name: Build and Push - Production Service Production
+        if: github.event.inputs.service == 'production-service-production'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/production.bonlinestore.com:latest
+            scakir1978/production.bonlinestore.com:prod-${{ github.sha }}
+
+      - name: Build and Push - Production Service Staging
+        if: github.event.inputs.service == 'production-service-staging'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/Production/BOnlineStore.Services.Production.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/production.bonlinestore.com:staging-${{ github.sha }}
+
+      - name: Build and Push - BFF Production
+        if: github.event.inputs.service == 'bff-service-production'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/bff.bonlinestore.com:latest
+            scakir1978/bff.bonlinestore.com:prod-${{ github.sha }}
+
+      - name: Build and Push - BFF Staging
+        if: github.event.inputs.service == 'bff-service-staging'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.Services/BFF/BOnlineStore.BFF/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/bff.bonlinestore.com:staging-${{ github.sha }}
+
+      - name: Build and Push - UI Production
+        if: github.event.inputs.service == 'ui-production'
+        uses: docker/build-push-action@v5
+        with:
+          context: BOnlineStore.UI/ClientApp
+          file: BOnlineStore.UI/ClientApp/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/ui.bonlinestore.com:latest
+            scakir1978/ui.bonlinestore.com:prod-${{ github.sha }}
+
+      - name: Build and Push - UI Staging
+        if: github.event.inputs.service == 'ui-staging'
+        uses: docker/build-push-action@v5
+        with:
+          context: BOnlineStore.UI/ClientApp
+          file: BOnlineStore.UI/ClientApp/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/ui.bonlinestore.com:staging-${{ github.sha }}
+
+      - name: Build and Push - IdentityServer Production
+        if: github.event.inputs.service == 'identityserver-production'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.IdentityServer/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            scakir1978/identityserver.bonlinestore.com:latest
+            scakir1978/identityserver.bonlinestore.com:prod-${{ github.sha }}
+
+      - name: Build and Push - IdentityServer Staging
+        if: github.event.inputs.service == 'identityserver-staging'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: BOnlineStore.IdentityServer/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: scakir1978/identityserver.bonlinestore.com:staging-${{ github.sha }}
+
+      - name: Upload test results
+        if: always() && (contains(github.event.inputs.service, 'definitions') || contains(github.event.inputs.service, 'identityserver'))
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-test-results
+          path: |
+            BOnlineStore.UnitTests/BOnlineStore.Services.Definitions.Api.UnitTests/TestResults/*.trx
+            BOnlineStore.UnitTests/BOnlineStore.IdentityServer.UnitTests/TestResults/*.trx
