@@ -12,9 +12,6 @@ const routes: Routes = [
     path: 'role',
     component: RoleComponent,
     canActivate: [AuthGuard],
-    resolve: {
-        Role: RoleService,
-    },
   },
 ];
 
