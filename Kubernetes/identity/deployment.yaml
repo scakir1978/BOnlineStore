@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: identity-bonlinestore-com
-          image: scakir1978/identity.bonlinestore.com:latest
+          image: scakir1978/identityserver.bonlinestore.com:latest
           imagePullPolicy: Always          
           ports:
             - containerPort: 443
