@@ -15,7 +15,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router
-  ) {}
+  ) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -30,7 +30,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         }
 
         const errorMessage = this.extractErrorMessage(err);
-        throw new Error(errorMessage);
+        return throwError(() => new Error(errorMessage));
       })
     );
   }
