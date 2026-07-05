@@ -120,7 +120,11 @@ internal static class HostingExtensions
         if (builder.Configuration[IdentityServerConstants.IdentityRunningMode] == IdentityServerConstants.RunningModeDocker)
         {
             var certName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + IdentityServerConstants.SigningCertificateFile;
-            Log.Information(File.Exists(certName) == true ? string.Format(IdentityServerConstants.CertFoundLogTemplate, certName) : string.Format(IdentityServerConstants.CertNotFoundLogTemplate, certName));
+            Log.Information(
+                File.Exists(certName)
+                    ? IdentityServerConstants.CertFoundLogTemplate
+                    : IdentityServerConstants.CertNotFoundLogTemplate,
+                certName);
 
             builderIdentity.AddSigningCredential(new X509Certificate2(certName, IdentityServerConstants.SigningCertificatePassword));
 
