@@ -24,7 +24,7 @@ RUN npm run build-prod
 FROM nginx:latest
 # Copying compiled code and nginx config to different folder
 # NOTE: This path may change according to your project's output folder 
-COPY --from=build /dist/src/app/dist/velzon /usr/share/nginx/html
+COPY --from=build /dist/src/app/dist/velzon/browser /usr/share/nginx/html
 #COPY /dist/velzon /usr/share/nginx/html
 COPY ssl/bonlinestore.crt  /etc/nginx/certs/bonlinestore.crt
 COPY ssl/bonlinestore-decrypted.key  /etc/nginx/certs/bonlinestore.key
