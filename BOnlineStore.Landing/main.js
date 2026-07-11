@@ -69,37 +69,7 @@ function applyLanguage(lang) {
   if (metaDesc) metaDesc.setAttribute('content', descs[lang]);
 }
 
-  // Update toggle button labels
-  const label = document.getElementById('langLabel');
-  if (label) {
-    const toggle = label.closest('.lang-toggle');
-    if (toggle) {
-      const active   = toggle.querySelector('.lang-active');
-      const inactive = toggle.querySelector('.lang-inactive');
-      if (lang === 'tr') {
-        if (active)   active.textContent   = 'TR';
-        if (inactive) inactive.textContent = 'EN';
-      } else {
-        if (active)   active.textContent   = 'EN';
-        if (inactive) inactive.textContent = 'TR';
-      }
-    }
-  }
-
-  // Update page title & meta description
-  const titles = {
-    tr: 'B-Online Store ERP | Üretimi Formüle Edin',
-    en: 'B-Online Store ERP | Formulate Your Production'
-  };
-  const descs = {
-    tr: 'Pasta üretiminden metrekare hesabına — iç içe formülasyonlarla imalat yönetimi. Mamul→Yarı Mamul→Hammadde hiyerarşisi.',
-    en: 'From pastry production to square meter calculation — manufacturing management with nested formulations. Finished Good→Semi-Finished→Raw Material hierarchy.'
-  };
-  document.title = titles[lang];
-  const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute('content', descs[lang]);
-}
-
+// ─── LANG TOGGLE ──────────────────────────
 function initLangToggle() {
   const btn = document.getElementById('langToggle');
   if (!btn) return;
@@ -130,7 +100,6 @@ function initHamburger() {
   btn.addEventListener('click', () => {
     const isOpen = menu.classList.toggle('open');
     btn.setAttribute('aria-expanded', isOpen);
-    // Animate hamburger → X
     const spans = btn.querySelectorAll('span');
     if (isOpen) {
       spans[0].style.cssText = 'transform:translateY(7px) rotate(45deg)';
@@ -141,7 +110,6 @@ function initHamburger() {
     }
   });
 
-  // Close when a mobile link is clicked
   menu.querySelectorAll('.mobile-link').forEach(link => {
     link.addEventListener('click', () => {
       menu.classList.remove('open');
@@ -158,10 +126,9 @@ function initScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        // Stagger children within the same parent
         setTimeout(() => {
           entry.target.classList.add('visible');
-        }, (i % 4) * 100); // max 400ms stagger
+        }, (i % 4) * 100);
         observer.unobserve(entry.target);
       }
     });
@@ -186,10 +153,9 @@ function initSmoothScroll() {
   });
 }
 
-// ─── CTA BUTTON TRACKING (optional) ───────
+// ─── CTA BUTTON TRACKING ──────────────────
 document.querySelectorAll('a[href*="ui.b-online-store.com"]').forEach(link => {
   link.addEventListener('click', () => {
-    // Simple analytics hook — replace with GA/plausible if needed
     console.info('[BOS] CTA clicked → ui.b-online-store.com');
   });
 });
@@ -208,29 +174,26 @@ function initContactForm() {
     const successBox = document.getElementById('formSuccess');
     const errorBox   = document.getElementById('formError');
 
-    // — Field values —
     const name    = document.getElementById('contactName').value.trim();
     const email   = document.getElementById('contactEmail').value.trim();
     const subject = document.getElementById('contactSubject').value;
     const message = document.getElementById('contactMessage').value.trim();
 
-    // — Basic validation —
     if (!name || !email || !subject || !message) {
-      // Trigger browser native validation UI
       form.reportValidity();
       return;
     }
 
-    // — Loading state —
-    submitBtn.disabled  = true;
+    // Loading state
+    submitBtn.disabled       = true;
     idleState.style.display  = 'none';
     loadState.style.display  = 'flex';
     successBox.style.display = 'none';
     errorBox.style.display   = 'none';
 
     try {
-      // FormSubmit AJAX endpoint — first submission triggers email verification
-      // to scakir1978@gmail.com (click the link once, then it works automatically)
+      // FormSubmit AJAX — ilk gönderimdede scakir1978@gmail.com'a doğrulama maili gelir,
+      // linke bir kez tıkladıktan sonra tüm sonraki gönderimler otomatik çalışır.
       const res = await fetch('https://formsubmit.co/ajax/scakir1978@gmail.com', {
         method: 'POST',
         headers: {
@@ -242,7 +205,7 @@ function initContactForm() {
           'E-posta':  email,
           'Konu':     subject,
           'Mesaj':    message,
-          _subject:   `[BOnlineStore ERP] ${subject} — ${name}`,
+          _subject:   '[BOnlineStore ERP] ' + subject + ' \u2014 ' + name,
           _cc:        'mustafatoprak@gmail.com',
           _template:  'box',
           _captcha:   'false'
@@ -253,22 +216,19 @@ function initContactForm() {
 
       if (data.success === 'true' || data.success === true) {
         successBox.style.display = 'flex';
-        // Apply current language texts
         applyLanguage(currentLang);
         form.reset();
-        // Scroll success message into view
         successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       } else {
-        throw new Error('FormSubmit returned non-success');
+        throw new Error('FormSubmit non-success: ' + JSON.stringify(data));
       }
     } catch (err) {
       console.error('[BOS Contact]', err);
       errorBox.style.display = 'flex';
     } finally {
-      submitBtn.disabled       = false;
-      idleState.style.display  = 'flex';
-      loadState.style.display  = 'none';
+      submitBtn.disabled      = false;
+      idleState.style.display = 'flex';
+      loadState.style.display = 'none';
     }
   });
 }
-
